@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="391.0" prefWidth="494.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.felix.controller.AddHauptfeldController">
+	<children>
+		<Label layoutX="78.0" layoutY="36.0" text="Name" />
+		<Button fx:id="save" layoutX="310.0" layoutY="352.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="79.0" text="Speichern" />
+		<Label layoutX="81.0" layoutY="67.0" text="Rolle" />
+		<Label layoutX="80.0" layoutY="100.0" text="Eigenschaft" />
+		<TextField fx:id="name" layoutX="146.74609375" layoutY="32.0" />
+		<TextField fx:id="rolle" layoutX="147.0" layoutY="63.0" />
+		<Button fx:id="cancle" layoutX="406.0" layoutY="352.0" mnemonicParsing="false" text="Abbrechen" /><ListView fx:id="eigenschaft" layoutX="147.0" layoutY="100.0" prefHeight="83.0" prefWidth="149.0" />
+	</children>
+</AnchorPane>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.felix.controller.HauptfelderControllerImpl">
+<children><MenuBar fx:id="menuBar"  layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+  <menus>
+    <Menu mnemonicParsing="false" text="File">
+      <items>
+        <MenuItem fx:id="menuItemClose" mnemonicParsing="false" text="Close" /><MenuItem fx:id="menuItemLoad" mnemonicParsing="false" text="Load" /><MenuItem fx:id="menuItemSave" mnemonicParsing="false" text="Save" />
+      </items>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Edit">
+      <items>
+        <MenuItem mnemonicParsing="false" text="Delete" />
+      </items>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Help">
+      <items>
+        <MenuItem mnemonicParsing="false" text="About" />
+      </items>
+    </Menu>
+  </menus>
+</MenuBar><TreeTableView fx:id="treeTable" layoutX="7.0" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="590.0">
+<columns>
+<TreeTableColumn  prefWidth="167.0" text="Name" />
+<TreeTableColumn  prefWidth="101.0" text="Rolle" />
+<TreeTableColumn prefWidth="98.0" text="Eigenschaft" />
+</columns>
+</TreeTableView>
+</children></AnchorPane>
