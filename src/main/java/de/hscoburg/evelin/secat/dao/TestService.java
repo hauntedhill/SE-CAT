@@ -1,4 +1,4 @@
-package de.hscoburg.evelin.secat.services;
+package de.hscoburg.evelin.secat.dao;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.hscoburg.evelin.secat.model.Hauptfeld;
+import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 
 @Service
 @Transactional
@@ -28,7 +28,7 @@ public class TestService {
 
 	public void save() {
 
-		Hauptfeld h = new Hauptfeld();
+		Handlungsfeld h = new Handlungsfeld();
 
 		h.setName("test");
 

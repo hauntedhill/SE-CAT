@@ -1,4 +1,4 @@
-package de.hscoburg.evelin.secat;
+package de.hscoburg.evelin.secat.util.javafx;
 
 import javafx.application.Platform;
 import javafx.event.Event;
@@ -9,9 +9,11 @@ import javafx.scene.Scene;
 import org.controlsfx.dialog.Dialogs;
 import org.slf4j.Logger;
 
-public abstract class FelixEventHandle<T extends Event> implements EventHandler<T> {
+import de.hscoburg.evelin.secat.SeCat;
 
-	private static final Logger logger = org.slf4j.LoggerFactory.getLogger(FelixEventHandle.class);
+public abstract class SeCatEventHandle<T extends Event> implements EventHandler<T> {
+
+	private static final Logger logger = org.slf4j.LoggerFactory.getLogger(SeCatEventHandle.class);
 
 	@Override
 	public void handle(final T event) {

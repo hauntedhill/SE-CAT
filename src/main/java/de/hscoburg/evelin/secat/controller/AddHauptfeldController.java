@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import de.hscoburg.evelin.secat.model.Hauptfeld;
+import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 
 @Controller
 public class AddHauptfeldController implements Initializable {
@@ -50,7 +50,7 @@ public class AddHauptfeldController implements Initializable {
 			@Override
 			public void handle(ActionEvent e) {
 
-				Hauptfeld h = new Hauptfeld();
+				Handlungsfeld h = new Handlungsfeld();
 				h.setId((new Random()).nextInt());
 				h.setName(name.getText());
 				hauptfeldController.addHauptfeldToCurrentSelection(h);

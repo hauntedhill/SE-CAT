@@ -1,0 +1,95 @@
+package de.hscoburg.evelin.secat.dao.entity;
+
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+
+import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
+
+@Entity
+public class Item extends StammdatenEntity {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1592944199003666766L;
+
+	private String name;
+
+	private String notiz;
+
+	private Handlungsfeld handlungsfeld;
+
+	private List<Eigenschaft> eigenschaften;
+
+	private List<Perspektive> perspektiven;
+
+	private List<Bewertung> bewertungen;
+
+	private List<Fragebogen> frageboegen;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getNotiz() {
+		return notiz;
+	}
+
+	public void setNotiz(String notiz) {
+		this.notiz = notiz;
+	}
+
+	@ManyToOne(targetEntity = Handlungsfeld.class)
+	public Handlungsfeld getHandlungsfeld() {
+		return handlungsfeld;
+	}
+
+	public void setHandlungsfeld(Handlungsfeld handlungsfeld) {
+		this.handlungsfeld = handlungsfeld;
+	}
+
+	@OneToMany(targetEntity = Eigenschaft.class, mappedBy = "items")
+	public List<Eigenschaft> getEigenschaften() {
+		return eigenschaften;
+	}
+
+	public void setEigenschaften(List<Eigenschaft> eigenschaften) {
+		this.eigenschaften = eigenschaften;
+	}
+
+	@ManyToMany(targetEntity = Perspektive.class)
+	public List<Perspektive> getPerspektiven() {
+		return perspektiven;
+	}
+
+	public void setPerspektiven(List<Perspektive> perspektiven) {
+		this.perspektiven = perspektiven;
+	}
+
+	@OneToMany(targetEntity = Bewertung.class, mappedBy = "item")
+	public List<Bewertung> getBewertungen() {
+		return bewertungen;
+	}
+
+	public void setBewertungen(List<Bewertung> bewertungen) {
+		this.bewertungen = bewertungen;
+	}
+
+	@ManyToMany(targetEntity = Fragebogen.class)
+	public List<Fragebogen> getFrageboegen() {
+		return frageboegen;
+	}
+
+	public void setFrageboegen(List<Fragebogen> frageboegen) {
+		this.frageboegen = frageboegen;
+	}
+
+}

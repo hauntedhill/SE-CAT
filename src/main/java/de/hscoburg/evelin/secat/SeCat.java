@@ -35,7 +35,7 @@ public class SeCat extends Application {
 
 			final Stage splashStage = new Stage();
 
-			Parent splash = (Parent) loader.load(SeCat.class.getResourceAsStream("/splashScreen.fxml"));
+			Parent splash = (Parent) loader.load(SeCat.class.getResourceAsStream("/gui/splashScreen.fxml"));
 
 			Scene sceneSplash = new Scene(splash);
 			splashStage.initStyle(StageStyle.UTILITY);
@@ -56,7 +56,7 @@ public class SeCat extends Application {
 
 						@Override
 						public void run() {
-							Parent p = (Parent) SpringFXMLLoader.getInstance().load("/hauptfelder.fxml");
+							Parent p = (Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/handlungsfeld.fxml");
 							// Parent p = (Parent) SpringFXMLLoader.getInstance().load("/splashScreen.fxml");
 
 							Scene scene = new Scene(p, 768, 480);

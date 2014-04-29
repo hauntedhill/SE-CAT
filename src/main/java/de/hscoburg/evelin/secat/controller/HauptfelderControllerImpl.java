@@ -30,9 +30,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import de.hscoburg.evelin.secat.FelixEventHandle;
-import de.hscoburg.evelin.secat.model.Hauptfeld;
-import de.hscoburg.evelin.secat.services.TestService;
+import de.hscoburg.evelin.secat.dao.TestService;
+import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
+import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 @Controller
@@ -41,7 +41,7 @@ public class HauptfelderControllerImpl implements Initializable {
 	private static Logger logger = LoggerFactory.getLogger(HauptfelderControllerImpl.class);
 
 	@FXML
-	private TreeTableView<Hauptfeld> treeTable;
+	private TreeTableView<Handlungsfeld> treeTable;
 
 	@FXML
 	private MenuBar menuBar;
@@ -96,7 +96,7 @@ public class HauptfelderControllerImpl implements Initializable {
 			}
 		});
 
-		menuItemLoad.setOnAction(new FelixEventHandle<ActionEvent>() {
+		menuItemLoad.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
 			private File file;
 
@@ -130,10 +130,10 @@ public class HauptfelderControllerImpl implements Initializable {
 
 		// treeTable.getColumns().get(0).setCellValueFactory(new TreeItemPropertyValueFactory<Hauptfeld, String>("name"));
 
-		((TreeTableColumn<Hauptfeld, String>) treeTable.getColumns().get(0))
-				.setCellValueFactory(new Callback<CellDataFeatures<Hauptfeld, String>, ObservableValue<String>>() {
+		((TreeTableColumn<Handlungsfeld, String>) treeTable.getColumns().get(0))
+				.setCellValueFactory(new Callback<CellDataFeatures<Handlungsfeld, String>, ObservableValue<String>>() {
 
-					public ObservableValue<String> call(CellDataFeatures<Hauptfeld, String> p) {
+					public ObservableValue<String> call(CellDataFeatures<Handlungsfeld, String> p) {
 						return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getName());
 
 						// return null;
@@ -141,11 +141,11 @@ public class HauptfelderControllerImpl implements Initializable {
 					}
 				});
 
-		treeTable.setRowFactory(new Callback<TreeTableView<Hauptfeld>, TreeTableRow<Hauptfeld>>() {
+		treeTable.setRowFactory(new Callback<TreeTableView<Handlungsfeld>, TreeTableRow<Handlungsfeld>>() {
 
-			public TreeTableRow<Hauptfeld> call(TreeTableView<Hauptfeld> treeTableView) {
+			public TreeTableRow<Handlungsfeld> call(TreeTableView<Handlungsfeld> treeTableView) {
 
-				final TreeTableRow<Hauptfeld> row = new TreeTableRow<>();
+				final TreeTableRow<Handlungsfeld> row = new TreeTableRow<>();
 				final ContextMenu rowMenu = new ContextMenu();
 				MenuItem removeItem = new MenuItem("Remove");
 
@@ -158,7 +158,7 @@ public class HauptfelderControllerImpl implements Initializable {
 
 						Stage stage = new Stage();
 
-						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/addHauptfeld.fxml"));
+						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/addHandlungsfeld.fxml"));
 
 						Scene scene = new Scene(p);
 
@@ -190,7 +190,7 @@ public class HauptfelderControllerImpl implements Initializable {
 
 		// treeTable.set
 
-		Hauptfeld h = new Hauptfeld();
+		Handlungsfeld h = new Handlungsfeld();
 		h.setId(1);
 		h.setName("Hauptfelder");
 
@@ -198,18 +198,18 @@ public class HauptfelderControllerImpl implements Initializable {
 		// em.flush();
 		// em.close();
 
-		Hauptfeld h1 = new Hauptfeld();
+		Handlungsfeld h1 = new Handlungsfeld();
 		h1.setId(2);
 		h1.setName("test123");
 
-		Hauptfeld h2 = new Hauptfeld();
+		Handlungsfeld h2 = new Handlungsfeld();
 		h2.setId(3);
 		h2.setName("test456");
 
-		TreeItem<Hauptfeld> root = new TreeItem<Hauptfeld>(h);
+		TreeItem<Handlungsfeld> root = new TreeItem<Handlungsfeld>(h);
 
-		root.getChildren().add(new TreeItem<Hauptfeld>(h1));
-		root.getChildren().add(new TreeItem<Hauptfeld>(h2));
+		root.getChildren().add(new TreeItem<Handlungsfeld>(h1));
+		root.getChildren().add(new TreeItem<Handlungsfeld>(h2));
 
 		// treeTable.setShowRoot(true);
 
@@ -219,16 +219,16 @@ public class HauptfelderControllerImpl implements Initializable {
 
 	}
 
-	public void addHauptfeldToCurrentSelection(Hauptfeld h) {
-		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<Hauptfeld>(h));
+	public void addHauptfeldToCurrentSelection(Handlungsfeld h) {
+		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<Handlungsfeld>(h));
 
 	}
 
-	public TreeTableView<Hauptfeld> getTreeTable() {
+	public TreeTableView<Handlungsfeld> getTreeTable() {
 		return treeTable;
 	}
 
-	public void setTreeTable(TreeTableView<Hauptfeld> treeTable) {
+	public void setTreeTable(TreeTableView<Handlungsfeld> treeTable) {
 		this.treeTable = treeTable;
 	}
 
