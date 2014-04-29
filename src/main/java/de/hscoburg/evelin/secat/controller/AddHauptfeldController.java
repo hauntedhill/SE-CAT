@@ -1,4 +1,4 @@
-package de.hscoburg.evelin.felix.controller;
+package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
 import java.util.Random;
@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import de.hscoburg.evelin.felix.model.Hauptfeld;
+import de.hscoburg.evelin.secat.model.Hauptfeld;
 
 @Controller
 public class AddHauptfeldController implements Initializable {

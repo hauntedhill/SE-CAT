@@ -1,4 +1,4 @@
-package de.hscoburg.evelin.felix;
+package de.hscoburg.evelin.secat;
 
 import javafx.application.Platform;
 import javafx.event.Event;

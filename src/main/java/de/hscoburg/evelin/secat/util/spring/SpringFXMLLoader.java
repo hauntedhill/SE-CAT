@@ -1,4 +1,4 @@
-package de.hscoburg.evelin.felix.util.spring;
+package de.hscoburg.evelin.secat.util.spring;
 
 import java.io.IOException;
 import java.io.InputStream;

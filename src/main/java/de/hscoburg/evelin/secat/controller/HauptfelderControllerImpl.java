@@ -1,4 +1,4 @@
-package de.hscoburg.evelin.felix.controller;
+package de.hscoburg.evelin.secat.controller;
 
 import java.io.File;
 import java.net.URL;
@@ -30,10 +30,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import de.hscoburg.evelin.felix.FelixEventHandle;
-import de.hscoburg.evelin.felix.model.Hauptfeld;
-import de.hscoburg.evelin.felix.services.TestService;
-import de.hscoburg.evelin.felix.util.spring.SpringFXMLLoader;
+import de.hscoburg.evelin.secat.FelixEventHandle;
+import de.hscoburg.evelin.secat.model.Hauptfeld;
+import de.hscoburg.evelin.secat.services.TestService;
+import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 @Controller
 public class HauptfelderControllerImpl implements Initializable {
@@ -117,13 +117,13 @@ public class HauptfelderControllerImpl implements Initializable {
 
 				if (file != null) {
 					service.loadDBFromFile(file);
-					try {
-						Thread.sleep(1000);
-						throw new NullPointerException();
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+					// try {
+					// Thread.sleep(1000);
+					// throw new NullPointerException();
+					// } catch (InterruptedException e) {
+					// // TODO Auto-generated catch block
+					// e.printStackTrace();
+					// }
 				}
 			}
 		});
@@ -215,7 +215,7 @@ public class HauptfelderControllerImpl implements Initializable {
 
 		treeTable.setRoot(root);
 
-		service.save();
+		// service.save();
 
 	}
 

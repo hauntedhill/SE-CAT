@@ -1,4 +1,4 @@
-package de.hscoburg.evelin.felix.services;
+package de.hscoburg.evelin.secat.services;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -14,7 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.hscoburg.evelin.felix.model.Hauptfeld;
+import de.hscoburg.evelin.secat.model.Hauptfeld;
 
 @Service
 @Transactional

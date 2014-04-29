@@ -1,4 +1,4 @@
-package de.hscoburg.evelin.felix;
+package de.hscoburg.evelin.secat;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import de.hscoburg.evelin.felix.util.spring.SpringFXMLLoader;
+import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 public class Felix extends Application {
 

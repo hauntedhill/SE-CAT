@@ -1,4 +1,4 @@
-package de.hscoburg.evelin.felix.model;
+package de.hscoburg.evelin.secat.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
