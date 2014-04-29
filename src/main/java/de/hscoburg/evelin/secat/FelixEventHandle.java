@@ -15,7 +15,7 @@ public abstract class FelixEventHandle<T extends Event> implements EventHandler<
 
 	@Override
 	public void handle(final T event) {
-		final Scene s = Felix.PRIMARY_STAGE.getScene();
+		final Scene s = SeCat.PRIMARY_STAGE.getScene();
 		final EventHandler<javafx.scene.input.InputEvent> handler = new EventHandler<javafx.scene.input.InputEvent>() {
 			@Override
 			public void handle(javafx.scene.input.InputEvent mouseEvent) {

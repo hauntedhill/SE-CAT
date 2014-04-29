@@ -11,7 +11,7 @@ import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
-public class Felix extends Application {
+public class SeCat extends Application {
 
 	public static Stage PRIMARY_STAGE;
 
@@ -35,7 +35,7 @@ public class Felix extends Application {
 
 			final Stage splashStage = new Stage();
 
-			Parent splash = (Parent) loader.load(Felix.class.getResourceAsStream("/splashScreen.fxml"));
+			Parent splash = (Parent) loader.load(SeCat.class.getResourceAsStream("/splashScreen.fxml"));
 
 			Scene sceneSplash = new Scene(splash);
 			splashStage.initStyle(StageStyle.UTILITY);

@@ -55,10 +55,11 @@ public class SpringDefaultConfiguration {
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
-		ds.setUrl("jdbc:mysql://localhost/secat");
+		ds.setUrl("jdbc:mysql://" + PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_HOST) + "/"
+				+ PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_SCHEMA));
 
-		ds.setUsername("secat");
-		ds.setPassword("secat");
+		ds.setUsername(PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_USER));
+		ds.setPassword(PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_PASSWORD));
 
 		Properties ps = new Properties();
 		// ps.put("initialSize", "1");
