@@ -22,7 +22,7 @@ import org.springframework.stereotype.Controller;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 
 @Controller
-public class AddHauptfeldController implements Initializable {
+public class AddHandlungsfeldController implements Initializable {
 
 	@FXML
 	private Button save;
@@ -37,7 +37,7 @@ public class AddHauptfeldController implements Initializable {
 	private ListView<String> eigenschaft;
 
 	@Autowired
-	private HauptfelderControllerImpl hauptfeldController;
+	private HandlungsfeldController hauptfeldController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

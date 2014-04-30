@@ -9,7 +9,7 @@
 <children><ImageView fx:id="kompetenz" fitHeight="150.0" fitWidth="335.0" layoutX="7.0" layoutY="7.0" pickOnBounds="true" preserveRatio="true">
 <image>
 <Image url="@/image/kompetenzmanagement.jpg" />
-</image></ImageView><Label layoutX="107.0" layoutY="165.0" prefHeight="16.0" prefWidth="78.0" text="Felix is loading" /><ImageView fx:id="ajaxLoader" fitHeight="29.0" fitWidth="34.0" layoutX="198.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true">
+</image></ImageView><Label layoutX="89.0" layoutY="165.0" prefHeight="17.0" prefWidth="96.0" text="SE-CAT is loading" /><ImageView fx:id="ajaxLoader" fitHeight="29.0" fitWidth="34.0" layoutX="198.0" layoutY="159.0" pickOnBounds="true" preserveRatio="true">
 <image>
 <Image url="@/image/ajax_loader_blue_512.gif" />
 </image>

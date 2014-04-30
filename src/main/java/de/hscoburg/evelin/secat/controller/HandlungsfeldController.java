@@ -36,9 +36,9 @@ import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 @Controller
-public class HauptfelderControllerImpl implements Initializable {
+public class HandlungsfeldController implements Initializable {
 
-	private static Logger logger = LoggerFactory.getLogger(HauptfelderControllerImpl.class);
+	private static Logger logger = LoggerFactory.getLogger(HandlungsfeldController.class);
 
 	@FXML
 	private TreeTableView<Handlungsfeld> treeTable;

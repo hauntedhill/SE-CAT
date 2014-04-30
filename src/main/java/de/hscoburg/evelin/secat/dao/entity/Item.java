@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.dao.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -30,6 +31,8 @@ public class Item extends StammdatenEntity {
 	private List<Bewertung> bewertungen;
 
 	private List<Fragebogen> frageboegen;
+
+	private Skala skala;
 
 	public String getName() {
 		return name;
@@ -92,4 +95,26 @@ public class Item extends StammdatenEntity {
 		this.frageboegen = frageboegen;
 	}
 
+	@ManyToOne(targetEntity = Skala.class)
+	public Skala getSkala() {
+		return skala;
+	}
+
+	public void setSkala(Skala skala) {
+		this.skala = skala;
+	}
+
+	public void addEigenschaft(Eigenschaft e) {
+		if (eigenschaften == null) {
+			eigenschaften = new ArrayList<Eigenschaft>();
+		}
+		eigenschaften.add(e);
+	}
+
+	public void addPerspektive(Perspektive e) {
+		if (perspektiven == null) {
+			perspektiven = new ArrayList<Perspektive>();
+		}
+		perspektiven.add(e);
+	}
 }

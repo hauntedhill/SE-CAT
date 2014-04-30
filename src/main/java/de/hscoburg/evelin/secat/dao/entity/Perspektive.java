@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.dao.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -47,4 +48,10 @@ public class Perspektive extends BaseEntity {
 		this.bewertende = bewertende;
 	}
 
+	public void addItem(Item i) {
+		if (items == null) {
+			items = new ArrayList<Item>();
+		}
+		items.add(i);
+	}
 }

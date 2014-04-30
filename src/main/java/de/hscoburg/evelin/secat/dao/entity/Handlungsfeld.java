@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.dao.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -44,6 +45,14 @@ public class Handlungsfeld extends StammdatenEntity {
 
 	public void setItems(List<Item> items) {
 		this.items = items;
+	}
+
+	public void addItem(Item i) {
+		i.setHandlungsfeld(this);
+		if (items == null) {
+			items = new ArrayList<Item>();
+		}
+		items.add(i);
 	}
 
 }

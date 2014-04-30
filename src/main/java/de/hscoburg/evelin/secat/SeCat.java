@@ -42,7 +42,7 @@ public class SeCat extends Application {
 			splashStage.setScene(sceneSplash);
 			splashStage.setResizable(false);
 
-			splashStage.setTitle("Felix");
+			splashStage.setTitle("SE-CAT");
 
 			splashStage.show();
 			new Thread(new Runnable() {
@@ -63,7 +63,7 @@ public class SeCat extends Application {
 
 							primaryStage.setScene(scene);
 
-							primaryStage.setTitle("Felix");
+							primaryStage.setTitle("SE-CAT");
 
 							primaryStage.setOnShown(new EventHandler<WindowEvent>() {
 
