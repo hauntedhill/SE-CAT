@@ -1,10 +1,16 @@
 package de.hscoburg.evelin.secat.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import de.hscoburg.evelin.secat.dao.EigenschaftenDAO;
+import de.hscoburg.evelin.secat.dao.FachDAO;
+import de.hscoburg.evelin.secat.dao.HandlungsfeldDAO;
+import de.hscoburg.evelin.secat.dao.ItemDAO;
+import de.hscoburg.evelin.secat.dao.PerspektiveDAO;
+import de.hscoburg.evelin.secat.dao.SkalaDAO;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
@@ -15,135 +21,120 @@ import de.hscoburg.evelin.secat.dao.entity.Skala;
 @Repository
 public class HandlungsfeldModel {
 
-	public List<Handlungsfeld> getHandlungsfelder(boolean aktiv, Perspektive p, Eigenschaft e, String Notiz, Fach f) {
-		List<Handlungsfeld> dummy = new ArrayList<>();
+	@Autowired
+	private HandlungsfeldDAO handlungsfeldDAO;
 
-		Handlungsfeld e1 = new Handlungsfeld();
-		e1.setName("Clarity");
+	@Autowired
+	private ItemDAO itemDAO;
 
-		Item i = new Item();
-		i.setAktiv(true);
-		Eigenschaft eig = new Eigenschaft();
-		eig.setName("teamleistung");
-		i.addEigenschaft(eig);
-		Perspektive p1 = new Perspektive();
-		p1.setName("Kunde");
-		i.addPerspektive(p1);
-		// i.setSkala(skala);
-		i.setName("irgend etwas");
-		e1.addItem(i);
+	@Autowired
+	private EigenschaftenDAO eigenschaftenDAO;
+	@Autowired
+	private PerspektiveDAO perspektiveDAO;
+	@Autowired
+	private SkalaDAO skalaDAO;
+	@Autowired
+	private FachDAO fachDAO;
 
-		i = new Item();
-		i.setAktiv(true);
-		eig = new Eigenschaft();
-		eig.setName("einzelleistung");
-		i.addEigenschaft(eig);
-		p1 = new Perspektive();
-		p1.setName("Dozent");
-		i.addPerspektive(p1);
-		// i.setSkala(skala);
-		i.setName("irgend etwas²");
-		e1.addItem(i);
+	public List<Handlungsfeld> getHandlungsfelderByBy(boolean handlungsfeldAktiv, boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld,
+			String notizItem, Fach f) {
 
-		dummy.add(e1);
-		e1 = new Handlungsfeld();
-		e1.setName("Creativity of solutions");
+		// List<Handlungsfeld> dummy = new ArrayList<>();
+		//
+		// Handlungsfeld e1 = new Handlungsfeld();
+		// e1.setName("Clarity");
+		//
+		// Item i = new Item();
+		// i.setAktiv(true);
+		// Eigenschaft eig = new Eigenschaft();
+		// eig.setName("teamleistung");
+		// i.addEigenschaft(eig);
+		// Perspektive p1 = new Perspektive();
+		// p1.setName("Kunde");
+		// i.addPerspektive(p1);
+		//
+		// i.setName("irgend etwas");
+		// e1.addItem(i);
+		//
+		// i = new Item();
+		// i.setAktiv(true);
+		// eig = new Eigenschaft();
+		// eig.setName("einzelleistung");
+		// i.addEigenschaft(eig);
+		// p1 = new Perspektive();
+		// p1.setName("Dozent");
+		// i.addPerspektive(p1);
+		//
+		// i.setName("irgend etwas²");
+		// e1.addItem(i);
+		//
+		// dummy.add(e1);
+		// e1 = new Handlungsfeld();
+		// e1.setName("Creativity of solutions");
+		//
+		// i = new Item();
+		// i.setAktiv(true);
+		// eig = new Eigenschaft();
+		// eig.setName("teamleistung1");
+		// i.addEigenschaft(eig);
+		// p1 = new Perspektive();
+		// p1.setName("Kunde1");
+		// i.addPerspektive(p1);
+		//
+		// i.setName("irgend etwa1s");
+		// e1.addItem(i);
+		//
+		// i = new Item();
+		// i.setAktiv(true);
+		// eig = new Eigenschaft();
+		// eig.setName("einzelleistung1");
+		// i.addEigenschaft(eig);
+		// p1 = new Perspektive();
+		// p1.setName("Dozent1");
+		// i.addPerspektive(p1);
+		//
+		// i.setName("irgend etwas²1");
+		// e1.addItem(i);
+		//
+		// dummy.add(e1);
 
-		i = new Item();
-		i.setAktiv(true);
-		eig = new Eigenschaft();
-		eig.setName("teamleistung1");
-		i.addEigenschaft(eig);
-		p1 = new Perspektive();
-		p1.setName("Kunde1");
-		i.addPerspektive(p1);
-		// i.setSkala(skala);
-		i.setName("irgend etwa1s");
-		e1.addItem(i);
-
-		i = new Item();
-		i.setAktiv(true);
-		eig = new Eigenschaft();
-		eig.setName("einzelleistung1");
-		i.addEigenschaft(eig);
-		p1 = new Perspektive();
-		p1.setName("Dozent1");
-		i.addPerspektive(p1);
-		// i.setSkala(skala);
-		i.setName("irgend etwas²1");
-		e1.addItem(i);
-
-		dummy.add(e1);
-
-		return dummy;
+		return handlungsfeldDAO.getHandlungsfelderBy(handlungsfeldAktiv, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
 	}
 
-	public void saveHandlungsfeld(Handlungsfeld h) {
-
+	public void persistHandlungsfeld(Handlungsfeld h) {
+		handlungsfeldDAO.persist(h);
 	}
 
-	public void updateHandlugsfeld(Handlungsfeld h) {
-
+	public void mergeHandlugsfeld(Handlungsfeld h) {
+		handlungsfeldDAO.merge(h);
 	}
 
-	public void saveItem(Item i) {
-
+	public void persistItem(Item i) {
+		itemDAO.persist(i);
 	}
 
-	public void updateItem(Item i) {
-
+	public void mergeItem(Item i) {
+		itemDAO.merge(i);
 	}
 
 	public List<Eigenschaft> getEigenschaften() {
-		List<Eigenschaft> dummy = new ArrayList<>();
 
-		Eigenschaft e = new Eigenschaft();
-		e.setName("teamfaehigkeit");
-		dummy.add(e);
-		e = new Eigenschaft();
-		e.setName("einzelleistung");
-		dummy.add(e);
-
-		return dummy;
+		return eigenschaftenDAO.findAll();
 	}
 
 	public List<Perspektive> getPerspektiven() {
-		List<Perspektive> dummy = new ArrayList<>();
 
-		Perspektive e = new Perspektive();
-		e.setName("Kunde");
-		dummy.add(e);
-		e = new Perspektive();
-		e.setName("Dozent");
-		dummy.add(e);
-
-		return dummy;
+		return perspektiveDAO.findAll();
 	}
 
 	public List<Skala> getSkalen() {
-		List<Skala> dummy = new ArrayList<>();
 
-		Skala e = new Skala();
-		e.setName("1-3");
-		dummy.add(e);
-		e = new Skala();
-		e.setName("gut - schlecht");
-		dummy.add(e);
-
-		return dummy;
+		return skalaDAO.findAll();
 	}
 
 	public List<Fach> getFaecher() {
-		List<Fach> dummy = new ArrayList<>();
 
-		Fach e = new Fach();
-		e.setName("SMA");
-		dummy.add(e);
-		e = new Fach();
-		e.setName("SWE");
-		dummy.add(e);
-
-		return dummy;
+		return fachDAO.findAll();
 	}
 
 }

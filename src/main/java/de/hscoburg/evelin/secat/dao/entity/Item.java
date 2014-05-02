@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -59,7 +60,7 @@ public class Item extends StammdatenEntity {
 		this.handlungsfeld = handlungsfeld;
 	}
 
-	@OneToMany(targetEntity = Eigenschaft.class, mappedBy = "items")
+	@OneToMany(targetEntity = Eigenschaft.class, mappedBy = "items", fetch = FetchType.EAGER)
 	public List<Eigenschaft> getEigenschaften() {
 		return eigenschaften;
 	}
@@ -68,7 +69,7 @@ public class Item extends StammdatenEntity {
 		this.eigenschaften = eigenschaften;
 	}
 
-	@ManyToMany(targetEntity = Perspektive.class)
+	@ManyToMany(targetEntity = Perspektive.class, fetch = FetchType.EAGER)
 	public List<Perspektive> getPerspektiven() {
 		return perspektiven;
 	}
@@ -95,7 +96,7 @@ public class Item extends StammdatenEntity {
 		this.frageboegen = frageboegen;
 	}
 
-	@ManyToOne(targetEntity = Skala.class)
+	@ManyToOne(targetEntity = Skala.class, fetch = FetchType.EAGER)
 	public Skala getSkala() {
 		return skala;
 	}

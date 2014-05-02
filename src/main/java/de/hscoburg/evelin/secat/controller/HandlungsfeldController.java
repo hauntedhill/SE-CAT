@@ -30,7 +30,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import de.hscoburg.evelin.secat.dao.TestService;
+import de.hscoburg.evelin.secat.dao.HandlungsfeldDAO;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
@@ -56,7 +56,7 @@ public class HandlungsfeldController implements Initializable {
 	private MenuItem menuItemClose;
 
 	@Autowired
-	private TestService service;
+	private HandlungsfeldDAO service;
 
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -82,7 +82,7 @@ public class HandlungsfeldController implements Initializable {
 					if (file.exists()) {
 						file.delete();
 					}
-					service.saveDBToFile(file);
+					// service.saveDBToFile(file);
 
 				}
 			}
@@ -92,7 +92,7 @@ public class HandlungsfeldController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				service.save();
+				// service.save();
 			}
 		});
 
@@ -116,7 +116,7 @@ public class HandlungsfeldController implements Initializable {
 			public void handleAction(ActionEvent event) {
 
 				if (file != null) {
-					service.loadDBFromFile(file);
+					// service.loadDBFromFile(file);
 					// try {
 					// Thread.sleep(1000);
 					// throw new NullPointerException();

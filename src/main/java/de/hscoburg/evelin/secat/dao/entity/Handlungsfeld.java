@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
@@ -38,7 +39,7 @@ public class Handlungsfeld extends StammdatenEntity {
 		this.notiz = notiz;
 	}
 
-	@OneToMany(mappedBy = "handlungsfeld", targetEntity = Item.class)
+	@OneToMany(mappedBy = "handlungsfeld", targetEntity = Item.class, fetch = FetchType.EAGER)
 	public List<Item> getItems() {
 		return items;
 	}
