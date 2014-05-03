@@ -26,7 +26,7 @@ public class Eigenschaft extends BaseEntity {
 		this.name = name;
 	}
 
-	@ManyToMany(targetEntity = Item.class)
+	@ManyToMany(targetEntity = Item.class, mappedBy = "eigenschaften")
 	public List<Item> getItems() {
 		return items;
 	}

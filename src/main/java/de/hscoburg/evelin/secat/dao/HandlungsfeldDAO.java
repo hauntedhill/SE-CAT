@@ -56,6 +56,7 @@ public class HandlungsfeldDAO extends BaseDAO<Handlungsfeld> {
 			Join<Item, Perspektive> perspektiveRoot = itemRoot.join(Item_.perspektiven);
 			predicates.add(cb.equal(perspektiveRoot.get(Perspektive_.id), p.getId()));
 		}
+
 		if (f != null) {
 			Join<Item, Fragebogen> frageogenRoot = itemRoot.join(Item_.frageboegen);
 			Join<Fragebogen, Lehrveranstaltung> leherveranstaltungRoot = frageogenRoot.join(Fragebogen_.lehrveranstaltung);
@@ -66,10 +67,10 @@ public class HandlungsfeldDAO extends BaseDAO<Handlungsfeld> {
 		predicates.add(cb.equal(handlungsfeldRoot.get(Handlungsfeld_.aktiv), handlungsfeldAktiv));
 		predicates.add(cb.equal(itemRoot.get(Item_.aktiv), itemAktiv));
 		if (!"".equals(notizHandlungsfeld) && notizHandlungsfeld != null) {
-			predicates.add(cb.like(cb.upper(handlungsfeldRoot.get(Handlungsfeld_.notiz)), notizHandlungsfeld + "%".toUpperCase()));
+			predicates.add(cb.like(cb.upper(handlungsfeldRoot.get(Handlungsfeld_.notiz)), (notizHandlungsfeld + "%").toUpperCase()));
 		}
 		if (!"".equals(notizItem) && notizItem != null) {
-			predicates.add(cb.like(cb.upper(itemRoot.get(Item_.notiz)), notizItem + "%".toUpperCase()));
+			predicates.add(cb.like(cb.upper(itemRoot.get(Item_.notiz)), (notizItem + "%").toUpperCase()));
 		}
 
 		handlungsfeldCriteria.select(handlungsfeldRoot).distinct(true).where(predicates.toArray(new Predicate[0]));

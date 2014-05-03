@@ -4,11 +4,11 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@StaticMetamodel(Item.class)
-public class Item_ {
+import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity_;
 
-	public static volatile SingularAttribute<Item, Integer> id;
-	public static volatile SingularAttribute<Item, Boolean> aktiv;
+@StaticMetamodel(Item.class)
+public class Item_ extends StammdatenEntity_ {
+
 	public static volatile SingularAttribute<Item, String> name;
 
 	public static volatile SingularAttribute<Item, String> notiz;

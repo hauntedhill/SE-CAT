@@ -1,6 +1,5 @@
 package de.hscoburg.evelin.secat.dao.entity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -35,14 +34,6 @@ public class Skala extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public void addItem(Item i) {
-		i.setSkala(this);
-		if (items == null) {
-			items = new ArrayList<Item>();
-		}
-		items.add(i);
 	}
 
 }

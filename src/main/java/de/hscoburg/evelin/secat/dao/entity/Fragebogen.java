@@ -70,4 +70,11 @@ public class Fragebogen extends BaseEntity {
 		this.lehrveranstaltung = lehrveranstaltung;
 	}
 
+	// public void addItem(Item i) {
+	// if (items == null) {
+	// items = new ArrayList<Item>();
+	// }
+	// items.add(i);
+	// }
+
 }

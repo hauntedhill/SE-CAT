@@ -5,11 +5,11 @@ import java.util.Date;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@StaticMetamodel(Lehrveranstaltung.class)
-public class Lehrveranstaltung_ {
+import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity_;
 
-	public static volatile SingularAttribute<Lehrveranstaltung, Integer> id;
-	public static volatile SingularAttribute<Lehrveranstaltung, Boolean> aktiv;
+@StaticMetamodel(Lehrveranstaltung.class)
+public class Lehrveranstaltung_ extends StammdatenEntity_ {
+
 	public static volatile SingularAttribute<Lehrveranstaltung, String> name;
 
 	public static volatile SingularAttribute<Lehrveranstaltung, Date> jahr;

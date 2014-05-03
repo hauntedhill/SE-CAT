@@ -1,6 +1,9 @@
 package de.hscoburg.evelin.secat.dao.entity;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
@@ -17,7 +20,7 @@ public class Bewertung extends BaseEntity {
 
 	private Bewertender bewertender;
 
-	private Item item;
+	private List<Item> item;
 
 	private Fragebogen fragebogen;
 
@@ -38,12 +41,12 @@ public class Bewertung extends BaseEntity {
 		this.bewertender = bewertender;
 	}
 
-	@ManyToOne(targetEntity = Item.class)
-	public Item getItem() {
+	@ManyToMany(targetEntity = Item.class, mappedBy = "bewertungen")
+	public List<Item> getItem() {
 		return item;
 	}
 
-	public void setItem(Item item) {
+	public void setItem(List<Item> item) {
 		this.item = item;
 	}
 

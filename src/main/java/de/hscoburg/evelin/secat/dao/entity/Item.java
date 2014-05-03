@@ -60,7 +60,7 @@ public class Item extends StammdatenEntity {
 		this.handlungsfeld = handlungsfeld;
 	}
 
-	@OneToMany(targetEntity = Eigenschaft.class, mappedBy = "items", fetch = FetchType.EAGER)
+	@ManyToMany(targetEntity = Eigenschaft.class, fetch = FetchType.EAGER)
 	public List<Eigenschaft> getEigenschaften() {
 		return eigenschaften;
 	}
@@ -78,7 +78,7 @@ public class Item extends StammdatenEntity {
 		this.perspektiven = perspektiven;
 	}
 
-	@OneToMany(targetEntity = Bewertung.class, mappedBy = "item")
+	@OneToMany(targetEntity = Bewertung.class)
 	public List<Bewertung> getBewertungen() {
 		return bewertungen;
 	}
@@ -109,6 +109,7 @@ public class Item extends StammdatenEntity {
 		if (eigenschaften == null) {
 			eigenschaften = new ArrayList<Eigenschaft>();
 		}
+
 		eigenschaften.add(e);
 	}
 
@@ -117,5 +118,13 @@ public class Item extends StammdatenEntity {
 			perspektiven = new ArrayList<Perspektive>();
 		}
 		perspektiven.add(e);
+	}
+
+	public void addFragebogen(Fragebogen f) {
+		if (frageboegen == null) {
+			frageboegen = new ArrayList<>();
+		}
+		frageboegen.add(f);
+
 	}
 }

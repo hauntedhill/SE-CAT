@@ -4,10 +4,10 @@ import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-@StaticMetamodel(Fragebogen.class)
-public class Fragebogen_ {
+import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity_;
 
-	public static volatile SingularAttribute<Fragebogen, Integer> id;
+@StaticMetamodel(Fragebogen.class)
+public class Fragebogen_ extends BaseEntity_ {
 
 	public static volatile ListAttribute<Fragebogen, Bewertung> bewertungen;
 

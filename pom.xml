@@ -86,37 +86,37 @@
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>4.3.4.Final</version>
 		</dependency>
-<dependency>
-	<groupId>org.springframework</groupId>
-	<artifactId>spring-test</artifactId>
-	<version>4.0.3.RELEASE</version>
-	<scope>test</scope>
-</dependency>
-<dependency>
-	<groupId>junit</groupId>
-	<artifactId>junit</artifactId>
-	<version>4.11</version>
-	<scope>test</scope>
-</dependency>
-        <dependency>
-	<groupId>org.jacoco</groupId>
-	<artifactId>jacoco-maven-plugin</artifactId>
-	<version>0.7.0.201403182114</version>
-	<scope>test</scope>
-</dependency>
-                
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>4.0.3.RELEASE</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.11</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jacoco</groupId>
+			<artifactId>jacoco-maven-plugin</artifactId>
+			<version>0.7.0.201403182114</version>
+			<scope>test</scope>
+		</dependency>
+
 
 	</dependencies>
 	<build>
-	
-	<resources>
-						<resource>
-							<directory>${basedir}/src/main/resources</directory>
-							<filtering>true</filtering>
-						</resource>
-					</resources>
+
+		<resources>
+			<resource>
+				<directory>${basedir}/src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
 		<plugins>
-		<plugin>
+			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
 				<version>0.7.0.201403182114</version>
@@ -146,8 +146,8 @@
 				<version>2.6</version>
 				<configuration>
 					<!-- specify UTF-8, ISO-8859-1 or any other file encoding -->
-					
-					
+
+
 				</configuration>
 			</plugin>
 			<plugin>
@@ -188,8 +188,8 @@
 		<profile>
 			<id>local</id>
 			<activation>
-            <activeByDefault>true</activeByDefault>
-        </activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
 			<properties>
 				<db.host>localhost</db.host>
 				<db.schema>secatENTW</db.schema>
