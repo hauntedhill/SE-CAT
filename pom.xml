@@ -11,7 +11,10 @@
 
 
 
-
+<properties>
+    <project.build.sourceEncoding>Cp1252</project.build.sourceEncoding>
+    <project.reporting.outputEncoding>Cp1252</project.reporting.outputEncoding>
+</properties>
 
 
 
