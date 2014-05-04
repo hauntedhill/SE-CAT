@@ -36,7 +36,11 @@ public class HandlungsfeldModel {
 	@Autowired
 	private FachDAO fachDAO;
 
-	public List<Handlungsfeld> getHandlungsfelderByBy(boolean handlungsfeldAktiv, boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld,
+	public List<Handlungsfeld> getHandlungsfelderBy(boolean handlungsfeldAktiv, boolean itemAktiv) {
+		return getHandlungsfelderBy(handlungsfeldAktiv, itemAktiv, null, null, null, null, null);
+	}
+
+	public List<Handlungsfeld> getHandlungsfelderBy(boolean handlungsfeldAktiv, boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld,
 			String notizItem, Fach f) {
 
 		// List<Handlungsfeld> dummy = new ArrayList<>();
