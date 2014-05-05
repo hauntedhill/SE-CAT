@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.hscoburg.evelin.secat.dao.EigenschaftenDAO;
 import de.hscoburg.evelin.secat.dao.FachDAO;
@@ -19,6 +20,7 @@ import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
 
 @Repository
+@Transactional
 public class HandlungsfeldModel {
 
 	@Autowired

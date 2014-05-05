@@ -4,8 +4,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0"  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.HandlungsfeldController">
-<children><MenuBar fx:id="menuBar"  layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.HandlungsfeldController">
+<children><MenuBar fx:id="menuBar" layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
   <menus>
     <Menu mnemonicParsing="false" text="File">
       <items>
@@ -25,9 +25,10 @@
   </menus>
 </MenuBar><TreeTableView fx:id="treeTable" layoutX="7.0" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="590.0">
 <columns>
-<TreeTableColumn  prefWidth="167.0" text="Name" />
-<TreeTableColumn  prefWidth="101.0" text="Rolle" />
-<TreeTableColumn prefWidth="98.0" text="Eigenschaft" />
+<TreeTableColumn prefWidth="167.0" text="Name" />
+<TreeTableColumn prefWidth="101.0" text="Notiz" />
+<TreeTableColumn prefWidth="98.0" text="Rolle" />
+<TreeTableColumn prefWidth="109.0" text="Eigenschaft" />
 </columns>
 </TreeTableView>
 </children></AnchorPane>

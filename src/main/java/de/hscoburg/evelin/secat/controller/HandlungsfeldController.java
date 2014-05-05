@@ -2,6 +2,9 @@ package de.hscoburg.evelin.secat.controller;
 
 import java.io.File;
 import java.net.URL;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -32,6 +35,10 @@ import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.dao.HandlungsfeldDAO;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
+import de.hscoburg.evelin.secat.dao.entity.Item;
+import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
+import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
+import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
@@ -41,7 +48,7 @@ public class HandlungsfeldController implements Initializable {
 	private static Logger logger = LoggerFactory.getLogger(HandlungsfeldController.class);
 
 	@FXML
-	private TreeTableView<Handlungsfeld> treeTable;
+	private TreeTableView<TreeItemWrapper> treeTable;
 
 	@FXML
 	private MenuBar menuBar;
@@ -57,6 +64,9 @@ public class HandlungsfeldController implements Initializable {
 
 	@Autowired
 	private HandlungsfeldDAO service;
+	
+	@Autowired
+	private HandlungsfeldModel hauptfeldModel;
 
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -92,7 +102,7 @@ public class HandlungsfeldController implements Initializable {
 
 			@Override
 			public void handle(ActionEvent event) {
-				// service.save();
+				
 			}
 		});
 
@@ -128,38 +138,53 @@ public class HandlungsfeldController implements Initializable {
 			}
 		});
 
-		// treeTable.getColumns().get(0).setCellValueFactory(new TreeItemPropertyValueFactory<Hauptfeld, String>("name"));
 
-		((TreeTableColumn<Handlungsfeld, String>) treeTable.getColumns().get(0))
-				.setCellValueFactory(new Callback<CellDataFeatures<Handlungsfeld, String>, ObservableValue<String>>() {
+		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(0))
+				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
 
-					public ObservableValue<String> call(CellDataFeatures<Handlungsfeld, String> p) {
+					public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
 						return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getName());
 
-						// return null;
+					
 
 					}
 				});
 
-		treeTable.setRowFactory(new Callback<TreeTableView<Handlungsfeld>, TreeTableRow<Handlungsfeld>>() {
+	      ((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(1))
+          .setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
 
-			public TreeTableRow<Handlungsfeld> call(TreeTableView<Handlungsfeld> treeTableView) {
+              public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
+                  return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getNotiz());
 
-				final TreeTableRow<Handlungsfeld> row = new TreeTableRow<>();
+             
+
+              }
+          });
+		
+		treeTable.setRowFactory(new Callback<TreeTableView<TreeItemWrapper>, TreeTableRow<TreeItemWrapper>>() {
+
+			public TreeTableRow<TreeItemWrapper> call(TreeTableView<TreeItemWrapper> treeTableView) {
+
+				final TreeTableRow<TreeItemWrapper> row = new TreeTableRow<>();
 				final ContextMenu rowMenu = new ContextMenu();
-				MenuItem removeItem = new MenuItem("Remove");
+				final ContextMenu rowMenuHf = new ContextMenu();
+				MenuItem addHfItem = new MenuItem("add Handlungsfeld");
+				MenuItem activateHfItem = new MenuItem ("activate Handlungsfeld");
+				MenuItem activateItItem = new MenuItem ("activate Item");
+                MenuItem deactivateHfItem = new MenuItem ("deactivate Handlungsfeld");
+                MenuItem deactivateItItem = new MenuItem ("deactivate Item");
+				MenuItem addItItem = new MenuItem("add Item");
 
-				removeItem.setOnAction(new EventHandler<ActionEvent>() {
+				addHfItem.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
 					public void handle(ActionEvent t) {
-						// data.remove(row.getItem());
-						// treeTblViewFiles.getSelectionModel().clearSelection();
+	
 
 						Stage stage = new Stage();
-
+						
 						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/addHandlungsfeld.fxml"));
-
+						
 						Scene scene = new Scene(p);
 
 						stage.setScene(scene);
@@ -175,11 +200,115 @@ public class HandlungsfeldController implements Initializable {
 					}
 
 				});
-				rowMenu.getItems().add(removeItem);
+				
+                addItItem.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent t) {
+             
+
+                        Stage stage = new Stage();
+
+                        Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/addItem.fxml"));
+
+                        Scene scene = new Scene(p);
+
+                        stage.setScene(scene);
+                        stage.show();
+
+                        stage.setOnHidden(new EventHandler<WindowEvent>() {
+                            public void handle(WindowEvent we) {
+                                logger.debug("Closing dialog stage.");
+
+                            }
+                        });
+
+  
+                    }
+
+                });
+             
+                deactivateHfItem.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent t) {
+
+                        Handlungsfeld h = treeTable.getSelectionModel().getModelItem( treeTable.getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld();
+                        h.setAktiv( false );
+                        hauptfeldModel.mergeHandlugsfeld( h );
+                    }
+
+                });
+                
+                
+                activateHfItem.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent t) {
+
+                        Handlungsfeld h = treeTable.getSelectionModel().getModelItem( treeTable.getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld();
+                        h.setAktiv( true );
+                        hauptfeldModel.mergeHandlugsfeld( h );
+                    }
+
+                });
+                
+                
+                deactivateItItem.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent t) {
+                        // data.remove(row.getItem());
+                        // treeTblViewFiles.getSelectionModel().clearSelection();
+                        Item i = treeTable.getSelectionModel().getModelItem( treeTable.getSelectionModel().getSelectedIndex()).getValue().getItem();
+                        i.setAktiv( false );
+                        hauptfeldModel.mergeItem( i );
+
+  
+                    }
+
+                });
+                
+                
+                activateItItem.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent t) {
+                        // data.remove(row.getItem());
+                        // treeTblViewFiles.getSelectionModel().clearSelection();
+                        Item i = treeTable.getSelectionModel().getModelItem( treeTable.getSelectionModel().getSelectedIndex()).getValue().getItem();
+                        i.setAktiv( true );
+                        hauptfeldModel.mergeItem( i );
+                    }
+
+                });
+				rowMenu.getItems().add(addHfItem);
+                rowMenu.getItems().add(activateHfItem);
+                rowMenu.getItems().add(deactivateHfItem);
+				rowMenu.getItems().add(addItItem);
+				rowMenu.getItems().add(activateItItem);
+				rowMenu.getItems().add(deactivateItItem);
+				
+				
+				rowMenuHf.getItems().add( addHfItem );
+                rowMenuHf.getItems().add(activateHfItem);
+                rowMenuHf.getItems().add(deactivateHfItem);
+                
+                
+                
+      
+      
 				row.contextMenuProperty().bind(
 						javafx.beans.binding.Bindings.when(javafx.beans.binding.Bindings.isNotNull(row.itemProperty())).then(rowMenu)
 								.otherwise((ContextMenu) null));
 				return row;
+                
+				
+				
+				
+				
+				
+				
 			}
 
 		});
@@ -189,46 +318,68 @@ public class HandlungsfeldController implements Initializable {
 		// rows.addAll(orderService.findOrders(orderSearchCriteria));
 
 		// treeTable.set
-
+		
 		Handlungsfeld h = new Handlungsfeld();
 		h.setId(1);
-		h.setName("Hauptfelder");
+		h.setName("Handlungsfelder");
 
-		// em.persist(h);
-		// em.flush();
-		// em.close();
+		List<Handlungsfeld> hf = hauptfeldModel.getHandlungsfelderBy( true, true );
+		
+		
+	    
+	    TreeItemWrapper t = new TreeItemWrapper(h);
+	    TreeItem<TreeItemWrapper> root = new TreeItem<TreeItemWrapper>(t);    
+	    ListIterator<Handlungsfeld> it = hf.listIterator();
+	        while(it.hasNext()){
+	            
+	            Handlungsfeld ha = it.next();
+	            List<Item> item = ha.getItems();
+	            TreeItemWrapper hawrapped = new TreeItemWrapper(ha);
+	            TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped);
+	            
+	            ListIterator<Item> iter = item.listIterator();
+	                    while(iter.hasNext()){
+	                        TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
+	                        node.getChildren().add( new TreeItem<TreeItemWrapper>(itwrapped));
+	                    }
+	                    
+	
+	            
+	            
+	            root.getChildren().add(node);
 
-		Handlungsfeld h1 = new Handlungsfeld();
-		h1.setId(2);
-		h1.setName("test123");
-
-		Handlungsfeld h2 = new Handlungsfeld();
-		h2.setId(3);
-		h2.setName("test456");
-
-		TreeItem<Handlungsfeld> root = new TreeItem<Handlungsfeld>(h);
-
-		root.getChildren().add(new TreeItem<Handlungsfeld>(h1));
-		root.getChildren().add(new TreeItem<Handlungsfeld>(h2));
-
-		// treeTable.setShowRoot(true);
-
+	        }
+		
+	
+	
+	    root.setExpanded(true);
 		treeTable.setRoot(root);
-
-		// service.save();
-
-	}
-
-	public void addHauptfeldToCurrentSelection(Handlungsfeld h) {
-		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<Handlungsfeld>(h));
+	
 
 	}
 
-	public TreeTableView<Handlungsfeld> getTreeTable() {
+	public void addHauptfeldToCurrentSelection(TreeItemWrapper t) {
+	    
+		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<TreeItemWrapper>(t));
+
+	}
+	
+	public void addItemToCurrentSelection(Item i) {
+	        
+
+	     i.setHandlungsfeld( treeTable.getSelectionModel().getModelItem( treeTable.getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld() );
+	     hauptfeldModel.persistItem( i ); 
+	     TreeItemWrapper t = new TreeItemWrapper(i);
+	     treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<TreeItemWrapper>(t));
+
+	    }
+	
+	
+	public TreeTableView<TreeItemWrapper> getTreeTable() {
 		return treeTable;
 	}
 
-	public void setTreeTable(TreeTableView<Handlungsfeld> treeTable) {
+	public void setTreeTable(TreeTableView<TreeItemWrapper> treeTable) {
 		this.treeTable = treeTable;
 	}
 
@@ -263,5 +414,10 @@ public class HandlungsfeldController implements Initializable {
 	// public void setTreeTable(TreeTableView<Hauptfeld> treeTable) {
 	// this.treeTable = treeTable;
 	// }
+	
+	
+	
+	
 
+	
 }
