@@ -9,6 +9,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
+
+import org.controlsfx.dialog.Dialogs;
+
+import de.hscoburg.evelin.secat.controller.LayoutController;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 public class SeCat extends Application {
@@ -35,7 +39,7 @@ public class SeCat extends Application {
 
 			final Stage splashStage = new Stage();
 
-			Parent splash = (Parent) loader.load(SeCat.class.getResourceAsStream("/gui/splashScreen.fxml"));
+			Parent splash = (Parent) loader.load(SeCat.class.getResourceAsStream(LayoutController.SPLASHSCREEN_FXML));
 
 			Scene sceneSplash = new Scene(splash);
 			splashStage.initStyle(StageStyle.UTILITY);
@@ -56,26 +60,34 @@ public class SeCat extends Application {
 
 						@Override
 						public void run() {
-							Parent p = (Parent) SpringFXMLLoader.getInstance().load("/gui/Layout.fxml");
-							// Parent p = (Parent) SpringFXMLLoader.getInstance().load("/splashScreen.fxml");
+							try {
+								Parent p = (Parent) SpringFXMLLoader.getInstance().load(LayoutController.LAYOUT_FXML);
+								// Parent p = (Parent) SpringFXMLLoader.getInstance().load("/splashScreen.fxml");
 
-							Scene scene = new Scene(p, 600, 480);
+								Scene scene = new Scene(p, 600, 480);
 
-							primaryStage.setScene(scene);
+								primaryStage.setScene(scene);
 
-							primaryStage.setTitle("SE-CAT");
+								primaryStage.setTitle("SE-CAT");
 
-							primaryStage.setOnShown(new EventHandler<WindowEvent>() {
+								primaryStage.setOnShown(new EventHandler<WindowEvent>() {
 
-								@Override
-								public void handle(WindowEvent event) {
-									splashStage.hide();
-									splashStage.close();
+									@Override
+									public void handle(WindowEvent event) {
+										splashStage.hide();
+										splashStage.close();
 
-								}
-							});
-							PRIMARY_STAGE = primaryStage;
-							primaryStage.show();
+									}
+								});
+								PRIMARY_STAGE = primaryStage;
+								primaryStage.show();
+							} catch (Exception e) {
+								splashStage.hide();
+								splashStage.close();
+								Dialogs.create().title("Es ist ein Fehler aufgetreten").masthead("Die Anwendung konnte nicht gestartet werden.")
+										.showException(e);
+
+							}
 
 						}
 					});
