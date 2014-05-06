@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.HandlungsfeldController">
-<children><TreeTableView fx:id="treeTable" layoutX="7.0" layoutY="27.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="371.0" prefWidth="590.0">
+<children><TreeTableView fx:id="treeTable" layoutX="-3.0" layoutY="-2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
 <columns>
 <TreeTableColumn prefWidth="167.0" text="Name" />
 <TreeTableColumn prefWidth="101.0" text="Notiz" />
