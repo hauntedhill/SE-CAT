@@ -24,6 +24,8 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
@@ -81,14 +83,15 @@ public class HandlungsfeldController implements Initializable {
 				final TreeTableRow<TreeItemWrapper> row = new TreeTableRow<>();
 				final ContextMenu rowMenu = new ContextMenu();
 				final ContextMenu rowMenuHf = new ContextMenu();
-				MenuItem addHfItem = new MenuItem("add Handlungsfeld");
-				MenuItem activateHfItem = new MenuItem("activate Handlungsfeld");
-				MenuItem activateItItem = new MenuItem("activate Item");
-				MenuItem deactivateHfItem = new MenuItem("deactivate Handlungsfeld");
-				MenuItem deactivateItItem = new MenuItem("deactivate Item");
-				MenuItem addItItem = new MenuItem("add Item");
-				MenuItem moveItems = new MenuItem("move Items");
-				MenuItem filterItItem = new MenuItem("filter Item");
+				MenuItem addHfItem = new MenuItem("add Handlungsfeld", new ImageView(new Image("/image/icons/db_add.png", 16, 16, true, true)));
+				MenuItem activateHfItem = new MenuItem("activate Handlungsfeld", new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
+				MenuItem activateItItem = new MenuItem("activate Item", new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
+				MenuItem deactivateHfItem = new MenuItem("deactivate Handlungsfeld", new ImageView(new Image("/image/icons/bookmark_Silver.png", 16, 16, true,
+						true)));
+				MenuItem deactivateItItem = new MenuItem("deactivate Item", new ImageView(new Image("/image/icons/bookmark_Silver.png", 16, 16, true, true)));
+				MenuItem addItItem = new MenuItem("add Item", new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
+				MenuItem moveItems = new MenuItem("move Items", new ImageView(new Image("/image/icons/up.png", 16, 16, true, true)));
+				MenuItem filterItItem = new MenuItem("filter Item", new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
 
 				addHfItem.setOnAction(new EventHandler<ActionEvent>() {
 

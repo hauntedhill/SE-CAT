@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
@@ -69,6 +70,7 @@ public class SeCat extends Application {
 								primaryStage.setScene(scene);
 
 								primaryStage.setTitle("SE-CAT");
+								primaryStage.getIcons().add(new Image("/image/icons/dvi.png"));
 
 								primaryStage.setOnShown(new EventHandler<WindowEvent>() {
 
