@@ -143,4 +143,12 @@ public class HandlungsfeldModel {
 		return fachDAO.findAll();
 	}
 
+	public Item findItemById(int id) {
+		return itemDAO.findById(id);
+	}
+
+	public Handlungsfeld findHandlungsfeldById(int id) {
+		return handlungsfeldDAO.findById(id);
+	}
+
 }
