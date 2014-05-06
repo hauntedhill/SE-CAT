@@ -1,6 +1,5 @@
 package de.hscoburg.evelin.secat.controller;
 
-import java.io.File;
 import java.net.URL;
 import java.util.List;
 import java.util.ListIterator;
@@ -18,14 +17,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableColumn.CellDataFeatures;
 import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
@@ -40,7 +37,6 @@ import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
-import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 @Controller
@@ -51,18 +47,6 @@ public class HandlungsfeldController implements Initializable {
 	@FXML
 	private TreeTableView<TreeItemWrapper> treeTable;
 
-	@FXML
-	private MenuBar menuBar;
-
-	@FXML
-	private MenuItem menuItemLoad;
-
-	@FXML
-	private MenuItem menuItemSave;
-
-	@FXML
-	private MenuItem menuItemClose;
-
 	@Autowired
 	private HandlungsfeldDAO service;
 
@@ -70,74 +54,6 @@ public class HandlungsfeldController implements Initializable {
 	private HandlungsfeldModel hauptfeldModel;
 
 	public void initialize(URL location, ResourceBundle resources) {
-
-		menuItemSave.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-				FileChooser fileChooser = new FileChooser();
-
-				// Set extension filter
-				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("FLX files (*.flx)", "*.flx");
-				fileChooser.getExtensionFilters().add(extFilter);
-
-				Stage stage = (Stage) menuBar.getScene().getWindow();
-
-				// Show save file dialog
-				File file = fileChooser.showSaveDialog(stage);
-
-				System.out.println(file);
-
-				// java.sql.Connection connection = em.unwrap(java.sql.Connection.class);
-				if (file != null) {
-					if (file.exists()) {
-						file.delete();
-					}
-					// service.saveDBToFile(file);
-
-				}
-			}
-		});
-
-		menuItemClose.setOnAction(new EventHandler<ActionEvent>() {
-
-			@Override
-			public void handle(ActionEvent event) {
-
-			}
-		});
-
-		menuItemLoad.setOnAction(new SeCatEventHandle<ActionEvent>() {
-
-			private File file;
-
-			@Override
-			public void performBeforeEventsBlocked(ActionEvent event) {
-				FileChooser fileChooser = new FileChooser();
-
-				// Set extension filter
-				FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("FLX files (*.flx)", "*.flx");
-				fileChooser.getExtensionFilters().add(extFilter);
-				Stage stage = (Stage) menuBar.getScene().getWindow();
-
-				file = fileChooser.showOpenDialog(stage);
-			}
-
-			@Override
-			public void handleAction(ActionEvent event) {
-
-				if (file != null) {
-					// service.loadDBFromFile(file);
-					// try {
-					// Thread.sleep(1000);
-					// throw new NullPointerException();
-					// } catch (InterruptedException e) {
-					// // TODO Auto-generated catch block
-					// e.printStackTrace();
-					// }
-				}
-			}
-		});
 
 		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(0))
 				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
@@ -414,29 +330,29 @@ public class HandlungsfeldController implements Initializable {
 		this.treeTable = treeTable;
 	}
 
-	public MenuBar getMenuBar() {
-		return menuBar;
-	}
-
-	public void setMenuBar(MenuBar menuBar) {
-		this.menuBar = menuBar;
-	}
-
-	public MenuItem getMenuItemLoad() {
-		return menuItemLoad;
-	}
-
-	public void setMenuItemLoad(MenuItem menuItemLoad) {
-		this.menuItemLoad = menuItemLoad;
-	}
-
-	public MenuItem getMenuItemSave() {
-		return menuItemSave;
-	}
-
-	public void setMenuItemSave(MenuItem menuItemSave) {
-		this.menuItemSave = menuItemSave;
-	}
+	// public MenuBar getMenuBar() {
+	// return menuBar;
+	// }
+	//
+	// public void setMenuBar(MenuBar menuBar) {
+	// this.menuBar = menuBar;
+	// }
+	//
+	// public MenuItem getMenuItemLoad() {
+	// return menuItemLoad;
+	// }
+	//
+	// public void setMenuItemLoad(MenuItem menuItemLoad) {
+	// this.menuItemLoad = menuItemLoad;
+	// }
+	//
+	// public MenuItem getMenuItemSave() {
+	// return menuItemSave;
+	// }
+	//
+	// public void setMenuItemSave(MenuItem menuItemSave) {
+	// this.menuItemSave = menuItemSave;
+	// }
 
 	// public TreeTableView<Hauptfeld> getTreeTable() {
 	// return treeTable;

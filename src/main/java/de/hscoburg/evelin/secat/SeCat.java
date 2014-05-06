@@ -56,10 +56,10 @@ public class SeCat extends Application {
 
 						@Override
 						public void run() {
-							Parent p = (Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/handlungsfeld.fxml");
+							Parent p = (Parent) SpringFXMLLoader.getInstance().load("/gui/Layout.fxml");
 							// Parent p = (Parent) SpringFXMLLoader.getInstance().load("/splashScreen.fxml");
 
-							Scene scene = new Scene(p, 768, 480);
+							Scene scene = new Scene(p, 600, 480);
 
 							primaryStage.setScene(scene);
 

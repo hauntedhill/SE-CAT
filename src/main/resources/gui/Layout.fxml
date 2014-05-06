@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="layout" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="de.hscoburg.evelin.secat.controller.LayoutController">
+<top><AnchorPane prefHeight="23.0" prefWidth="600.0" BorderPane.alignment="CENTER">
+<children>
+        <fx:include source="/gui/Topmenu.fxml"/>
+</children></AnchorPane>
+</top>
+<center><AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" >
+<children>
+        <fx:include source="/gui/stammdaten/handlungsfeld.fxml"/>
+</children>
+
+</AnchorPane>
+</center>
+
+
+</BorderPane>
