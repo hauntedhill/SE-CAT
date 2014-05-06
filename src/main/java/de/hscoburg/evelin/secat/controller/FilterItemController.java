@@ -1,47 +1,49 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.ResourceBundle;
 
-import javax.persistence.EntityManager;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
+
+
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
-import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 
 @Controller
-public class AddHandlungsfeldController implements Initializable {
+public class FilterItemController implements Initializable {
 
 	@FXML
-	private Button save;
+	private Button filter;
 
 	@FXML
 	private Button cancle;
 	@FXML
 	private TextField name;
-/*	@FXML
+	@FXML
 	private TextField rolle;
 	@FXML
-	private ListView<String> eigenschaft;*/
+	private TextArea notiz;
+	@FXML
+	private ListView<String> eigenschaft;
 
 	@Autowired
 	private HandlungsfeldController hauptfeldController;
@@ -56,21 +58,12 @@ public class AddHandlungsfeldController implements Initializable {
 
 		eigenschaft.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);*/
 
-		save.setOnAction(new EventHandler<ActionEvent>() {
+		filter.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-
-
-			    
-			    
-				Handlungsfeld h = new Handlungsfeld();
-				h.setId((new Random()).nextInt());
-				h.setAktiv( true );
-				h.setName(name.getText());
-
-		
-				hauptfeldController.addHauptfeldToCurrentSelection(h);
-				Stage stage = (Stage) save.getScene().getWindow();
+			    			
+				hauptfeldController.filterItem(notiz.getText());
+				Stage stage = (Stage) filter.getScene().getWindow();
 				// do what you have to do
 				stage.close();
 

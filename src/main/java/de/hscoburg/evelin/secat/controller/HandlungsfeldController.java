@@ -1,8 +1,10 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.beans.InvalidationListener;
@@ -86,6 +88,8 @@ public class HandlungsfeldController implements Initializable {
 				MenuItem deactivateHfItem = new MenuItem("deactivate Handlungsfeld");
 				MenuItem deactivateItItem = new MenuItem("deactivate Item");
 				MenuItem addItItem = new MenuItem("add Item");
+				MenuItem moveItems = new MenuItem("move Items");
+				MenuItem filterItItem = new MenuItem("filter Item");
 
 				addHfItem.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -167,8 +171,7 @@ public class HandlungsfeldController implements Initializable {
 
 					@Override
 					public void handle(ActionEvent t) {
-						// data.remove(row.getItem());
-						// treeTblViewFiles.getSelectionModel().clearSelection();
+			
 						Item i = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getItem();
 						i.setAktiv(false);
 						hauptfeldModel.mergeItem(i);
@@ -181,29 +184,78 @@ public class HandlungsfeldController implements Initializable {
 
 					@Override
 					public void handle(ActionEvent t) {
-						// data.remove(row.getItem());
-						// treeTblViewFiles.getSelectionModel().clearSelection();
+			
 						Item i = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getItem();
 						i.setAktiv(true);
 						hauptfeldModel.mergeItem(i);
 					}
 
 				});
-				rowMenu.getItems().add(addHfItem);
-				rowMenu.getItems().add(activateHfItem);
-				rowMenu.getItems().add(deactivateHfItem);
-				rowMenu.getItems().add(addItItem);
+				
+                filterItItem.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent t) {
+
+                        Stage stage = new Stage();
+
+                        Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/filterItem.fxml"));
+
+                        Scene scene = new Scene(p);
+
+                        stage.setScene(scene);
+                        stage.show();
+
+                        stage.setOnHidden(new EventHandler<WindowEvent>() {
+                            public void handle(WindowEvent we) {
+                                logger.debug("Closing dialog stage.");
+
+                            }
+                        });
+
+                    }
+
+                });
+                
+                moveItems.setOnAction(new EventHandler<ActionEvent>() {
+
+                    @Override
+                    public void handle(ActionEvent t) {
+
+                        Stage stage = new Stage();
+
+                        Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/moveItems.fxml"));
+
+                        Scene scene = new Scene(p);
+
+                        stage.setScene(scene);
+                        stage.show();
+
+                        stage.setOnHidden(new EventHandler<WindowEvent>() {
+                            public void handle(WindowEvent we) {
+                                logger.debug("Closing dialog stage.");
+
+                            }
+                        });
+
+                    }
+
+                });
+                
+                
+                
+				
 				rowMenu.getItems().add(activateItItem);
 				rowMenu.getItems().add(deactivateItItem);
+				rowMenu.getItems().add(filterItItem);
 
 				rowMenuHf.getItems().add(addHfItem);
 				rowMenuHf.getItems().add(activateHfItem);
 				rowMenuHf.getItems().add(deactivateHfItem);
+				rowMenuHf.getItems().add(addItItem);
+				rowMenuHf.getItems().add(moveItems);
 
-				// row.contextMenuProperty().bind(
-				// javafx.beans.binding.Bindings.when(javafx.beans.binding.Bindings.boo).then(rowMenu)
-				// .otherwise((ContextMenu) null));
-
+			
 				ObservableObjectValue<TreeItemWrapper> rowMenuObserver = new ObservableObjectValue<TreeItemWrapper>() {
 
 					@Override
@@ -270,11 +322,7 @@ public class HandlungsfeldController implements Initializable {
 
 		});
 
-		// ObservableList<Hauptfeld> rows = FXCollections.observableArrayList();
 
-		// rows.addAll(orderService.findOrders(orderSearchCriteria));
-
-		// treeTable.set
 
 		Handlungsfeld h = new Handlungsfeld();
 		h.setId(1);
@@ -307,21 +355,89 @@ public class HandlungsfeldController implements Initializable {
 
 	}
 
-	public void addHauptfeldToCurrentSelection(TreeItemWrapper t) {
-
-		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<TreeItemWrapper>(t));
+	public void addHauptfeldToCurrentSelection(Handlungsfeld h) {
+	    
+	    hauptfeldModel.persistHandlungsfeld( h );
+	    TreeItemWrapper t = new TreeItemWrapper(h);
+	    System.out.println( treeTable.getRoot().getValue().getName());
+	    if(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().equals( treeTable.getRoot().getValue() )){
+	        treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<TreeItemWrapper>(t));
+	    }
+	    else
+	        treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren().add(new TreeItem<TreeItemWrapper>(t));
 
 	}
-
+	
+	
 	public void addItemToCurrentSelection(Item i) {
-
+	    ArrayList<Item> list = new ArrayList<Item>();
+	    list.add( i );
 		i.setHandlungsfeld(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld());
 		hauptfeldModel.persistItem(i);
 		TreeItemWrapper t = new TreeItemWrapper(i);
+		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld().setItems( list );
 		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<TreeItemWrapper>(t));
 
 	}
+	
+	public void refreshHandlungsfeld(String name , List<Item> oldItem){
+	    treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().remove( treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren() );
+	    treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren().remove( treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()) );
 
+	    ListIterator<TreeItem<TreeItemWrapper>> it =  treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren().listIterator();
+	    while(it.hasNext()){
+	        TreeItem<TreeItemWrapper> tmp = it.next();
+	        System.out.println( tmp.getValue().getName() );
+	        if(tmp.getValue().getHandlungsfeld().getName().equals( name )){
+	            tmp.getChildren().remove( tmp.getChildren() );
+	            
+	            
+	            List<Item> item = oldItem;
+	            ListIterator<Item> iter = item.listIterator();
+	            while (iter.hasNext()) {
+	                TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
+	                tmp.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
+	            }
+	            
+	        }
+	        
+	            
+	    }
+	    
+	  
+	}
+	
+	public void filterItem( String notiz){
+	    
+	  
+	    Handlungsfeld ha = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getValue().getHandlungsfeld();
+	    TreeItem<TreeItemWrapper> parent = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent();
+	    
+	    
+	    treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren().removeAll( 
+	           treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren() );
+	    
+	    List<Item> item = ha.getItems();
+        ListIterator<Item> iter = item.listIterator();
+        while (iter.hasNext()) {
+            TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
+            System.out.println( itwrapped.getNotiz() );
+            if(notiz != null && !notiz.equals( "" )){
+                if(itwrapped.getNotiz().equals( notiz )){
+                    parent.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
+                    }
+            }
+            else{
+                parent.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
+            }
+            
+            
+        }
+	    
+	  
+	}
+	
+	
 	public TreeTableView<TreeItemWrapper> getTreeTable() {
 		return treeTable;
 	}
@@ -354,12 +470,32 @@ public class HandlungsfeldController implements Initializable {
 	// this.menuItemSave = menuItemSave;
 	// }
 
-	// public TreeTableView<Hauptfeld> getTreeTable() {
-	// return treeTable;
-	// }
-	//
-	// public void setTreeTable(TreeTableView<Hauptfeld> treeTable) {
-	// this.treeTable = treeTable;
-	// }
+	        List<Handlungsfeld> hf = hauptfeldModel.getHandlungsfelderBy(true, true);
+
+	        TreeItemWrapper t = new TreeItemWrapper(h);
+	        TreeItem<TreeItemWrapper> root = new TreeItem<TreeItemWrapper>(t);
+	        ListIterator<Handlungsfeld> it = hf.listIterator();
+	        while (it.hasNext()) {
+
+	            Handlungsfeld ha = it.next();
+	            List<Item> item = ha.getItems();
+	            TreeItemWrapper hawrapped = new TreeItemWrapper(ha);
+	            TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped);
+
+	            ListIterator<Item> iter = item.listIterator();
+	            while (iter.hasNext()) {
+	                TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
+	                node.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
+	            }
+
+	            root.getChildren().add(node);
+
+	        }
+
+	        root.setExpanded(true);
+	        treeTable.setRoot(root);
+	    
+	}
+
 
 }
