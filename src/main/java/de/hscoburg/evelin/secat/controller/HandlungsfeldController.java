@@ -4,7 +4,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Random;
 import java.util.ResourceBundle;
 
 import javafx.beans.InvalidationListener;
@@ -171,7 +170,7 @@ public class HandlungsfeldController implements Initializable {
 
 					@Override
 					public void handle(ActionEvent t) {
-			
+
 						Item i = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getItem();
 						i.setAktiv(false);
 						hauptfeldModel.mergeItem(i);
@@ -184,67 +183,64 @@ public class HandlungsfeldController implements Initializable {
 
 					@Override
 					public void handle(ActionEvent t) {
-			
+
 						Item i = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getItem();
 						i.setAktiv(true);
 						hauptfeldModel.mergeItem(i);
 					}
 
 				});
-				
-                filterItItem.setOnAction(new EventHandler<ActionEvent>() {
 
-                    @Override
-                    public void handle(ActionEvent t) {
+				filterItItem.setOnAction(new EventHandler<ActionEvent>() {
 
-                        Stage stage = new Stage();
+					@Override
+					public void handle(ActionEvent t) {
 
-                        Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/filterItem.fxml"));
+						Stage stage = new Stage();
 
-                        Scene scene = new Scene(p);
+						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/filterItem.fxml"));
 
-                        stage.setScene(scene);
-                        stage.show();
+						Scene scene = new Scene(p);
 
-                        stage.setOnHidden(new EventHandler<WindowEvent>() {
-                            public void handle(WindowEvent we) {
-                                logger.debug("Closing dialog stage.");
+						stage.setScene(scene);
+						stage.show();
 
-                            }
-                        });
+						stage.setOnHidden(new EventHandler<WindowEvent>() {
+							public void handle(WindowEvent we) {
+								logger.debug("Closing dialog stage.");
 
-                    }
+							}
+						});
 
-                });
-                
-                moveItems.setOnAction(new EventHandler<ActionEvent>() {
+					}
 
-                    @Override
-                    public void handle(ActionEvent t) {
+				});
 
-                        Stage stage = new Stage();
+				moveItems.setOnAction(new EventHandler<ActionEvent>() {
 
-                        Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/moveItems.fxml"));
+					@Override
+					public void handle(ActionEvent t) {
 
-                        Scene scene = new Scene(p);
+						Stage stage = new Stage();
 
-                        stage.setScene(scene);
-                        stage.show();
+						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/moveItems.fxml"));
 
-                        stage.setOnHidden(new EventHandler<WindowEvent>() {
-                            public void handle(WindowEvent we) {
-                                logger.debug("Closing dialog stage.");
+						Scene scene = new Scene(p);
 
-                            }
-                        });
+						stage.setScene(scene);
+						stage.show();
 
-                    }
+						stage.setOnHidden(new EventHandler<WindowEvent>() {
+							public void handle(WindowEvent we) {
+								logger.debug("Closing dialog stage.");
 
-                });
-                
-                
-                
-				
+							}
+						});
+
+					}
+
+				});
+
 				rowMenu.getItems().add(activateItItem);
 				rowMenu.getItems().add(deactivateItItem);
 				rowMenu.getItems().add(filterItItem);
@@ -255,7 +251,6 @@ public class HandlungsfeldController implements Initializable {
 				rowMenuHf.getItems().add(addItItem);
 				rowMenuHf.getItems().add(moveItems);
 
-			
 				ObservableObjectValue<TreeItemWrapper> rowMenuObserver = new ObservableObjectValue<TreeItemWrapper>() {
 
 					@Override
@@ -322,8 +317,6 @@ public class HandlungsfeldController implements Initializable {
 
 		});
 
-
-
 		Handlungsfeld h = new Handlungsfeld();
 		h.setId(1);
 		h.setName("Handlungsfelder");
@@ -356,88 +349,82 @@ public class HandlungsfeldController implements Initializable {
 	}
 
 	public void addHauptfeldToCurrentSelection(Handlungsfeld h) {
-	    
-	    hauptfeldModel.persistHandlungsfeld( h );
-	    TreeItemWrapper t = new TreeItemWrapper(h);
-	    System.out.println( treeTable.getRoot().getValue().getName());
-	    if(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().equals( treeTable.getRoot().getValue() )){
-	        treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<TreeItemWrapper>(t));
-	    }
-	    else
-	        treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren().add(new TreeItem<TreeItemWrapper>(t));
+
+		hauptfeldModel.persistHandlungsfeld(h);
+		TreeItemWrapper t = new TreeItemWrapper(h);
+		System.out.println(treeTable.getRoot().getValue().getName());
+		if (treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().equals(treeTable.getRoot().getValue())) {
+			treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<TreeItemWrapper>(t));
+		} else
+			treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+					.add(new TreeItem<TreeItemWrapper>(t));
 
 	}
-	
-	
+
 	public void addItemToCurrentSelection(Item i) {
-	    ArrayList<Item> list = new ArrayList<Item>();
-	    list.add( i );
+		ArrayList<Item> list = new ArrayList<Item>();
+		list.add(i);
 		i.setHandlungsfeld(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld());
 		hauptfeldModel.persistItem(i);
 		TreeItemWrapper t = new TreeItemWrapper(i);
-		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld().setItems( list );
+		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld().setItems(list);
 		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<TreeItemWrapper>(t));
 
 	}
-	
-	public void refreshHandlungsfeld(String name , List<Item> oldItem){
-	    treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().remove( treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren() );
-	    treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren().remove( treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()) );
 
-	    ListIterator<TreeItem<TreeItemWrapper>> it =  treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren().listIterator();
-	    while(it.hasNext()){
-	        TreeItem<TreeItemWrapper> tmp = it.next();
-	        System.out.println( tmp.getValue().getName() );
-	        if(tmp.getValue().getHandlungsfeld().getName().equals( name )){
-	            tmp.getChildren().remove( tmp.getChildren() );
-	            
-	            
-	            List<Item> item = oldItem;
-	            ListIterator<Item> iter = item.listIterator();
-	            while (iter.hasNext()) {
-	                TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
-	                tmp.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
-	            }
-	            
-	        }
-	        
-	            
-	    }
-	    
-	  
+	public void refreshHandlungsfeld(String name, List<Item> oldItem) {
+		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren()
+				.remove(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren());
+		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+				.remove(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
+
+		ListIterator<TreeItem<TreeItemWrapper>> it = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent()
+				.getChildren().listIterator();
+		while (it.hasNext()) {
+			TreeItem<TreeItemWrapper> tmp = it.next();
+			System.out.println(tmp.getValue().getName());
+			if (tmp.getValue().getHandlungsfeld().getName().equals(name)) {
+				tmp.getChildren().remove(tmp.getChildren());
+
+				List<Item> item = oldItem;
+				ListIterator<Item> iter = item.listIterator();
+				while (iter.hasNext()) {
+					TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
+					tmp.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
+				}
+
+			}
+
+		}
+
 	}
-	
-	public void filterItem( String notiz){
-	    
-	  
-	    Handlungsfeld ha = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getValue().getHandlungsfeld();
-	    TreeItem<TreeItemWrapper> parent = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent();
-	    
-	    
-	    treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren().removeAll( 
-	           treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren() );
-	    
-	    List<Item> item = ha.getItems();
-        ListIterator<Item> iter = item.listIterator();
-        while (iter.hasNext()) {
-            TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
-            System.out.println( itwrapped.getNotiz() );
-            if(notiz != null && !notiz.equals( "" )){
-                if(itwrapped.getNotiz().equals( notiz )){
-                    parent.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
-                    }
-            }
-            else{
-                parent.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
-            }
-            
-            
-        }
-	    
-	  
+
+	public void filterItem(String notiz) {
+
+		Handlungsfeld ha = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getValue()
+				.getHandlungsfeld();
+		TreeItem<TreeItemWrapper> parent = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent();
+
+		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+				.removeAll(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren());
+
+		List<Item> item = ha.getItems();
+		ListIterator<Item> iter = item.listIterator();
+		while (iter.hasNext()) {
+			TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
+			System.out.println(itwrapped.getNotiz());
+			if (notiz != null && !notiz.equals("")) {
+				if (itwrapped.getNotiz().equals(notiz)) {
+					parent.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
+				}
+			} else {
+				parent.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
+			}
+
+		}
+
 	}
-	
-	
+
 	public TreeTableView<TreeItemWrapper> getTreeTable() {
 		return treeTable;
 	}
@@ -469,33 +456,35 @@ public class HandlungsfeldController implements Initializable {
 	// public void setMenuItemSave(MenuItem menuItemSave) {
 	// this.menuItemSave = menuItemSave;
 	// }
+	public void buildTreeTable() {
+		Handlungsfeld h = new Handlungsfeld();
+		h.setId(1);
+		h.setName("Handlungsfelder");
+		List<Handlungsfeld> hf = hauptfeldModel.getHandlungsfelderBy(true, true);
 
-	        List<Handlungsfeld> hf = hauptfeldModel.getHandlungsfelderBy(true, true);
+		TreeItemWrapper t = new TreeItemWrapper(h);
+		TreeItem<TreeItemWrapper> root = new TreeItem<TreeItemWrapper>(t);
+		ListIterator<Handlungsfeld> it = hf.listIterator();
+		while (it.hasNext()) {
 
-	        TreeItemWrapper t = new TreeItemWrapper(h);
-	        TreeItem<TreeItemWrapper> root = new TreeItem<TreeItemWrapper>(t);
-	        ListIterator<Handlungsfeld> it = hf.listIterator();
-	        while (it.hasNext()) {
+			Handlungsfeld ha = it.next();
+			List<Item> item = ha.getItems();
+			TreeItemWrapper hawrapped = new TreeItemWrapper(ha);
+			TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped);
 
-	            Handlungsfeld ha = it.next();
-	            List<Item> item = ha.getItems();
-	            TreeItemWrapper hawrapped = new TreeItemWrapper(ha);
-	            TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped);
+			ListIterator<Item> iter = item.listIterator();
+			while (iter.hasNext()) {
+				TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
+				node.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
+			}
 
-	            ListIterator<Item> iter = item.listIterator();
-	            while (iter.hasNext()) {
-	                TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
-	                node.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
-	            }
+			root.getChildren().add(node);
 
-	            root.getChildren().add(node);
+		}
 
-	        }
+		root.setExpanded(true);
+		treeTable.setRoot(root);
 
-	        root.setExpanded(true);
-	        treeTable.setRoot(root);
-	    
 	}
-
 
 }
