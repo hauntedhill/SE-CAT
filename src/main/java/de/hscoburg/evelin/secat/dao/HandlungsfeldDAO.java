@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -46,7 +47,7 @@ public class HandlungsfeldDAO extends BaseDAO<Handlungsfeld> {
 		CriteriaQuery<Handlungsfeld> handlungsfeldCriteria = cb.createQuery(Handlungsfeld.class);
 		Root<Handlungsfeld> handlungsfeldRoot = handlungsfeldCriteria.from(Handlungsfeld.class);
 		// Person.address is an embedded attribute
-		Join<Handlungsfeld, Item> itemRoot = handlungsfeldRoot.join(Handlungsfeld_.items);
+		Join<Handlungsfeld, Item> itemRoot = handlungsfeldRoot.join(Handlungsfeld_.items, JoinType.LEFT);
 		// Address.country is a ManyToOne
 		if (e != null) {
 			Join<Item, Eigenschaft> eigenschaftRoot = itemRoot.join(Item_.eigenschaften);
@@ -65,7 +66,7 @@ public class HandlungsfeldDAO extends BaseDAO<Handlungsfeld> {
 		}
 
 		predicates.add(cb.equal(handlungsfeldRoot.get(Handlungsfeld_.aktiv), handlungsfeldAktiv));
-		predicates.add(cb.equal(itemRoot.get(Item_.aktiv), itemAktiv));
+		predicates.add(cb.or(cb.equal(itemRoot.get(Item_.aktiv), itemAktiv), cb.isNull(itemRoot.get(Item_.id))));
 		if (!"".equals(notizHandlungsfeld) && notizHandlungsfeld != null) {
 			predicates.add(cb.like(cb.upper(handlungsfeldRoot.get(Handlungsfeld_.notiz)), (notizHandlungsfeld + "%").toUpperCase()));
 		}
