@@ -55,15 +55,16 @@ public class FachDAOTest {
 		fach1 = new Fach();
 		fach2 = new Fach();
 
-		fach1.setId(1);
+		// fach1.setId(1);
 		fach1.setName("test");
 
-		fach2.setId(2);
+		// fach2.setId(2);
 		fach2.setName("test2");
 
 		em.persist(fach1);
 
 		em.persist(fach2);
+		em.flush();
 
 	}
 
@@ -79,11 +80,11 @@ public class FachDAOTest {
 	@Test
 	public void persist() {
 		Fach e = new Fach();
-		e.setId(3);
+		// e.setId(3);
 		e.setName("test3");
 		dao.persist(e);
 
-		Assert.assertTrue(dao.findById(3).getId() == 3);
+		Assert.assertTrue(dao.findById(e.getId()).getId() == e.getId());
 	}
 
 }

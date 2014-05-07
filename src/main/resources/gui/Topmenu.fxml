@@ -9,7 +9,10 @@
   <menus>
     <Menu mnemonicParsing="false" text="Stammdaten">
       <items>
-        <MenuItem fx:id="eigenschaften" mnemonicParsing="false" text="Eigenschaften pflegen" /><MenuItem fx:id="perspektive" mnemonicParsing="false" text="Perspektiven pflegen" />
+       <MenuItem fx:id="handlungsfeld" mnemonicParsing="false" text="Handlungsfelder pflegen" />
+        <MenuItem fx:id="eigenschaften" mnemonicParsing="false" text="Eigenschaften pflegen" />
+        <MenuItem fx:id="perspektive" mnemonicParsing="false" text="Perspektiven pflegen" />
+       
       </items>
     </Menu>
   </menus>

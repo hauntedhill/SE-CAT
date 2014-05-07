@@ -85,64 +85,64 @@ public class HandlungsfeldDAOTest {
 		handlungsfeld1 = new Handlungsfeld();
 		handlungsfeld2 = new Handlungsfeld();
 
-		handlungsfeld1.setId(1);
+		// handlungsfeld1.setId(1);
 		handlungsfeld1.setAktiv(true);
 		handlungsfeld1.setName("test");
 		handlungsfeld1.setNotiz("test");
 
-		handlungsfeld2.setId(2);
+		// handlungsfeld2.setId(2);
 		handlungsfeld2.setAktiv(true);
 		handlungsfeld2.setName("_test2");
 		handlungsfeld2.setNotiz("_test2");
 
 		e1 = new Eigenschaft();
-		e1.setId(1);
+		// e1.setId(1);
 		e1.setName("teamleistung");
 
 		em.persist(e1);
 
 		e2 = new Eigenschaft();
-		e2.setId(2);
+		// e2.setId(2);
 		e2.setName("einzelleistung");
 
 		em.persist(e2);
 
 		e3 = new Eigenschaft();
-		e3.setId(3);
+		// e3.setId(3);
 		e3.setName("einzelleistung123");
 
 		em.persist(e3);
 
 		p1 = new Perspektive();
-		p1.setId(1);
+		// p1.setId(1);
 		p1.setName("Dozent");
 		em.persist(p1);
 
 		p2 = new Perspektive();
-		p2.setId(2);
+		// p2.setId(2);
 		p2.setName("Kunde");
 		em.persist(p2);
 
 		l1 = new Lehrveranstaltung();
-		l1.setId(1);
+		// l1.setId(1);
 		em.persist(l1);
 
 		l2 = new Lehrveranstaltung();
-		l2.setId(2);
+		// l2.setId(2);
 		em.persist(l2);
 
 		f1 = new Fach();
-		f1.setId(1);
+		// f1.setId(1);
 		f1.setName("SMA");
 		em.persist(f1);
 
 		f2 = new Fach();
-		f2.setId(2);
+		// f2.setId(2);
 		f2.setName("SWE");
 		em.persist(f2);
 
 		i1 = new Item();
-		i1.setId(1);
+		// i1.setId(1);
 		i1.setAktiv(true);
 		i1.setNotiz("test1");
 		i1.setName("Leistungbereit");
@@ -153,7 +153,7 @@ public class HandlungsfeldDAOTest {
 		em.persist(i1);
 
 		i2 = new Item();
-		i2.setId(2);
+		// i2.setId(2);
 		i2.setAktiv(true);
 		i2.setNotiz("_test2");
 		i2.setName("Wortgewand");
@@ -162,11 +162,11 @@ public class HandlungsfeldDAOTest {
 		em.persist(i2);
 
 		i3 = new Item();
-		i3.setId(3);
+		// i3.setId(3);
 		em.persist(i3);
 
 		Fragebogen fb1 = new Fragebogen();
-		fb1.setId(1);
+		// fb1.setId(1);
 
 		i1.addFragebogen(fb1);
 
@@ -176,7 +176,7 @@ public class HandlungsfeldDAOTest {
 		em.persist(fb1);
 
 		Fragebogen fb2 = new Fragebogen();
-		fb2.setId(2);
+		// fb2.setId(2);
 
 		i1.addFragebogen(fb2);
 		i2.addFragebogen(fb2);
@@ -197,6 +197,7 @@ public class HandlungsfeldDAOTest {
 		em.persist(handlungsfeld1);
 
 		em.persist(handlungsfeld2);
+		em.flush();
 
 	}
 
@@ -212,7 +213,7 @@ public class HandlungsfeldDAOTest {
 	@Test
 	public void persist() {
 		Handlungsfeld e = new Handlungsfeld();
-		e.setId(3);
+		// e.setId(3);
 		e.setName("test3");
 		dao.persist(e);
 

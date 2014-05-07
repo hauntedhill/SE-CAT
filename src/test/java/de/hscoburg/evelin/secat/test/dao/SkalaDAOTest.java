@@ -55,16 +55,16 @@ public class SkalaDAOTest {
 		skala1 = new Skala();
 		skala2 = new Skala();
 
-		skala1.setId(1);
+		// skala1.setId(1);
 		skala1.setName("test");
 
-		skala2.setId(2);
+		// skala2.setId(2);
 		skala2.setName("test2");
 
 		em.persist(skala1);
 
 		em.persist(skala2);
-
+		em.flush();
 	}
 
 	@Test
@@ -79,11 +79,11 @@ public class SkalaDAOTest {
 	@Test
 	public void persist() {
 		Skala e = new Skala();
-		e.setId(3);
+		// e.setId(3);
 		e.setName("test3");
 		dao.persist(e);
 
-		Assert.assertTrue(dao.findById(3).getId() == 3);
+		Assert.assertTrue(dao.findById(e.getId()).getId() == e.getId());
 	}
 
 }

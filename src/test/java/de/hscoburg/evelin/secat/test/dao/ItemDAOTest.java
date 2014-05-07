@@ -55,15 +55,16 @@ public class ItemDAOTest {
 		item1 = new Item();
 		item2 = new Item();
 
-		item1.setId(1);
+		// item1.setId(1);
 		item1.setName("test");
 
-		item2.setId(2);
+		// item2.setId(2);
 		item2.setName("test2");
 
 		em.persist(item1);
 
 		em.persist(item2);
+		em.flush();
 
 	}
 
@@ -79,11 +80,11 @@ public class ItemDAOTest {
 	@Test
 	public void persist() {
 		Item e = new Item();
-		e.setId(3);
+		// e.setId(3);
 		e.setName("test3");
 		dao.persist(e);
 
-		Assert.assertTrue(dao.findById(3).getId() == 3);
+		Assert.assertTrue(dao.findById(e.getId()).getId() == e.getId());
 	}
 
 }

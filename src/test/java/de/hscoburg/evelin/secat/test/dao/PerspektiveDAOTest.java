@@ -55,15 +55,16 @@ public class PerspektiveDAOTest {
 		perspektive1 = new Perspektive();
 		perspektive2 = new Perspektive();
 
-		perspektive1.setId(1);
+		// perspektive1.setId(1);
 		perspektive1.setName("test");
 
-		perspektive2.setId(2);
+		// perspektive2.setId(2);
 		perspektive2.setName("test2");
 
 		em.persist(perspektive1);
 
 		em.persist(perspektive2);
+		em.flush();
 
 	}
 
@@ -79,11 +80,11 @@ public class PerspektiveDAOTest {
 	@Test
 	public void persist() {
 		Perspektive e = new Perspektive();
-		e.setId(3);
+		// e.setId(3);
 		e.setName("test3");
 		dao.persist(e);
 
-		Assert.assertTrue(dao.findById(3).getId() == 3);
+		Assert.assertTrue(dao.findById(e.getId()).getId() == e.getId());
 	}
 
 }

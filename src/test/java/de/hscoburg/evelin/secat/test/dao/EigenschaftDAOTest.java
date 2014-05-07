@@ -55,16 +55,16 @@ public class EigenschaftDAOTest {
 		eigenschaft1 = new Eigenschaft();
 		eigenschaft2 = new Eigenschaft();
 
-		eigenschaft1.setId(1);
+		// eigenschaft1.setId(1);
 		eigenschaft1.setName("test");
 
-		eigenschaft2.setId(2);
+		// eigenschaft2.setId(2);
 		eigenschaft2.setName("test2");
 
 		em.persist(eigenschaft1);
 
 		em.persist(eigenschaft2);
-
+		em.flush();
 	}
 
 	@Test
@@ -79,11 +79,11 @@ public class EigenschaftDAOTest {
 	@Test
 	public void persist() {
 		Eigenschaft e = new Eigenschaft();
-		e.setId(3);
+		// e.setId(3);
 		e.setName("test3");
 		dao.persist(e);
 
-		Assert.assertTrue(dao.findById(3).getId() == 3);
+		Assert.assertTrue(dao.findById(e.getId()).getId() == e.getId());
 	}
 
 }
