@@ -2,6 +2,7 @@ package de.hscoburg.evelin.secat.dao.entity.base;
 
 import java.io.Serializable;
 
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
@@ -30,6 +31,7 @@ public abstract class BaseEntity implements Serializable {
 	 * @return Ein {@link Integer}-Object.
 	 */
 	@Id
+	@GeneratedValue
 	public Integer getId() {
 		return id;
 	}

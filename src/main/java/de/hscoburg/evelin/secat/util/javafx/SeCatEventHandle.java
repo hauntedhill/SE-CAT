@@ -56,8 +56,14 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 			}, new Callback() {
 				@Override
 				public void complete() {
-					s.removeEventFilter(javafx.scene.input.InputEvent.ANY, handler);
-					s.setCursor(Cursor.DEFAULT);
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							updateUI();
+							s.removeEventFilter(javafx.scene.input.InputEvent.ANY, handler);
+							s.setCursor(Cursor.DEFAULT);
+						}
+					});
 				}
 			});
 
@@ -80,6 +86,10 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 	public abstract void handleAction(T event) throws Exception;
 
 	public void performBeforeEventsBlocked(T event) throws Exception {
+
+	}
+
+	public void updateUI() {
 
 	}
 

@@ -83,13 +83,13 @@ public class HandlungsfeldController implements Initializable {
 				final TreeTableRow<TreeItemWrapper> row = new TreeTableRow<>();
 				final ContextMenu rowMenu = new ContextMenu();
 				final ContextMenu rowMenuHf = new ContextMenu();
-				MenuItem addHfItem = new MenuItem("add Handlungsfeld", new ImageView(new Image("/image/icons/db_add.png", 16, 16, true, true)));
+				MenuItem addHfItem = new MenuItem("add Handlungsfeld", new ImageView(new Image("/image/icons/add_hand.png", 16, 16, true, true)));
 				MenuItem activateHfItem = new MenuItem("activate Handlungsfeld", new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
 				MenuItem activateItItem = new MenuItem("activate Item", new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
 				MenuItem deactivateHfItem = new MenuItem("deactivate Handlungsfeld", new ImageView(new Image("/image/icons/bookmark_Silver.png", 16, 16, true,
 						true)));
 				MenuItem deactivateItItem = new MenuItem("deactivate Item", new ImageView(new Image("/image/icons/bookmark_Silver.png", 16, 16, true, true)));
-				MenuItem addItItem = new MenuItem("add Item", new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
+				MenuItem addItItem = new MenuItem("add Item", new ImageView(new Image("/image/icons/add_item.png", 16, 16, true, true)));
 				MenuItem moveItems = new MenuItem("move Items", new ImageView(new Image("/image/icons/up.png", 16, 16, true, true)));
 				MenuItem filterItItem = new MenuItem("filter Item", new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
 
@@ -334,12 +334,12 @@ public class HandlungsfeldController implements Initializable {
 			Handlungsfeld ha = it.next();
 			List<Item> item = ha.getItems();
 			TreeItemWrapper hawrapped = new TreeItemWrapper(ha);
-			TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped);
+			TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true)));
 
 			ListIterator<Item> iter = item.listIterator();
 			while (iter.hasNext()) {
 				TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
-				node.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
+				node.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped, new ImageView(new Image("/image/icons/filenew.png", 16, 16, true, true))));
 			}
 
 			root.getChildren().add(node);
@@ -473,12 +473,12 @@ public class HandlungsfeldController implements Initializable {
 			Handlungsfeld ha = it.next();
 			List<Item> item = ha.getItems();
 			TreeItemWrapper hawrapped = new TreeItemWrapper(ha);
-			TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped);
+			TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true)));
 
 			ListIterator<Item> iter = item.listIterator();
 			while (iter.hasNext()) {
 				TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
-				node.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
+				node.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped, new ImageView(new Image("/image/icons/filenew.png", 16, 16, true, true))));
 			}
 
 			root.getChildren().add(node);

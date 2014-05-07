@@ -21,6 +21,10 @@ public class LayoutController implements Initializable {
 
 	public static final String HANDLUNGSFELD_FXML = STAMMDATEN_PATH + "handlungsfeld.fxml";
 
+	public static final String EIGENSCHAFTEN_FXML = STAMMDATEN_PATH + "Eigenschaften.fxml";
+
+	public static final String PERSPEKTIVEN_FXML = STAMMDATEN_PATH + "Perspektiven.fxml";
+
 	public static final String TOPMENU_FXML = GUI_PATH + "Topmenu.fxml";
 
 	public static final String SPLASHSCREEN_FXML = GUI_PATH + "splashScreen.fxml";
@@ -35,8 +39,12 @@ public class LayoutController implements Initializable {
 
 		layout.setTop((Node) SpringFXMLLoader.getInstance().load(TOPMENU_FXML));
 
-		layout.setCenter((Node) SpringFXMLLoader.getInstance().load(HANDLUNGSFELD_FXML));
+		setCenterNode(HANDLUNGSFELD_FXML);
 
+	}
+
+	public void setCenterNode(String url) {
+		layout.setCenter((Node) SpringFXMLLoader.getInstance().load(url));
 	}
 
 }
