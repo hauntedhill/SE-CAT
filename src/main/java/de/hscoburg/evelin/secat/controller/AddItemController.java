@@ -12,7 +12,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -25,9 +24,8 @@ import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
-import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.controller.base.BaseController;
+import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
@@ -52,13 +50,13 @@ public class AddItemController extends BaseController {
 	private TextArea notiz;
 	@FXML
 	private ListView<Eigenschaft> eigenschaftList;
-	
+
 	@FXML
 	private ListView<Perspektive> perspektiveList;
 
 	@FXML
 	private ComboBox<Skala> skalaBox;
-	
+
 	@Autowired
 	private HandlungsfeldController hauptfeldController;
 
@@ -67,165 +65,150 @@ public class AddItemController extends BaseController {
 
 	@Autowired
 	private PerspektivenModel perspektivenModel;
-	
+
 	@Autowired
 	private SkalenModel skalenModel;
-	
+
 	@Autowired
 	private EigenschaftenModel eigenschaftModel;
-	
+
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
-	   
-	   skalaBox.setCellFactory(new Callback<ListView<Skala>, ListCell<Skala>>() {
+		skalaBox.setCellFactory(new Callback<ListView<Skala>, ListCell<Skala>>() {
 
-           @Override
-           public ListCell<Skala> call(ListView<Skala> s) {
+			@Override
+			public ListCell<Skala> call(ListView<Skala> s) {
 
-               ListCell<Skala> cell = new ListCell<Skala>() {
+				ListCell<Skala> cell = new ListCell<Skala>() {
 
-                   @Override
-                   protected void updateItem(Skala t, boolean bln) {
-                       super.updateItem(t, bln);
-                       
-                       if (t != null) {
-                           setText(t.getName());
-                       }
-                   }
+					@Override
+					protected void updateItem(Skala t, boolean bln) {
+						super.updateItem(t, bln);
 
-               };
+						if (t != null) {
+							setText(t.getName());
+						}
+					}
 
-               return cell;
-           }
-       });
-	   
-	   
-	   
-       ObservableList<Skala> skalenOl = FXCollections.observableArrayList();
-       List<Skala> skalenList = skalenModel.getSkalen();
-       ListIterator<Skala> itskala = skalenList.listIterator();
-       
-       while (itskala.hasNext()) {
+				};
 
-           skalenOl.add( itskala.next() );;
-           }
-       
+				return cell;
+			}
+		});
 
-       
-       skalaBox.setItems( skalenOl );
-       
-	    
-       perspektiveList.setCellFactory(new Callback<ListView<Perspektive>, ListCell<Perspektive>>() {
+		ObservableList<Skala> skalenOl = FXCollections.observableArrayList();
+		List<Skala> skalenList = skalenModel.getSkalen();
+		ListIterator<Skala> itskala = skalenList.listIterator();
 
-           @Override
-           public ListCell<Perspektive> call(ListView<Perspektive> s) {
+		while (itskala.hasNext()) {
 
-               ListCell<Perspektive> cell = new ListCell<Perspektive>() {
+			skalenOl.add(itskala.next());
+			;
+		}
 
-                   @Override
-                   protected void updateItem(Perspektive t, boolean bln) {
-                       super.updateItem(t, bln);
-                       if (t != null) {
-                           setText(t.getName());
-                       }
-                   }
+		skalaBox.setItems(skalenOl);
 
-               };
+		perspektiveList.setCellFactory(new Callback<ListView<Perspektive>, ListCell<Perspektive>>() {
 
-               return cell;
-           }
-       }); 
-	    
-	    
-	    ObservableList<Perspektive> perspektivenOl = FXCollections.observableArrayList();
-	    List<Perspektive> persList = perspektivenModel.getPerspektiven();
-	    ListIterator<Perspektive> itpers = persList.listIterator();
-	    
-        while (itpers.hasNext()) {
+			@Override
+			public ListCell<Perspektive> call(ListView<Perspektive> s) {
 
-            perspektivenOl.add( itpers.next() );
-            }
-	    
-	    
-        perspektiveList.setItems( perspektivenOl );
-	    perspektiveList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
+				ListCell<Perspektive> cell = new ListCell<Perspektive>() {
 
-        
-        
-        eigenschaftList.setCellFactory(new Callback<ListView<Eigenschaft>, ListCell<Eigenschaft>>() {
+					@Override
+					protected void updateItem(Perspektive t, boolean bln) {
+						super.updateItem(t, bln);
+						if (t != null) {
+							setText(t.getName());
+						}
+					}
 
-            @Override
-            public ListCell<Eigenschaft> call(ListView<Eigenschaft> s) {
+				};
 
-                ListCell<Eigenschaft> cell = new ListCell<Eigenschaft>() {
+				return cell;
+			}
+		});
 
-                    @Override
-                    protected void updateItem(Eigenschaft t, boolean bln) {
-                        super.updateItem(t, bln);
-                        if (t != null) {
-                            setText(t.getName());
-                        }
-                    }
+		ObservableList<Perspektive> perspektivenOl = FXCollections.observableArrayList();
+		List<Perspektive> persList = perspektivenModel.getPerspektiven();
+		ListIterator<Perspektive> itpers = persList.listIterator();
 
-                };
+		while (itpers.hasNext()) {
 
-                return cell;
-            }
-        }); 
-         
-         
-         ObservableList<Eigenschaft> eigenschaftOl = FXCollections.observableArrayList();
-         List<Eigenschaft> eigenList = eigenschaftModel.getEigenschaften();
-         ListIterator<Eigenschaft> iteigenschaft = eigenList.listIterator();
-         
-         while (iteigenschaft.hasNext()) {
+			perspektivenOl.add(itpers.next());
+		}
 
-             eigenschaftOl.add( iteigenschaft.next() );
-             }
-         
-         
-         eigenschaftList.setItems( eigenschaftOl );
-         eigenschaftList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        
-        
+		perspektiveList.setItems(perspektivenOl);
+		perspektiveList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
+		eigenschaftList.setCellFactory(new Callback<ListView<Eigenschaft>, ListCell<Eigenschaft>>() {
+
+			@Override
+			public ListCell<Eigenschaft> call(ListView<Eigenschaft> s) {
+
+				ListCell<Eigenschaft> cell = new ListCell<Eigenschaft>() {
+
+					@Override
+					protected void updateItem(Eigenschaft t, boolean bln) {
+						super.updateItem(t, bln);
+						if (t != null) {
+							setText(t.getName());
+						}
+					}
+
+				};
+
+				return cell;
+			}
+		});
+
+		ObservableList<Eigenschaft> eigenschaftOl = FXCollections.observableArrayList();
+		List<Eigenschaft> eigenList = eigenschaftModel.getEigenschaften();
+		ListIterator<Eigenschaft> iteigenschaft = eigenList.listIterator();
+
+		while (iteigenschaft.hasNext()) {
+
+			eigenschaftOl.add(iteigenschaft.next());
+		}
+
+		eigenschaftList.setItems(eigenschaftOl);
+		eigenschaftList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+
 		save.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 
+				if (name.getText() != null || !name.getText().equals("")) {
 
-			if ( name.getText() != null || !name.getText().equals( "" ) ){	
-			    
-			    Item i = new Item();
-				i.setAktiv(true);
-				i.setName(name.getText());
-				i.setNotiz(notiz.getText());
+					Item i = new Item();
+					i.setAktiv(true);
+					i.setName(name.getText());
+					i.setNotiz(notiz.getText());
 
-	           if(skalaBox.getValue() != null){
-	               
-	           
-				i.setSkala( skalaBox.getValue());
-	           }
-	           
-	           if (perspektiveList.getSelectionModel().getSelectedItems() != null){
-	           i.setPerspektiven( perspektiveList.getSelectionModel().getSelectedItems() );
-	           }
-	           
-               if (eigenschaftList.getSelectionModel().getSelectedItems() != null){
-               i.setEigenschaften( eigenschaftList.getSelectionModel().getSelectedItems() );
-               }
-	           
-		        ArrayList<Item> list = new ArrayList<Item>();
-		        list.add(i);
-		        i.setHandlungsfeld(hauptfeldController.getTreeTable().getSelectionModel().getModelItem(hauptfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld());
-		      
+					if (skalaBox.getValue() != null) {
 
-		        handlungsfeldModel.persistItem(i);
-		        hauptfeldController.buildTreeTable();
-				
-			}
-				
+						i.setSkala(skalaBox.getValue());
+					}
+
+					if (perspektiveList.getSelectionModel().getSelectedItems() != null) {
+						i.setPerspektiven(perspektiveList.getSelectionModel().getSelectedItems());
+					}
+
+					if (eigenschaftList.getSelectionModel().getSelectedItems() != null) {
+						i.setEigenschaften(eigenschaftList.getSelectionModel().getSelectedItems());
+					}
+
+					ArrayList<Item> list = new ArrayList<Item>();
+					list.add(i);
+					i.setHandlungsfeld(hauptfeldController.getTreeTable().getSelectionModel()
+							.getModelItem(hauptfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld());
+
+					handlungsfeldModel.persistItem(i);
+					hauptfeldController.buildTreeTable();
+
+				}
+
 				Stage stage = (Stage) save.getScene().getWindow();
 				// do what you have to do
 				stage.close();
@@ -251,5 +234,4 @@ public class AddItemController extends BaseController {
 		return "Item hinzufügen";
 	}
 
-}
 }

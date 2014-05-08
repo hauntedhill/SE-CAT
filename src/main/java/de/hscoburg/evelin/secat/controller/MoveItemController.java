@@ -47,9 +47,6 @@ public class MoveItemController extends BaseController {
 	private HandlungsfeldController hauptfeldController;
 
 	@Autowired
-	private HandlungsfeldModel hauptfeldModel;
-
-	@Autowired
 	private HandlungsfeldModel handlungsfeldModel;
 
 	@Autowired
@@ -57,27 +54,6 @@ public class MoveItemController extends BaseController {
 
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
-
-		ObservableList<String> options = FXCollections.observableArrayList();
-		TreeTableView<TreeItemWrapper> treeTable = hauptfeldController.getTreeTable();
-
-		TreeItem<TreeItemWrapper> neu;
-
-		TreeItem<TreeItemWrapper> old = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex());
-		String selected = old.getValue().getName();
-		final List<Handlungsfeld> hf = hauptfeldModel.getHandlungsfelderBy(true, true);
-		final ListIterator<Handlungsfeld> it = hf.listIterator();
-		final List<Item> oldItem = old.getValue().getHandlungsfeld().getItems();
-		String tmp = "";
-
-		while (it.hasNext()) {
-			tmp = it.next().getName();
-			if (!tmp.equals(selected)) {
-				options.add(tmp);
-			}
-		}
-
-		// handlungsfeld.setItems(options);
 
 		handlungsfeld.setCellFactory(new Callback<ListView<Handlungsfeld>, ListCell<Handlungsfeld>>() {
 
@@ -127,7 +103,6 @@ public class MoveItemController extends BaseController {
 
 				ListIterator<Item> iter = items.listIterator();
 				Item tmpItem = new Item();
-
 				while (iter.hasNext()) {
 
 					tmpItem = iter.next();

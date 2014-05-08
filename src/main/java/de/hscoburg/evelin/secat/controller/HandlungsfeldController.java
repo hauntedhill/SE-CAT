@@ -115,11 +115,11 @@ public class HandlungsfeldController extends BaseController {
 
 						Stage stage = new Stage();
 
-						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addHandlungsfeld.fxml", stage);
+						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/addHandlungsfeld.fxml"));
 
-						// Scene scene = new Scene(p);
+						Scene scene = new Scene(p);
 
-						// stage.setScene(scene);
+						stage.setScene(scene);
 						stage.show();
 
 						stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -141,8 +141,11 @@ public class HandlungsfeldController extends BaseController {
 
 							Stage stage = new Stage();
 
-							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addItem.fxml", stage);
+							Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/addItem.fxml"));
 
+							Scene scene = new Scene(p);
+
+							stage.setScene(scene);
 							stage.show();
 
 							stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -218,8 +221,11 @@ public class HandlungsfeldController extends BaseController {
 						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
 							Stage stage = new Stage();
 
-							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterItem.fxml", stage);
+							Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/filterItem.fxml"));
 
+							Scene scene = new Scene(p);
+
+							stage.setScene(scene);
 							stage.show();
 
 							stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -240,8 +246,11 @@ public class HandlungsfeldController extends BaseController {
 						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
 							Stage stage = new Stage();
 
-							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/moveItems.fxml", stage);
+							Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/moveItems.fxml"));
 
+							Scene scene = new Scene(p);
+
+							stage.setScene(scene);
 							stage.show();
 
 							stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -512,12 +521,13 @@ public class HandlungsfeldController extends BaseController {
 
 		root.setExpanded(true);
 		treeTable.setRoot(root);
+
 	}
 
 	@Override
 	public String getSceneName() {
-		// TODO Auto-generated method stub
-		return "Handlungsfeld pflegen";
+
+		return "Handlungsfelder pflegen";
 	}
 
 }
