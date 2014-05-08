@@ -1,4 +1,4 @@
-package de.hscoburg.evelin.secat.controller;
+package de.hscoburg.evelin.secat.controller.base;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -10,6 +10,7 @@ import javafx.scene.layout.BorderPane;
 
 import org.springframework.stereotype.Controller;
 
+import de.hscoburg.evelin.secat.SeCat;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 @Controller
@@ -39,9 +40,8 @@ public class LayoutController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
-		layout.setTop((Node) SpringFXMLLoader.getInstance().load(TOPMENU_FXML));
-
-		setCenterNode(HANDLUNGSFELD_FXML);
+		layout.setTop((Node) SpringFXMLLoader.getInstance().load(TOPMENU_FXML, SeCat.PRIMARY_STAGE));
+		layout.setCenter((Node) SpringFXMLLoader.getInstance().load(HANDLUNGSFELD_FXML, SeCat.PRIMARY_STAGE));
 
 	}
 

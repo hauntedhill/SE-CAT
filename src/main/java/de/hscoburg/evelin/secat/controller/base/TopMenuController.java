@@ -1,4 +1,4 @@
-package de.hscoburg.evelin.secat.controller;
+package de.hscoburg.evelin.secat.controller.base;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -43,6 +43,7 @@ public class TopMenuController implements Initializable {
 			@Override
 			public void performBeforeEventsBlocked(ActionEvent event) {
 				layout.setCenterNode(LayoutController.EIGENSCHAFTEN_FXML);
+
 			}
 
 			@Override
@@ -56,6 +57,7 @@ public class TopMenuController implements Initializable {
 			@Override
 			public void performBeforeEventsBlocked(ActionEvent event) {
 				layout.setCenterNode(LayoutController.PERSPEKTIVEN_FXML);
+
 			}
 
 			@Override
@@ -69,6 +71,7 @@ public class TopMenuController implements Initializable {
 			@Override
 			public void performBeforeEventsBlocked(ActionEvent event) {
 				layout.setCenterNode(LayoutController.HANDLUNGSFELD_FXML);
+
 			}
 
 			@Override
@@ -81,6 +84,7 @@ public class TopMenuController implements Initializable {
 			@Override
 			public void performBeforeEventsBlocked(ActionEvent event) {
 				layout.setCenterNode(LayoutController.SKALEN_FXML);
+
 			}
 
 			@Override

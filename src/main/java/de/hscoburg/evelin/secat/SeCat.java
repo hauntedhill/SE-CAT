@@ -13,15 +13,21 @@ import javafx.stage.WindowEvent;
 
 import org.controlsfx.dialog.Dialogs;
 
-import de.hscoburg.evelin.secat.controller.LayoutController;
+import de.hscoburg.evelin.secat.controller.base.LayoutController;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 public class SeCat extends Application {
 
 	public static Stage PRIMARY_STAGE;
 
-	public void start(final Stage primaryStage) {
+	public static String MAIN_STAGE_TITLE = "SE-CAT";
 
+	public static void setSubTitle(String title) {
+		PRIMARY_STAGE.setTitle(MAIN_STAGE_TITLE + " - " + title);
+	}
+
+	public void start(final Stage primaryStage) {
+		PRIMARY_STAGE = primaryStage;
 		// final ImageView imageView = new ImageView(new Image(Felix.class.getResourceAsStream("/ajax_loader_blue_512.gif")));
 		//
 		// imageView.setFitHeight(29.0);
@@ -47,7 +53,7 @@ public class SeCat extends Application {
 			splashStage.setScene(sceneSplash);
 			splashStage.setResizable(false);
 
-			splashStage.setTitle("SE-CAT");
+			splashStage.setTitle(MAIN_STAGE_TITLE);
 
 			splashStage.show();
 			new Thread(new Runnable() {
@@ -62,14 +68,9 @@ public class SeCat extends Application {
 						@Override
 						public void run() {
 							try {
-								Parent p = (Parent) SpringFXMLLoader.getInstance().load(LayoutController.LAYOUT_FXML);
+								SpringFXMLLoader.getInstance().loadInNewScene(LayoutController.LAYOUT_FXML, primaryStage);
 								// Parent p = (Parent) SpringFXMLLoader.getInstance().load("/splashScreen.fxml");
 
-								Scene scene = new Scene(p, 600, 480);
-
-								primaryStage.setScene(scene);
-
-								primaryStage.setTitle("SE-CAT");
 								primaryStage.getIcons().add(new Image("/image/icons/dvi.png"));
 
 								primaryStage.setOnShown(new EventHandler<WindowEvent>() {
@@ -81,8 +82,8 @@ public class SeCat extends Application {
 
 									}
 								});
-								PRIMARY_STAGE = primaryStage;
 								primaryStage.show();
+
 							} catch (Exception e) {
 								splashStage.hide();
 								splashStage.close();

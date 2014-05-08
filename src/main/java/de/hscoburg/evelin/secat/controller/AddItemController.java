@@ -7,7 +7,6 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
@@ -17,12 +16,13 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 
 @Controller
-public class AddItemController implements Initializable {
+public class AddItemController extends BaseController {
 
 	@FXML
 	private Button save;
@@ -45,7 +45,7 @@ public class AddItemController implements Initializable {
 	private HandlungsfeldModel hauptfeldModel;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initializeController(URL location, ResourceBundle resources) {
 		/*
 		 * ObservableList<String> options = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
 		 * eigenschaft.setItems(options);
@@ -87,6 +87,12 @@ public class AddItemController implements Initializable {
 
 			}
 		});
+	}
+
+	@Override
+	public String getSceneName() {
+
+		return "Item hinzufügen";
 	}
 
 }

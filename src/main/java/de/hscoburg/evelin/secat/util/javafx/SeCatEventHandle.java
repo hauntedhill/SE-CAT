@@ -21,7 +21,7 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 		final EventHandler<javafx.scene.input.InputEvent> handler = new EventHandler<javafx.scene.input.InputEvent>() {
 			@Override
 			public void handle(javafx.scene.input.InputEvent mouseEvent) {
-				System.out.println("test");
+
 				mouseEvent.consume();
 			}
 		};

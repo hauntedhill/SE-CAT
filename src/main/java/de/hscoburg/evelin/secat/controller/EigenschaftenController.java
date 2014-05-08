@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -19,12 +18,13 @@ import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 
 @Controller
-public class EigenschaftenController implements Initializable {
+public class EigenschaftenController extends BaseController {
 
 	@FXML
 	private ListView<Eigenschaft> listEigenschaften;
@@ -39,7 +39,7 @@ public class EigenschaftenController implements Initializable {
 	private EigenschaftenModel eigenschaftenModel;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initializeController(URL location, ResourceBundle resources) {
 
 		loadList();
 		listEigenschaften.setCellFactory(new Callback<ListView<Eigenschaft>, ListCell<Eigenschaft>>() {
@@ -86,6 +86,12 @@ public class EigenschaftenController implements Initializable {
 	private void loadList() {
 		ObservableList<Eigenschaft> myObservableList = FXCollections.observableList(eigenschaftenModel.getEigenschaften());
 		listEigenschaften.setItems(myObservableList);
+	}
+
+	@Override
+	public String getSceneName() {
+
+		return "Eigenschaften pflegen";
 	}
 
 }

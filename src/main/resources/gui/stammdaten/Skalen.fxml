@@ -7,6 +7,6 @@
 <AnchorPane prefHeight="145.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.SkalenController">
 <children><Button fx:id="buttonAdd" layoutX="265.0" layoutY="2.0" mnemonicParsing="false" text="Hinzufügen" />
 <TextField fx:id="textNameSkalen" layoutX="116.0" layoutY="2.0" />
-<Label fx:id="labelSkalen" layoutX="14.0" layoutY="6.0" text="Neue Perspektive:" />
-<ListView fx:id="listSkalen" layoutX="116.0" layoutY="42.0" prefHeight="326.0" prefWidth="200.0" /><Label layoutX="14.0" layoutY="42.0" text="Perspektiven:" />
+<Label fx:id="labelSkalen" layoutX="14.0" layoutY="6.0" text="Neue Skala:" />
+<ListView fx:id="listSkalen" layoutX="116.0" layoutY="42.0" prefHeight="326.0" prefWidth="200.0" /><Label layoutX="14.0" layoutY="42.0" text="Skalen:" />
 </children></AnchorPane>

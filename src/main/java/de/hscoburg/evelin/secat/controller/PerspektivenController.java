@@ -7,7 +7,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -19,12 +18,13 @@ import javafx.util.Callback;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 
 @Controller
-public class PerspektivenController implements Initializable {
+public class PerspektivenController extends BaseController {
 
 	@FXML
 	private ListView<Perspektive> listPerspektiven;
@@ -39,7 +39,7 @@ public class PerspektivenController implements Initializable {
 	private PerspektivenModel perspektivenModel;
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initializeController(URL location, ResourceBundle resources) {
 
 		loadList();
 		listPerspektiven.setCellFactory(new Callback<ListView<Perspektive>, ListCell<Perspektive>>() {
@@ -86,6 +86,12 @@ public class PerspektivenController implements Initializable {
 	private void loadList() {
 		ObservableList<Perspektive> myObservableList = FXCollections.observableList(perspektivenModel.getPerspektiven());
 		listPerspektiven.setItems(myObservableList);
+	}
+
+	@Override
+	public String getSceneName() {
+
+		return "Perspektive pflegen";
 	}
 
 }

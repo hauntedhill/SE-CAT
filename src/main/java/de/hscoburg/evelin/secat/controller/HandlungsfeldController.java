@@ -14,9 +14,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -35,6 +32,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.HandlungsfeldDAO;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
@@ -43,7 +41,7 @@ import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 @Controller
-public class HandlungsfeldController implements Initializable {
+public class HandlungsfeldController extends BaseController {
 
 	private static Logger logger = LoggerFactory.getLogger(HandlungsfeldController.class);
 
@@ -56,7 +54,7 @@ public class HandlungsfeldController implements Initializable {
 	@Autowired
 	private HandlungsfeldModel hauptfeldModel;
 
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initializeController(URL location, ResourceBundle resources) {
 
 		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(0))
 				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
@@ -100,11 +98,11 @@ public class HandlungsfeldController implements Initializable {
 
 						Stage stage = new Stage();
 
-						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/addHandlungsfeld.fxml"));
+						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addHandlungsfeld.fxml", stage);
 
-						Scene scene = new Scene(p);
+						// Scene scene = new Scene(p);
 
-						stage.setScene(scene);
+						// stage.setScene(scene);
 						stage.show();
 
 						stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -125,11 +123,8 @@ public class HandlungsfeldController implements Initializable {
 
 						Stage stage = new Stage();
 
-						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/addItem.fxml"));
+						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addItem.fxml", stage);
 
-						Scene scene = new Scene(p);
-
-						stage.setScene(scene);
 						stage.show();
 
 						stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -201,11 +196,8 @@ public class HandlungsfeldController implements Initializable {
 
 						Stage stage = new Stage();
 
-						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/filterItem.fxml"));
+						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterItem.fxml", stage);
 
-						Scene scene = new Scene(p);
-
-						stage.setScene(scene);
 						stage.show();
 
 						stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -226,11 +218,8 @@ public class HandlungsfeldController implements Initializable {
 
 						Stage stage = new Stage();
 
-						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/moveItems.fxml"));
+						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/moveItems.fxml", stage);
 
-						Scene scene = new Scene(p);
-
-						stage.setScene(scene);
 						stage.show();
 
 						stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -488,6 +477,12 @@ public class HandlungsfeldController implements Initializable {
 		root.setExpanded(true);
 		treeTable.setRoot(root);
 
+	}
+
+	@Override
+	public String getSceneName() {
+		// TODO Auto-generated method stub
+		return "Handlungsfeld pflegen";
 	}
 
 }
