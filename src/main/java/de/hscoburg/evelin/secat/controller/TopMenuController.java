@@ -27,6 +27,9 @@ public class TopMenuController implements Initializable {
 	private MenuItem perspektive;
 
 	@FXML
+	private MenuItem skalen;
+
+	@FXML
 	private MenuItem handlungsfeld;
 
 	@Autowired
@@ -66,6 +69,18 @@ public class TopMenuController implements Initializable {
 			@Override
 			public void performBeforeEventsBlocked(ActionEvent event) {
 				layout.setCenterNode(LayoutController.HANDLUNGSFELD_FXML);
+			}
+
+			@Override
+			public void handleAction(ActionEvent event) {
+
+			}
+		});
+		skalen.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+			@Override
+			public void performBeforeEventsBlocked(ActionEvent event) {
+				layout.setCenterNode(LayoutController.SKALEN_FXML);
 			}
 
 			@Override

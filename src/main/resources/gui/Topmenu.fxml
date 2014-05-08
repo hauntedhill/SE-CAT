@@ -12,6 +12,7 @@
        <MenuItem fx:id="handlungsfeld" mnemonicParsing="false" text="Handlungsfelder pflegen" />
         <MenuItem fx:id="eigenschaften" mnemonicParsing="false" text="Eigenschaften pflegen" />
         <MenuItem fx:id="perspektive" mnemonicParsing="false" text="Perspektiven pflegen" />
+        <MenuItem fx:id="skalen" mnemonicParsing="false" text="Skalen pflegen" />
        
       </items>
     </Menu>
