@@ -37,8 +37,11 @@ import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.HandlungsfeldDAO;
+import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
+import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
+import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
@@ -295,11 +298,11 @@ public class HandlungsfeldController extends BaseController {
 					public void handle(ActionEvent t) {
 						if (inaktiv == false) {
 							inaktiv = true;
-							buildFilteredTreeTable(hauptfeldModel.getHandlungsfelderBy(false, false));
+							buildFilteredTreeTable(hauptfeldModel.getHandlungsfelderBy(false, false), false, false);
 						} else {
 
 							inaktiv = false;
-							buildFilteredTreeTable(hauptfeldModel.getHandlungsfelderBy(true, true));
+							buildFilteredTreeTable(hauptfeldModel.getHandlungsfelderBy(true, true), true, true);
 
 						}
 
@@ -494,7 +497,12 @@ public class HandlungsfeldController extends BaseController {
 
 	}
 
-	public void buildFilteredTreeTable(List<Handlungsfeld> hfList) {
+	public void buildFilteredTreeTable(List<Handlungsfeld> hfList, boolean handlungsfeldAktiv, boolean itemAktiv) {
+		buildFilteredTreeTable(hfList, handlungsfeldAktiv, itemAktiv, null, null, null, null, null);
+	}
+
+	public void buildFilteredTreeTable(List<Handlungsfeld> hfList, boolean handlungsfeldAktiv, boolean itemAktiv, Perspektive p, Eigenschaft e,
+			String notizHandlungsfeld, String notizItem, Fach f) {
 		Handlungsfeld h = new Handlungsfeld();
 		h.setId(1);
 		h.setName("Handlungsfelder");
@@ -505,7 +513,7 @@ public class HandlungsfeldController extends BaseController {
 		while (it.hasNext()) {
 
 			Handlungsfeld ha = it.next();
-			List<Item> item = ha.getItems();
+			List<Item> item = hauptfeldModel.getItemBy(ha, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
 			TreeItemWrapper hawrapped = new TreeItemWrapper(ha);
 			TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true)));
 

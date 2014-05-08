@@ -179,7 +179,8 @@ public class FilterAllItemsController extends BaseController {
 				Stage stage = (Stage) filter.getScene().getWindow();
 				List<Handlungsfeld> result = handlungsfeldModel.getHandlungsfelderBy(true, true, perspektiveList.getSelectionModel().getSelectedItem(),
 						eigenschaftList.getSelectionModel().getSelectedItem(), null, notiz.getText(), null);
-				hauptfeldController.buildFilteredTreeTable(result);
+				hauptfeldController.buildFilteredTreeTable(result, true, true, perspektiveList.getSelectionModel().getSelectedItem(), eigenschaftList
+						.getSelectionModel().getSelectedItem(), null, notiz.getText(), null);
 				stage.close();
 
 			}
