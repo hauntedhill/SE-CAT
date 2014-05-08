@@ -1,7 +1,6 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -14,13 +13,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-<<<<<<< HEAD
-=======
-import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
->>>>>>> 8b0008830fab2af2d43c211856d678877505b58e
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -56,27 +50,25 @@ public class HandlungsfeldController extends BaseController {
 
 	@FXML
 	private TreeTableView<TreeItemWrapper> treeTable;
-	
 
-	
 	@FXML
 	private MenuBar menuBar;
-	
+
 	@FXML
 	private Menu menuFilter;
-	
+
 	@FXML
 	private MenuItem menuItemFilterHandlungsfeld;
 
 	@FXML
 	private MenuItem menuItemFilterItem;
-	
+
 	@Autowired
 	private HandlungsfeldDAO service;
 
 	@Autowired
 	private HandlungsfeldModel hauptfeldModel;
-	
+
 	private static boolean inaktiv = false;
 
 	public void initializeController(URL location, ResourceBundle resources) {
@@ -129,7 +121,7 @@ public class HandlungsfeldController extends BaseController {
 
 						// stage.setScene(scene);
 						stage.show();
-						
+
 						stage.setOnHidden(new EventHandler<WindowEvent>() {
 							public void handle(WindowEvent we) {
 								logger.debug("Closing dialog stage.");
@@ -145,22 +137,22 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
-					  if( !treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals( "Handlungsfelder")){
-					   
-						Stage stage = new Stage();
+						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
 
-						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addItem.fxml", stage);
+							Stage stage = new Stage();
 
-						stage.show();
+							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addItem.fxml", stage);
 
-						stage.setOnHidden(new EventHandler<WindowEvent>() {
-							public void handle(WindowEvent we) {
-								logger.debug("Closing dialog stage.");
+							stage.show();
 
-							}
-						});
+							stage.setOnHidden(new EventHandler<WindowEvent>() {
+								public void handle(WindowEvent we) {
+									logger.debug("Closing dialog stage.");
 
-					  }
+								}
+							});
+
+						}
 					}
 				});
 
@@ -201,7 +193,6 @@ public class HandlungsfeldController extends BaseController {
 						i.setAktiv(false);
 						hauptfeldModel.mergeItem(i);
 						buildTreeTable();
-					
 
 					}
 
@@ -215,8 +206,7 @@ public class HandlungsfeldController extends BaseController {
 						Item i = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getItem();
 						i.setAktiv(true);
 						hauptfeldModel.mergeItem(i);
-					
-						
+
 					}
 
 				});
@@ -225,94 +215,91 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
-					    if( !treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals( "Handlungsfelder")){
-						Stage stage = new Stage();
+						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
+							Stage stage = new Stage();
 
-						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterItem.fxml", stage);
+							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterItem.fxml", stage);
 
-						stage.show();
+							stage.show();
 
-						stage.setOnHidden(new EventHandler<WindowEvent>() {
-							public void handle(WindowEvent we) {
-								logger.debug("Closing dialog stage.");
+							stage.setOnHidden(new EventHandler<WindowEvent>() {
+								public void handle(WindowEvent we) {
+									logger.debug("Closing dialog stage.");
 
-							}
-						});
-					    }
+								}
+							});
+						}
 					}
 
 				});
 
 				moveItems.setOnAction(new EventHandler<ActionEvent>() {
-				    
+
 					@Override
 					public void handle(ActionEvent t) {
-					    if( !treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals( "Handlungsfelder")){
-						Stage stage = new Stage();
+						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
+							Stage stage = new Stage();
 
-						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/moveItems.fxml", stage);
+							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/moveItems.fxml", stage);
 
-						stage.show();
+							stage.show();
 
-						stage.setOnHidden(new EventHandler<WindowEvent>() {
-							public void handle(WindowEvent we) {
-								logger.debug("Closing dialog stage.");
+							stage.setOnHidden(new EventHandler<WindowEvent>() {
+								public void handle(WindowEvent we) {
+									logger.debug("Closing dialog stage.");
 
-							}
-						});
-					    }
+								}
+							});
+						}
 					}
 
 				});
 
 				menuItemFilterItem.setOnAction(new EventHandler<ActionEvent>() {
 
-                    @Override
-                    public void handle(ActionEvent t) {
+					@Override
+					public void handle(ActionEvent t) {
 
-                        Stage stage = new Stage();
+						Stage stage = new Stage();
 
-                        Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/filterAllItems.fxml"));
+						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/filterAllItems.fxml"));
 
-                        Scene scene = new Scene(p);
+						Scene scene = new Scene(p);
 
-                        stage.setScene(scene);
-                        stage.show();
+						stage.setScene(scene);
+						stage.show();
 
-                        stage.setOnHidden(new EventHandler<WindowEvent>() {
-                            public void handle(WindowEvent we) {
-                                logger.debug("Closing dialog stage.");
+						stage.setOnHidden(new EventHandler<WindowEvent>() {
+							public void handle(WindowEvent we) {
+								logger.debug("Closing dialog stage.");
 
-                            }
-                        });
+							}
+						});
 
-                    }
+					}
 
-                });
-				
+				});
+
 				menuItemFilterHandlungsfeld.setOnAction(new EventHandler<ActionEvent>() {
 
-                    @Override
-                    public void handle(ActionEvent t) {
-                        if(inaktiv == false){
-                        inaktiv = true;
-                        buildFilteredTreeTable( hauptfeldModel.getHandlungsfelderBy( false, false ));
-                        }
-                        else{
-                            
-                            inaktiv = false;
-                            buildFilteredTreeTable( hauptfeldModel.getHandlungsfelderBy( true, true ));
-                        
-                        }
+					@Override
+					public void handle(ActionEvent t) {
+						if (inaktiv == false) {
+							inaktiv = true;
+							buildFilteredTreeTable(hauptfeldModel.getHandlungsfelderBy(false, false));
+						} else {
 
-                    }
+							inaktiv = false;
+							buildFilteredTreeTable(hauptfeldModel.getHandlungsfelderBy(true, true));
 
-                });
-				
-				
+						}
+
+					}
+
+				});
+
 				rowMenu.getItems().add(activateItItem);
 				rowMenu.getItems().add(deactivateItItem);
-				
 
 				rowMenuHf.getItems().add(addHfItem);
 				rowMenuHf.getItems().add(activateHfItem);
@@ -387,7 +374,6 @@ public class HandlungsfeldController extends BaseController {
 
 		});
 
-
 		this.buildTreeTable();
 
 	}
@@ -396,18 +382,15 @@ public class HandlungsfeldController extends BaseController {
 
 		hauptfeldModel.persistHandlungsfeld(h);
 		TreeItemWrapper t = new TreeItemWrapper(h);
-   
 
-		
 		if (treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().equals(treeTable.getRoot().getValue())) {
-			treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(new TreeItem<TreeItemWrapper>(t, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true))));
-		} 
-		else
+			treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren()
+					.add(new TreeItem<TreeItemWrapper>(t, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true))));
+		} else
 			treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
 					.add(new TreeItem<TreeItemWrapper>(t, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true))));
 
 	}
-
 
 	public void filterItem(String notiz) {
 
@@ -470,14 +453,13 @@ public class HandlungsfeldController extends BaseController {
 		h.setId(1);
 		h.setName("Handlungsfelder");
 		List<Handlungsfeld> hf;
-		if(inaktiv == false){
-		hf = hauptfeldModel.getHandlungsfelderBy(true, true);
+		if (inaktiv == false) {
+			hf = hauptfeldModel.getHandlungsfelderBy(true, true);
+		} else {
+
+			hf = hauptfeldModel.getHandlungsfelderBy(false, false);
 		}
-		else{
-		    
-		hf = hauptfeldModel.getHandlungsfelderBy(false, false);
-		}
-		  
+
 		TreeItemWrapper t = new TreeItemWrapper(h);
 		TreeItem<TreeItemWrapper> root = new TreeItem<TreeItemWrapper>(t);
 		ListIterator<Handlungsfeld> it = hf.listIterator();
@@ -502,45 +484,40 @@ public class HandlungsfeldController extends BaseController {
 		treeTable.setRoot(root);
 
 	}
-	
-	public void buildFilteredTreeTable( List<Handlungsfeld> hfList ){
-	       Handlungsfeld h = new Handlungsfeld();
-	       h.setId(1);
-	       h.setName("Handlungsfelder");
-	    
-	       TreeItemWrapper t = new TreeItemWrapper(h);
-	        TreeItem<TreeItemWrapper> root = new TreeItem<TreeItemWrapper>(t);
-	        ListIterator<Handlungsfeld> it = hfList.listIterator();
-	        while (it.hasNext()) {
 
-	            Handlungsfeld ha = it.next();
-	            List<Item> item = ha.getItems();
-	            TreeItemWrapper hawrapped = new TreeItemWrapper(ha);
-	            TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true)));
+	public void buildFilteredTreeTable(List<Handlungsfeld> hfList) {
+		Handlungsfeld h = new Handlungsfeld();
+		h.setId(1);
+		h.setName("Handlungsfelder");
 
-	            ListIterator<Item> iter = item.listIterator();
-	            while (iter.hasNext()) {
-	                TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
-	                node.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped, new ImageView(new Image("/image/icons/filenew.png", 16, 16, true, true))));
-	            }
+		TreeItemWrapper t = new TreeItemWrapper(h);
+		TreeItem<TreeItemWrapper> root = new TreeItem<TreeItemWrapper>(t);
+		ListIterator<Handlungsfeld> it = hfList.listIterator();
+		while (it.hasNext()) {
 
-	            root.getChildren().add(node);
+			Handlungsfeld ha = it.next();
+			List<Item> item = ha.getItems();
+			TreeItemWrapper hawrapped = new TreeItemWrapper(ha);
+			TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true)));
 
-	        }
+			ListIterator<Item> iter = item.listIterator();
+			while (iter.hasNext()) {
+				TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
+				node.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped, new ImageView(new Image("/image/icons/filenew.png", 16, 16, true, true))));
+			}
 
-	        root.setExpanded(true);
-	        treeTable.setRoot(root);
+			root.getChildren().add(node);
 
-<<<<<<< HEAD
+		}
+
+		root.setExpanded(true);
+		treeTable.setRoot(root);
+	}
+
 	@Override
 	public String getSceneName() {
 		// TODO Auto-generated method stub
 		return "Handlungsfeld pflegen";
 	}
 
-=======
-	}
-	
-	
->>>>>>> 8b0008830fab2af2d43c211856d678877505b58e
 }
