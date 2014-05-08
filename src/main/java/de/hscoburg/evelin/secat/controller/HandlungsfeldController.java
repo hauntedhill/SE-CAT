@@ -13,8 +13,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -118,11 +116,8 @@ public class HandlungsfeldController extends BaseController {
 
 						Stage stage = new Stage();
 
-						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/addHandlungsfeld.fxml"));
+						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addHandlungsfeld.fxml", stage);
 
-						Scene scene = new Scene(p);
-
-						stage.setScene(scene);
 						stage.show();
 
 						stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -144,11 +139,8 @@ public class HandlungsfeldController extends BaseController {
 
 							Stage stage = new Stage();
 
-							Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/addItem.fxml"));
+							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addItem.fxml", stage);
 
-							Scene scene = new Scene(p);
-
-							stage.setScene(scene);
 							stage.show();
 
 							stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -224,11 +216,8 @@ public class HandlungsfeldController extends BaseController {
 						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
 							Stage stage = new Stage();
 
-							Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/filterItem.fxml"));
+							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterItem.fxml", stage);
 
-							Scene scene = new Scene(p);
-
-							stage.setScene(scene);
 							stage.show();
 
 							stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -249,11 +238,8 @@ public class HandlungsfeldController extends BaseController {
 						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
 							Stage stage = new Stage();
 
-							Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/moveItems.fxml"));
+							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/moveItems.fxml", stage);
 
-							Scene scene = new Scene(p);
-
-							stage.setScene(scene);
 							stage.show();
 
 							stage.setOnHidden(new EventHandler<WindowEvent>() {
@@ -274,11 +260,8 @@ public class HandlungsfeldController extends BaseController {
 
 						Stage stage = new Stage();
 
-						Parent p = ((Parent) SpringFXMLLoader.getInstance().load("/gui/stammdaten/filterAllItems.fxml"));
+						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterAllItems.fxml", stage);
 
-						Scene scene = new Scene(p);
-
-						stage.setScene(scene);
 						stage.show();
 
 						stage.setOnHidden(new EventHandler<WindowEvent>() {
