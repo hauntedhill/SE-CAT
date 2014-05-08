@@ -42,6 +42,7 @@ public class FilterItemController extends BaseController {
 	private HandlungsfeldModel hauptfeldModel;
 
 	@Override
+<<<<<<< HEAD
 	public void initializeController(URL location, ResourceBundle resources) {
 		/*
 		 * ObservableList<String> options = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
@@ -49,7 +50,14 @@ public class FilterItemController extends BaseController {
 		 * 
 		 * eigenschaft.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		 */
+=======
+	public void initialize(URL location, ResourceBundle resources) {
+>>>>>>> 8b0008830fab2af2d43c211856d678877505b58e
 
+	    
+	    
+	    
+	    
 		filter.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
