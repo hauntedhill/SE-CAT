@@ -4,13 +4,24 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.HandlungsfeldController">
-<children><TreeTableView fx:id="treeTable" layoutX="-3.0" layoutY="-2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0">
+<AnchorPane prefHeight="145.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.HandlungsfeldController">
+<children>
+<TreeTableView fx:id="treeTable"  layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="600.0">
 <columns>
 <TreeTableColumn prefWidth="167.0" text="Name" />
 <TreeTableColumn prefWidth="101.0" text="Notiz" />
-<TreeTableColumn prefWidth="98.0" text="Rolle" />
+<TreeTableColumn prefWidth="98.0" text="Perspektive" />
 <TreeTableColumn prefWidth="109.0" text="Eigenschaft" />
 </columns>
 </TreeTableView>
+<MenuBar  layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+  <menus>
+    <Menu fx:id="menuFilter" mnemonicParsing="false" text="Filter">
+      <items>
+        <MenuItem fx:id="menuItemFilterHandlungsfeld" mnemonicParsing="false" text="Handlungsfelder in/aktiv" />
+        <MenuItem fx:id="menuItemFilterItem" mnemonicParsing="false" text="Items filtern" />
+      </items>
+    </Menu>
+  </menus>
+</MenuBar>
 </children></AnchorPane>
