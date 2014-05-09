@@ -6,6 +6,7 @@ import java.io.InputStream;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -31,9 +32,12 @@ public class SpringFXMLLoader {
 		return Holder.INSTANCE;
 	}
 
-	public void loadInNewScene(String url, Stage currentStage, int sizeX, int sizeY) {
+	public Stage loadInNewScene(String url, Stage currentStage, int sizeX, int sizeY, Stage owner) {
 		try {
-
+			if (owner != null) {
+				currentStage.initModality(Modality.APPLICATION_MODAL);
+				currentStage.initOwner(owner);
+			}
 			InputStream fxmlStream = SpringFXMLLoader.class.getResourceAsStream(url);
 			FXMLLoader loader = new FXMLLoader();
 			loader.setControllerFactory(new Callback<Class<?>, Object>() {
@@ -53,6 +57,7 @@ public class SpringFXMLLoader {
 			}
 
 			currentStage.setScene(scene);
+			return currentStage;
 
 		} catch (IOException ioException) {
 			logger.error("Could not init FXML File", ioException);
@@ -61,9 +66,15 @@ public class SpringFXMLLoader {
 		}
 	}
 
-	public void loadInNewScene(String url, Stage currentStage) {
+	public Stage loadInNewScene(String url) {
 
-		loadInNewScene(url, currentStage, 600, 480);
+		return loadInNewScene(url, new Stage(), 600, 480, (Stage) org.controlsfx.tools.Utils.getWindow(null));
+
+	}
+
+	public Stage loadInNewScene(String url, Stage currentStage, Stage owner) {
+
+		return loadInNewScene(url, currentStage, 600, 480, owner);
 
 	}
 

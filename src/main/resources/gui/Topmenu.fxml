@@ -2,19 +2,36 @@
 
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="de.hscoburg.evelin.secat.controller.base.TopMenuController">
-<children><MenuBar fx:id="menuBar" layoutY="2.0" prefHeight="25.0" maxHeight="25.0" prefWidth="600.0">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.base.TopMenuController">
+<children><MenuBar fx:id="menuBar" layoutY="2.0" maxHeight="25.0" prefHeight="25.0" prefWidth="600.0">
   <menus>
-    <Menu mnemonicParsing="false" text="Stammdaten">
+    <Menu mnemonicParsing="true" text="Stammdaten">
       <items>
-       <MenuItem fx:id="handlungsfeld" mnemonicParsing="false" text="Handlungsfelder pflegen" />
-        <MenuItem fx:id="eigenschaften" mnemonicParsing="false" text="Eigenschaften pflegen" />
-        <MenuItem fx:id="perspektive" mnemonicParsing="false" text="Perspektiven pflegen" />
-        <MenuItem fx:id="skalen" mnemonicParsing="false" text="Skalen pflegen" />
+       <MenuItem fx:id="handlungsfeld" mnemonicParsing="true" text="Handlungsfelder pflegen">
+<accelerator>
+<KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
+</accelerator></MenuItem>
+        <MenuItem fx:id="eigenschaften" text="Eigenschaften pflegen">
+        <accelerator>
+<KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP" shift="UP" shortcut="UP" />
+</accelerator>
+</MenuItem>
+        <MenuItem fx:id="perspektive" text="Perspektiven pflegen">
+        <accelerator>
+<KeyCodeCombination alt="DOWN" code="P" control="UP" meta="UP" shift="UP" shortcut="UP" />
+</accelerator>
+</MenuItem>
+        <MenuItem fx:id="skalen" text="Skalen pflegen">
+        <accelerator>
+<KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="UP" />
+</accelerator>
+</MenuItem>
        
       </items>
+
     </Menu>
   </menus>
 </MenuBar>

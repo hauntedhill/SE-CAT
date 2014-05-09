@@ -92,9 +92,7 @@ public class EigenschaftenController extends BaseController {
 				if (((KeyEvent) event).getCode() == KeyCode.ENTER)
 
 				{
-					Eigenschaft e = new Eigenschaft();
-					e.setName(textNameEigenschaften.getText());
-					eigenschaftenModel.persist(e);
+					buttonAdd.fire();
 				}
 
 			}

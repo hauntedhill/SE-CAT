@@ -114,9 +114,7 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public void handle(ActionEvent t) {
 
-						Stage stage = new Stage();
-
-						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addHandlungsfeld.fxml", stage);
+						Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addHandlungsfeld.fxml");
 
 						stage.show();
 
@@ -137,9 +135,7 @@ public class HandlungsfeldController extends BaseController {
 					public void handle(ActionEvent t) {
 						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
 
-							Stage stage = new Stage();
-
-							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addItem.fxml", stage);
+							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addItem.fxml");
 
 							stage.show();
 
@@ -214,9 +210,8 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public void handle(ActionEvent t) {
 						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
-							Stage stage = new Stage();
 
-							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterItem.fxml", stage);
+							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterItem.fxml");
 
 							stage.show();
 
@@ -236,9 +231,8 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public void handle(ActionEvent t) {
 						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
-							Stage stage = new Stage();
 
-							SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/moveItems.fxml", stage);
+							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/moveItems.fxml");
 
 							stage.show();
 
@@ -258,9 +252,7 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public void handle(ActionEvent t) {
 
-						Stage stage = new Stage();
-
-						SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterAllItems.fxml", stage);
+						Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterAllItems.fxml");
 
 						stage.show();
 

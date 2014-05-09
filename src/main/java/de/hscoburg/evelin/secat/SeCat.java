@@ -68,7 +68,7 @@ public class SeCat extends Application {
 						@Override
 						public void run() {
 							try {
-								SpringFXMLLoader.getInstance().loadInNewScene(LayoutController.LAYOUT_FXML, primaryStage);
+								SpringFXMLLoader.getInstance().loadInNewScene(LayoutController.LAYOUT_FXML, primaryStage, null);
 								// Parent p = (Parent) SpringFXMLLoader.getInstance().load("/splashScreen.fxml");
 
 								primaryStage.getIcons().add(new Image("/image/icons/dvi.png"));
