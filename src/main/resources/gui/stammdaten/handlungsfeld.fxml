@@ -10,7 +10,7 @@
 <columns>
 <TreeTableColumn prefWidth="167.0" text="Name" />
 <TreeTableColumn prefWidth="101.0" text="Notiz" />
-<TreeTableColumn prefWidth="98.0" text="Perspektive" />
+<TreeTableColumn prefWidth="98.0" text="Skala" />
 <TreeTableColumn prefWidth="109.0" text="Eigenschaft" />
 </columns>
 </TreeTableView>

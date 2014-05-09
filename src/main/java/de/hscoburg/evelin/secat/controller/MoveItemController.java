@@ -12,13 +12,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
-import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -55,26 +55,27 @@ public class MoveItemController extends BaseController {
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
-		handlungsfeld.setCellFactory(new Callback<ListView<Handlungsfeld>, ListCell<Handlungsfeld>>() {
+		move.setGraphic(new ImageView(new Image("/image/icons/up.png", 16, 16, true, true)));
+		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
+		handlungsfeld.setConverter(new StringConverter<Handlungsfeld>() {
+			@Override
+			public String toString(Handlungsfeld h) {
+
+				if (h == null) {
+					System.out.println("null");
+					return "";
+				}
+				return h.getName();
+			}
 
 			@Override
-			public ListCell<Handlungsfeld> call(ListView<Handlungsfeld> s) {
-
-				ListCell<Handlungsfeld> cell = new ListCell<Handlungsfeld>() {
-
-					@Override
-					protected void updateItem(Handlungsfeld t, boolean bln) {
-						super.updateItem(t, bln);
-						if (t != null) {
-							setText(t.getName());
-						}
-					}
-
-				};
-
-				return cell;
+			public Handlungsfeld fromString(String string) {
+				throw new RuntimeException("not required for non editable ComboBox");
 			}
+
 		});
+
+		handlungsfeld.promptTextProperty().set("Handlungsfeld wählen");
 
 		TreeTableView<TreeItemWrapper> treeTable = hauptfeldController.getTreeTable();
 		TreeItem<TreeItemWrapper> old = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex());

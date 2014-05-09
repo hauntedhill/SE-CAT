@@ -8,6 +8,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,25 +43,22 @@ public class AddHandlungsfeldController extends BaseController {
 
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
-		/*
-		 * ObservableList<String> options = FXCollections.observableArrayList("Option 1", "Option 2", "Option 3");
-		 * eigenschaft.setItems(options);
-		 * 
-		 * eigenschaft.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		 */
+
+		save.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
+		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
 
 		save.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
 
 				Handlungsfeld h = new Handlungsfeld();
-				// h.setId((new Random()).nextInt());
+
 				h.setAktiv(true);
 				h.setName(name.getText());
 
 				hauptfeldController.addHauptfeldToCurrentSelection(h);
 				Stage stage = (Stage) save.getScene().getWindow();
-				// do what you have to do
+
 				stage.close();
 
 			}

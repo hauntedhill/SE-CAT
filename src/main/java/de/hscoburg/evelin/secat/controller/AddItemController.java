@@ -18,8 +18,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.StringConverter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -75,27 +78,26 @@ public class AddItemController extends BaseController {
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
-		skalaBox.setCellFactory(new Callback<ListView<Skala>, ListCell<Skala>>() {
+		save.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
+		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
+		skalaBox.setConverter(new StringConverter<Skala>() {
+			@Override
+			public String toString(Skala object) {
+
+				if (object == null) {
+					System.out.println("null");
+					return "";
+				}
+				return object.getName();
+			}
 
 			@Override
-			public ListCell<Skala> call(ListView<Skala> s) {
-
-				ListCell<Skala> cell = new ListCell<Skala>() {
-
-					@Override
-					protected void updateItem(Skala t, boolean bln) {
-						super.updateItem(t, bln);
-
-						if (t != null) {
-							setText(t.getName());
-						}
-					}
-
-				};
-
-				return cell;
+			public Skala fromString(String string) {
+				throw new RuntimeException("not required for non editable ComboBox");
 			}
+
 		});
+		skalaBox.promptTextProperty().set("Skala wählen");
 
 		ObservableList<Skala> skalenOl = FXCollections.observableArrayList();
 		List<Skala> skalenList = skalenModel.getSkalen();
