@@ -74,6 +74,8 @@ public class HandlungsfeldController extends BaseController {
 
 	public void initializeController(URL location, ResourceBundle resources) {
 
+		menuItemFilterHandlungsfeld.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
+		menuItemFilterItem.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
 		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(0))
 				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
 
@@ -88,6 +90,15 @@ public class HandlungsfeldController extends BaseController {
 
 					public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
 						return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getNotiz());
+
+					}
+				});
+
+		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(2))
+				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
+
+					public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
+						return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getSkala());
 
 					}
 				});
@@ -293,7 +304,7 @@ public class HandlungsfeldController extends BaseController {
 				rowMenuHf.getItems().add(deactivateHfItem);
 				rowMenuHf.getItems().add(addItItem);
 				rowMenuHf.getItems().add(moveItems);
-				rowMenuHf.getItems().add(filterItItem);
+				// rowMenuHf.getItems().add(filterItItem);
 
 				ObservableObjectValue<TreeItemWrapper> rowMenuObserver = new ObservableObjectValue<TreeItemWrapper>() {
 

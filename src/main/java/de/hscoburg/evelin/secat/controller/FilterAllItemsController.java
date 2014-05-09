@@ -11,10 +11,12 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -25,7 +27,6 @@ import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
-import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
@@ -39,21 +40,18 @@ public class FilterAllItemsController extends BaseController {
 
 	@FXML
 	private Button cancle;
-	/*
-	 * @FXML private TextField name;
-	 * 
-	 * @FXML private TextField rolle;
-	 */
+
 	@FXML
 	private TextArea notiz;
+
+	@FXML
+	private CheckBox isInaktiv;
+
 	@FXML
 	private ListView<Eigenschaft> eigenschaftList;
 
 	@FXML
 	private ListView<Perspektive> perspektiveList;
-
-	@FXML
-	private ComboBox<Skala> skalaBox;
 
 	@Autowired
 	private HandlungsfeldController hauptfeldController;
@@ -73,39 +71,8 @@ public class FilterAllItemsController extends BaseController {
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
-		skalaBox.setCellFactory(new Callback<ListView<Skala>, ListCell<Skala>>() {
-
-			@Override
-			public ListCell<Skala> call(ListView<Skala> s) {
-
-				ListCell<Skala> cell = new ListCell<Skala>() {
-
-					@Override
-					protected void updateItem(Skala t, boolean bln) {
-						super.updateItem(t, bln);
-
-						if (t != null) {
-							setText(t.getName());
-						}
-					}
-
-				};
-
-				return cell;
-			}
-		});
-
-		ObservableList<Skala> skalenOl = FXCollections.observableArrayList();
-		List<Skala> skalenList = skalenModel.getSkalen();
-		ListIterator<Skala> itskala = skalenList.listIterator();
-
-		while (itskala.hasNext()) {
-
-			skalenOl.add(itskala.next());
-			;
-		}
-
-		skalaBox.setItems(skalenOl);
+		filter.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
+		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
 
 		perspektiveList.setCellFactory(new Callback<ListView<Perspektive>, ListCell<Perspektive>>() {
 
@@ -174,13 +141,13 @@ public class FilterAllItemsController extends BaseController {
 		filter.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				;
 
 				Stage stage = (Stage) filter.getScene().getWindow();
-				List<Handlungsfeld> result = handlungsfeldModel.getHandlungsfelderBy(true, true, perspektiveList.getSelectionModel().getSelectedItem(),
+				List<Handlungsfeld> result = handlungsfeldModel.getHandlungsfelderBy(true, !isInaktiv.isSelected(), perspektiveList.getSelectionModel()
+						.getSelectedItem(), eigenschaftList.getSelectionModel().getSelectedItem(), null, notiz.getText(), null);
+
+				hauptfeldController.buildFilteredTreeTable(result, true, !isInaktiv.isSelected(), perspektiveList.getSelectionModel().getSelectedItem(),
 						eigenschaftList.getSelectionModel().getSelectedItem(), null, notiz.getText(), null);
-				hauptfeldController.buildFilteredTreeTable(result, true, true, perspektiveList.getSelectionModel().getSelectedItem(), eigenschaftList
-						.getSelectionModel().getSelectedItem(), null, notiz.getText(), null);
 				stage.close();
 
 			}
