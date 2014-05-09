@@ -6,15 +6,17 @@
 
 <AnchorPane prefHeight="145.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.HandlungsfeldController">
 <children>
-<TreeTableView fx:id="treeTable"  layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="600.0">
+<TreeTableView fx:id="treeTable"  layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="800.0">
 <columns>
-<TreeTableColumn prefWidth="167.0" text="Name" />
-<TreeTableColumn prefWidth="101.0" text="Notiz" />
+<TreeTableColumn prefWidth="180.0" text="Name" />
+<TreeTableColumn prefWidth="50.0" text="Aktiv" />
+<TreeTableColumn prefWidth="250.0" text="Notiz" />
 <TreeTableColumn prefWidth="98.0" text="Skala" />
-<TreeTableColumn prefWidth="109.0" text="Eigenschaft" />
+<TreeTableColumn prefWidth="110.0" text="Eigenschaften" />
+<TreeTableColumn prefWidth="110.0" text="Perspektiven" />
 </columns>
 </TreeTableView>
-<MenuBar  layoutY="2.0" prefHeight="25.0" prefWidth="600.0">
+<MenuBar  layoutY="2.0" prefHeight="25.0" prefWidth="800.0">
   <menus>
     <Menu fx:id="menuFilter" mnemonicParsing="false" text="Filter">
       <items>

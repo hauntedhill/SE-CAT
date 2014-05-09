@@ -13,6 +13,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -85,11 +86,15 @@ public class HandlungsfeldController extends BaseController {
 					}
 				});
 
-		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(1))
-				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
+		((TreeTableColumn<TreeItemWrapper, Node>) treeTable.getColumns().get(1))
+				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, Node>, ObservableValue<Node>>() {
 
-					public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getNotiz());
+					public ObservableValue<Node> call(CellDataFeatures<TreeItemWrapper, Node> p) {
+						if (p.getValue().getValue().isAktive()) {
+							return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
+						} else {
+							return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/bookmark_Silver.png", 16, 16, true, true)));
+						}
 
 					}
 				});
@@ -98,7 +103,52 @@ public class HandlungsfeldController extends BaseController {
 				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
 
 					public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
+						return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getNotiz());
+
+					}
+				});
+
+		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(3))
+				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
+
+					public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
 						return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getSkala());
+
+					}
+				});
+
+		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(4))
+				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
+
+					public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
+
+						StringBuilder b = new StringBuilder();
+						for (Eigenschaft e : p.getValue().getValue().getEigenschaften()) {
+							if (b.length() != 0) {
+								b.append(", ");
+							}
+							b.append(e.getName());
+						}
+
+						return new ReadOnlyObjectWrapper<String>(b.toString());
+
+					}
+				});
+
+		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(5))
+				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
+
+					public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
+
+						StringBuilder b = new StringBuilder();
+						for (Perspektive e : p.getValue().getValue().getPerspektiven()) {
+							if (b.length() != 0) {
+								b.append(", ");
+							}
+							b.append(e.getName());
+						}
+
+						return new ReadOnlyObjectWrapper<String>(b.toString());
 
 					}
 				});
@@ -450,6 +500,7 @@ public class HandlungsfeldController extends BaseController {
 		Handlungsfeld h = new Handlungsfeld();
 		h.setId(1);
 		h.setName("Handlungsfelder");
+		h.setAktiv(true);
 		List<Handlungsfeld> hf;
 		if (inaktiv == false) {
 			hf = hauptfeldModel.getHandlungsfelderBy(true, true);
@@ -492,6 +543,7 @@ public class HandlungsfeldController extends BaseController {
 		Handlungsfeld h = new Handlungsfeld();
 		h.setId(1);
 		h.setName("Handlungsfelder");
+		h.setAktiv(true);
 
 		TreeItemWrapper t = new TreeItemWrapper(h);
 		TreeItem<TreeItemWrapper> root = new TreeItem<TreeItemWrapper>(t);

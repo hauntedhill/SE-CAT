@@ -68,13 +68,13 @@ public class SpringFXMLLoader {
 
 	public Stage loadInNewScene(String url) {
 
-		return loadInNewScene(url, new Stage(), 600, 480, (Stage) org.controlsfx.tools.Utils.getWindow(null));
+		return loadInNewScene(url, new Stage(), 800, 600, (Stage) org.controlsfx.tools.Utils.getWindow(null));
 
 	}
 
 	public Stage loadInNewScene(String url, Stage currentStage, Stage owner) {
 
-		return loadInNewScene(url, currentStage, 600, 480, owner);
+		return loadInNewScene(url, currentStage, 800, 600, owner);
 
 	}
 

@@ -1,5 +1,8 @@
 package de.hscoburg.evelin.secat.dao.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TreeItemWrapper {
 
 	private Handlungsfeld h;
@@ -50,5 +53,29 @@ public class TreeItemWrapper {
 	public boolean isHandlungsfeld() {
 
 		return isHandlungsfeld;
+	}
+
+	public List<Eigenschaft> getEigenschaften() {
+		if (this.isHandlungsfeld) {
+			return new ArrayList<Eigenschaft>();
+		} else {
+			return i.getEigenschaften();
+		}
+	}
+
+	public List<Perspektive> getPerspektiven() {
+		if (this.isHandlungsfeld) {
+			return new ArrayList<Perspektive>();
+		} else {
+			return i.getPerspektiven();
+		}
+	}
+
+	public boolean isAktive() {
+		if (this.isHandlungsfeld) {
+			return this.h.isAktiv();
+		} else {
+			return this.i.isAktiv();
+		}
 	}
 }
