@@ -3,6 +3,7 @@ package de.hscoburg.evelin.secat.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,6 +19,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
+import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -73,9 +75,21 @@ public class PerspektivenController extends BaseController {
 
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
-				Perspektive e = new Perspektive();
-				e.setName(textNamePerspektiven.getText());
-				perspektivenModel.persist(e);
+
+				if (!"".equals(textNamePerspektiven.getText().trim())) {
+					Perspektive e = new Perspektive();
+					e.setName(textNamePerspektiven.getText());
+					perspektivenModel.persist(e);
+				} else {
+					Platform.runLater(new Runnable() {
+
+						@Override
+						public void run() {
+							Dialogs.create().title("Ungültiger Wert").masthead("Der von Ihnen eingegebene Wert ist ungültig").showError();
+
+						}
+					});
+				}
 
 			}
 
