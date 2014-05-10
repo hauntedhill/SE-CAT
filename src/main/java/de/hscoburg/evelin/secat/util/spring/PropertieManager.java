@@ -21,7 +21,7 @@ public class PropertieManager extends Properties {
 	private PropertieManager() {
 
 		try {
-			this.load(SpringDefaultConfiguration.class.getResourceAsStream("/properties.properties"));
+			this.load(SpringDefaultConfiguration.class.getResourceAsStream("/secat.properties"));
 		} catch (IOException e) {
 
 			e.printStackTrace();
