@@ -1,15 +1,16 @@
 package de.hscoburg.evelin.secat.util.javafx;
 
+import java.util.concurrent.Executors;
+
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
 import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 import org.controlsfx.dialog.Dialogs;
 import org.slf4j.Logger;
-
-import de.hscoburg.evelin.secat.SeCat;
 
 public abstract class SeCatEventHandle<T extends Event> implements EventHandler<T> {
 
@@ -17,7 +18,7 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 
 	@Override
 	public void handle(final T event) {
-		final Scene s = SeCat.PRIMARY_STAGE.getScene();
+		final Scene s = ((Stage) org.controlsfx.tools.Utils.getWindow(null)).getScene();
 		final EventHandler<javafx.scene.input.InputEvent> handler = new EventHandler<javafx.scene.input.InputEvent>() {
 			@Override
 			public void handle(javafx.scene.input.InputEvent mouseEvent) {
@@ -67,7 +68,7 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 				}
 			});
 
-			Thread t = new Thread(c);
+			Thread t = Executors.defaultThreadFactory().newThread(c);
 			t.start();
 		} catch (Exception e) {
 

@@ -1,5 +1,7 @@
 package de.hscoburg.evelin.secat;
 
+import java.util.concurrent.Executors;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -21,10 +23,6 @@ public class SeCat extends Application {
 	public static Stage PRIMARY_STAGE;
 
 	public static String MAIN_STAGE_TITLE = "SE-CAT";
-
-	public static void setSubTitle(String title) {
-		PRIMARY_STAGE.setTitle(MAIN_STAGE_TITLE + " - " + title);
-	}
 
 	public void start(final Stage primaryStage) {
 		PRIMARY_STAGE = primaryStage;
@@ -52,11 +50,12 @@ public class SeCat extends Application {
 			splashStage.initStyle(StageStyle.UTILITY);
 			splashStage.setScene(sceneSplash);
 			splashStage.setResizable(false);
+			splashStage.initOwner(primaryStage);
 
 			splashStage.setTitle(MAIN_STAGE_TITLE);
 
 			splashStage.show();
-			new Thread(new Runnable() {
+			Executors.defaultThreadFactory().newThread(new Runnable() {
 
 				@Override
 				public void run() {
