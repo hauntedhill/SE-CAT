@@ -38,15 +38,15 @@ public class HandlungsfeldModel {
 	@Autowired
 	private FachDAO fachDAO;
 
-	public List<Item> getItemBy(Handlungsfeld h, boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
+	public List<Item> getItemBy(Handlungsfeld h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
 		return itemDAO.getItemBy(h, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
 	}
 
-	public List<Handlungsfeld> getHandlungsfelderBy(boolean handlungsfeldAktiv, boolean itemAktiv) {
+	public List<Handlungsfeld> getHandlungsfelderBy(Boolean handlungsfeldAktiv, Boolean itemAktiv) {
 		return getHandlungsfelderBy(handlungsfeldAktiv, itemAktiv, null, null, null, null, null);
 	}
 
-	public List<Handlungsfeld> getHandlungsfelderBy(boolean handlungsfeldAktiv, boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld,
+	public List<Handlungsfeld> getHandlungsfelderBy(Boolean handlungsfeldAktiv, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld,
 			String notizItem, Fach f) {
 
 		// List<Handlungsfeld> dummy = new ArrayList<>();

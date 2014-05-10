@@ -37,7 +37,7 @@ public class HandlungsfeldDAO extends BaseDAO<Handlungsfeld> {
 
 	}
 
-	public List<Handlungsfeld> getHandlungsfelderBy(boolean handlungsfeldAktiv, boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld,
+	public List<Handlungsfeld> getHandlungsfelderBy(Boolean handlungsfeldAktiv, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld,
 			String notizItem, Fach f) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -64,9 +64,12 @@ public class HandlungsfeldDAO extends BaseDAO<Handlungsfeld> {
 			Join<Lehrveranstaltung, Fach> fachRoot = leherveranstaltungRoot.join(Lehrveranstaltung_.fach);
 			predicates.add(cb.equal(fachRoot.get(Fach_.id), f.getId()));
 		}
-
-		predicates.add(cb.equal(handlungsfeldRoot.get(Handlungsfeld_.aktiv), handlungsfeldAktiv));
-		predicates.add(cb.or(cb.equal(itemRoot.get(Item_.aktiv), itemAktiv), cb.isNull(itemRoot.get(Item_.id))));
+		if (handlungsfeldAktiv != null) {
+			predicates.add(cb.equal(handlungsfeldRoot.get(Handlungsfeld_.aktiv), handlungsfeldAktiv));
+		}
+		if (itemAktiv != null) {
+			predicates.add(cb.or(cb.equal(itemRoot.get(Item_.aktiv), itemAktiv), cb.isNull(itemRoot.get(Item_.id))));
+		}
 		if (!"".equals(notizHandlungsfeld) && notizHandlungsfeld != null) {
 			predicates.add(cb.like(cb.upper(handlungsfeldRoot.get(Handlungsfeld_.notiz)), (notizHandlungsfeld + "%").toUpperCase()));
 		}

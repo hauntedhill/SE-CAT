@@ -35,7 +35,7 @@ public class ItemDAO extends BaseDAO<Item> {
 
 	}
 
-	public List<Item> getItemBy(Handlungsfeld h, boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
+	public List<Item> getItemBy(Handlungsfeld h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
@@ -60,8 +60,9 @@ public class ItemDAO extends BaseDAO<Item> {
 			Join<Lehrveranstaltung, Fach> fachRoot = leherveranstaltungRoot.join(Lehrveranstaltung_.fach);
 			predicates.add(cb.equal(fachRoot.get(Fach_.id), f.getId()));
 		}
-
-		predicates.add(cb.equal(itemRoot.get(Item_.aktiv), itemAktiv));
+		if (itemAktiv != null) {
+			predicates.add(cb.equal(itemRoot.get(Item_.aktiv), itemAktiv));
+		}
 		predicates.add(cb.equal(itemRoot.get(Item_.handlungsfeld), h));
 
 		if (!"".equals(notizItem) && notizItem != null) {
