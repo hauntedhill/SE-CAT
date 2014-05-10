@@ -123,6 +123,7 @@ public class PerspektivenController extends BaseController {
 
 	private void loadList() {
 		ObservableList<Perspektive> myObservableList = FXCollections.observableList(perspektivenModel.getPerspektiven());
+
 		listPerspektiven.setItems(myObservableList);
 	}
 

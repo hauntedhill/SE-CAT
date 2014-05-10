@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
@@ -13,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
+import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 @Controller
 public class TopMenuController implements Initializable {
@@ -40,56 +42,60 @@ public class TopMenuController implements Initializable {
 
 		eigenschaften.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
-			@Override
-			public void performBeforeEventsBlocked(ActionEvent event) {
-				layout.setCenterNode(LayoutController.EIGENSCHAFTEN_FXML);
-
-			}
+			private Node guiNode;
 
 			@Override
 			public void handleAction(ActionEvent event) {
+				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.EIGENSCHAFTEN_FXML);
+			}
 
+			@Override
+			public void updateUI() {
+				layout.setCenterNode(guiNode);
 			}
 		});
 
 		perspektive.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
-			@Override
-			public void performBeforeEventsBlocked(ActionEvent event) {
-				layout.setCenterNode(LayoutController.PERSPEKTIVEN_FXML);
-
-			}
+			private Node guiNode;
 
 			@Override
 			public void handleAction(ActionEvent event) {
+				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.PERSPEKTIVEN_FXML);
+			}
 
+			@Override
+			public void updateUI() {
+				layout.setCenterNode(guiNode);
 			}
 		});
 
 		handlungsfeld.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
-			@Override
-			public void performBeforeEventsBlocked(ActionEvent event) {
-				layout.setCenterNode(LayoutController.HANDLUNGSFELD_FXML);
-
-			}
+			private Node guiNode;
 
 			@Override
 			public void handleAction(ActionEvent event) {
+				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.HANDLUNGSFELD_FXML);
+			}
 
+			@Override
+			public void updateUI() {
+				layout.setCenterNode(guiNode);
 			}
 		});
 		skalen.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
-			@Override
-			public void performBeforeEventsBlocked(ActionEvent event) {
-				layout.setCenterNode(LayoutController.SKALEN_FXML);
-
-			}
+			private Node guiNode;
 
 			@Override
 			public void handleAction(ActionEvent event) {
+				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.SKALEN_FXML);
+			}
 
+			@Override
+			public void updateUI() {
+				layout.setCenterNode(guiNode);
 			}
 		});
 	}

@@ -45,8 +45,8 @@ public class LayoutController implements Initializable {
 
 	}
 
-	public void setCenterNode(String url) {
-		layout.setCenter((Node) SpringFXMLLoader.getInstance().load(url));
+	public void setCenterNode(Node url) {
+		layout.setCenter(url);
 	}
 
 }
