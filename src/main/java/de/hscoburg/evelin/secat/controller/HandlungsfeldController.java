@@ -196,7 +196,7 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
-						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
+						if (treeTable.getSelectionModel().getSelectedItem().getValue().getHandlungsfeld().getId() != -1) {
 
 							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addItem.fxml");
 
@@ -217,37 +217,37 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
+						if (treeTable.getSelectionModel().getSelectedItem().getValue().getHandlungsfeld().getId() != -1) {
+							Handlungsfeld h = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue()
+									.getHandlungsfeld();
+							h.setAktiv(false);
+							hauptfeldModel.mergeHandlugsfeld(h);
+							int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+									.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
 
-						Handlungsfeld h = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue()
-								.getHandlungsfeld();
-						h.setAktiv(false);
-						hauptfeldModel.mergeHandlugsfeld(h);
-						int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-								.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
+							treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+									.set(index, createNode(new TreeItemWrapper(h)));
 
-						treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-								.set(index, createNode(new TreeItemWrapper(h)));
-
+						}
 					}
-
 				});
 
 				activateHfItem.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
 					public void handle(ActionEvent t) {
+						if (treeTable.getSelectionModel().getSelectedItem().getValue().getHandlungsfeld().getId() != -1) {
+							Handlungsfeld h = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue()
+									.getHandlungsfeld();
+							h.setAktiv(true);
+							hauptfeldModel.mergeHandlugsfeld(h);
+							int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+									.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
+							treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+									.set(index, createNode(new TreeItemWrapper(h)));
 
-						Handlungsfeld h = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue()
-								.getHandlungsfeld();
-						h.setAktiv(true);
-						hauptfeldModel.mergeHandlugsfeld(h);
-						int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-								.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
-						treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-								.set(index, createNode(new TreeItemWrapper(h)));
-
+						}
 					}
-
 				});
 
 				deactivateItItem.setOnAction(new EventHandler<ActionEvent>() {
@@ -310,7 +310,7 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
-						if (!treeTable.getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
+						if (treeTable.getSelectionModel().getSelectedItem().getValue().getHandlungsfeld().getId() != -1) {
 
 							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/moveItems.fxml");
 
@@ -514,7 +514,7 @@ public class HandlungsfeldController extends BaseController {
 	// }
 	public void buildTreeTable() {
 		Handlungsfeld h = new Handlungsfeld();
-		h.setId(1);
+		h.setId(-1);
 		h.setName("Handlungsfelder");
 		h.setAktiv(true);
 		List<Handlungsfeld> hf = hauptfeldModel.getHandlungsfelderBy(true, null);
@@ -545,7 +545,7 @@ public class HandlungsfeldController extends BaseController {
 	String notizHandlungsfeld, String notizItem, Fach f) {
 
 		Handlungsfeld h = new Handlungsfeld();
-		h.setId(1);
+		h.setId(-1);
 		h.setName("Handlungsfelder");
 		h.setAktiv(true);
 		TreeItemWrapper t = new TreeItemWrapper(h);
