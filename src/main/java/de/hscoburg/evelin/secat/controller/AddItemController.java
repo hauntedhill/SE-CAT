@@ -18,6 +18,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -29,9 +30,11 @@ import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
+import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
+import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
 import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
@@ -61,7 +64,7 @@ public class AddItemController extends BaseController {
 	private ComboBox<Skala> skalaBox;
 
 	@Autowired
-	private HandlungsfeldController hauptfeldController;
+	private HandlungsfeldController handlungsfeldController;
 
 	@Autowired
 	private HandlungsfeldModel handlungsfeldModel;
@@ -203,12 +206,29 @@ public class AddItemController extends BaseController {
 
 					ArrayList<Item> list = new ArrayList<Item>();
 					list.add(i);
-					i.setHandlungsfeld(hauptfeldController.getTreeTable().getSelectionModel()
-							.getModelItem(hauptfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld());
+					i.setHandlungsfeld(handlungsfeldController.getTreeTable().getSelectionModel()
+							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld());
 
 					handlungsfeldModel.persistItem(i);
-					hauptfeldController.buildTreeTable();
 
+					Handlungsfeld reNew = handlungsfeldController.getTreeTable().getSelectionModel()
+							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld();
+					reNew.addItem(i);
+					TreeItem<TreeItemWrapper> tmp = handlungsfeldController.getTreeTable().getSelectionModel()
+							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex());
+					int index = handlungsfeldController.getTreeTable().getSelectionModel()
+							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren().indexOf(tmp);
+							
+					handlungsfeldController.getTreeTable().getSelectionModel()
+							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren().remove(tmp);
+
+					// handlungsfeldController.getTreeTable().getSelectionModel()
+					// .getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren()
+					// .add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
+							
+					handlungsfeldController.getTreeTable().getRoot().getChildren().add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
+
+					handlungsfeldController.getTreeTable().getRoot().getChildren().get(index).setExpanded(true);
 				}
 
 				Stage stage = (Stage) save.getScene().getWindow();

@@ -1,6 +1,7 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -41,7 +42,7 @@ public class MoveItemController extends BaseController {
 	@FXML
 	private TextField name;
 	@FXML
-	private ComboBox<Handlungsfeld> handlungsfeld;
+	private ComboBox<TreeItem<TreeItemWrapper>> handlungsfeld;
 
 	@Autowired
 	private HandlungsfeldController hauptfeldController;
@@ -57,19 +58,20 @@ public class MoveItemController extends BaseController {
 
 		move.setGraphic(new ImageView(new Image("/image/icons/up.png", 16, 16, true, true)));
 		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
-		handlungsfeld.setConverter(new StringConverter<Handlungsfeld>() {
-			@Override
-			public String toString(Handlungsfeld h) {
 
-				if (h == null) {
+		handlungsfeld.setConverter(new StringConverter<TreeItem<TreeItemWrapper>>() {
+			@Override
+			public String toString(TreeItem<TreeItemWrapper> t) {
+
+				if (t == null) {
 					System.out.println("null");
 					return "";
 				}
-				return h.getName();
+				return t.getValue().getHandlungsfeld().getName();
 			}
 
 			@Override
-			public Handlungsfeld fromString(String string) {
+			public TreeItem<TreeItemWrapper> fromString(String string) {
 				throw new RuntimeException("not required for non editable ComboBox");
 			}
 
@@ -80,13 +82,13 @@ public class MoveItemController extends BaseController {
 		TreeTableView<TreeItemWrapper> treeTable = hauptfeldController.getTreeTable();
 		TreeItem<TreeItemWrapper> old = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex());
 
-		ObservableList<Handlungsfeld> handlungsfeldOl = FXCollections.observableArrayList();
-		List<Handlungsfeld> handlungsfeldList = handlungsfeldModel.getHandlungsfelderBy(true, true);
-		ListIterator<Handlungsfeld> ithandlungsfeld = handlungsfeldList.listIterator();
-		Handlungsfeld tmp;
-		while (ithandlungsfeld.hasNext()) {
-			tmp = ithandlungsfeld.next();
-			if (!tmp.equals(old))
+		ObservableList<TreeItem<TreeItemWrapper>> handlungsfeldOl = FXCollections.observableArrayList();
+
+		TreeItem<TreeItemWrapper> tmp;
+		Iterator<TreeItem<TreeItemWrapper>> treeItems = treeTable.getRoot().getChildren().iterator();
+		while (treeItems.hasNext()) {
+			tmp = treeItems.next();
+			if (!tmp.getValue().getHandlungsfeld().equals(old.getValue().getHandlungsfeld()))
 				handlungsfeldOl.add(tmp);
 		}
 
@@ -100,18 +102,32 @@ public class MoveItemController extends BaseController {
 				TreeItemWrapper old = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue();
 
 				List<Item> items = old.getHandlungsfeld().getItems();
-				handlungsfeld.getValue().setItems(items);
+
+				Handlungsfeld hfToAttach = handlungsfeld.getValue().getValue().getHandlungsfeld();
+
+				// handlungsfeldModel.mergeHandlugsfeld(hfToAttach);
 
 				ListIterator<Item> iter = items.listIterator();
 				Item tmpItem = new Item();
 				while (iter.hasNext()) {
 
 					tmpItem = iter.next();
-					tmpItem.setHandlungsfeld(handlungsfeld.getValue());
+					tmpItem.setHandlungsfeld(hfToAttach);
 					handlungsfeldModel.mergeItem(tmpItem);
+					System.out.println(tmpItem.getName());
+					hfToAttach.addItem(tmpItem);
 				}
 
-				hauptfeldController.buildTreeTable();
+				Handlungsfeld oldHf = handlungsfeldModel.findHandlungsfeldById(old.getHandlungsfeld().getId());
+				int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+						.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
+				treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+						.set(index, hauptfeldController.createNode(new TreeItemWrapper(oldHf)));
+
+				index = treeTable.getRoot().getChildren().indexOf(handlungsfeld.getValue());
+				treeTable.getRoot().getChildren().set(index, hauptfeldController.createNode(new TreeItemWrapper(hfToAttach)));
+
+				treeTable.getRoot().getChildren().get(index).setExpanded(true);
 
 				Stage stage = (Stage) move.getScene().getWindow();
 				// do what you have to do

@@ -10,6 +10,8 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableObjectValue;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -220,7 +222,12 @@ public class HandlungsfeldController extends BaseController {
 								.getHandlungsfeld();
 						h.setAktiv(false);
 						hauptfeldModel.mergeHandlugsfeld(h);
-						buildTreeTable();
+						int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+								.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
+
+						treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+								.set(index, createNode(new TreeItemWrapper(h)));
+
 					}
 
 				});
@@ -234,7 +241,11 @@ public class HandlungsfeldController extends BaseController {
 								.getHandlungsfeld();
 						h.setAktiv(true);
 						hauptfeldModel.mergeHandlugsfeld(h);
-						buildTreeTable();
+						int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+								.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
+						treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+								.set(index, createNode(new TreeItemWrapper(h)));
+
 					}
 
 				});
@@ -247,8 +258,12 @@ public class HandlungsfeldController extends BaseController {
 						Item i = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getItem();
 						i.setAktiv(false);
 						hauptfeldModel.mergeItem(i);
-						buildTreeTable();
 
+						int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+								.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
+
+						treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+								.set(index, createNode(new TreeItemWrapper(i)));
 					}
 
 				});
@@ -261,11 +276,15 @@ public class HandlungsfeldController extends BaseController {
 						Item i = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getItem();
 						i.setAktiv(true);
 						hauptfeldModel.mergeItem(i);
+						int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+								.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
+
+						treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
+								.set(index, createNode(new TreeItemWrapper(i)));
 
 					}
 
 				});
-
 				filterItItem.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
@@ -429,14 +448,12 @@ public class HandlungsfeldController extends BaseController {
 	public void addHauptfeldToCurrentSelection(Handlungsfeld h) {
 
 		hauptfeldModel.persistHandlungsfeld(h);
-		TreeItemWrapper t = new TreeItemWrapper(h);
 
 		if (treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().equals(treeTable.getRoot().getValue())) {
-			treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren()
-					.add(new TreeItem<TreeItemWrapper>(t, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true))));
+			treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(createNode(new TreeItemWrapper(h)));
 		} else
 			treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-					.add(new TreeItem<TreeItemWrapper>(t, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true))));
+					.add(createNode(new TreeItemWrapper(h)));
 
 	}
 
@@ -452,7 +469,6 @@ public class HandlungsfeldController extends BaseController {
 		ListIterator<Item> iter = item.listIterator();
 		while (iter.hasNext()) {
 			TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
-			System.out.println(itwrapped.getNotiz());
 			if (notiz != null && !notiz.equals("")) {
 				if (itwrapped.getNotiz().equals(notiz)) {
 					parent.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
@@ -501,32 +517,18 @@ public class HandlungsfeldController extends BaseController {
 		h.setId(1);
 		h.setName("Handlungsfelder");
 		h.setAktiv(true);
-		List<Handlungsfeld> hf;
-		if (inaktiv == false) {
-			hf = hauptfeldModel.getHandlungsfelderBy(true, true);
-		} else {
-
-			hf = hauptfeldModel.getHandlungsfelderBy(false, false);
-		}
-
+		List<Handlungsfeld> hf = hauptfeldModel.getHandlungsfelderBy(true, null);
+		/*
+		 * if (inaktiv == false) { hf = hauptfeldModel.getHandlungsfelderBy(true, true); } else {
+		 * 
+		 * hf = hauptfeldModel.getHandlungsfelderBy(false, false); }
+		 */
 		TreeItemWrapper t = new TreeItemWrapper(h);
-		TreeItem<TreeItemWrapper> root = new TreeItem<TreeItemWrapper>(t);
+		TreeItem<TreeItemWrapper> root = createNode(t);
 		ListIterator<Handlungsfeld> it = hf.listIterator();
 		while (it.hasNext()) {
 
-			Handlungsfeld ha = it.next();
-			List<Item> item = ha.getItems();
-			TreeItemWrapper hawrapped = new TreeItemWrapper(ha);
-			TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true)));
-
-			ListIterator<Item> iter = item.listIterator();
-			while (iter.hasNext()) {
-				TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
-				node.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped, new ImageView(new Image("/image/icons/filenew.png", 16, 16, true, true))));
-			}
-
-			root.getChildren().add(node);
-
+			root.getChildren().add(createNode(new TreeItemWrapper(it.next())));
 		}
 
 		root.setExpanded(true);
@@ -539,29 +541,24 @@ public class HandlungsfeldController extends BaseController {
 	}
 
 	public void buildFilteredTreeTable(List<Handlungsfeld> hfList, boolean handlungsfeldAktiv, boolean itemAktiv, Perspektive p, Eigenschaft e,
-			String notizHandlungsfeld, String notizItem, Fach f) {
+
+	String notizHandlungsfeld, String notizItem, Fach f) {
+
 		Handlungsfeld h = new Handlungsfeld();
 		h.setId(1);
 		h.setName("Handlungsfelder");
 		h.setAktiv(true);
-
 		TreeItemWrapper t = new TreeItemWrapper(h);
 		TreeItem<TreeItemWrapper> root = new TreeItem<TreeItemWrapper>(t);
+
 		ListIterator<Handlungsfeld> it = hfList.listIterator();
 		while (it.hasNext()) {
 
 			Handlungsfeld ha = it.next();
 			List<Item> item = hauptfeldModel.getItemBy(ha, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
-			TreeItemWrapper hawrapped = new TreeItemWrapper(ha);
-			TreeItem<TreeItemWrapper> node = new TreeItem<TreeItemWrapper>(hawrapped, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true)));
+			ha.setItems(item);
 
-			ListIterator<Item> iter = item.listIterator();
-			while (iter.hasNext()) {
-				TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
-				node.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped, new ImageView(new Image("/image/icons/filenew.png", 16, 16, true, true))));
-			}
-
-			root.getChildren().add(node);
+			root.getChildren().add(createNode(new TreeItemWrapper(ha)));
 
 		}
 
@@ -574,6 +571,63 @@ public class HandlungsfeldController extends BaseController {
 	public String getSceneName() {
 
 		return "Handlungsfelder pflegen";
+	}
+
+	public TreeItem<TreeItemWrapper> createNode(final TreeItemWrapper t) {
+
+		if (!t.isHandlungsfeld()) {
+			return new TreeItem<TreeItemWrapper>(t, new ImageView(new Image("/image/icons/filenew.png", 16, 16, true, true)));
+		}
+		return new TreeItem<TreeItemWrapper>(t, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true))) {
+
+			private boolean isLeaf;
+			private boolean isFirstTimeChildren = true;
+			private boolean isFirstTimeLeaf = true;
+
+			@Override
+			public ObservableList<TreeItem<TreeItemWrapper>> getChildren() {
+				if (isFirstTimeChildren) {
+					isFirstTimeChildren = false;
+
+					// First getChildren() call, so we actually go off and
+					// determine the children of the File contained in this TreeItem.
+					super.getChildren().setAll(buildChildren(this));
+				}
+				return super.getChildren();
+			}
+
+			@Override
+			public boolean isLeaf() {
+				if (isFirstTimeLeaf) {
+					isFirstTimeLeaf = false;
+					TreeItemWrapper t = (TreeItemWrapper) getValue();
+					isLeaf = !t.isHandlungsfeld();
+				}
+
+				return isLeaf;
+			}
+
+			private ObservableList<TreeItem<TreeItemWrapper>> buildChildren(TreeItem<TreeItemWrapper> TreeItem) {
+
+				TreeItemWrapper t = TreeItem.getValue();
+
+				if (t != null && t.isHandlungsfeld()) {
+					List<Item> items = t.getHandlungsfeld().getItems();
+					if (items != null) {
+						ObservableList<TreeItem<TreeItemWrapper>> children = FXCollections.observableArrayList();
+
+						for (Item child : items) {
+
+							children.add(createNode(new TreeItemWrapper(child)));
+						}
+
+						return children;
+					}
+				}
+
+				return FXCollections.emptyObservableList();
+			}
+		};
 	}
 
 }
