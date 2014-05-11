@@ -429,7 +429,7 @@ public class HandlungsfeldController extends BaseController {
 				// .itemProperty().getValue().isHandlungsfeld() ? new ReadOnlyObjectWrapper<String>("")
 				// : new ReadOnlyObjectWrapper<String>(null)) : new ReadOnlyObjectWrapper<String>(null))
 				// : new ReadOnlyObjectWrapper<String>(null))).then(rowMenuHf).otherwise((ContextMenu) null));
-				// //
+				//
 				// row.contextMenuProperty()
 				// .bind(javafx.beans.binding.Bindings
 				// .when(javafx.beans.binding.Bindings.isNotNull(row.itemProperty().getValue() != null ? (!row.itemProperty().getValue()
