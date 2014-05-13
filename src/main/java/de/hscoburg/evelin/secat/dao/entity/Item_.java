@@ -23,6 +23,6 @@ public class Item_ extends StammdatenEntity_ {
 
 	public static volatile ListAttribute<Item, Fragebogen> frageboegen;
 
-	public static volatile SingularAttribute<Item, Skala> skala;
+	// public static volatile SingularAttribute<Item, Skala> skala;
 
 }

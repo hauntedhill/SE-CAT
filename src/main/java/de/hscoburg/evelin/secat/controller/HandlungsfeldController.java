@@ -110,16 +110,16 @@ public class HandlungsfeldController extends BaseController {
 					}
 				});
 
+		// ((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(3))
+		// .setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
+		//
+		// public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
+		// return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getSkala());
+		//
+		// }
+		// });
+
 		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(3))
-				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
-
-					public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getSkala());
-
-					}
-				});
-
-		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(4))
 				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
 
 					public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
@@ -137,7 +137,7 @@ public class HandlungsfeldController extends BaseController {
 					}
 				});
 
-		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(5))
+		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(4))
 				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
 
 					public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {

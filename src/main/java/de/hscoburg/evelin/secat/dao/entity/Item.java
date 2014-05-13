@@ -33,7 +33,7 @@ public class Item extends StammdatenEntity {
 
 	private List<Fragebogen> frageboegen;
 
-	private Skala skala;
+	// private Skala skala;
 
 	public String getName() {
 		return name;
@@ -96,14 +96,14 @@ public class Item extends StammdatenEntity {
 		this.frageboegen = frageboegen;
 	}
 
-	@ManyToOne(targetEntity = Skala.class, fetch = FetchType.EAGER)
-	public Skala getSkala() {
-		return skala;
-	}
-
-	public void setSkala(Skala skala) {
-		this.skala = skala;
-	}
+	// @ManyToOne(targetEntity = Skala.class, fetch = FetchType.EAGER)
+	// public Skala getSkala() {
+	// return skala;
+	// }
+	//
+	// public void setSkala(Skala skala) {
+	// this.skala = skala;
+	// }
 
 	public void addEigenschaft(Eigenschaft e) {
 		if (eigenschaften == null) {

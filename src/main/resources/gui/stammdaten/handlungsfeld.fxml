@@ -11,7 +11,7 @@
 <TreeTableColumn prefWidth="180.0" text="Name" />
 <TreeTableColumn prefWidth="50.0" text="Aktiv" />
 <TreeTableColumn prefWidth="250.0" text="Notiz" />
-<TreeTableColumn prefWidth="98.0" text="Skala" />
+<!--  <TreeTableColumn prefWidth="98.0" text="Skala" />-->
 <TreeTableColumn prefWidth="110.0" text="Eigenschaften" />
 <TreeTableColumn prefWidth="110.0" text="Perspektiven" />
 </columns>

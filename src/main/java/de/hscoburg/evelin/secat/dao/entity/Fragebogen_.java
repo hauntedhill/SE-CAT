@@ -16,4 +16,7 @@ public class Fragebogen_ extends BaseEntity_ {
 	public static volatile ListAttribute<Fragebogen, Student> studenten;
 
 	public static volatile SingularAttribute<Fragebogen, Lehrveranstaltung> lehrveranstaltung;
+
+	public static volatile SingularAttribute<Fragebogen, Skala> skala;
+
 }

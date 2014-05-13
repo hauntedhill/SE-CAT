@@ -3,6 +3,7 @@ package de.hscoburg.evelin.secat.dao.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -25,6 +26,17 @@ public class Fragebogen extends BaseEntity {
 	private List<Student> studenten;
 
 	private Lehrveranstaltung lehrveranstaltung;
+
+	private Skala skala;
+
+	@ManyToOne(targetEntity = Skala.class, fetch = FetchType.EAGER)
+	public Skala getSkala() {
+		return skala;
+	}
+
+	public void setSkala(Skala skala) {
+		this.skala = skala;
+	}
 
 	public String getName() {
 		return name;

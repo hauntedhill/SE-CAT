@@ -17,15 +17,26 @@ public class Skala extends BaseEntity {
 
 	private String name;
 
-	private List<Item> items;
+	// private List<Item> items;
 
-	@OneToMany(targetEntity = Item.class, mappedBy = "skala")
-	public List<Item> getItems() {
-		return items;
+	// @OneToMany(targetEntity = Item.class, mappedBy = "skala")
+	// public List<Item> getItems() {
+	// return items;
+	// }
+	//
+	// public void setItems(List<Item> items) {
+	// this.items = items;
+	// }
+
+	private List<Fragebogen> frageboegen;
+
+	@OneToMany(targetEntity = Fragebogen.class, mappedBy = "skala")
+	public List<Fragebogen> getItems() {
+		return frageboegen;
 	}
 
-	public void setItems(List<Item> items) {
-		this.items = items;
+	public void setItems(List<Fragebogen> frageboegen) {
+		this.frageboegen = frageboegen;
 	}
 
 	public String getName() {

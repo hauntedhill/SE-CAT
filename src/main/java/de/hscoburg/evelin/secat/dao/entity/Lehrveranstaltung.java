@@ -4,11 +4,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.Enumerated;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import de.hscoburg.evelin.secat.dao.entity.base.SemesterType;
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
 
 @Entity
@@ -21,6 +23,10 @@ public class Lehrveranstaltung extends StammdatenEntity {
 	private Date jahr;
 
 	private Fach fach;
+
+	private SemesterType semester;
+
+	private String dozent;
 
 	private List<Fragebogen> frageboegen;
 
@@ -49,6 +55,23 @@ public class Lehrveranstaltung extends StammdatenEntity {
 
 	public void setFrageboegen(List<Fragebogen> frageboegen) {
 		this.frageboegen = frageboegen;
+	}
+
+	@Enumerated
+	public SemesterType getSemester() {
+		return semester;
+	}
+
+	public void setSemester(SemesterType semester) {
+		this.semester = semester;
+	}
+
+	public String getDozent() {
+		return dozent;
+	}
+
+	public void setDozent(String dozent) {
+		this.dozent = dozent;
 	}
 
 }

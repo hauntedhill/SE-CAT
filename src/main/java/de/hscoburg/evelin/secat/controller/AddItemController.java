@@ -193,7 +193,7 @@ public class AddItemController extends BaseController {
 
 					if (skalaBox.getValue() != null) {
 
-						i.setSkala(skalaBox.getValue());
+						// i.setSkala(skalaBox.getValue());
 					}
 
 					if (perspektiveList.getSelectionModel().getSelectedItems() != null) {
@@ -218,14 +218,14 @@ public class AddItemController extends BaseController {
 							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex());
 					int index = handlungsfeldController.getTreeTable().getSelectionModel()
 							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren().indexOf(tmp);
-							
+
 					handlungsfeldController.getTreeTable().getSelectionModel()
 							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren().remove(tmp);
 
 					// handlungsfeldController.getTreeTable().getSelectionModel()
 					// .getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren()
 					// .add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
-							
+
 					handlungsfeldController.getTreeTable().getRoot().getChildren().add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
 
 					handlungsfeldController.getTreeTable().getRoot().getChildren().get(index).setExpanded(true);
