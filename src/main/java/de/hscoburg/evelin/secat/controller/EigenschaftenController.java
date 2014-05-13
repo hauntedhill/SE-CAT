@@ -27,6 +27,7 @@ import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
+import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class EigenschaftenController extends BaseController {
@@ -127,7 +128,7 @@ public class EigenschaftenController extends BaseController {
 	@Override
 	public String getSceneName() {
 
-		return "Eigenschaften pflegen";
+		return SeCatResourceBundle.getInstance().getObject("scene.property.lable.title").toString();
 	}
 
 }

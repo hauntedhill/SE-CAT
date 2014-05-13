@@ -7,7 +7,8 @@
 <AnchorPane prefHeight="145.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.EigenschaftenController">
 <children>
 <TextField fx:id="textNameEigenschaften" layoutX="116.0" layoutY="2.0" />
-<Button fx:id="buttonAdd" layoutX="265.0" layoutY="2.0" mnemonicParsing="false" text="Hinzufügen" />
-<Label fx:id="labelEigenschaften" layoutX="14.0" layoutY="6.0" text="Neue Eigenschaft:" />
-<ListView fx:id="listEigenschaften" layoutX="116.0" layoutY="42.0" prefHeight="326.0" prefWidth="200.0" /><Label layoutX="14.0" layoutY="42.0" text="Eigenschaften:" />
+<Button fx:id="buttonAdd" layoutX="265.0" layoutY="2.0" mnemonicParsing="false" text="%scene.property.button.add" />
+<Label fx:id="labelEigenschaften" layoutX="14.0" layoutY="6.0" text="%scene.property.lable.new" />
+<ListView fx:id="listEigenschaften" layoutX="116.0" layoutY="42.0" prefHeight="326.0" prefWidth="200.0" />
+<Label layoutX="14.0" layoutY="42.0" text="%scene.property.lable" />
 </children></AnchorPane>

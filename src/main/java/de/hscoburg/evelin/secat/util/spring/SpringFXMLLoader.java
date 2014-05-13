@@ -16,6 +16,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
+import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 public class SpringFXMLLoader {
 	private ApplicationContext applicationContext;
@@ -40,6 +41,8 @@ public class SpringFXMLLoader {
 			}
 			InputStream fxmlStream = SpringFXMLLoader.class.getResourceAsStream(url);
 			FXMLLoader loader = new FXMLLoader();
+			loader.setResources(SeCatResourceBundle.getInstance());
+
 			loader.setControllerFactory(new Callback<Class<?>, Object>() {
 
 				public Object call(Class<?> clazz) {
@@ -82,6 +85,7 @@ public class SpringFXMLLoader {
 		try {
 			InputStream fxmlStream = SpringFXMLLoader.class.getResourceAsStream(url);
 			FXMLLoader loader = new FXMLLoader();
+			loader.setResources(SeCatResourceBundle.getInstance());
 			loader.setControllerFactory(new Callback<Class<?>, Object>() {
 
 				public Object call(Class<?> clazz) {

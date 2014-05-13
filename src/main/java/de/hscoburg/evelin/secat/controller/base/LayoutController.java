@@ -20,6 +20,8 @@ public class LayoutController implements Initializable {
 
 	private static final String STAMMDATEN_PATH = GUI_PATH + "stammdaten/";
 
+	private static final String EINSTELLUNGEN_PATH = GUI_PATH + "einstellungen/";
+
 	public static final String HANDLUNGSFELD_FXML = STAMMDATEN_PATH + "handlungsfeld.fxml";
 
 	public static final String EIGENSCHAFTEN_FXML = STAMMDATEN_PATH + "Eigenschaften.fxml";
@@ -34,6 +36,8 @@ public class LayoutController implements Initializable {
 
 	public static final String LAYOUT_FXML = GUI_PATH + "Layout.fxml";
 
+	public static final String SPRACHE_FXML = EINSTELLUNGEN_PATH + "Sprache.fxml";
+
 	@FXML
 	private BorderPane layout;
 
@@ -47,6 +51,10 @@ public class LayoutController implements Initializable {
 
 	public void setCenterNode(Node url) {
 		layout.setCenter(url);
+	}
+
+	public void setTop(Node url) {
+		layout.setTop(url);
 	}
 
 }

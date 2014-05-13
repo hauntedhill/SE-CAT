@@ -34,6 +34,9 @@ public class TopMenuController implements Initializable {
 	@FXML
 	private MenuItem handlungsfeld;
 
+	@FXML
+	private MenuItem sprache;
+
 	@Autowired
 	private LayoutController layout;
 
@@ -91,6 +94,20 @@ public class TopMenuController implements Initializable {
 			@Override
 			public void handleAction(ActionEvent event) {
 				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.SKALEN_FXML);
+			}
+
+			@Override
+			public void updateUI() {
+				layout.setCenterNode(guiNode);
+			}
+		});
+		sprache.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+			private Node guiNode;
+
+			@Override
+			public void handleAction(ActionEvent event) {
+				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.SPRACHE_FXML);
 			}
 
 			@Override

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.SpracheController">
+<children><AnchorPane prefHeight="200.0" prefWidth="200.0">
+<children>
+<Button fx:id="buttonWaehlen" layoutX="89.1875" layoutY="108.5" mnemonicParsing="false" text="Wählen" />
+<ComboBox fx:id="boxSprachen" layoutX="14.0" layoutY="44.0" prefWidth="150.0" />
+</children></AnchorPane>
+</children></AnchorPane>
