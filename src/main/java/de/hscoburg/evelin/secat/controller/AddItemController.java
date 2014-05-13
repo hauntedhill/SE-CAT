@@ -275,7 +275,7 @@ public class AddItemController extends BaseController {
 			@Override
 			public void handle(ActionEvent e) {
 
-				skalaBox.setValue(templateBox.getValue().getSkala());
+				// skalaBox.setValue(templateBox.getValue().getSkala());
 				notiz.setText(templateBox.getValue().getNotiz());
 				List<Perspektive> templatePerspektive = templateBox.getValue().getPerspektiven();
 				for (Perspektive set : templatePerspektive) {
