@@ -45,9 +45,10 @@ public class AddItemController extends BaseController {
 
 	@FXML
 	private Button save;
-
 	@FXML
 	private Button cancle;
+	@FXML
+	private Button chooseTemplate;
 	@FXML
 	private TextField name;
 	@FXML
@@ -56,25 +57,21 @@ public class AddItemController extends BaseController {
 	private TextArea notiz;
 	@FXML
 	private ListView<Eigenschaft> eigenschaftList;
-
 	@FXML
 	private ListView<Perspektive> perspektiveList;
-
 	@FXML
 	private ComboBox<Skala> skalaBox;
+	@FXML
+	private ComboBox<Item> templateBox;
 
 	@Autowired
 	private HandlungsfeldController handlungsfeldController;
-
 	@Autowired
 	private HandlungsfeldModel handlungsfeldModel;
-
 	@Autowired
 	private PerspektivenModel perspektivenModel;
-
 	@Autowired
 	private SkalenModel skalenModel;
-
 	@Autowired
 	private EigenschaftenModel eigenschaftModel;
 
@@ -83,6 +80,10 @@ public class AddItemController extends BaseController {
 
 		save.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
+		chooseTemplate.setGraphic(new ImageView(new Image("/image/icons/editcopy.png", 16, 16, true, true)));
+		Handlungsfeld chosenHandlungsfeld = handlungsfeldController.getTreeTable().getSelectionModel()
+				.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld();
+
 		skalaBox.setConverter(new StringConverter<Skala>() {
 			@Override
 			public String toString(Skala object) {
@@ -113,6 +114,38 @@ public class AddItemController extends BaseController {
 		}
 
 		skalaBox.setItems(skalenOl);
+
+		templateBox.setConverter(new StringConverter<Item>() {
+			@Override
+			public String toString(Item object) {
+
+				if (object == null) {
+					System.out.println("null");
+					return "";
+				}
+				return object.getName();
+			}
+
+			@Override
+			public Item fromString(String string) {
+				throw new RuntimeException("not required for non editable ComboBox");
+			}
+
+		});
+		templateBox.promptTextProperty().set("Vorlage wählen");
+
+		ObservableList<Item> itemOl = FXCollections.observableArrayList();
+		System.out.println(chosenHandlungsfeld.getName());
+		List<Item> itemList = handlungsfeldModel.getItemBy(chosenHandlungsfeld, true, null, null, null, null, null);
+		ListIterator<Item> itItem = itemList.listIterator();
+
+		while (itItem.hasNext()) {
+
+			itemOl.add(itItem.next());
+			;
+		}
+
+		templateBox.setItems(itemOl);
 
 		perspektiveList.setCellFactory(new Callback<ListView<Perspektive>, ListCell<Perspektive>>() {
 
@@ -218,14 +251,14 @@ public class AddItemController extends BaseController {
 							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex());
 					int index = handlungsfeldController.getTreeTable().getSelectionModel()
 							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren().indexOf(tmp);
-							
+
 					handlungsfeldController.getTreeTable().getSelectionModel()
 							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren().remove(tmp);
 
 					// handlungsfeldController.getTreeTable().getSelectionModel()
 					// .getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren()
 					// .add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
-							
+
 					handlungsfeldController.getTreeTable().getRoot().getChildren().add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
 
 					handlungsfeldController.getTreeTable().getRoot().getChildren().get(index).setExpanded(true);
@@ -235,6 +268,23 @@ public class AddItemController extends BaseController {
 				// do what you have to do
 				stage.close();
 
+			}
+		});
+
+		chooseTemplate.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+
+				skalaBox.setValue(templateBox.getValue().getSkala());
+				notiz.setText(templateBox.getValue().getNotiz());
+				List<Perspektive> templatePerspektive = templateBox.getValue().getPerspektiven();
+				for (Perspektive set : templatePerspektive) {
+					perspektiveList.getSelectionModel().select(perspektiveList.getItems().indexOf(set));
+				}
+				List<Eigenschaft> templateEigenschaft = templateBox.getValue().getEigenschaften();
+				for (Eigenschaft set : templateEigenschaft) {
+					eigenschaftList.getSelectionModel().select(eigenschaftList.getItems().indexOf(set));
+				}
 			}
 		});
 
