@@ -22,6 +22,7 @@
       <items>
         <MenuItem fx:id="menuItemFilterHandlungsfeld" mnemonicParsing="false" text="Handlungsfelder in/aktiv" />
         <MenuItem fx:id="menuItemFilterItem" mnemonicParsing="false" text="Items filtern" />
+        <MenuItem fx:id="menuItemFilterOff" mnemonicParsing="false" text="Filter deaktivieren" />
       </items>
     </Menu>
   </menus>

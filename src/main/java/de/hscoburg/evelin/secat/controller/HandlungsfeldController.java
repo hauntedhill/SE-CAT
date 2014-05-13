@@ -67,6 +67,9 @@ public class HandlungsfeldController extends BaseController {
 	@FXML
 	private MenuItem menuItemFilterItem;
 
+	@FXML
+	private MenuItem menuItemFilterOff;
+
 	@Autowired
 	private HandlungsfeldDAO service;
 
@@ -79,6 +82,7 @@ public class HandlungsfeldController extends BaseController {
 
 		menuItemFilterHandlungsfeld.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
 		menuItemFilterItem.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
+		menuItemFilterOff.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
 		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(0))
 				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
 
@@ -361,6 +365,16 @@ public class HandlungsfeldController extends BaseController {
 
 						}
 
+					}
+
+				});
+
+				menuItemFilterOff.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent t) {
+						inaktiv = false;
+						buildTreeTable();
 					}
 
 				});
