@@ -105,7 +105,7 @@ public class SpracheController extends BaseController {
 		@Override
 		public String toString() {
 			// TODO Auto-generated method stub
-			return locale.getDisplayName() + " (" + locale.getLanguage() + "_" + locale.getCountry() + ")";
+			return locale.getDisplayName() + " (" + locale.getLanguage() + ("".equals(locale.getCountry().trim()) ? "" : "_") + locale.getCountry() + ")";
 		}
 
 		@Override
