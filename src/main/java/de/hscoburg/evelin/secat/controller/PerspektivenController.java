@@ -27,6 +27,7 @@ import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
+import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class PerspektivenController extends BaseController {
@@ -85,7 +86,8 @@ public class PerspektivenController extends BaseController {
 
 						@Override
 						public void run() {
-							Dialogs.create().title("Ungültiger Wert").masthead("Der von Ihnen eingegebene Wert ist ungültig").showError();
+							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.input.error.title"))
+									.masthead(SeCatResourceBundle.getInstance().getString("scene.input.error.txt")).showError();
 
 						}
 					});
@@ -128,9 +130,9 @@ public class PerspektivenController extends BaseController {
 	}
 
 	@Override
-	public String getSceneName() {
+	public String getKeyForSceneName() {
 
-		return "Perspektive pflegen";
+		return "scene.perspective.lable.title";
 	}
 
 }

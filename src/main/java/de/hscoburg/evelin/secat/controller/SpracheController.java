@@ -122,9 +122,9 @@ public class SpracheController extends BaseController {
 	}
 
 	@Override
-	public String getSceneName() {
+	public String getKeyForSceneName() {
 
-		return SeCatResourceBundle.getInstance().getObject("scene.property.lable.title").toString();
+		return "scene.sprache.lable.title";
 	}
 
 }

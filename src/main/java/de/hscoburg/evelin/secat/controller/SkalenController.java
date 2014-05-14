@@ -27,6 +27,7 @@ import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
+import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class SkalenController extends BaseController {
@@ -85,7 +86,8 @@ public class SkalenController extends BaseController {
 
 						@Override
 						public void run() {
-							Dialogs.create().title("Ungültiger Wert").masthead("Der von Ihnen eingegebene Wert ist ungültig").showError();
+							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.input.error.title"))
+									.masthead(SeCatResourceBundle.getInstance().getString("scene.input.error.txt")).showError();
 
 						}
 					});
@@ -126,9 +128,9 @@ public class SkalenController extends BaseController {
 	}
 
 	@Override
-	public String getSceneName() {
+	public String getKeyForSceneName() {
 
-		return "Skalen pflegen";
+		return "scene.skala.lable.title";
 	}
 
 }

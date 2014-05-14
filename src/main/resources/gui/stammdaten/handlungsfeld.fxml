@@ -8,21 +8,25 @@
 <children>
 <TreeTableView fx:id="treeTable"  layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="800.0">
 <columns>
-<TreeTableColumn prefWidth="180.0" text="Name" />
-<TreeTableColumn prefWidth="50.0" text="Aktiv" />
-<TreeTableColumn prefWidth="250.0" text="Notiz" />
+<TreeTableColumn prefWidth="180.0" text="%scene.all.item" />
+<TreeTableColumn prefWidth="50.0" text="%scene.all.active" />
+<TreeTableColumn prefWidth="250.0" text="%scene.all.notiz" />
 <!--  <TreeTableColumn prefWidth="98.0" text="Skala" />-->
-<TreeTableColumn prefWidth="110.0" text="Eigenschaften" />
-<TreeTableColumn prefWidth="110.0" text="Perspektiven" />
+<TreeTableColumn prefWidth="110.0" text="%scene.all.property" />
+<TreeTableColumn prefWidth="110.0" text="%scene.all.perspective" />
 </columns>
+
+
+
+
 </TreeTableView>
 <MenuBar  layoutY="2.0" prefHeight="25.0" prefWidth="800.0">
   <menus>
-    <Menu fx:id="menuFilter" mnemonicParsing="false" text="Filter">
+    <Menu fx:id="menuFilter" mnemonicParsing="false" text="%scene.handlungsfeld.menu.lable">
       <items>
-        <MenuItem fx:id="menuItemFilterHandlungsfeld" mnemonicParsing="false" text="Handlungsfelder in/aktiv" />
-        <MenuItem fx:id="menuItemFilterItem" mnemonicParsing="false" text="Items filtern" />
-        <MenuItem fx:id="menuItemFilterOff" mnemonicParsing="false" text="Filter deaktivieren" />
+        <MenuItem fx:id="menuItemFilterHandlungsfeld" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterHandlungsfeld" />
+        <MenuItem fx:id="menuItemFilterItem" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterItem" />
+        <MenuItem fx:id="menuItemFilterOff" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterOff" />
       </items>
     </Menu>
   </menus>

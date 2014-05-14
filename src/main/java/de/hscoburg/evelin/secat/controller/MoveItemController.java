@@ -30,6 +30,7 @@ import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
+import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class MoveItemController extends BaseController {
@@ -77,7 +78,7 @@ public class MoveItemController extends BaseController {
 
 		});
 
-		handlungsfeld.promptTextProperty().set("Handlungsfeld wählen");
+		handlungsfeld.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.moveitem.handlungsfeld.prompttextproperty"));
 
 		TreeTableView<TreeItemWrapper> treeTable = hauptfeldController.getTreeTable();
 		TreeItem<TreeItemWrapper> old = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex());
@@ -151,9 +152,9 @@ public class MoveItemController extends BaseController {
 	}
 
 	@Override
-	public String getSceneName() {
+	public String getKeyForSceneName() {
 
-		return "Items verschieben";
+		return "scene.moveitem.lable.title";
 	}
 
 }

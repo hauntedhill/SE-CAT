@@ -39,6 +39,7 @@ import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
 import de.hscoburg.evelin.secat.model.SkalenModel;
+import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class AddItemController extends BaseController {
@@ -101,7 +102,7 @@ public class AddItemController extends BaseController {
 			}
 
 		});
-		skalaBox.promptTextProperty().set("Skala wählen");
+		skalaBox.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.addItem.skalabox.prompttextproperty"));
 
 		ObservableList<Skala> skalenOl = FXCollections.observableArrayList();
 		List<Skala> skalenList = skalenModel.getSkalen();
@@ -132,7 +133,7 @@ public class AddItemController extends BaseController {
 			}
 
 		});
-		templateBox.promptTextProperty().set("Vorlage wählen");
+		templateBox.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.addItem.templatebox.prompttextproperty"));
 
 		ObservableList<Item> itemOl = FXCollections.observableArrayList();
 		System.out.println(chosenHandlungsfeld.getName());
@@ -301,9 +302,9 @@ public class AddItemController extends BaseController {
 	}
 
 	@Override
-	public String getSceneName() {
+	public String getKeyForSceneName() {
 
-		return "Item hinzufügen";
+		return "scene.addItem.lable.title";
 	}
 
 }

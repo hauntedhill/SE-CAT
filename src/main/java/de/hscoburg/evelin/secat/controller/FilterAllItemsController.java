@@ -166,9 +166,9 @@ public class FilterAllItemsController extends BaseController {
 	}
 
 	@Override
-	public String getSceneName() {
+	public String getKeyForSceneName() {
 
-		return "Anzeige filtern";
+		return "scene.filterallitems.lable.title";
 	}
 
 }

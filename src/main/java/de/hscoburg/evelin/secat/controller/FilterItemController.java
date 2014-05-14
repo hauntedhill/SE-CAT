@@ -162,9 +162,9 @@ public class FilterItemController extends BaseController {
 	}
 
 	@Override
-	public String getSceneName() {
+	public String getKeyForSceneName() {
 		// TODO Auto-generated method stub
-		return "Items filtern";
+		return "scene.filteritem.lable.title";
 	}
 
 }

@@ -6,9 +6,13 @@
 
 <AnchorPane prefHeight="391.0" prefWidth="494.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.MoveItemController">
 	<children>
-		<Label layoutX="78.0" layoutY="36.0" text="Handlungsfeld" />
-		<Button fx:id="move" layoutX="172.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Verschieben" />
-		<Button fx:id="cancle" layoutX="282.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="Abbrechen" />
+		<Label layoutX="78.0" layoutY="36.0" text="%scene.all.handlungsfeld" />
+		<Button fx:id="move" layoutX="172.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="%scene.all.movebutton" />
+		<Button fx:id="cancle" layoutX="282.0" layoutY="68.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="107.0" text="%scene.all.canclebutton" />
 		<ComboBox fx:id="handlungsfeld" layoutX="172.0" layoutY="34.0" prefHeight="25.0" prefWidth="217.0" />
 	</children>
+	
+	
+	
+	
 </AnchorPane>

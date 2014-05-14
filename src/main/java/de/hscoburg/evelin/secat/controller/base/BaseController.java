@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import de.hscoburg.evelin.secat.SeCat;
+import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 public abstract class BaseController implements Initializable {
 
@@ -44,7 +45,12 @@ public abstract class BaseController implements Initializable {
 
 	public abstract void initializeController(URL location, ResourceBundle resources);
 
-	public abstract String getSceneName();
+	public String getSceneName() {
+
+		return SeCatResourceBundle.getInstance().getObject(getKeyForSceneName()).toString();
+	}
+
+	public abstract String getKeyForSceneName();
 
 	@Override
 	public final void initialize(URL location, ResourceBundle resources) {

@@ -85,7 +85,8 @@ public class EigenschaftenController extends BaseController {
 
 						@Override
 						public void run() {
-							Dialogs.create().title("Ungültiger Wert").masthead("Der von Ihnen eingegebene Wert ist ungültig").showError();
+							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.input.error.title"))
+									.masthead(SeCatResourceBundle.getInstance().getString("scene.input.error.txt")).showError();
 
 						}
 					});
@@ -126,9 +127,9 @@ public class EigenschaftenController extends BaseController {
 	}
 
 	@Override
-	public String getSceneName() {
+	public String getKeyForSceneName() {
 
-		return SeCatResourceBundle.getInstance().getObject("scene.property.lable.title").toString();
+		return "scene.property.lable.title";
 	}
 
 }

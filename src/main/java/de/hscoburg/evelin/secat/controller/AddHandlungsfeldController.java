@@ -77,9 +77,9 @@ public class AddHandlungsfeldController extends BaseController {
 	}
 
 	@Override
-	public String getSceneName() {
+	public String getKeyForSceneName() {
 
-		return "Handlungsfeld hinzufügen";
+		return "scene.addhandlungsfeld.lable.title";
 	}
 
 }

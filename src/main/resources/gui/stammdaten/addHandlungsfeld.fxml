@@ -6,9 +6,9 @@
 
 <AnchorPane prefHeight="135.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.AddHandlungsfeldController">
 	<children>
-		<Label layoutX="50.0" layoutY="36.0" text="Name" />
-		<Button fx:id="save" layoutX="121.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Speichern" />
+		<Label layoutX="50.0" layoutY="36.0" text="%scene.addhandlungsfeld.name" />
+		<Button fx:id="save" layoutX="121.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="%scene.all.savebutton" />
 		<TextField fx:id="name" layoutX="119.0" layoutY="36.0" prefHeight="25.0" prefWidth="230.0" />
-		<Button fx:id="cancle" layoutX="243.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="Abbrechen" />
+		<Button fx:id="cancle" layoutX="243.0" layoutY="71.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="%scene.all.canclebutton" />
 	</children>
 </AnchorPane>

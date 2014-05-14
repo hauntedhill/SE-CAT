@@ -7,20 +7,22 @@
 <AnchorPane prefHeight="391.0" prefWidth="494.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.FilterItemController">
 	<children>
 
-		<Label layoutX="80.0" layoutY="16.0" text="Item" />
-		<CheckBox fx:id="isInaktiv" layoutX="182.0" layoutY="16.0" mnemonicParsing="false" text="Inaktiv" />
+		<Label layoutX="80.0" layoutY="16.0" text="%scene.all.item" />
+		<CheckBox fx:id="isInaktiv" layoutX="182.0" layoutY="16.0" mnemonicParsing="false" text="%scene.all.inactive" />
 		
-		<Label layoutX="80.0" layoutY="85.0" text="Perspektive" />
+		<Label layoutX="80.0" layoutY="85.0" text="%scene.all.perspective" />
 		<ListView fx:id="perspektiveList" layoutX="183.0" layoutY="84.0" prefHeight="83.0" prefWidth="149.0" />
 		
-		<Label layoutX="79.0" layoutY="182.0" text="Eigenschaft" />
+		<Label layoutX="79.0" layoutY="182.0" text="%scene.all.property" />
 		<ListView fx:id="eigenschaftList" layoutX="183.0" layoutY="181.0" prefHeight="83.0" prefWidth="149.0" />
 		
-		<Label layoutX="81.0" layoutY="268.0" text="Notiz" />
+		<Label layoutX="81.0" layoutY="268.0" text="%scene.all.notiz" />
 		<TextArea fx:id="notiz" layoutX="182.0" layoutY="277.0" prefHeight="46.0" prefWidth="149.0" />
 
-		<Button fx:id="filter" layoutX="183.0" layoutY="335.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Filtern" />
-		<Button fx:id="cancle" layoutX="288.0" layoutY="335.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="Abbrechen" />
+
+
+		<Button fx:id="filter" layoutX="183.0" layoutY="335.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="%scene.all.filterbutton" />
+		<Button fx:id="cancle" layoutX="288.0" layoutY="335.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="%scene.all.canclebutton" />
 		
 	</children>
 </AnchorPane>
