@@ -406,6 +406,7 @@ public class HandlungsfeldController extends BaseController {
 				rowMenuHf.getItems().add(moveItems);
 				// rowMenuHf.getItems().add(filterItItem);
 
+
 				ObservableObjectValue<TreeItemWrapper> rowMenuObserver = new ObservableObjectValue<TreeItemWrapper>() {
 
 					@Override
