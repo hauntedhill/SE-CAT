@@ -40,6 +40,12 @@
 									control="UP" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
+						<MenuItem fx:id="faecher" text="%menu.item.masterdata.fach">
+							<accelerator>
+								<KeyCodeCombination alt="DOWN" code="F"
+									control="UP" meta="UP" shift="UP" shortcut="UP" />
+							</accelerator>
+						</MenuItem>
 
 					</items>
 

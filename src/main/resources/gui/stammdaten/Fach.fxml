@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="419.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.FachController">
+<children><TitledPane animated="false" layoutX="31.0" layoutY="142.0" prefHeight="242.0" prefWidth="409.0" text="%scene.fach.lable">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+<children><ListView fx:id="listFach" layoutX="10.0" layoutY="8.0" prefHeight="200.0" prefWidth="386.0" />
+</children></AnchorPane>
+  </content>
+</TitledPane><TitledPane animated="false" layoutX="31.0" layoutY="21.0" prefHeight="109.0" prefWidth="409.0" text="%scene.fach.addlable">
+  <content>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="83.0" prefWidth="351.0">
+<children><Label layoutX="23.0" layoutY="33.0" prefHeight="17.0" prefWidth="73.0" text="%scene.fach.namelable" />
+<TextField fx:id="textNameFach" layoutX="96.24609375" layoutY="29.0" />
+<Button fx:id="buttonAdd" layoutX="260.1875" layoutY="29.0" mnemonicParsing="false" text="%scene.all.addbutton" />
+</children></AnchorPane>
+  </content>
+</TitledPane>
+</children></AnchorPane>

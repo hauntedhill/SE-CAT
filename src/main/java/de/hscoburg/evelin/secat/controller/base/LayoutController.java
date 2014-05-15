@@ -28,6 +28,8 @@ public class LayoutController implements Initializable {
 
 	public static final String PERSPEKTIVEN_FXML = STAMMDATEN_PATH + "Perspektiven.fxml";
 
+	public static final String FAECHER_FXML = STAMMDATEN_PATH + "Fach.fxml";
+
 	public static final String SKALEN_FXML = STAMMDATEN_PATH + "Skalen.fxml";
 
 	public static final String TOPMENU_FXML = GUI_PATH + "Topmenu.fxml";
