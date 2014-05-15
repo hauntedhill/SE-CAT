@@ -10,8 +10,8 @@ import org.springframework.stereotype.Repository;
 import de.hscoburg.evelin.secat.dao.FachDAO;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
 
-@Transactional
 @Repository
+@Transactional
 public class FachModel {
 	@Autowired
 	private FachDAO fachDAO;
