@@ -16,7 +16,7 @@
 		<Label layoutX="11.0" layoutY="104.0" text="%scene.all.perspective" />
 		<ListView fx:id="perspektiveList" layoutX="114.0" layoutY="103.0" prefHeight="83.0" prefWidth="149.0" />
 		
-		<Label layoutX="10.0" layoutY="192.0" text="%scene.all.propert" />
+		<Label layoutX="10.0" layoutY="192.0" text="%scene.all.property" />
 		<ListView fx:id="eigenschaftList" layoutX="114.0" layoutY="191.0" prefHeight="83.0" prefWidth="149.0" />
 		
 		<Label layoutX="9.0" layoutY="279.0" text="%scene.all.notiz" />
