@@ -5,9 +5,41 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="450.0" prefWidth="499.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.PerspektivenController">
+
+
 <children>
-<TextField fx:id="textNamePerspektiven" layoutX="150.0" layoutY="2.0" />
-<Button fx:id="buttonAdd" layoutX="350.0" layoutY="2.0" mnemonicParsing="false" text="%scene.all.addbutton" />
-<Label fx:id="labelPerspektiven" layoutX="14.0" layoutY="6.0" text="%scene.perspective.lable.new" />
-<ListView fx:id="listPerspektiven" layoutX="150.0" layoutY="42.0" prefHeight="326.0" prefWidth="200.0" /><Label layoutX="14.0" layoutY="42.0" text="%scene.perspective.lable" />
-</children></AnchorPane>
+		<TitledPane animated="false" layoutX="31.0" layoutY="142.0"
+			prefHeight="242.0" prefWidth="409.0" text="%scene.perspective.lable">
+			<content>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+					prefWidth="200.0">
+					<children>
+						<ListView fx:id="listPerspektiven" layoutX="10.0" layoutY="8.0"
+							prefHeight="200.0" prefWidth="386.0" />
+					</children>
+				</AnchorPane>
+			</content>
+		</TitledPane>
+		<TitledPane animated="false" layoutX="31.0" layoutY="21.0"
+			prefHeight="109.0" prefWidth="409.0" text="%scene.perspective.lable.new">
+			<content>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="83.0"
+					prefWidth="351.0">
+					<children>
+						<Label layoutX="23.0" layoutY="33.0" prefHeight="17.0"
+							prefWidth="73.0" text="%scene.perspective.namelable" />
+						<TextField fx:id="textNamePerspektiven" layoutX="96.24609375"
+							layoutY="29.0" />
+						<Button fx:id="buttonAdd" layoutX="260.1875" layoutY="29.0"
+							mnemonicParsing="false" text="%scene.all.addbutton" />
+					</children>
+				</AnchorPane>
+			</content>
+		</TitledPane>
+	</children>
+
+
+
+
+
+</AnchorPane>
