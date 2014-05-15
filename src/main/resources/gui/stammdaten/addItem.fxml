@@ -4,11 +4,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="391.0" prefWidth="494.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.AddItemController">
+<AnchorPane prefHeight="391.0" prefWidth="571.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.AddItemController">
 	<children>
 		<Label layoutX="11.0" layoutY="15.0" prefHeight="17.0" prefWidth="79.0" text="%scene.addItem.lable.vorlage" />
 		<ComboBox fx:id="templateBox" layoutX="114.0" layoutY="11.0" prefHeight="25.0" prefWidth="250.0" />
 		<Button fx:id="chooseTemplate" layoutX="379.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="%scene.all.usebutton" />
+		<Button fx:id="undo" layoutX="379.0" layoutY="42.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="%scene.all.undobutton" />
 	
 		<Label layoutX="11.0" layoutY="46.0" text="%scene.all.item" />
 		<TextField fx:id="name" layoutX="113.0" layoutY="42.0" prefHeight="25.0" prefWidth="250.0" />
@@ -21,11 +22,6 @@
 		
 		<Label layoutX="9.0" layoutY="279.0" text="%scene.all.notiz" />
 		<TextArea fx:id="notiz" layoutX="113.0" layoutY="279.0" prefHeight="46.0" prefWidth="250.0" />
-		
-		<Label layoutX="11.0" layoutY="76.0" text="%scene.all.scale" />
-		<ComboBox fx:id="skalaBox" layoutX="113.0" layoutY="72.0" prefHeight="25.0" prefWidth="149.0" />
-		
-
 		
 		<Button fx:id="save" layoutX="113.0" layoutY="330.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="%scene.all.savebutton" />
 		<Button fx:id="cancle" layoutX="223.0" layoutY="330.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="101.0" text="%scene.all.canclebutton" />

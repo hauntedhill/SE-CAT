@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
+import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -50,13 +51,17 @@ public class AddHandlungsfeldController extends BaseController {
 		save.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
+				if (name.getText() != null && !name.getText().equals("")) {
+					Handlungsfeld h = new Handlungsfeld();
 
-				Handlungsfeld h = new Handlungsfeld();
+					h.setAktiv(true);
+					h.setName(name.getText());
 
-				h.setAktiv(true);
-				h.setName(name.getText());
+					hauptfeldController.addHauptfeldToCurrentSelection(h);
+				} else {
 
-				hauptfeldController.addHauptfeldToCurrentSelection(h);
+					Dialogs.create().title("Warnung").masthead("Handlungsfeld konnte nich angelegt werden!").message("Kein Name vergeben!").showWarning();
+				}
 				Stage stage = (Stage) save.getScene().getWindow();
 
 				stage.close();

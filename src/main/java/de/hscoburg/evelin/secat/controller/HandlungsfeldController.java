@@ -173,6 +173,8 @@ public class HandlungsfeldController extends BaseController {
 						new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
 				MenuItem activateItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.activateItItem"),
 						new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
+				MenuItem editItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.editItItem"), new ImageView(
+						new Image("/image/icons/edit.png", 16, 16, true, true)));
 				MenuItem deactivateHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.deactivateHfItem"),
 						new ImageView(new Image("/image/icons/bookmark_Silver.png", 16, 16, true, true)));
 				MenuItem deactivateItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.deactivateItItem"),
@@ -225,20 +227,36 @@ public class HandlungsfeldController extends BaseController {
 					}
 				});
 
+				editItItem.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent t) {
+
+						Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/editItem.fxml");
+
+						stage.show();
+
+						stage.setOnHidden(new EventHandler<WindowEvent>() {
+							public void handle(WindowEvent we) {
+								logger.debug("Closing dialog stage.");
+
+							}
+						});
+
+					}
+				});
+
 				deactivateHfItem.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
 					public void handle(ActionEvent t) {
-						if (treeTable.getSelectionModel().getSelectedItem().getValue().getHandlungsfeld().getId() != -1) {
-							Handlungsfeld h = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue()
-									.getHandlungsfeld();
+						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
+						if (selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
+							Handlungsfeld h = selectedTreeItem.getValue().getHandlungsfeld();
 							h.setAktiv(false);
 							hauptfeldModel.mergeHandlugsfeld(h);
-							int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-									.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
-
-							treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-									.set(index, createNode(new TreeItemWrapper(h)));
+							int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
+							selectedTreeItem.getParent().getChildren().set(index, createNode(new TreeItemWrapper(h)));
 
 						}
 					}
@@ -248,16 +266,13 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
-						if (treeTable.getSelectionModel().getSelectedItem().getValue().getHandlungsfeld().getId() != -1) {
-							Handlungsfeld h = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue()
-									.getHandlungsfeld();
+						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
+						if (selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
+							Handlungsfeld h = selectedTreeItem.getValue().getHandlungsfeld();
 							h.setAktiv(true);
 							hauptfeldModel.mergeHandlugsfeld(h);
-							int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-									.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
-							treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-									.set(index, createNode(new TreeItemWrapper(h)));
-
+							int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
+							selectedTreeItem.getParent().getChildren().set(index, createNode(new TreeItemWrapper(h)));
 						}
 					}
 				});
@@ -266,16 +281,12 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
-
-						Item i = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getItem();
+						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
+						Item i = selectedTreeItem.getValue().getItem();
 						i.setAktiv(false);
 						hauptfeldModel.mergeItem(i);
-
-						int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-								.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
-
-						treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-								.set(index, createNode(new TreeItemWrapper(i)));
+						int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
+						selectedTreeItem.getParent().getChildren().set(index, createNode(new TreeItemWrapper(i)));
 					}
 
 				});
@@ -284,15 +295,12 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
-
-						Item i = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getItem();
+						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
+						Item i = selectedTreeItem.getValue().getItem();
 						i.setAktiv(true);
 						hauptfeldModel.mergeItem(i);
-						int index = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-								.indexOf(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()));
-
-						treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-								.set(index, createNode(new TreeItemWrapper(i)));
+						int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
+						selectedTreeItem.getParent().getChildren().set(index, createNode(new TreeItemWrapper(i)));
 
 					}
 
@@ -389,6 +397,7 @@ public class HandlungsfeldController extends BaseController {
 
 				rowMenu.getItems().add(activateItItem);
 				rowMenu.getItems().add(deactivateItItem);
+				rowMenu.getItems().add(editItItem);
 
 				rowMenuHf.getItems().add(addHfItem);
 				rowMenuHf.getItems().add(activateHfItem);
@@ -593,6 +602,11 @@ public class HandlungsfeldController extends BaseController {
 	public String getKeyForSceneName() {
 
 		return "scene.handlungsfeld.lable.title";
+	}
+
+	public TreeItem<TreeItemWrapper> getSelectedTreeItem() {
+
+		return treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex());
 	}
 
 	public TreeItem<TreeItemWrapper> createNode(final TreeItemWrapper t) {

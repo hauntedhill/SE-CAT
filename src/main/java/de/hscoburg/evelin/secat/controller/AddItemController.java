@@ -25,6 +25,7 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -33,12 +34,10 @@ import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
-import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
 import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
-import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
@@ -51,6 +50,8 @@ public class AddItemController extends BaseController {
 	@FXML
 	private Button chooseTemplate;
 	@FXML
+	private Button undo;
+	@FXML
 	private TextField name;
 	@FXML
 	private TextField rolle;
@@ -61,8 +62,6 @@ public class AddItemController extends BaseController {
 	@FXML
 	private ListView<Perspektive> perspektiveList;
 	@FXML
-	private ComboBox<Skala> skalaBox;
-	@FXML
 	private ComboBox<Item> templateBox;
 
 	@Autowired
@@ -72,8 +71,6 @@ public class AddItemController extends BaseController {
 	@Autowired
 	private PerspektivenModel perspektivenModel;
 	@Autowired
-	private SkalenModel skalenModel;
-	@Autowired
 	private EigenschaftenModel eigenschaftModel;
 
 	@Override
@@ -82,39 +79,10 @@ public class AddItemController extends BaseController {
 		save.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
 		chooseTemplate.setGraphic(new ImageView(new Image("/image/icons/editcopy.png", 16, 16, true, true)));
+		undo.setGraphic(new ImageView(new Image("/image/icons/editdelete.png", 16, 16, true, true)));
 		Handlungsfeld chosenHandlungsfeld = handlungsfeldController.getTreeTable().getSelectionModel()
 				.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld();
 
-		skalaBox.setConverter(new StringConverter<Skala>() {
-			@Override
-			public String toString(Skala object) {
-
-				if (object == null) {
-					System.out.println("null");
-					return "";
-				}
-				return object.getName();
-			}
-
-			@Override
-			public Skala fromString(String string) {
-				throw new RuntimeException("not required for non editable ComboBox");
-			}
-
-		});
-		skalaBox.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.addItem.skalabox.prompttextproperty"));
-
-		ObservableList<Skala> skalenOl = FXCollections.observableArrayList();
-		List<Skala> skalenList = skalenModel.getSkalen();
-		ListIterator<Skala> itskala = skalenList.listIterator();
-
-		while (itskala.hasNext()) {
-
-			skalenOl.add(itskala.next());
-			;
-		}
-
-		skalaBox.setItems(skalenOl);
 
 		templateBox.setConverter(new StringConverter<Item>() {
 			@Override
@@ -136,7 +104,6 @@ public class AddItemController extends BaseController {
 		templateBox.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.addItem.templatebox.prompttextproperty"));
 
 		ObservableList<Item> itemOl = FXCollections.observableArrayList();
-		System.out.println(chosenHandlungsfeld.getName());
 		List<Item> itemList = handlungsfeldModel.getItemBy(chosenHandlungsfeld, true, null, null, null, null, null);
 		ListIterator<Item> itItem = itemList.listIterator();
 
@@ -218,17 +185,14 @@ public class AddItemController extends BaseController {
 			@Override
 			public void handle(ActionEvent e) {
 
-				if (name.getText() != null || !name.getText().equals("")) {
+				if (name.getText() != null && !name.getText().equals("")) {
 
 					Item i = new Item();
 					i.setAktiv(true);
 					i.setName(name.getText());
 					i.setNotiz(notiz.getText());
 
-					if (skalaBox.getValue() != null) {
 
-						// i.setSkala(skalaBox.getValue());
-					}
 
 					if (perspektiveList.getSelectionModel().getSelectedItems() != null) {
 						i.setPerspektiven(perspektiveList.getSelectionModel().getSelectedItems());
@@ -263,6 +227,9 @@ public class AddItemController extends BaseController {
 					handlungsfeldController.getTreeTable().getRoot().getChildren().add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
 
 					handlungsfeldController.getTreeTable().getRoot().getChildren().get(index).setExpanded(true);
+				} else {
+
+					Dialogs.create().title("Warnung").masthead("Item konnte nich angelegt werden!").message("Kein Name vergeben!").showWarning();
 				}
 
 				Stage stage = (Stage) save.getScene().getWindow();
@@ -276,7 +243,8 @@ public class AddItemController extends BaseController {
 			@Override
 			public void handle(ActionEvent e) {
 
-				// skalaBox.setValue(templateBox.getValue().getSkala());
+				perspektiveList.getSelectionModel().clearSelection();
+				eigenschaftList.getSelectionModel().clearSelection();
 				notiz.setText(templateBox.getValue().getNotiz());
 				List<Perspektive> templatePerspektive = templateBox.getValue().getPerspektiven();
 				for (Perspektive set : templatePerspektive) {
@@ -286,6 +254,16 @@ public class AddItemController extends BaseController {
 				for (Eigenschaft set : templateEigenschaft) {
 					eigenschaftList.getSelectionModel().select(eigenschaftList.getItems().indexOf(set));
 				}
+			}
+		});
+
+		undo.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent e) {
+
+				perspektiveList.getSelectionModel().clearSelection();
+				eigenschaftList.getSelectionModel().clearSelection();
+				notiz.setText("");
 			}
 		});
 
