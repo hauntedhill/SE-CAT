@@ -40,6 +40,9 @@ public class TopMenuController implements Initializable {
 	@FXML
 	private MenuItem faecher;
 
+	@FXML
+	private MenuItem lehrveranstaltungen;
+
 	@Autowired
 	private LayoutController layout;
 
@@ -125,6 +128,21 @@ public class TopMenuController implements Initializable {
 			@Override
 			public void handleAction(ActionEvent event) {
 				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.FAECHER_FXML);
+			}
+
+			@Override
+			public void updateUI() {
+				layout.setCenterNode(guiNode);
+			}
+		});
+
+		lehrveranstaltungen.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+			private Node guiNode;
+
+			@Override
+			public void handleAction(ActionEvent event) {
+				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.LEHRVERANSTALTUNGEN_FXML);
 			}
 
 			@Override

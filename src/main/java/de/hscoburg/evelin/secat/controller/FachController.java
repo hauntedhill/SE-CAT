@@ -122,7 +122,7 @@ public class FachController extends BaseController {
 	}
 
 	private void loadList() {
-		ObservableList<Fach> myObservableList = FXCollections.observableList(fachModel.getEigenschaften());
+		ObservableList<Fach> myObservableList = FXCollections.observableList(fachModel.getFaecher());
 		listFach.setItems(myObservableList);
 	}
 

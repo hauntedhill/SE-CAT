@@ -15,7 +15,7 @@ public class FachModel {
 	@Autowired
 	private FachDAO fachDAO;
 
-	public List<Fach> getEigenschaften() {
+	public List<Fach> getFaecher() {
 		return fachDAO.findAll();
 	}
 

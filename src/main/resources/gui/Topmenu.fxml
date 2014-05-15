@@ -46,6 +46,15 @@
 									control="UP" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
+						<MenuItem fx:id="lehrveranstaltungen" text="%menu.item.masterdata.lehrveranstaltung">
+							<accelerator>
+								<KeyCodeCombination alt="DOWN" code="L"
+									control="UP" meta="UP" shift="UP" shortcut="UP" />
+							</accelerator>
+						</MenuItem>
+						
+						
+						
 
 					</items>
 
