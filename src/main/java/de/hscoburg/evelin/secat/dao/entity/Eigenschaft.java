@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
@@ -17,6 +18,8 @@ public class Eigenschaft extends BaseEntity {
 	private String name;
 
 	private List<Item> items;
+
+	private List<Fragebogen> frageboegen;
 
 	public String getName() {
 		return name;
@@ -33,6 +36,15 @@ public class Eigenschaft extends BaseEntity {
 
 	public void setItems(List<Item> items) {
 		this.items = items;
+	}
+
+	@OneToMany(targetEntity = Fragebogen.class, mappedBy = "eigenschaft")
+	public List<Fragebogen> getFrageboegen() {
+		return frageboegen;
+	}
+
+	public void setFrageboegen(List<Fragebogen> frageboegen) {
+		this.frageboegen = frageboegen;
 	}
 
 }

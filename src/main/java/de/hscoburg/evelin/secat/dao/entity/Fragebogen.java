@@ -29,6 +29,12 @@ public class Fragebogen extends BaseEntity {
 
 	private Skala skala;
 
+	private List<Frage> fragen;
+
+	private Eigenschaft eigenschaft;
+
+	private Perspektive perspektive;
+
 	@ManyToOne(targetEntity = Skala.class, fetch = FetchType.EAGER)
 	public Skala getSkala() {
 		return skala;
@@ -80,6 +86,33 @@ public class Fragebogen extends BaseEntity {
 
 	public void setLehrveranstaltung(Lehrveranstaltung lehrveranstaltung) {
 		this.lehrveranstaltung = lehrveranstaltung;
+	}
+
+	@OneToMany(targetEntity = Frage.class, mappedBy = "fragebogen")
+	public List<Frage> getFragen() {
+		return fragen;
+	}
+
+	public void setFragen(List<Frage> fragen) {
+		this.fragen = fragen;
+	}
+
+	@ManyToOne(targetEntity = Perspektive.class)
+	public Perspektive getPerspektive() {
+		return perspektive;
+	}
+
+	public void setPerspektive(Perspektive perspektive) {
+		this.perspektive = perspektive;
+	}
+
+	@ManyToOne(targetEntity = Eigenschaft.class)
+	public Eigenschaft getEigenschaft() {
+		return eigenschaft;
+	}
+
+	public void setEigenschaft(Eigenschaft eigenschaft) {
+		this.eigenschaft = eigenschaft;
 	}
 
 	// public void addItem(Item i) {

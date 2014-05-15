@@ -21,6 +21,8 @@ public class Perspektive extends BaseEntity {
 
 	private List<Bewertender> bewertende;
 
+	private List<Fragebogen> frageboegen;
+
 	public String getName() {
 		return name;
 	}
@@ -45,6 +47,15 @@ public class Perspektive extends BaseEntity {
 
 	public void setBewertende(List<Bewertender> bewertende) {
 		this.bewertende = bewertende;
+	}
+
+	@OneToMany(targetEntity = Fragebogen.class, mappedBy = "perspektive")
+	public List<Fragebogen> getFrageboegen() {
+		return frageboegen;
+	}
+
+	public void setFrageboegen(List<Fragebogen> frageboegen) {
+		this.frageboegen = frageboegen;
 	}
 
 }

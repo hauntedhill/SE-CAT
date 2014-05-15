@@ -11,6 +11,6 @@ public class Handlungsfeld_ extends StammdatenEntity_ {
 
 	public static volatile SingularAttribute<Handlungsfeld, String> name;
 	public static volatile SingularAttribute<Handlungsfeld, String> notiz;
-	public static volatile ListAttribute<Handlungsfeld, Item> items;
+	public static volatile ListAttribute<Handlungsfeld, Bereich> bereiche;
 
 }

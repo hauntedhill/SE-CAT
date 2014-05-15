@@ -14,6 +14,8 @@ import javax.persistence.criteria.Root;
 import org.springframework.stereotype.Repository;
 
 import de.hscoburg.evelin.secat.dao.base.BaseDAO;
+import de.hscoburg.evelin.secat.dao.entity.Bereich;
+import de.hscoburg.evelin.secat.dao.entity.Bereich_;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft_;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
@@ -47,7 +49,8 @@ public class HandlungsfeldDAO extends BaseDAO<Handlungsfeld> {
 		CriteriaQuery<Handlungsfeld> handlungsfeldCriteria = cb.createQuery(Handlungsfeld.class);
 		Root<Handlungsfeld> handlungsfeldRoot = handlungsfeldCriteria.from(Handlungsfeld.class);
 		// Person.address is an embedded attribute
-		Join<Handlungsfeld, Item> itemRoot = handlungsfeldRoot.join(Handlungsfeld_.items, JoinType.LEFT);
+		Join<Handlungsfeld, Bereich> bereichRoot = handlungsfeldRoot.join(Handlungsfeld_.bereiche, JoinType.LEFT);
+		Join<Bereich, Item> itemRoot = bereichRoot.join(Bereich_.items, JoinType.LEFT);
 		// Address.country is a ManyToOne
 		if (e != null) {
 			Join<Item, Eigenschaft> eigenschaftRoot = itemRoot.join(Item_.eigenschaften);

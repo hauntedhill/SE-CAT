@@ -23,7 +23,7 @@ public class Item extends StammdatenEntity {
 
 	private String notiz;
 
-	private Handlungsfeld handlungsfeld;
+	private Bereich bereich;
 
 	private List<Eigenschaft> eigenschaften;
 
@@ -51,13 +51,13 @@ public class Item extends StammdatenEntity {
 		this.notiz = notiz;
 	}
 
-	@ManyToOne(targetEntity = Handlungsfeld.class)
-	public Handlungsfeld getHandlungsfeld() {
-		return handlungsfeld;
+	@ManyToOne(targetEntity = Bereich.class)
+	public Bereich getBereich() {
+		return bereich;
 	}
 
-	public void setHandlungsfeld(Handlungsfeld handlungsfeld) {
-		this.handlungsfeld = handlungsfeld;
+	public void setBereich(Bereich handlungsfeld) {
+		this.bereich = handlungsfeld;
 	}
 
 	@ManyToMany(targetEntity = Eigenschaft.class, fetch = FetchType.EAGER)
@@ -78,7 +78,7 @@ public class Item extends StammdatenEntity {
 		this.perspektiven = perspektiven;
 	}
 
-	@OneToMany(targetEntity = Bewertung.class)
+	@OneToMany(targetEntity = Bewertung.class, mappedBy = "item")
 	public List<Bewertung> getBewertungen() {
 		return bewertungen;
 	}

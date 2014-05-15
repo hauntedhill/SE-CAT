@@ -83,7 +83,6 @@ public class AddItemController extends BaseController {
 		Handlungsfeld chosenHandlungsfeld = handlungsfeldController.getTreeTable().getSelectionModel()
 				.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld();
 
-
 		templateBox.setConverter(new StringConverter<Item>() {
 			@Override
 			public String toString(Item object) {
@@ -104,7 +103,11 @@ public class AddItemController extends BaseController {
 		templateBox.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.addItem.templatebox.prompttextproperty"));
 
 		ObservableList<Item> itemOl = FXCollections.observableArrayList();
-		List<Item> itemList = handlungsfeldModel.getItemBy(chosenHandlungsfeld, true, null, null, null, null, null);
+
+		// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
+		// List<Item> itemList = handlungsfeldModel.getItemBy(chosenHandlungsfeld, true, null, null, null, null, null);
+		List<Item> itemList = new ArrayList<>();
+
 		ListIterator<Item> itItem = itemList.listIterator();
 
 		while (itItem.hasNext()) {
@@ -192,8 +195,6 @@ public class AddItemController extends BaseController {
 					i.setName(name.getText());
 					i.setNotiz(notiz.getText());
 
-
-
 					if (perspektiveList.getSelectionModel().getSelectedItems() != null) {
 						i.setPerspektiven(perspektiveList.getSelectionModel().getSelectedItems());
 					}
@@ -204,14 +205,16 @@ public class AddItemController extends BaseController {
 
 					ArrayList<Item> list = new ArrayList<Item>();
 					list.add(i);
-					i.setHandlungsfeld(handlungsfeldController.getTreeTable().getSelectionModel()
-							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld());
+					// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
+					// i.setHandlungsfeld(handlungsfeldController.getTreeTable().getSelectionModel()
+					// .getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld());
 
 					handlungsfeldModel.persistItem(i);
 
 					Handlungsfeld reNew = handlungsfeldController.getTreeTable().getSelectionModel()
 							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld();
-					reNew.addItem(i);
+					// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
+					// reNew.addItem(i);
 					TreeItem<TreeItemWrapper> tmp = handlungsfeldController.getTreeTable().getSelectionModel()
 							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex());
 					int index = handlungsfeldController.getTreeTable().getSelectionModel()

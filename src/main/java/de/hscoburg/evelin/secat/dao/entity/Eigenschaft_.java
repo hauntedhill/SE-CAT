@@ -11,4 +11,6 @@ public class Eigenschaft_ extends StammdatenEntity_ {
 
 	public static volatile SingularAttribute<Eigenschaft, String> name;
 	public static volatile ListAttribute<Eigenschaft, Item> items;
+
+	public static volatile ListAttribute<Eigenschaft, Fragebogen> frageboegen;
 }

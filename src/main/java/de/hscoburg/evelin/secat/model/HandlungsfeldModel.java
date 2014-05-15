@@ -6,12 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.hscoburg.evelin.secat.dao.BereichDAO;
 import de.hscoburg.evelin.secat.dao.EigenschaftenDAO;
 import de.hscoburg.evelin.secat.dao.FachDAO;
 import de.hscoburg.evelin.secat.dao.HandlungsfeldDAO;
 import de.hscoburg.evelin.secat.dao.ItemDAO;
 import de.hscoburg.evelin.secat.dao.PerspektiveDAO;
 import de.hscoburg.evelin.secat.dao.SkalaDAO;
+import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
@@ -38,8 +40,15 @@ public class HandlungsfeldModel {
 	@Autowired
 	private FachDAO fachDAO;
 
-	public List<Item> getItemBy(Handlungsfeld h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
+	@Autowired
+	private BereichDAO bereichDAO;
+
+	public List<Item> getItemBy(Bereich h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
 		return itemDAO.getItemBy(h, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
+	}
+
+	public List<Bereich> getBereichBy(Handlungsfeld h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
+		return bereichDAO.getBereicheBy(h, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
 	}
 
 	public List<Handlungsfeld> getHandlungsfelderBy(Boolean handlungsfeldAktiv, Boolean itemAktiv) {

@@ -17,6 +17,14 @@ public class Fragebogen_ extends BaseEntity_ {
 
 	public static volatile SingularAttribute<Fragebogen, Lehrveranstaltung> lehrveranstaltung;
 
+	public static volatile SingularAttribute<Fragebogen, String> name;
+
 	public static volatile SingularAttribute<Fragebogen, Skala> skala;
+
+	public static volatile ListAttribute<Fragebogen, Frage> fragen;
+
+	public static volatile SingularAttribute<Fragebogen, Eigenschaft> eigenschaft;
+
+	public static volatile SingularAttribute<Fragebogen, Perspektive> perspektive;
 
 }

@@ -14,4 +14,6 @@ public class Perspektive_ extends StammdatenEntity_ {
 	public static volatile ListAttribute<Perspektive, Item> items;
 
 	public static volatile ListAttribute<Perspektive, Bewertender> bewertende;
+
+	public static volatile ListAttribute<Perspektive, Fragebogen> frageboegen;
 }

@@ -1,6 +1,7 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -406,7 +407,6 @@ public class HandlungsfeldController extends BaseController {
 				rowMenuHf.getItems().add(moveItems);
 				// rowMenuHf.getItems().add(filterItItem);
 
-
 				ObservableObjectValue<TreeItemWrapper> rowMenuObserver = new ObservableObjectValue<TreeItemWrapper>() {
 
 					@Override
@@ -496,8 +496,9 @@ public class HandlungsfeldController extends BaseController {
 
 		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren()
 				.removeAll(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren());
-
-		List<Item> item = ha.getItems();
+		// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
+		// List<Item> item = ha.getItems();
+		List<Item> item = new ArrayList<Item>();
 		ListIterator<Item> iter = item.listIterator();
 		while (iter.hasNext()) {
 			TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
@@ -587,8 +588,9 @@ public class HandlungsfeldController extends BaseController {
 		while (it.hasNext()) {
 
 			Handlungsfeld ha = it.next();
-			List<Item> item = hauptfeldModel.getItemBy(ha, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
-			ha.setItems(item);
+			// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
+			// List<Item> item = hauptfeldModel.getItemBy(ha, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
+			// ha.setItems(item);
 
 			root.getChildren().add(createNode(new TreeItemWrapper(ha)));
 
@@ -649,7 +651,10 @@ public class HandlungsfeldController extends BaseController {
 				TreeItemWrapper t = TreeItem.getValue();
 
 				if (t != null && t.isHandlungsfeld()) {
-					List<Item> items = t.getHandlungsfeld().getItems();
+					// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
+					// List<Item> items = t.getHandlungsfeld().getItems();
+					List<Item> items = new ArrayList<Item>();
+
 					if (items != null) {
 						ObservableList<TreeItem<TreeItemWrapper>> children = FXCollections.observableArrayList();
 

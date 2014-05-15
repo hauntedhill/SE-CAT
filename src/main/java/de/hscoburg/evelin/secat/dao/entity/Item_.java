@@ -13,7 +13,7 @@ public class Item_ extends StammdatenEntity_ {
 
 	public static volatile SingularAttribute<Item, String> notiz;
 
-	public static volatile SingularAttribute<Item, Handlungsfeld> handlungsfeld;
+	public static volatile SingularAttribute<Item, Bereich> bereich;
 
 	public static volatile ListAttribute<Item, Eigenschaft> eigenschaften;
 

@@ -1,6 +1,7 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -101,8 +102,9 @@ public class MoveItemController extends BaseController {
 
 				TreeTableView<TreeItemWrapper> treeTable = hauptfeldController.getTreeTable();
 				TreeItemWrapper old = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue();
-
-				List<Item> items = old.getHandlungsfeld().getItems();
+				// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
+				// List<Item> items = old.getHandlungsfeld().getItems();
+				List<Item> items = new ArrayList<Item>();
 
 				Handlungsfeld hfToAttach = handlungsfeld.getValue().getValue().getHandlungsfeld();
 
@@ -113,10 +115,12 @@ public class MoveItemController extends BaseController {
 				while (iter.hasNext()) {
 
 					tmpItem = iter.next();
-					tmpItem.setHandlungsfeld(hfToAttach);
+					// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
+					// tmpItem.setHandlungsfeld(hfToAttach);
 					handlungsfeldModel.mergeItem(tmpItem);
 					System.out.println(tmpItem.getName());
-					hfToAttach.addItem(tmpItem);
+					// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
+					// hfToAttach.addItem(tmpItem);
 				}
 
 				Handlungsfeld oldHf = handlungsfeldModel.findHandlungsfeldById(old.getHandlungsfeld().getId());

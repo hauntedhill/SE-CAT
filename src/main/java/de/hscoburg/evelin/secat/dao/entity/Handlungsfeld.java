@@ -21,7 +21,7 @@ public class Handlungsfeld extends StammdatenEntity {
 
 	private String notiz;
 
-	private List<Item> items;
+	private List<Bereich> bereiche;
 
 	public String getName() {
 		return name;
@@ -39,21 +39,21 @@ public class Handlungsfeld extends StammdatenEntity {
 		this.notiz = notiz;
 	}
 
-	@OneToMany(mappedBy = "handlungsfeld", targetEntity = Item.class, fetch = FetchType.EAGER)
-	public List<Item> getItems() {
-		return items;
+	@OneToMany(mappedBy = "handlungsfeld", targetEntity = Bereich.class, fetch = FetchType.EAGER)
+	public List<Bereich> getBereiche() {
+		return bereiche;
 	}
 
-	public void setItems(List<Item> items) {
-		this.items = items;
+	public void setBereiche(List<Bereich> items) {
+		this.bereiche = items;
 	}
 
-	public void addItem(Item i) {
+	public void addBereich(Bereich i) {
 		i.setHandlungsfeld(this);
-		if (items == null) {
-			items = new ArrayList<Item>();
+		if (bereiche == null) {
+			bereiche = new ArrayList<Bereich>();
 		}
-		items.add(i);
+		bereiche.add(i);
 	}
 
 }

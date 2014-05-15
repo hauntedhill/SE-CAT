@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.hscoburg.evelin.secat.dao.HandlungsfeldDAO;
+import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
@@ -189,10 +190,23 @@ public class HandlungsfeldDAOTest {
 		em.merge(i1);
 		em.merge(i2);
 
-		handlungsfeld1.addItem(i1);
+		Bereich b1 = new Bereich();
+		Bereich b2 = new Bereich();
+		Bereich b3 = new Bereich();
 
-		handlungsfeld2.addItem(i2);
-		handlungsfeld2.addItem(i3);
+		b1.addItem(i1);
+
+		b2.addItem(i2);
+		b3.addItem(i3);
+
+		em.persist(b1);
+		em.persist(b2);
+		em.persist(b3);
+
+		handlungsfeld1.addBereich(b1);
+
+		handlungsfeld2.addBereich(b2);
+		handlungsfeld2.addBereich(b3);
 
 		em.persist(handlungsfeld1);
 

@@ -7,6 +7,7 @@ import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
+import javax.persistence.criteria.JoinType;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 
@@ -14,12 +15,14 @@ import org.springframework.stereotype.Repository;
 
 import de.hscoburg.evelin.secat.dao.base.BaseDAO;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
+import de.hscoburg.evelin.secat.dao.entity.Bereich_;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft_;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Fach_;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen_;
+import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Item_;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
@@ -28,21 +31,22 @@ import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive_;
 
 @Repository
-public class ItemDAO extends BaseDAO<Item> {
+public class BereichDAO extends BaseDAO<Bereich> {
 
-	public ItemDAO() {
-		super(Item.class);
-
+	public BereichDAO() {
+		super(Bereich.class);
+		// TODO Auto-generated constructor stub
 	}
 
-	public List<Item> getItemBy(Bereich h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
+	public List<Bereich> getBereicheBy(Handlungsfeld h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
 		List<Predicate> predicates = new ArrayList<Predicate>();
 
-		CriteriaQuery<Item> itemCriteria = cb.createQuery(Item.class);
-		Root<Item> itemRoot = itemCriteria.from(Item.class);
+		CriteriaQuery<Bereich> bereichCriteria = cb.createQuery(Bereich.class);
+		Root<Bereich> bereichRoot = bereichCriteria.from(Bereich.class);
+		Join<Bereich, Item> itemRoot = bereichRoot.join(Bereich_.items, JoinType.LEFT);
 		// Person.address is an embedded attribute
 		// Address.country is a ManyToOne
 		if (e != null) {
@@ -69,9 +73,9 @@ public class ItemDAO extends BaseDAO<Item> {
 			predicates.add(cb.like(cb.upper(itemRoot.get(Item_.notiz)), (notizItem + "%").toUpperCase()));
 		}
 
-		itemCriteria.select(itemRoot).distinct(true).where(predicates.toArray(new Predicate[0]));
+		bereichCriteria.select(bereichRoot).distinct(true).where(predicates.toArray(new Predicate[0]));
 
-		TypedQuery<Item> q = em.createQuery(itemCriteria);
+		TypedQuery<Bereich> q = em.createQuery(bereichCriteria);
 
 		return q.getResultList();
 	}

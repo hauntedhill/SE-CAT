@@ -30,6 +30,8 @@ public class Skala extends BaseEntity {
 
 	private List<Fragebogen> frageboegen;
 
+	private List<Frage> fragen;
+
 	@OneToMany(targetEntity = Fragebogen.class, mappedBy = "skala")
 	public List<Fragebogen> getItems() {
 		return frageboegen;
@@ -45,6 +47,15 @@ public class Skala extends BaseEntity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@OneToMany(targetEntity = Frage.class, mappedBy = "skala")
+	public List<Frage> getFragen() {
+		return fragen;
+	}
+
+	public void setFragen(List<Frage> fragen) {
+		this.fragen = fragen;
 	}
 
 }
