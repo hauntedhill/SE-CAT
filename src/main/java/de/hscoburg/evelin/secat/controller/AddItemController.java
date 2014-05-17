@@ -30,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
+import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
@@ -185,11 +186,13 @@ public class AddItemController extends BaseController {
 		eigenschaftList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 
 		save.setOnAction(new EventHandler<ActionEvent>() {
+
 			@Override
 			public void handle(ActionEvent e) {
 
 				if (name.getText() != null && !name.getText().equals("")) {
-
+					TreeItem<TreeItemWrapper> selected = handlungsfeldController.getSelectedTreeItem();
+					TreeItem<TreeItemWrapper> parent = selected.getParent();
 					Item i = new Item();
 					i.setAktiv(true);
 					i.setName(name.getText());
@@ -205,38 +208,26 @@ public class AddItemController extends BaseController {
 
 					ArrayList<Item> list = new ArrayList<Item>();
 					list.add(i);
-					// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
-					// i.setHandlungsfeld(handlungsfeldController.getTreeTable().getSelectionModel()
-					// .getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld());
+					i.setBereich(selected.getValue().getBereich());
 
 					handlungsfeldModel.persistItem(i);
 
-					Handlungsfeld reNew = handlungsfeldController.getTreeTable().getSelectionModel()
-							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld();
-					// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
-					// reNew.addItem(i);
-					TreeItem<TreeItemWrapper> tmp = handlungsfeldController.getTreeTable().getSelectionModel()
-							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex());
-					int index = handlungsfeldController.getTreeTable().getSelectionModel()
-							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren().indexOf(tmp);
+					Bereich reNew = selected.getValue().getBereich();
+					reNew.addItem(i);
 
-					handlungsfeldController.getTreeTable().getSelectionModel()
-							.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren().remove(tmp);
+					int index = selected.getParent().getChildren().indexOf(selected);
+					System.out.println(index);
+					System.out.println(selected.getValue().getName());
+					parent.getChildren().remove(selected);
+					parent.getChildren().add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
+					parent.getChildren().get(index).setExpanded(true);
 
-					// handlungsfeldController.getTreeTable().getSelectionModel()
-					// .getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getParent().getChildren()
-					// .add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
-
-					handlungsfeldController.getTreeTable().getRoot().getChildren().add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
-
-					handlungsfeldController.getTreeTable().getRoot().getChildren().get(index).setExpanded(true);
 				} else {
 
 					Dialogs.create().title("Warnung").masthead("Item konnte nich angelegt werden!").message("Kein Name vergeben!").showWarning();
 				}
 
 				Stage stage = (Stage) save.getScene().getWindow();
-				// do what you have to do
 				stage.close();
 
 			}

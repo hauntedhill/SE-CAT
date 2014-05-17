@@ -7,14 +7,19 @@ public class TreeItemWrapper {
 
 	private Handlungsfeld h;
 	private Item i;
+	private Bereich b;
 	private String n;
 	// private String skala;
 	private boolean isHandlungsfeld;
+	private boolean isItem;
+	private boolean isBereich;
 
 	public TreeItemWrapper(Handlungsfeld ha) {
 		this.h = ha;
 		this.n = ha.getName();
 		this.isHandlungsfeld = true;
+		this.isItem = false;
+		this.isBereich = false;
 
 	}
 
@@ -22,9 +27,16 @@ public class TreeItemWrapper {
 		this.i = it;
 		this.n = it.getName();
 		this.isHandlungsfeld = false;
-		// if (it.getSkala() != null) {
-		// this.skala = it.getSkala().getName();
-		// }
+		this.isItem = true;
+		this.isBereich = false;
+	}
+
+	public TreeItemWrapper(Bereich b) {
+		this.b = b;
+		this.n = b.getName();
+		this.isHandlungsfeld = false;
+		this.isItem = false;
+		this.isBereich = true;
 	}
 
 	public Handlungsfeld getHandlungsfeld() {
@@ -33,6 +45,10 @@ public class TreeItemWrapper {
 
 	public Item getItem() {
 		return i;
+	}
+
+	public Bereich getBereich() {
+		return b;
 	}
 
 	public String getName() {
@@ -44,10 +60,12 @@ public class TreeItemWrapper {
 	// }
 
 	public String getNotiz() {
-		if (this.isHandlungsfeld)
-			return "";
-		else
+
+		if (this.isItem) {
 			return i.getNotiz();
+		} else {
+			return "";
+		}
 	}
 
 	public boolean isHandlungsfeld() {
@@ -55,8 +73,18 @@ public class TreeItemWrapper {
 		return isHandlungsfeld;
 	}
 
+	public boolean isItem() {
+
+		return isItem;
+	}
+
+	public boolean isBereich() {
+
+		return isBereich;
+	}
+
 	public List<Eigenschaft> getEigenschaften() {
-		if (this.isHandlungsfeld) {
+		if (this.isHandlungsfeld || this.isBereich) {
 			return new ArrayList<Eigenschaft>();
 		} else {
 			return i.getEigenschaften();
@@ -64,7 +92,7 @@ public class TreeItemWrapper {
 	}
 
 	public List<Perspektive> getPerspektiven() {
-		if (this.isHandlungsfeld) {
+		if (this.isHandlungsfeld || this.isBereich) {
 			return new ArrayList<Perspektive>();
 		} else {
 			return i.getPerspektiven();
@@ -74,8 +102,10 @@ public class TreeItemWrapper {
 	public boolean isAktive() {
 		if (this.isHandlungsfeld) {
 			return this.h.isAktiv();
-		} else {
+		} else if (this.isItem) {
 			return this.i.isAktiv();
+		} else {
+			return true;
 		}
 	}
 }

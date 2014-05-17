@@ -136,6 +136,14 @@ public class HandlungsfeldModel {
 		itemDAO.merge(i);
 	}
 
+	public void persistBereich(Bereich b) {
+		bereichDAO.persist(b);
+	}
+
+	public void mergeBereich(Bereich b) {
+		bereichDAO.merge(b);
+	}
+
 	public List<Eigenschaft> getEigenschaften() {
 
 		return eigenschaftenDAO.findAll();

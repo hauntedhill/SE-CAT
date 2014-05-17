@@ -39,6 +39,7 @@ import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.HandlungsfeldDAO;
+import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
@@ -76,7 +77,7 @@ public class HandlungsfeldController extends BaseController {
 	private HandlungsfeldDAO service;
 
 	@Autowired
-	private HandlungsfeldModel hauptfeldModel;
+	private HandlungsfeldModel handlungsfeldModel;
 
 	private static boolean inaktiv = false;
 
@@ -116,14 +117,12 @@ public class HandlungsfeldController extends BaseController {
 					}
 				});
 
-		// ((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(3))
-		// .setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
-		//
-		// public ObservableValue<String> call(CellDataFeatures<TreeItemWrapper, String> p) {
-		// return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getSkala());
-		//
-		// }
-		// });
+		/*
+		 * ((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(3)) .setCellValueFactory(new
+		 * Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() { public ObservableValue<String>
+		 * call(CellDataFeatures<TreeItemWrapper, String> p) { return new ReadOnlyObjectWrapper<String>(p.getValue().getValue().getSkala());
+		 * } });
+		 */
 
 		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(3))
 				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
@@ -170,6 +169,8 @@ public class HandlungsfeldController extends BaseController {
 				final ContextMenu rowMenuHf = new ContextMenu();
 				MenuItem addHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.addHfItem"), new ImageView(
 						new Image("/image/icons/add_hand.png", 16, 16, true, true)));
+				MenuItem addBereichItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.addBereichItem"),
+						new ImageView(new Image("/image/icons/add_hand.png", 16, 16, true, true)));
 				MenuItem activateHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.activateHfItem"),
 						new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
 				MenuItem activateItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.activateItItem"),
@@ -191,28 +192,28 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
+						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
+						if (selectedTreeItem.getValue().isHandlungsfeld()) {
+							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addHandlungsfeld.fxml");
 
-						Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addHandlungsfeld.fxml");
+							stage.show();
 
-						stage.show();
+							stage.setOnHidden(new EventHandler<WindowEvent>() {
+								public void handle(WindowEvent we) {
+									logger.debug("Closing dialog stage.");
 
-						stage.setOnHidden(new EventHandler<WindowEvent>() {
-							public void handle(WindowEvent we) {
-								logger.debug("Closing dialog stage.");
-
-							}
-						});
-
+								}
+							});
+						}
 					}
 
 				});
 
 				addItItem.setOnAction(new EventHandler<ActionEvent>() {
-
 					@Override
 					public void handle(ActionEvent t) {
-						if (treeTable.getSelectionModel().getSelectedItem().getValue().getHandlungsfeld().getId() != -1) {
-
+						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
+						if (selectedTreeItem.getValue().isBereich()) {
 							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addItem.fxml");
 
 							stage.show();
@@ -223,7 +224,6 @@ public class HandlungsfeldController extends BaseController {
 
 								}
 							});
-
 						}
 					}
 				});
@@ -252,10 +252,10 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public void handle(ActionEvent t) {
 						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
-						if (selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
+						if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
 							Handlungsfeld h = selectedTreeItem.getValue().getHandlungsfeld();
 							h.setAktiv(false);
-							hauptfeldModel.mergeHandlugsfeld(h);
+							handlungsfeldModel.mergeHandlugsfeld(h);
 							int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
 							selectedTreeItem.getParent().getChildren().set(index, createNode(new TreeItemWrapper(h)));
 
@@ -268,10 +268,10 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public void handle(ActionEvent t) {
 						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
-						if (selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
+						if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
 							Handlungsfeld h = selectedTreeItem.getValue().getHandlungsfeld();
 							h.setAktiv(true);
-							hauptfeldModel.mergeHandlugsfeld(h);
+							handlungsfeldModel.mergeHandlugsfeld(h);
 							int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
 							selectedTreeItem.getParent().getChildren().set(index, createNode(new TreeItemWrapper(h)));
 						}
@@ -285,7 +285,7 @@ public class HandlungsfeldController extends BaseController {
 						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
 						Item i = selectedTreeItem.getValue().getItem();
 						i.setAktiv(false);
-						hauptfeldModel.mergeItem(i);
+						handlungsfeldModel.mergeItem(i);
 						int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
 						selectedTreeItem.getParent().getChildren().set(index, createNode(new TreeItemWrapper(i)));
 					}
@@ -299,7 +299,7 @@ public class HandlungsfeldController extends BaseController {
 						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
 						Item i = selectedTreeItem.getValue().getItem();
 						i.setAktiv(true);
-						hauptfeldModel.mergeItem(i);
+						handlungsfeldModel.mergeItem(i);
 						int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
 						selectedTreeItem.getParent().getChildren().set(index, createNode(new TreeItemWrapper(i)));
 
@@ -327,11 +327,34 @@ public class HandlungsfeldController extends BaseController {
 
 				});
 
+				addBereichItem.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent t) {
+						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
+						if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
+
+							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addBereich.fxml");
+
+							stage.show();
+
+							stage.setOnHidden(new EventHandler<WindowEvent>() {
+								public void handle(WindowEvent we) {
+									logger.debug("Closing dialog stage.");
+
+								}
+							});
+
+						}
+					}
+				});
+
 				moveItems.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
 					public void handle(ActionEvent t) {
-						if (treeTable.getSelectionModel().getSelectedItem().getValue().getHandlungsfeld().getId() != -1) {
+						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
+						if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
 
 							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/moveItems.fxml");
 
@@ -374,11 +397,11 @@ public class HandlungsfeldController extends BaseController {
 					public void handle(ActionEvent t) {
 						if (inaktiv == false) {
 							inaktiv = true;
-							buildFilteredTreeTable(hauptfeldModel.getHandlungsfelderBy(false, false), false, false);
+							buildFilteredTreeTable(handlungsfeldModel.getHandlungsfelderBy(false, false), false, false);
 						} else {
 
 							inaktiv = false;
-							buildFilteredTreeTable(hauptfeldModel.getHandlungsfelderBy(true, true), true, true);
+							buildFilteredTreeTable(handlungsfeldModel.getHandlungsfelderBy(true, true), true, true);
 
 						}
 
@@ -403,9 +426,9 @@ public class HandlungsfeldController extends BaseController {
 				rowMenuHf.getItems().add(addHfItem);
 				rowMenuHf.getItems().add(activateHfItem);
 				rowMenuHf.getItems().add(deactivateHfItem);
+				rowMenuHf.getItems().add(addBereichItem);
 				rowMenuHf.getItems().add(addItItem);
 				rowMenuHf.getItems().add(moveItems);
-				// rowMenuHf.getItems().add(filterItItem);
 
 				ObservableObjectValue<TreeItemWrapper> rowMenuObserver = new ObservableObjectValue<TreeItemWrapper>() {
 
@@ -436,15 +459,15 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public TreeItemWrapper getValue() {
 
-						return (row.itemProperty() != null ? (row.itemProperty().getValue() != null ? (!row.itemProperty().getValue().isHandlungsfeld() ? row
-								.itemProperty().getValue() : null) : null) : null);
+						return (row.itemProperty() != null ? (row.itemProperty().getValue() != null ? (!row.itemProperty().getValue().isHandlungsfeld() ? (!row
+								.itemProperty().getValue().isBereich() ? row.itemProperty().getValue() : null) : null) : null) : null);
 					}
 
 					@Override
 					public TreeItemWrapper get() {
 						// TODO Auto-generated method stub
-						return (row.itemProperty().get() != null ? (row.itemProperty().get() != null ? (!row.itemProperty().get().isHandlungsfeld() ? row
-								.itemProperty().get() : null) : null) : null);
+						return (row.itemProperty().get() != null ? (row.itemProperty().get() != null ? (!row.itemProperty().get().isHandlungsfeld() ? (!row
+								.itemProperty().getValue().isBereich() ? row.itemProperty().get() : null) : null) : null) : null);
 					}
 				};
 
@@ -473,13 +496,11 @@ public class HandlungsfeldController extends BaseController {
 
 		});
 
-		this.buildTreeTable();
+		buildTreeTable();
 
 	}
 
-	public void addHauptfeldToCurrentSelection(Handlungsfeld h) {
-
-		hauptfeldModel.persistHandlungsfeld(h);
+	public void addHandlungsfeldToCurrentSelection(Handlungsfeld h) {
 
 		if (treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().equals(treeTable.getRoot().getValue())) {
 			treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(createNode(new TreeItemWrapper(h)));
@@ -550,7 +571,7 @@ public class HandlungsfeldController extends BaseController {
 		h.setId(-1);
 		h.setName("Handlungsfelder");
 		h.setAktiv(true);
-		List<Handlungsfeld> hf = hauptfeldModel.getHandlungsfelderBy(true, null);
+		List<Handlungsfeld> hf = handlungsfeldModel.getHandlungsfelderBy(true, null);
 		/*
 		 * if (inaktiv == false) { hf = hauptfeldModel.getHandlungsfelderBy(true, true); } else {
 		 * 
@@ -614,7 +635,7 @@ public class HandlungsfeldController extends BaseController {
 
 	public TreeItem<TreeItemWrapper> createNode(final TreeItemWrapper t) {
 
-		if (!t.isHandlungsfeld()) {
+		if (t.isItem()) {
 			return new TreeItem<TreeItemWrapper>(t, new ImageView(new Image("/image/icons/filenew.png", 16, 16, true, true)));
 		}
 		return new TreeItem<TreeItemWrapper>(t, new ImageView(new Image("/image/icons/share.png", 16, 16, true, true))) {
@@ -625,24 +646,27 @@ public class HandlungsfeldController extends BaseController {
 
 			@Override
 			public ObservableList<TreeItem<TreeItemWrapper>> getChildren() {
+
 				if (isFirstTimeChildren) {
 					isFirstTimeChildren = false;
 
-					// First getChildren() call, so we actually go off and
-					// determine the children of the File contained in this TreeItem.
 					super.getChildren().setAll(buildChildren(this));
 				}
+
 				return super.getChildren();
 			}
 
 			@Override
 			public boolean isLeaf() {
+
 				if (isFirstTimeLeaf) {
 					isFirstTimeLeaf = false;
 					TreeItemWrapper t = (TreeItemWrapper) getValue();
-					isLeaf = !t.isHandlungsfeld();
+					if (t.isHandlungsfeld())
+						isLeaf = !t.isHandlungsfeld();
+					if (t.isBereich())
+						isLeaf = !t.isBereich();
 				}
-
 				return isLeaf;
 			}
 
@@ -651,16 +675,40 @@ public class HandlungsfeldController extends BaseController {
 				TreeItemWrapper t = TreeItem.getValue();
 
 				if (t != null && t.isHandlungsfeld()) {
-					// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
-					// List<Item> items = t.getHandlungsfeld().getItems();
-					List<Item> items = new ArrayList<Item>();
+					List<Bereich> bereiche = t.getHandlungsfeld().getBereiche();
+
+					if (bereiche != null) {
+						ObservableList<TreeItem<TreeItemWrapper>> children = FXCollections.observableArrayList();
+
+						for (Bereich child : bereiche) {
+							TreeItem<TreeItemWrapper> bereich = createNode(new TreeItemWrapper(child));
+
+							List<Item> items = child.getItems();
+							if (items != null && !items.isEmpty()) {
+								ObservableList<TreeItem<TreeItemWrapper>> itemsOl = FXCollections.observableArrayList();
+								for (Item item : items) {
+									itemsOl.add(createNode(new TreeItemWrapper(item)));
+								}
+								bereich.getChildren().addAll(itemsOl); //
+								System.out.println(bereich.getChildren().get(0).getValue().getName());
+							}
+
+							children.add(bereich);
+						}
+
+						return children;
+					}
+				}
+
+				if (t != null && t.isBereich()) {
+					List<Item> items = t.getBereich().getItems();
 
 					if (items != null) {
 						ObservableList<TreeItem<TreeItemWrapper>> children = FXCollections.observableArrayList();
 
 						for (Item child : items) {
-
-							children.add(createNode(new TreeItemWrapper(child)));
+							TreeItem<TreeItemWrapper> item = createNode(new TreeItemWrapper(child));
+							children.add(item);
 						}
 
 						return children;
