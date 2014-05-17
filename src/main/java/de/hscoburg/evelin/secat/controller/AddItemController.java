@@ -32,7 +32,6 @@ import org.springframework.stereotype.Controller;
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
-import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
@@ -81,8 +80,9 @@ public class AddItemController extends BaseController {
 		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
 		chooseTemplate.setGraphic(new ImageView(new Image("/image/icons/editcopy.png", 16, 16, true, true)));
 		undo.setGraphic(new ImageView(new Image("/image/icons/editdelete.png", 16, 16, true, true)));
-		Handlungsfeld chosenHandlungsfeld = handlungsfeldController.getTreeTable().getSelectionModel()
-				.getModelItem(handlungsfeldController.getTreeTable().getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld();
+
+		TreeItem<TreeItemWrapper> selected = handlungsfeldController.getSelectedTreeItem();
+		Bereich chosenBereich = selected.getValue().getBereich();
 
 		templateBox.setConverter(new StringConverter<Item>() {
 			@Override
@@ -105,16 +105,13 @@ public class AddItemController extends BaseController {
 
 		ObservableList<Item> itemOl = FXCollections.observableArrayList();
 
+		List<Item> itemList = handlungsfeldModel.getItemBy(chosenBereich, true, null, null, null, null, null);
 		// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
 		// List<Item> itemList = handlungsfeldModel.getItemBy(chosenHandlungsfeld, true, null, null, null, null, null);
-		List<Item> itemList = new ArrayList<>();
 
-		ListIterator<Item> itItem = itemList.listIterator();
+		for (Item item : itemList) {
 
-		while (itItem.hasNext()) {
-
-			itemOl.add(itItem.next());
-			;
+			itemOl.add(item);
 		}
 
 		templateBox.setItems(itemOl);
@@ -266,7 +263,6 @@ public class AddItemController extends BaseController {
 			public void handle(ActionEvent e) {
 
 				Stage stage = (Stage) cancle.getScene().getWindow();
-				// do what you have to do
 				stage.close();
 
 			}
