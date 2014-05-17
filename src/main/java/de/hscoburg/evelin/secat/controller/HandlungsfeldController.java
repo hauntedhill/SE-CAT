@@ -86,6 +86,7 @@ public class HandlungsfeldController extends BaseController {
 		menuItemFilterHandlungsfeld.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
 		menuItemFilterItem.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
 		menuItemFilterOff.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
+
 		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(0))
 				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
 
@@ -167,6 +168,7 @@ public class HandlungsfeldController extends BaseController {
 				final TreeTableRow<TreeItemWrapper> row = new TreeTableRow<>();
 				final ContextMenu rowMenu = new ContextMenu();
 				final ContextMenu rowMenuHf = new ContextMenu();
+
 				MenuItem addHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.addHfItem"), new ImageView(
 						new Image("/image/icons/add_hand.png", 16, 16, true, true)));
 				MenuItem addBereichItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.addBereichItem"),
@@ -194,6 +196,7 @@ public class HandlungsfeldController extends BaseController {
 					public void handle(ActionEvent t) {
 						TreeItem<TreeItemWrapper> selectedTreeItem = getSelectedTreeItem();
 						if (selectedTreeItem.getValue().isHandlungsfeld()) {
+
 							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addHandlungsfeld.fxml");
 
 							stage.show();
@@ -605,17 +608,27 @@ public class HandlungsfeldController extends BaseController {
 		TreeItemWrapper t = new TreeItemWrapper(h);
 		TreeItem<TreeItemWrapper> root = new TreeItem<TreeItemWrapper>(t);
 
-		ListIterator<Handlungsfeld> it = hfList.listIterator();
-		while (it.hasNext()) {
-
-			Handlungsfeld ha = it.next();
-			// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
-			// List<Item> item = hauptfeldModel.getItemBy(ha, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
-			// ha.setItems(item);
-
-			root.getChildren().add(createNode(new TreeItemWrapper(ha)));
-
+		for (Handlungsfeld hf : hfList) {
+			List<Bereich> bereiche = hf.getBereiche();
+			for (Bereich bereich : bereiche) {
+				bereich.setItems(handlungsfeldModel.getItemBy(bereich, itemAktiv, p, e, notizHandlungsfeld, notizItem, f));
+			}
+			hf.setBereiche(bereiche);
+			root.getChildren().add(createNode(new TreeItemWrapper(hf)));
 		}
+		// ListIterator<Handlungsfeld> it = hfList.listIterator();
+		// while (it.hasNext()) {
+
+		// Handlungsfeld ha = it.next();
+		// System.out.println(ha.getName());
+		// List<Bereich> bereich = handlungsfeldModel.getBereichBy(ha, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
+		// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
+		// List<Item> item = hauptfeldModel.getItemBy(ha, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
+		// ha.setItems(item);
+
+		// root.getChildren().add(createNode(new TreeItemWrapper(ha)));
+
+		// }
 
 		root.setExpanded(true);
 		treeTable.setRoot(root);

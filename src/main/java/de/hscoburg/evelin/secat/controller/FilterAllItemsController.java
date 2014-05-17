@@ -15,6 +15,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -27,6 +28,7 @@ import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
+import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
 import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
@@ -54,7 +56,7 @@ public class FilterAllItemsController extends BaseController {
 	private ListView<Perspektive> perspektiveList;
 
 	@Autowired
-	private HandlungsfeldController hauptfeldController;
+	private HandlungsfeldController handlungsfeldController;
 
 	@Autowired
 	private HandlungsfeldModel handlungsfeldModel;
@@ -141,13 +143,15 @@ public class FilterAllItemsController extends BaseController {
 		filter.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
+				TreeItem<TreeItemWrapper> selectedTreeItem = handlungsfeldController.getSelectedTreeItem();
 
-				Stage stage = (Stage) filter.getScene().getWindow();
 				List<Handlungsfeld> result = handlungsfeldModel.getHandlungsfelderBy(true, !isInaktiv.isSelected(), perspektiveList.getSelectionModel()
 						.getSelectedItem(), eigenschaftList.getSelectionModel().getSelectedItem(), null, notiz.getText(), null);
 
-				hauptfeldController.buildFilteredTreeTable(result, true, !isInaktiv.isSelected(), perspektiveList.getSelectionModel().getSelectedItem(),
+				handlungsfeldController.buildFilteredTreeTable(result, true, !isInaktiv.isSelected(), perspektiveList.getSelectionModel().getSelectedItem(),
 						eigenschaftList.getSelectionModel().getSelectedItem(), null, notiz.getText(), null);
+
+				Stage stage = (Stage) filter.getScene().getWindow();
 				stage.close();
 
 			}
@@ -158,7 +162,6 @@ public class FilterAllItemsController extends BaseController {
 			public void handle(ActionEvent e) {
 
 				Stage stage = (Stage) cancle.getScene().getWindow();
-				// do what you have to do
 				stage.close();
 
 			}
