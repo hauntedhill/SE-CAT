@@ -115,7 +115,8 @@ public class MoveItemController extends BaseController {
 				selected.getParent().getChildren().set(treeindex, handlungsfeldController.createNode(new TreeItemWrapper(oldHf)));
 
 				treeindex = treeTable.getRoot().getChildren().indexOf(handlungsfeld.getValue());
-				treeTable.getRoot().getChildren().set(treeindex, handlungsfeldController.createNode(new TreeItemWrapper(hfToAttach)));
+				treeTable.getRoot().getChildren().remove(treeindex);
+				treeTable.getRoot().getChildren().add(treeindex, handlungsfeldController.createNode(new TreeItemWrapper(hfToAttach)));
 				treeTable.getRoot().getChildren().get(treeindex).setExpanded(true);
 
 				Stage stage = (Stage) move.getScene().getWindow();
