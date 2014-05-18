@@ -141,7 +141,7 @@ public class FilterItemController extends BaseController {
 			@Override
 			public void handle(ActionEvent e) {
 
-				hauptfeldController.filterItem(notiz.getText());
+				// hauptfeldController.filterItem(notiz.getText());
 				Stage stage = (Stage) filter.getScene().getWindow();
 				// do what you have to do
 				stage.close();

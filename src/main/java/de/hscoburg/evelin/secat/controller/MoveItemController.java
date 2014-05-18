@@ -36,7 +36,6 @@ public class MoveItemController extends BaseController {
 
 	@FXML
 	private Button move;
-
 	@FXML
 	private Button cancle;
 	@FXML

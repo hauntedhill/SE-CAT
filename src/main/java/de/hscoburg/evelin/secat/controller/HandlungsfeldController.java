@@ -1,7 +1,6 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -513,31 +512,24 @@ public class HandlungsfeldController extends BaseController {
 
 	}
 
-	public void filterItem(String notiz) {
-
-		Handlungsfeld ha = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld();
-		TreeItem<TreeItemWrapper> parent = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex());
-
-		treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren()
-				.removeAll(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren());
-		// AUSKOMMENTIERT WEGEN NEUEN ENTITIES
-		// List<Item> item = ha.getItems();
-		List<Item> item = new ArrayList<Item>();
-		ListIterator<Item> iter = item.listIterator();
-		while (iter.hasNext()) {
-			TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next());
-			if (notiz != null && !notiz.equals("")) {
-				if (itwrapped.getNotiz().equals(notiz)) {
-					parent.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
-				}
-			} else {
-				parent.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
-			}
-
-		}
-
-	}
-
+	/*
+	 * public void filterItem(String notiz) {
+	 * 
+	 * Handlungsfeld ha =
+	 * treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().getHandlungsfeld();
+	 * TreeItem<TreeItemWrapper> parent = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex());
+	 * 
+	 * treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren()
+	 * .removeAll(treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren()); //
+	 * AUSKOMMENTIERT WEGEN NEUEN ENTITIES // List<Item> item = ha.getItems(); List<Item> item = new ArrayList<Item>(); ListIterator<Item>
+	 * iter = item.listIterator(); while (iter.hasNext()) { TreeItemWrapper itwrapped = new TreeItemWrapper(iter.next()); if (notiz != null
+	 * && !notiz.equals("")) { if (itwrapped.getNotiz().equals(notiz)) { parent.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped));
+	 * } } else { parent.getChildren().add(new TreeItem<TreeItemWrapper>(itwrapped)); }
+	 * 
+	 * }
+	 * 
+	 * }
+	 */
 	public TreeTableView<TreeItemWrapper> getTreeTable() {
 		return treeTable;
 	}
@@ -612,6 +604,12 @@ public class HandlungsfeldController extends BaseController {
 			List<Bereich> bereiche = hf.getBereiche();
 			for (Bereich bereich : bereiche) {
 				bereich.setItems(handlungsfeldModel.getItemBy(bereich, itemAktiv, p, e, notizHandlungsfeld, notizItem, f));
+				// ONLY FOR TESTING
+				List<Item> items = handlungsfeldModel.getItemBy(bereich, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
+				for (Item i : items) {
+					System.out.println(i.getName());
+				}
+
 			}
 			hf.setBereiche(bereiche);
 			root.getChildren().add(createNode(new TreeItemWrapper(hf)));
@@ -713,7 +711,7 @@ public class HandlungsfeldController extends BaseController {
 					}
 				}
 
-				if (t != null && t.isBereich()) {
+				if (t != null && t.isBereich() && isFirstTimeChildren) {
 					List<Item> items = t.getBereich().getItems();
 
 					if (items != null) {

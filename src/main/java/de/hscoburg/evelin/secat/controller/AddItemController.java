@@ -87,7 +87,6 @@ public class AddItemController extends BaseController {
 		templateBox.setConverter(new StringConverter<Item>() {
 			@Override
 			public String toString(Item object) {
-
 				if (object == null) {
 					System.out.println("null");
 					return "";
@@ -110,7 +109,6 @@ public class AddItemController extends BaseController {
 		// List<Item> itemList = handlungsfeldModel.getItemBy(chosenHandlungsfeld, true, null, null, null, null, null);
 
 		for (Item item : itemList) {
-
 			itemOl.add(item);
 		}
 
@@ -261,10 +259,8 @@ public class AddItemController extends BaseController {
 		cancle.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-
 				Stage stage = (Stage) cancle.getScene().getWindow();
 				stage.close();
-
 			}
 		});
 	}
