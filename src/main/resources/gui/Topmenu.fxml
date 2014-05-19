@@ -71,6 +71,15 @@
 						</items>
 
 				</Menu>
+				
+				<Menu mnemonicParsing="true" text="%menu.item.questionnaires.label">
+					<items>
+						<MenuItem fx:id="addFragebogen" mnemonicParsing="true"
+							text="%menu.item.questionaires.add.lable">
+						</MenuItem>
+					</items>
+				</Menu>
+				
 			</menus>
 		</MenuBar>
 	</children>

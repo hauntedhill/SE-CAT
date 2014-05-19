@@ -22,6 +22,8 @@ public class LayoutController implements Initializable {
 
 	private static final String EINSTELLUNGEN_PATH = GUI_PATH + "einstellungen/";
 
+	private static final String FRAGEBOGEN_PATH = GUI_PATH + "fragebogen/";
+
 	public static final String HANDLUNGSFELD_FXML = STAMMDATEN_PATH + "handlungsfeld.fxml";
 
 	public static final String EIGENSCHAFTEN_FXML = STAMMDATEN_PATH + "Eigenschaften.fxml";
@@ -41,6 +43,8 @@ public class LayoutController implements Initializable {
 	public static final String LAYOUT_FXML = GUI_PATH + "Layout.fxml";
 
 	public static final String SPRACHE_FXML = EINSTELLUNGEN_PATH + "Sprache.fxml";
+
+	public static final String FRAGEBOGEN_FXML = FRAGEBOGEN_PATH + "addFragebogen.fxml";
 
 	@FXML
 	private BorderPane layout;

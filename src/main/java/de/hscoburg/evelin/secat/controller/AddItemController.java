@@ -1,7 +1,6 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.ResourceBundle;
@@ -67,6 +66,8 @@ public class AddItemController extends BaseController {
 	@Autowired
 	private HandlungsfeldController handlungsfeldController;
 	@Autowired
+	private TreeTableController treeTableController;
+	@Autowired
 	private HandlungsfeldModel handlungsfeldModel;
 	@Autowired
 	private PerspektivenModel perspektivenModel;
@@ -81,7 +82,7 @@ public class AddItemController extends BaseController {
 		chooseTemplate.setGraphic(new ImageView(new Image("/image/icons/editcopy.png", 16, 16, true, true)));
 		undo.setGraphic(new ImageView(new Image("/image/icons/editdelete.png", 16, 16, true, true)));
 
-		TreeItem<TreeItemWrapper> selected = handlungsfeldController.getSelectedTreeItem();
+		TreeItem<TreeItemWrapper> selected = treeTableController.getSelectedTreeItem();
 		Bereich chosenBereich = selected.getValue().getBereich();
 
 		templateBox.setConverter(new StringConverter<Item>() {
@@ -186,7 +187,7 @@ public class AddItemController extends BaseController {
 			public void handle(ActionEvent e) {
 
 				if (name.getText() != null && !name.getText().equals("")) {
-					TreeItem<TreeItemWrapper> selected = handlungsfeldController.getSelectedTreeItem();
+					TreeItem<TreeItemWrapper> selected = treeTableController.getSelectedTreeItem();
 					TreeItem<TreeItemWrapper> parent = selected.getParent();
 					Item i = new Item();
 					i.setAktiv(true);
@@ -201,8 +202,6 @@ public class AddItemController extends BaseController {
 						i.setEigenschaften(eigenschaftList.getSelectionModel().getSelectedItems());
 					}
 
-					ArrayList<Item> list = new ArrayList<Item>();
-					list.add(i);
 					i.setBereich(selected.getValue().getBereich());
 
 					handlungsfeldModel.persistItem(i);
@@ -214,7 +213,7 @@ public class AddItemController extends BaseController {
 					System.out.println(index);
 					System.out.println(selected.getValue().getName());
 					parent.getChildren().remove(selected);
-					parent.getChildren().add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
+					parent.getChildren().add(index, treeTableController.createNode(new TreeItemWrapper(reNew)));
 					parent.getChildren().get(index).setExpanded(true);
 
 				} else {

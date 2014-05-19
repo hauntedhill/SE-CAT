@@ -56,13 +56,15 @@ public class EditItemController extends BaseController {
 	private PerspektivenModel perspektivenModel;
 	@Autowired
 	private EigenschaftenModel eigenschaftModel;
+	@Autowired
+	private TreeTableController treeTableController;
 
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
 		edit.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 		cancel.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
-		TreeItem<TreeItemWrapper> oldTreeItem = handlungsfeldController.getSelectedTreeItem();
+		TreeItem<TreeItemWrapper> oldTreeItem = treeTableController.getSelectedTreeItem();
 		final Item editItem = oldTreeItem.getValue().getItem();
 
 		name.setText(editItem.getName());
@@ -139,9 +141,9 @@ public class EditItemController extends BaseController {
 				newItem.setPerspektiven(perspektiveList.getSelectionModel().getSelectedItems());
 				newItem.setEigenschaften(eigenschaftList.getSelectionModel().getSelectedItems());
 				handlungsfeldModel.mergeItem(newItem);
-				TreeItem<TreeItemWrapper> selectedTreeItem = handlungsfeldController.getSelectedTreeItem();
+				TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
 				int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
-				selectedTreeItem.getParent().getChildren().add(index, handlungsfeldController.createNode(new TreeItemWrapper(newItem)));
+				selectedTreeItem.getParent().getChildren().add(index, treeTableController.createNode(new TreeItemWrapper(newItem)));
 				selectedTreeItem.getParent().getChildren().remove(selectedTreeItem);
 				Stage stage = (Stage) edit.getScene().getWindow();
 				stage.close();

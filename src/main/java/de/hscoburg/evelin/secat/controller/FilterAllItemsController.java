@@ -69,6 +69,8 @@ public class FilterAllItemsController extends BaseController {
 
 	@Autowired
 	private EigenschaftenModel eigenschaftModel;
+	@Autowired
+	private TreeTableController treeTableController;
 
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
@@ -143,12 +145,12 @@ public class FilterAllItemsController extends BaseController {
 		filter.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				TreeItem<TreeItemWrapper> selectedTreeItem = handlungsfeldController.getSelectedTreeItem();
+				TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
 
 				List<Handlungsfeld> result = handlungsfeldModel.getHandlungsfelderBy(true, !isInaktiv.isSelected(), perspektiveList.getSelectionModel()
 						.getSelectedItem(), eigenschaftList.getSelectionModel().getSelectedItem(), null, notiz.getText(), null);
 
-				handlungsfeldController.buildFilteredTreeTable(result, true, !isInaktiv.isSelected(), perspektiveList.getSelectionModel().getSelectedItem(),
+				treeTableController.buildFilteredTreeTable(result, true, !isInaktiv.isSelected(), perspektiveList.getSelectionModel().getSelectedItem(),
 						eigenschaftList.getSelectionModel().getSelectedItem(), null, notiz.getText(), null);
 
 				Stage stage = (Stage) filter.getScene().getWindow();

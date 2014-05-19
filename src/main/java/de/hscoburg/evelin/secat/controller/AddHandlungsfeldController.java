@@ -42,6 +42,9 @@ public class AddHandlungsfeldController extends BaseController {
 	@Autowired
 	private HandlungsfeldModel handlungsfeldModel;
 
+	@Autowired
+	private TreeTableController treeTableController;
+
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -58,7 +61,7 @@ public class AddHandlungsfeldController extends BaseController {
 					h.setName(name.getText());
 					handlungsfeldModel.persistHandlungsfeld(h);
 
-					handlungsfeldfeldController.addHandlungsfeldToCurrentSelection(h);
+					treeTableController.addHandlungsfeldToCurrentSelection(h);
 				} else {
 
 					Dialogs.create().title("Warnung").masthead("Handlungsfeld konnte nich angelegt werden!").message("Kein Name vergeben!").showWarning();

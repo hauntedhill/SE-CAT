@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<Pane prefHeight="387.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.TreeTableController">
+<children>
+
+<TreeTableView fx:id="treeTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="800.0" >
+<columns>
+<TreeTableColumn prefWidth="180.0" text="%scene.all.item" />
+<TreeTableColumn prefWidth="50.0" text="%scene.all.active" />
+<TreeTableColumn prefWidth="250.0" text="%scene.all.notiz" />
+<TreeTableColumn prefWidth="110.0" text="%scene.all.property" />
+<TreeTableColumn prefWidth="110.0" text="%scene.all.perspective" />
+</columns>
+</TreeTableView>
+
+</children>
+</Pane>

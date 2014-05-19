@@ -52,6 +52,9 @@ public class MoveItemController extends BaseController {
 	@Autowired
 	private HandlungsfeldDAO service;
 
+	@Autowired
+	private TreeTableController treeTableController;
+
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -78,7 +81,7 @@ public class MoveItemController extends BaseController {
 
 		handlungsfeld.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.moveitem.handlungsfeld.prompttextproperty"));
 
-		TreeTableView<TreeItemWrapper> treeTable = handlungsfeldController.getTreeTable();
+		TreeTableView<TreeItemWrapper> treeTable = treeTableController.getTreeTable();
 		TreeItem<TreeItemWrapper> old = treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex());
 
 		ObservableList<TreeItem<TreeItemWrapper>> handlungsfeldOl = FXCollections.observableArrayList();
@@ -97,8 +100,8 @@ public class MoveItemController extends BaseController {
 			@Override
 			public void handle(ActionEvent e) {
 
-				TreeTableView<TreeItemWrapper> treeTable = handlungsfeldController.getTreeTable();
-				TreeItem<TreeItemWrapper> selected = handlungsfeldController.getSelectedTreeItem();
+				TreeTableView<TreeItemWrapper> treeTable = treeTableController.getTreeTable();
+				TreeItem<TreeItemWrapper> selected = treeTableController.getSelectedTreeItem();
 
 				List<Bereich> bereiche = selected.getValue().getHandlungsfeld().getBereiche();
 				Handlungsfeld hfToAttach = handlungsfeld.getValue().getValue().getHandlungsfeld();
@@ -112,11 +115,11 @@ public class MoveItemController extends BaseController {
 
 				Handlungsfeld oldHf = handlungsfeldModel.findHandlungsfeldById(selected.getValue().getHandlungsfeld().getId());
 				int treeindex = selected.getParent().getChildren().indexOf(selected);
-				selected.getParent().getChildren().set(treeindex, handlungsfeldController.createNode(new TreeItemWrapper(oldHf)));
+				selected.getParent().getChildren().set(treeindex, treeTableController.createNode(new TreeItemWrapper(oldHf)));
 
 				treeindex = treeTable.getRoot().getChildren().indexOf(handlungsfeld.getValue());
 				treeTable.getRoot().getChildren().remove(treeindex);
-				treeTable.getRoot().getChildren().add(treeindex, handlungsfeldController.createNode(new TreeItemWrapper(hfToAttach)));
+				treeTable.getRoot().getChildren().add(treeindex, treeTableController.createNode(new TreeItemWrapper(hfToAttach)));
 				treeTable.getRoot().getChildren().get(treeindex).setExpanded(true);
 
 				Stage stage = (Stage) move.getScene().getWindow();
