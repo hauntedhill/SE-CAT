@@ -35,6 +35,10 @@ public class AddBereichController extends BaseController {
 
 	@Autowired
 	private HandlungsfeldController handlungsfeldController;
+
+	@Autowired
+	private TreeTableController treeTableController;
+
 	@Autowired
 	private HandlungsfeldModel handlungsfeldModel;
 
@@ -48,19 +52,19 @@ public class AddBereichController extends BaseController {
 			@Override
 			public void handle(ActionEvent e) {
 				if (!name.getText().equals("")) {
-					Handlungsfeld h = handlungsfeldController.getSelectedTreeItem().getValue().getHandlungsfeld();
+					Handlungsfeld h = treeTableController.getSelectedTreeItem().getValue().getHandlungsfeld();
 					Bereich b = new Bereich();
 					b.setName(name.getText());
 					b.setHandlungsfeld(h);
 					handlungsfeldModel.persistBereich(b);
 
-					TreeItem<TreeItemWrapper> selected = handlungsfeldController.getSelectedTreeItem();
+					TreeItem<TreeItemWrapper> selected = treeTableController.getSelectedTreeItem();
 					Handlungsfeld reNew = selected.getValue().getHandlungsfeld();
 					reNew.addBereich(b);
 					int index = selected.getParent().getChildren().indexOf(selected);
 					selected.getParent().getChildren().remove(selected);
-					handlungsfeldController.getTreeTable().getRoot().getChildren().add(index, handlungsfeldController.createNode(new TreeItemWrapper(reNew)));
-					handlungsfeldController.getTreeTable().getRoot().getChildren().get(index).setExpanded(true);
+					treeTableController.getTreeTable().getRoot().getChildren().add(index, treeTableController.createNode(new TreeItemWrapper(reNew)));
+					treeTableController.getTreeTable().getRoot().getChildren().get(index).setExpanded(true);
 				} else {
 
 					Dialogs.create().title("Warnung").masthead("Handlungsfeld konnte nich angelegt werden!").message("Kein Name vergeben!").showWarning();
