@@ -257,15 +257,14 @@ public class TreeTableController extends BaseController {
 						for (Bereich child : bereiche) {
 							TreeItem<TreeItemWrapper> bereich = createNode(new TreeItemWrapper(child));
 
-							List<Item> items = child.getItems();
-							if (items != null && !items.isEmpty()) {
-								ObservableList<TreeItem<TreeItemWrapper>> itemsOl = FXCollections.observableArrayList();
-								for (Item item : items) {
-									itemsOl.add(createNode(new TreeItemWrapper(item)));
-								}
-								bereich.getChildren().addAll(itemsOl); //
-								System.out.println(bereich.getChildren().get(0).getValue().getName());
-							}
+							/*
+							 * List<Item> items = child.getItems();
+							 * 
+							 * if (items != null && !items.isEmpty()) { ObservableList<TreeItem<TreeItemWrapper>> itemsOl =
+							 * FXCollections.observableArrayList(); for (Item item : items) { itemsOl.add(createNode(new
+							 * TreeItemWrapper(item))); } bereich.getChildren().addAll(itemsOl); //
+							 * System.out.println(bereich.getChildren().get(0).getValue().getName()); }
+							 */
 
 							children.add(bereich);
 						}
@@ -274,9 +273,9 @@ public class TreeTableController extends BaseController {
 					}
 				}
 
-				if (t != null && t.isBereich() && isFirstTimeChildren) {
+				
+				if (t != null && t.isBereich() && !isFirstTimeChildren) {
 					List<Item> items = t.getBereich().getItems();
-
 					if (items != null) {
 						ObservableList<TreeItem<TreeItemWrapper>> children = FXCollections.observableArrayList();
 
