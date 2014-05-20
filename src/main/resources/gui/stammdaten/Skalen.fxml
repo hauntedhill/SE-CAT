@@ -4,10 +4,42 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="440.0" prefWidth="504.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.SkalenController">
-<children>
-<TextField fx:id="textNameSkalen" layoutX="152.0" layoutY="2.0" />
-<Button fx:id="buttonAdd" layoutX="352.0" layoutY="2.0" mnemonicParsing="false" text="%scene.all.addbutton" />
-<Label fx:id="labelSkalen" layoutX="14.0" layoutY="6.0" text="%scene.skala.lable.new" />
-<ListView fx:id="listSkalen" layoutX="152.0" layoutY="42.0" prefHeight="326.0" prefWidth="200.0" /><Label layoutX="14.0" layoutY="42.0" text="%scene.skala.lable" />
-</children></AnchorPane>
+<AnchorPane prefHeight="593.0" prefWidth="665.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.SkalenController">
+	<children>
+		<TitledPane animated="false" layoutX="31.0" layoutY="352.0" prefHeight="174.0" prefWidth="622.0" text="%scene.skala.lable">
+			<content>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+					<children>
+						<ListView fx:id="listSkalen" layoutX="10.0" layoutY="13.0" prefHeight="131.0" prefWidth="603.0" />
+					</children>
+				</AnchorPane>
+			</content>
+		</TitledPane>
+		<TitledPane animated="false" layoutX="31.0" layoutY="21.0" prefHeight="319.0" prefWidth="622.0" text="%scene.skala.lable.new">
+			<content>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="284.0" prefWidth="620.0">
+					<children>
+					<Label layoutX="26.0" layoutY="27.0" prefHeight="17.0" prefWidth="85.0" text="%scene.skala.lable.name" />
+						<TextField fx:id="textNameSkalen" layoutX="115.0361328125" layoutY="23.0" />
+						
+						<RadioButton fx:id="freeQuestion" layoutX="21.5439453125" layoutY="62.0" mnemonicParsing="false" text="%scene.skala.label.freieFrage" />
+						<RadioButton fx:id="discretQuestion" layoutX="281.5439453125" layoutY="62.0" mnemonicParsing="false" text="%scene.skala.label.diskreteFrage" />
+						<Label layoutX="40.048828125" layoutY="95.5" text="%scene.skala.label.zeilen" />
+						<TextField fx:id="textZeilen" layoutX="114.7900390625" layoutY="91.5" />
+						<Label layoutX="310.0" layoutY="96.0" prefHeight="17.0" prefWidth="102.0" text="%scene.skala.label.schritte" />
+						<Label layoutX="310.0" layoutY="124.0" prefHeight="17.0" prefWidth="101.0" text="%scene.skala.label.schrittWeite" />
+						<Label layoutX="308.0" layoutY="152.0" prefHeight="17.0" prefWidth="104.0" text="%scene.skala.label.minText" />
+						<Label layoutX="308.0" layoutY="180.0" prefHeight="17.0" prefWidth="105.0" text="%scene.skala.label.maxText" />
+						<Label layoutX="309.0" layoutY="207.0" prefHeight="17.0" prefWidth="102.0" text="%scene.skala.label.optimum" />
+						<TextField fx:id="textSchritte" layoutX="415.74609375" layoutY="91.5" />
+						<TextField fx:id="textSchrittweite" layoutX="415.9921875" layoutY="119.5" />
+						<TextField fx:id="textMinimal" layoutX="415.9921875" layoutY="147.5" />
+						<TextField fx:id="textMaximal" layoutX="416.23828125" layoutY="175.5" />
+						<TextField fx:id="textOptimum" layoutX="415.9921875" layoutY="203.0" />
+<Button fx:id="buttonAdd" layoutX="436.0" layoutY="241.0" mnemonicParsing="false" text="%scene.all.addbutton" />
+					</children>
+				</AnchorPane>
+			</content>
+		</TitledPane>
+	</children>
+</AnchorPane>

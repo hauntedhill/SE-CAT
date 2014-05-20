@@ -12,7 +12,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -25,6 +27,7 @@ import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
+import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
@@ -41,11 +44,38 @@ public class SkalenController extends BaseController {
 	@FXML
 	private TextField textNameSkalen;
 
+	@FXML
+	private RadioButton discretQuestion;
+
+	@FXML
+	private RadioButton freeQuestion;
+
 	@Autowired
 	private SkalenModel skalenModel;
 
+	@FXML
+	private TextField textZeilen;
+
+	@FXML
+	private TextField textSchritte;
+	@FXML
+	private TextField textSchrittweite;
+	@FXML
+	private TextField textMinimal;
+	@FXML
+	private TextField textMaximal;
+	@FXML
+	private TextField textOptimum;
+
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
+
+		ToggleGroup group = new ToggleGroup();
+
+		discretQuestion.setToggleGroup(group);
+		freeQuestion.setToggleGroup(group);
+
+		freeQuestion.setSelected(true);
 
 		loadList();
 		textNameSkalen.requestFocus();
@@ -77,11 +107,11 @@ public class SkalenController extends BaseController {
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
 
-				if (!"".equals(textNameSkalen.getText().trim())) {
-					Skala e = new Skala();
-					e.setName(textNameSkalen.getText());
-					skalenModel.persist(e);
-				} else {
+				try {
+
+					skalenModel.saveSkala(freeQuestion.isSelected() ? SkalaType.FREE : SkalaType.DISCRET, textNameSkalen.getText(), textZeilen.getText(),
+							textSchritte.getText(), textSchrittweite.getText(), textMinimal.getText(), textMaximal.getText(), textOptimum.getText());
+				} catch (NumberFormatException nfe) {
 					Platform.runLater(new Runnable() {
 
 						@Override
@@ -107,9 +137,7 @@ public class SkalenController extends BaseController {
 				if (((KeyEvent) event).getCode() == KeyCode.ENTER)
 
 				{
-					Skala e = new Skala();
-					e.setName(textNameSkalen.getText());
-					skalenModel.persist(e);
+					buttonAdd.fire();
 				}
 
 			}

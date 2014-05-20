@@ -19,7 +19,17 @@ public class FachModel {
 		return fachDAO.findAll();
 	}
 
-	public void persist(Fach e) {
-		fachDAO.persist(e);
+	// public void persist(Fach e) {
+	// fachDAO.persist(e);
+	// }
+
+	public void saveFach(String name) throws IllegalArgumentException {
+		if (!"".equals(name)) {
+			Fach e = new Fach();
+			e.setName(name);
+			fachDAO.persist(e);
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 }

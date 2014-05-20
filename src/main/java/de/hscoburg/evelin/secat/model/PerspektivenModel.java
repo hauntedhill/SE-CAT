@@ -20,8 +20,18 @@ public class PerspektivenModel {
 		return perspektivenDAO.findAll();
 	}
 
-	public void persist(Perspektive e) {
-		perspektivenDAO.persist(e);
+	// public void persist(Perspektive e) {
+	// perspektivenDAO.persist(e);
+	// }
+
+	public void savePerspektive(String name) throws IllegalArgumentException {
+		if (!"".equals(name)) {
+			Perspektive e = new Perspektive();
+			e.setName(name);
+			perspektivenDAO.persist(e);
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 }

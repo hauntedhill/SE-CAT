@@ -24,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import de.hscoburg.evelin.secat.SeCat;
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.controller.base.LayoutController;
+import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
@@ -63,7 +64,7 @@ public class SpracheController extends BaseController {
 
 		buttonWaehlen.setGraphic(new ImageView(new Image("/image/icons/apply.png", 16, 16, true, true)));
 
-		buttonWaehlen.setOnAction(new SeCatEventHandle<ActionEvent>() {
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			private Node guiNode;
 
@@ -84,7 +85,7 @@ public class SpracheController extends BaseController {
 				layout.setCenterNode(guiNode);
 				layout.setTop(guiMenuNode);
 			}
-		});
+		}, buttonWaehlen);
 
 		boxSprachen.setItems(myObservableList);
 

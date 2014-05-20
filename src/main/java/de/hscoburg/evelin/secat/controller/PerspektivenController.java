@@ -7,7 +7,6 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
@@ -15,8 +14,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
 
 import org.controlsfx.dialog.Dialogs;
@@ -26,6 +23,7 @@ import org.springframework.stereotype.Controller;
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
+import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
@@ -72,16 +70,15 @@ public class PerspektivenController extends BaseController {
 
 		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 
-		buttonAdd.setOnAction(new SeCatEventHandle<ActionEvent>() {
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
 
-				if (!"".equals(textNamePerspektiven.getText().trim())) {
-					Perspektive e = new Perspektive();
-					e.setName(textNamePerspektiven.getText());
-					perspektivenModel.persist(e);
-				} else {
+				try {
+
+					perspektivenModel.savePerspektive(textNamePerspektiven.getText());
+				} catch (IllegalArgumentException iae) {
 					Platform.runLater(new Runnable() {
 
 						@Override
@@ -99,27 +96,7 @@ public class PerspektivenController extends BaseController {
 			public void updateUI() {
 				loadList();
 			}
-		});
-
-		buttonAdd.setOnKeyPressed(new SeCatEventHandle<Event>() {
-
-			@Override
-			public void handleAction(Event event) {
-				if (((KeyEvent) event).getCode() == KeyCode.ENTER)
-
-				{
-					Perspektive e = new Perspektive();
-					e.setName(textNamePerspektiven.getText());
-					perspektivenModel.persist(e);
-				}
-
-			}
-
-			@Override
-			public void updateUI() {
-				loadList();
-			}
-		});
+		}, buttonAdd);
 
 	}
 
