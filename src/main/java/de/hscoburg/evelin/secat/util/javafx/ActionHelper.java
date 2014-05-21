@@ -15,9 +15,7 @@ public class ActionHelper {
 
 			@Override
 			public void handleAction(Event event) {
-				if (((KeyEvent) event).getCode() == KeyCode.ENTER)
-
-				{
+				if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
 					button.fire();
 				}
 

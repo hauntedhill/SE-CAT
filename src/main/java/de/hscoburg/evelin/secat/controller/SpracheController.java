@@ -25,6 +25,7 @@ import de.hscoburg.evelin.secat.SeCat;
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.controller.base.LayoutController;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
+import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
@@ -35,7 +36,7 @@ public class SpracheController extends BaseController {
 	@FXML
 	private Button buttonWaehlen;
 	@FXML
-	private ComboBox<LocaleContainer> boxSprachen;
+	private ComboBox<Locale> boxSprachen;
 
 	@Autowired
 	private LayoutController layout;
@@ -45,20 +46,20 @@ public class SpracheController extends BaseController {
 
 		Locale list[] = SimpleDateFormat.getAvailableLocales();
 
-		List<LocaleContainer> items = new LinkedList<LocaleContainer>();
+		List<Locale> items = new LinkedList<Locale>();
 		for (Locale l : list) {
-			items.add(new LocaleContainer(l));
+			items.add(l);
 		}
 
-		items.sort(new Comparator<LocaleContainer>() {
+		items.sort(new Comparator<Locale>() {
 
 			@Override
-			public int compare(LocaleContainer o1, LocaleContainer o2) {
-				return o1.getLocale().getDisplayName().compareTo(o2.getLocale().getDisplayName());
+			public int compare(Locale o1, Locale o2) {
+				return o1.getDisplayName().compareTo(o2.getDisplayName());
 			}
 		});
 
-		ObservableList<LocaleContainer> myObservableList = FXCollections.observableList(items);
+		ObservableList<Locale> myObservableList = FXCollections.observableList(items);
 
 		boxSprachen.setVisibleRowCount(10);
 
@@ -73,7 +74,7 @@ public class SpracheController extends BaseController {
 			@Override
 			public void handleAction(ActionEvent event) {
 
-				Locale.setDefault(boxSprachen.getValue().getLocale());
+				Locale.setDefault(boxSprachen.getValue());
 
 				SeCatResourceBundle.getInstance().refreseh();
 				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.SPRACHE_FXML);
@@ -87,43 +88,15 @@ public class SpracheController extends BaseController {
 			}
 		}, buttonWaehlen);
 
+		boxSprachen.setConverter(ConverterHelper.getConverterForLocale());
+
 		boxSprachen.setItems(myObservableList);
 
-		boxSprachen.getSelectionModel().select(new LocaleContainer(Locale.getDefault()));
+		boxSprachen.getSelectionModel().select(Locale.getDefault());
 
-		boxSprachen.setValue(new LocaleContainer(Locale.getDefault()));
+		boxSprachen.setValue(Locale.getDefault());
 		// boxSprachen.getSelectionModel().select(1);
 
-	}
-
-	private class LocaleContainer {
-		private Locale locale;
-
-		public LocaleContainer(Locale l) {
-			locale = l;
-		}
-
-		public Locale getLocale() {
-			return locale;
-		}
-
-		@Override
-		public String toString() {
-			// TODO Auto-generated method stub
-			return locale.getDisplayName() + " (" + locale.getLanguage() + ("".equals(locale.getCountry().trim()) ? "" : "_") + locale.getCountry() + ")";
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			// TODO Auto-generated method stub
-			return locale.equals(obj);
-		}
-
-		@Override
-		public int hashCode() {
-			// TODO Auto-generated method stub
-			return locale.hashCode();
-		}
 	}
 
 	@Override

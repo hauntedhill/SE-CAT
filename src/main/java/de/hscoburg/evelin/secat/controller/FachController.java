@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -100,8 +99,8 @@ public class FachController extends BaseController {
 	}
 
 	private void loadList() {
-		ObservableList<Fach> myObservableList = FXCollections.observableList(fachModel.getFaecher());
-		listFach.setItems(myObservableList);
+
+		listFach.setItems(FXCollections.observableList(fachModel.getFaecher()));
 	}
 
 	@Override

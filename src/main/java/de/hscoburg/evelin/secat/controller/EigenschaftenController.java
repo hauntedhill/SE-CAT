@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -103,8 +102,7 @@ public class EigenschaftenController extends BaseController {
 	}
 
 	private void loadList() {
-		ObservableList<Eigenschaft> myObservableList = FXCollections.observableList(eigenschaftenModel.getEigenschaften());
-		listEigenschaften.setItems(myObservableList);
+		listEigenschaften.setItems(FXCollections.observableList(eigenschaftenModel.getEigenschaften()));
 	}
 
 	@Override

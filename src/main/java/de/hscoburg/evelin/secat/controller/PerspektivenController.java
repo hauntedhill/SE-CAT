@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -101,9 +100,8 @@ public class PerspektivenController extends BaseController {
 	}
 
 	private void loadList() {
-		ObservableList<Perspektive> myObservableList = FXCollections.observableList(perspektivenModel.getPerspektiven());
 
-		listPerspektiven.setItems(myObservableList);
+		listPerspektiven.setItems(FXCollections.observableList(perspektivenModel.getPerspektiven()));
 	}
 
 	@Override

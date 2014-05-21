@@ -1,7 +1,6 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
@@ -29,8 +28,10 @@ import de.hscoburg.evelin.secat.dao.entity.base.SemesterType;
 import de.hscoburg.evelin.secat.model.FachModel;
 import de.hscoburg.evelin.secat.model.LehrveranstaltungModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
+import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
+import edu.emory.mathcs.backport.java.util.Arrays;
 
 @Controller
 public class LehrveranstaltungController extends BaseController {
@@ -46,7 +47,7 @@ public class LehrveranstaltungController extends BaseController {
 	@FXML
 	private ComboBox<SemesterType> boxSemester;
 	@FXML
-	private ComboBox<FachContainer> boxFach;
+	private ComboBox<Fach> boxFach;
 
 	@FXML
 	private TextField textDozent;
@@ -71,27 +72,18 @@ public class LehrveranstaltungController extends BaseController {
 
 		boxJahr.setValue(year);
 
-		ObservableList<SemesterType> semester = FXCollections.observableArrayList();
+		boxSemester.setItems(FXCollections.observableList(Arrays.asList(SemesterType.values())));
 
-		for (SemesterType t : SemesterType.values()) {
-			semester.add(t);
-		}
-		boxSemester.setItems(semester);
+		boxSemester.getSelectionModel().select(boxSemester.getItems().get(0));
 
-		boxSemester.getSelectionModel().select(SemesterType.values()[0]);
+		boxSemester.setValue(boxSemester.getItems().get(0));
 
-		boxSemester.setValue(SemesterType.values()[0]);
+		boxFach.setConverter(ConverterHelper.getConverterForFach());
 
-		ObservableList<FachContainer> faecher = FXCollections.observableArrayList();
-
-		for (Fach f : fachModel.getFaecher() != null ? fachModel.getFaecher() : new ArrayList<Fach>()) {
-			faecher.add(new FachContainer(f));
-		}
-
-		boxFach.setItems(faecher);
-		if (faecher.size() > 0) {
-			boxFach.getSelectionModel().select(faecher.get(0));
-			boxFach.setValue(faecher.get(0));
+		boxFach.setItems(FXCollections.observableList(fachModel.getFaecher()));
+		if (boxFach.getItems().size() > 0) {
+			boxFach.getSelectionModel().select(boxFach.getItems().get(0));
+			boxFach.setValue(boxFach.getItems().get(0));
 		}
 
 		boxFach.setVisibleRowCount(10);
@@ -128,8 +120,7 @@ public class LehrveranstaltungController extends BaseController {
 
 				try {
 
-					lehrveranstaltungsModel.saveLehrveranstaltung(textDozent.getText(), boxFach.getValue().getFach(), boxJahr.getValue(),
-							boxSemester.getValue());
+					lehrveranstaltungsModel.saveLehrveranstaltung(textDozent.getText(), boxFach.getValue(), boxJahr.getValue(), boxSemester.getValue());
 				} catch (IllegalArgumentException iae) {
 					javafx.application.Platform.runLater(new Runnable() {
 
@@ -154,44 +145,13 @@ public class LehrveranstaltungController extends BaseController {
 	}
 
 	private void loadList() {
-		ObservableList<Lehrveranstaltung> myObservableList = FXCollections.observableList(lehrveranstaltungsModel.getLehrveranstaltung());
-		listLehrveranstaltung.setItems(myObservableList);
+		listLehrveranstaltung.setItems(FXCollections.observableList(lehrveranstaltungsModel.getLehrveranstaltung()));
 	}
 
 	@Override
 	public String getKeyForSceneName() {
 
 		return "scene.fach.title.lable";
-	}
-
-	private class FachContainer {
-		private Fach fach;
-
-		public FachContainer(Fach l) {
-			fach = l;
-		}
-
-		public Fach getFach() {
-			return fach;
-		}
-
-		@Override
-		public String toString() {
-			// TODO Auto-generated method stub
-			return fach.getName();
-		}
-
-		@Override
-		public boolean equals(Object obj) {
-			// TODO Auto-generated method stub
-			return fach.equals(obj);
-		}
-
-		@Override
-		public int hashCode() {
-			// TODO Auto-generated method stub
-			return fach.hashCode();
-		}
 	}
 
 }
