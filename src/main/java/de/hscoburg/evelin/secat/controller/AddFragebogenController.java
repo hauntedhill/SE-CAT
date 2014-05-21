@@ -340,6 +340,7 @@ public class AddFragebogenController extends BaseController {
 			}
 		});
 
+
 		fach.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
@@ -368,5 +369,7 @@ public class AddFragebogenController extends BaseController {
 		treeTableController.buildFilteredTreeTable(handlungsfeldModel.getHandlungsfelderBy(true, true), true, true, selectedPerspektive, selectedEigenschaft,
 				null, null, null);
 	}
+
+
 
 }
