@@ -4,28 +4,50 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="549.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.LehrveranstaltungController">
-<children><TitledPane animated="false" layoutX="31.0" layoutY="275.0" prefHeight="242.0" prefWidth="409.0" text="%scene.lehrveranstaltung.lable">
-  <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-<children><ListView fx:id="listLehrveranstaltung" layoutX="10.0" layoutY="8.0" prefHeight="200.0" prefWidth="386.0" />
-</children></AnchorPane>
-  </content>
-</TitledPane><TitledPane animated="false" layoutX="31.0" layoutY="21.0" prefHeight="229.0" prefWidth="409.0" text="%scene.lehrveranstaltung.addlable">
-  <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="138.0" prefWidth="407.0">
-<children>
-<Label layoutX="23.0" layoutY="33.0" prefHeight="17.0" prefWidth="86.0" text="%scene.lehrveranstaltung.jahrlable" />
+<AnchorPane prefHeight="549.0" prefWidth="470.0"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="de.hscoburg.evelin.secat.controller.LehrveranstaltungController">
+	<children>
+		<TitledPane animated="false" layoutX="31.0" layoutY="275.0"
+			prefHeight="242.0" prefWidth="409.0" text="%scene.lehrveranstaltung.lable">
+			<content>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
+					prefWidth="200.0">
+					<children>
+						<ListView fx:id="listLehrveranstaltung" layoutX="10.0"
+							layoutY="8.0" prefHeight="200.0" prefWidth="386.0" />
+					</children>
+				</AnchorPane>
+			</content>
+		</TitledPane>
+		<TitledPane animated="false" layoutX="31.0" layoutY="21.0"
+			prefHeight="229.0" prefWidth="409.0" text="%scene.lehrveranstaltung.addlable">
+			<content>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="138.0"
+					prefWidth="407.0">
+					<children>
+						<Label layoutX="23.0" layoutY="33.0" prefHeight="17.0"
+							prefWidth="86.0" text="%scene.lehrveranstaltung.jahrlable" />
 
-<ComboBox fx:id="boxJahr" layoutX="114.0" layoutY="29.0" prefWidth="150.0" />
-<ComboBox fx:id="boxSemester" layoutX="114.0" layoutY="65.0" prefWidth="150.0" />
-<ComboBox fx:id="boxFach" layoutX="114.0" layoutY="102.0" prefWidth="150.0" />
-<Label layoutX="23.0" layoutY="69.0" prefHeight="17.0" prefWidth="89.0" text="%scene.lehrveranstaltung.semesterlable" />
-<Label layoutX="23.0" layoutY="106.0" prefHeight="17.0" prefWidth="87.0" text="%scene.lehrveranstaltung.fachlable" />
-<Label layoutX="23.0" layoutY="143.0" prefHeight="17.0" prefWidth="84.0" text="%scene.lehrveranstaltung.dozent" />
-<TextField fx:id="textDozent" layoutX="114.74609375" layoutY="139.0" />
-<Button fx:id="buttonAdd" layoutX="271.0" layoutY="139.0" mnemonicParsing="false" text="%scene.all.addbutton" />
-</children></AnchorPane>
-  </content>
-</TitledPane>
-</children></AnchorPane>
+						<ComboBox fx:id="boxJahr" layoutX="114.0" layoutY="29.0"
+							prefWidth="150.0" />
+						<ComboBox fx:id="boxSemester" layoutX="114.0" layoutY="65.0"
+							prefWidth="150.0" />
+						<ComboBox fx:id="boxFach" layoutX="114.0" layoutY="102.0"
+							prefWidth="150.0" />
+						<Label layoutX="23.0" layoutY="69.0" prefHeight="17.0"
+							prefWidth="89.0" text="%scene.lehrveranstaltung.semesterlable" />
+						<Label layoutX="23.0" layoutY="106.0" prefHeight="17.0"
+							prefWidth="87.0" text="%scene.lehrveranstaltung.fachlable" />
+						<Label layoutX="23.0" layoutY="143.0" prefHeight="17.0"
+							prefWidth="84.0" text="%scene.lehrveranstaltung.dozent" />
+						<TextField fx:id="textDozent" layoutX="114.74609375"
+							layoutY="139.0" />
+						<Button fx:id="buttonAdd" layoutX="271.0" layoutY="139.0"
+							mnemonicParsing="false" text="%scene.all.addbutton" />
+					</children>
+				</AnchorPane>
+			</content>
+		</TitledPane>
+	</children>
+</AnchorPane>

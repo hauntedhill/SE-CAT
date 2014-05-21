@@ -20,8 +20,18 @@ public class EigenschaftenModel {
 		return eigenschaftenDAO.findAll();
 	}
 
-	public void persist(Eigenschaft e) {
-		eigenschaftenDAO.persist(e);
+	// public void persist(Eigenschaft e) {
+	// eigenschaftenDAO.persist(e);
+	// }
+
+	public void saveEigenschaft(String name) throws IllegalArgumentException {
+		if (!"".equals(name.trim())) {
+			Eigenschaft e = new Eigenschaft();
+			e.setName(name);
+			eigenschaftenDAO.persist(e);
+		} else {
+			throw new IllegalArgumentException();
+		}
 	}
 
 }

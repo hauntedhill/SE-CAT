@@ -42,6 +42,8 @@ public class Skala extends BaseEntity {
 
 	private Integer weight;
 
+	private Integer optimum;
+
 	private String minText;
 
 	private String maxText;
@@ -128,6 +130,14 @@ public class Skala extends BaseEntity {
 
 	public void setMaxText(String maxText) {
 		this.maxText = maxText;
+	}
+
+	public Integer getOptimum() {
+		return optimum;
+	}
+
+	public void setOptimum(Integer optimum) {
+		this.optimum = optimum;
 	}
 
 }
