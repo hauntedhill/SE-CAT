@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableColumn.CellDataFeatures;
@@ -128,11 +129,10 @@ public class TreeTableController extends BaseController {
 
 	public void addHandlungsfeldToCurrentSelection(Handlungsfeld h) {
 
-		if (treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getValue().equals(treeTable.getRoot().getValue())) {
-			treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getChildren().add(createNode(new TreeItemWrapper(h)));
+		if (getSelectedTreeItem().getValue().equals(treeTable.getRoot().getValue())) {
+			getSelectedTreeItem().getChildren().add(createNode(new TreeItemWrapper(h)));
 		} else
-			treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex()).getParent().getChildren()
-					.add(createNode(new TreeItemWrapper(h)));
+			getSelectedTreeItem().getParent().getChildren().add(createNode(new TreeItemWrapper(h)));
 
 	}
 
@@ -273,7 +273,6 @@ public class TreeTableController extends BaseController {
 					}
 				}
 
-				
 				if (t != null && t.isBereich() && !isFirstTimeChildren) {
 					List<Item> items = t.getBereich().getItems();
 					if (items != null) {
@@ -297,6 +296,16 @@ public class TreeTableController extends BaseController {
 	public String getKeyForSceneName() {
 
 		return "scene.addFragebogen.lable.title";
+	}
+
+	public ObservableList<TreeItem<TreeItemWrapper>> getSelectedTreeItemList() {
+
+		return treeTable.getSelectionModel().getSelectedItems();
+	}
+
+	public void setSelectionMode(SelectionMode arg0) {
+
+		treeTable.getSelectionModel().setSelectionMode(arg0);
 	}
 
 	public void setRowFactory(Callback<TreeTableView<TreeItemWrapper>, TreeTableRow<TreeItemWrapper>> arg0) {

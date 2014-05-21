@@ -89,7 +89,6 @@ public class AddItemController extends BaseController {
 			@Override
 			public String toString(Item object) {
 				if (object == null) {
-					System.out.println("null");
 					return "";
 				}
 				return object.getName();

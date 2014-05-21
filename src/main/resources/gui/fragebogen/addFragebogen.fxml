@@ -4,9 +4,36 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.AddFragebogenController">
+<AnchorPane prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.AddFragebogenController">
 <children>
- <fx:include  fx:id="treeTable" source="/gui/TreeTable.fxml"/>
+<MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="800.0">
+  <menus>
+    <Menu fx:id="menuFilter" mnemonicParsing="false" text="%scene.handlungsfeld.menu.lable">
+      <items>
+        <MenuItem fx:id="menuItemFilterHandlungsfeld" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterHandlungsfeld" />
+        <MenuItem fx:id="menuItemFilterItem" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterItem" />
+        <MenuItem fx:id="menuItemFilterOff" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterOff" />
+      </items>
+    </Menu>
+  </menus>
+</MenuBar>
+
+<fx:include layoutY="26"  fx:id="treeTable" source="/gui/TreeTable.fxml"/>
+<Button fx:id="addItem" layoutX="10.0" layoutY="440.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="%scene.all.addbutton" />
+<Button fx:id="removeItem" layoutX="10.0" layoutY="470.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="%scene.all.removebutton" />
+
+
+<ComboBox fx:id="perspektive" layoutX="10.0" layoutY="500.0" prefHeight="25.0" prefWidth="150.0" />
+<ComboBox fx:id="eigenschaft" layoutX="10.0" layoutY="530.0" prefHeight="25.0" prefWidth="150.0" />
+<Label layoutX="170.0" layoutY="420.0" text="%scene.all.item" />
+<ListView fx:id="itemList" layoutX="170.0" layoutY="440.0" prefHeight="120.0" prefWidth="200.0" />
+
+<Label layoutX="380.0" layoutY="420.0" text="%scene.addFragebogen.lable.name" />
+<TextField fx:id="name" layoutX="380.0" layoutY="440.0" prefHeight="25.0" prefWidth="150.0" />
+<ComboBox fx:id="skala" layoutX="380" layoutY="470.0" prefHeight="25.0" prefWidth="150.0" />
+<ComboBox fx:id="fach" layoutX="380" layoutY="500.0" prefHeight="25.0" prefWidth="150.0" />
+<ComboBox fx:id="lehrveranstaltung" layoutX="380" layoutY="530.0" prefHeight="25.0" prefWidth="150.0" />
+
 </children>
 
 </AnchorPane>
