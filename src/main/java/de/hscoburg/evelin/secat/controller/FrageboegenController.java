@@ -22,6 +22,7 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
@@ -47,6 +48,12 @@ import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class FrageboegenController extends BaseController {
+
+	@FXML
+	private TitledPane searchPanel;
+
+	@FXML
+	private TitledPane tablePanel;
 
 	@FXML
 	private TextField searchName;
@@ -282,6 +289,32 @@ public class FrageboegenController extends BaseController {
 			}
 
 		});
+
+		ActionHelper.setToggleListenerForTitledPanelResize(searchPanel, tablePanel, frageboegen, 176);
+
+		// searchPanel.expandedProperty().addListener(new ChangeListener<Boolean>() {
+		//
+		// private int HEIGHT_DIFF = 176;
+		//
+		// @Override
+		// public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
+		// if (newValue) {
+		// tablePanel.setLayoutY(235);
+		// // tablePanel.setPrefHeight(205);
+		// tablePanel.setPrefHeight(tablePanel.getPrefHeight() - HEIGHT_DIFF);
+		// // frageboegen.setPrefHeight(181);
+		// frageboegen.setPrefHeight(frageboegen.getPrefHeight() - HEIGHT_DIFF);
+		// } else {
+		// tablePanel.setLayoutY(60);
+		// // tablePanel.setPrefHeight(380);
+		// tablePanel.setPrefHeight(tablePanel.getPrefHeight() + HEIGHT_DIFF);
+		// // frageboegen.setPrefHeight(356);
+		// frageboegen.setPrefHeight(frageboegen.getPrefHeight() + HEIGHT_DIFF);
+		// }
+		//
+		// }
+		//
+		// });
 
 		updateTable(getFrageboegen());
 

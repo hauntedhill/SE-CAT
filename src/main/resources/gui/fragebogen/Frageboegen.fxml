@@ -6,7 +6,7 @@
 
 <AnchorPane prefHeight="568.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.FrageboegenController">
 	<children>
-							<TitledPane animated="false" layoutX="22.0" layoutY="14.0" prefHeight="215.0" prefWidth="675.0" text="%scene.frageboegen.label.searchCriterias">
+							<TitledPane fx:id="searchPanel" animated="false" layoutX="22.0" layoutY="14.0" prefHeight="215.0" prefWidth="675.0" text="%scene.frageboegen.label.searchCriterias">
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="189.0" prefWidth="677.0">
 					<children>
@@ -34,11 +34,11 @@
 				</AnchorPane>
 			</content>
 		</TitledPane>
-		<TitledPane animated="false" layoutX="22.0" layoutY="235.0" prefHeight="288.0" prefWidth="679.0" text="%scene.frageboegen.lable.name">
+		<TitledPane fx:id="tablePanel" animated="false" layoutX="22.0" layoutY="235.0" prefHeight="282.0" prefWidth="679.0" text="%scene.frageboegen.lable.name">
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 					<children>
-						<TableView fx:id="frageboegen" layoutX="-1.0" layoutY="-2.0" prefHeight="264.0" prefWidth="679.0">
+						<TableView fx:id="frageboegen" layoutX="-1.0" layoutY="-2.0" prefHeight="258.0" prefWidth="679.0">
 							<columns>
 								<TableColumn prefWidth="106.0" text="%scene.frageboegen.collabel.name" />
 								<TableColumn prefWidth="102.0" text="%scene.frageboegen.collabel.eigenschaft" />
