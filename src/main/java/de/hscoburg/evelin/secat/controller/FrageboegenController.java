@@ -111,14 +111,20 @@ public class FrageboegenController extends BaseController {
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
-			public void handleAction(ActionEvent event) throws Exception {
-				// TODO Auto-generated method stub
+			public void performBeforeEventsBlocked(ActionEvent event) throws Exception {
+				resetSearchBox();
+			}
 
+			ObservableList<Fragebogen> result;
+
+			@Override
+			public void handleAction(ActionEvent event) throws Exception {
+				result = getFrageboegen();
 			}
 
 			@Override
 			public void updateUI() {
-				resetSearchBox();
+				updateTable(result);
 			}
 		}, reset);
 
