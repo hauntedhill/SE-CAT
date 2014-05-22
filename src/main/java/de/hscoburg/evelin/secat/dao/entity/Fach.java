@@ -3,6 +3,7 @@ package de.hscoburg.evelin.secat.dao.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
@@ -26,7 +27,7 @@ public class Fach extends StammdatenEntity {
 		this.name = name;
 	}
 
-	@OneToMany(mappedBy = "fach", targetEntity = Lehrveranstaltung.class)
+	@OneToMany(mappedBy = "fach", targetEntity = Lehrveranstaltung.class, fetch = FetchType.EAGER)
 	public List<Lehrveranstaltung> getLehrveranstaltungen() {
 		return lehrveranstaltungen;
 	}
