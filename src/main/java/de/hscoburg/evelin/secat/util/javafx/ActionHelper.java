@@ -28,7 +28,7 @@ public class ActionHelper {
 		});
 	}
 
-	public static void setToggleListenerForTitledPanelResize(final TitledPane searchPanel, final TitledPane dataPanel, final Control container,
+	public static void setAutoResizeToggleListenerForTitledPanel(final TitledPane searchPanel, final TitledPane dataPanel, final Control container,
 			final int heightDiff) {
 		searchPanel.expandedProperty().addListener(new ChangeListener<Boolean>() {
 
