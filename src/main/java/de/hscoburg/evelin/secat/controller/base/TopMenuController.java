@@ -46,6 +46,9 @@ public class TopMenuController implements Initializable {
 	@FXML
 	private MenuItem addFragebogen;
 
+	@FXML
+	private MenuItem showFragebogen;
+
 	@Autowired
 	private LayoutController layout;
 
@@ -161,6 +164,21 @@ public class TopMenuController implements Initializable {
 			@Override
 			public void handleAction(ActionEvent event) {
 				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.FRAGEBOGEN_FXML);
+			}
+
+			@Override
+			public void updateUI() {
+				layout.setCenterNode(guiNode);
+			}
+		});
+
+		showFragebogen.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+			private Node guiNode;
+
+			@Override
+			public void handleAction(ActionEvent event) {
+				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.SHOW_FRAGEBOGEN_FXML);
 			}
 
 			@Override

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="568.0" prefWidth="717.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.FrageboegenController">
+	<children>
+							<TitledPane animated="false" layoutX="22.0" layoutY="14.0" prefHeight="215.0" prefWidth="675.0" text="%scene.frageboegen.label.searchCriterias">
+			<content>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="189.0" prefWidth="677.0">
+					<children>
+						<Label layoutX="42.0" layoutY="22.0" prefHeight="17.0" prefWidth="123.0" text="%scene.frageboegen.label.name" />
+						<Label layoutX="387.0" layoutY="85.0" prefHeight="17.0" prefWidth="93.0" text="%scene.frageboegen.label.perspektive" />
+						<Label layoutX="387.0" layoutY="17.0" prefHeight="17.0" prefWidth="93.0" text="%scene.frageboegen.label.eigenschaft" />
+						<Label layoutX="387.0" layoutY="50.0" prefHeight="17.0" prefWidth="96.0" text="%scene.frageboegen.label.skala" />
+						<Label layoutX="42.0" layoutY="55.0" prefHeight="17.0" prefWidth="125.0" text="%scene.frageboegen.label.lehrveranstaltung" />
+						<Label layoutX="42.0" layoutY="90.0" prefHeight="17.0" prefWidth="133.0" text="%scene.frageboegen.label.erstellungVon" />
+						<Label layoutX="42.0" layoutY="123.0" prefHeight="17.0" prefWidth="134.0" text="%scene.frageboegen.label.erstellungBis" />
+						<TextField fx:id="searchName" layoutX="175.0" layoutY="18.0" />
+						<ComboBox fx:id="searchLehrveransteltung" layoutX="175.0" layoutY="51.0" prefWidth="150.0" />
+						<DatePicker fx:id="searchFromDate" layoutX="174.0" layoutY="86.0" prefHeight="25.0" prefWidth="149.0" />
+						<DatePicker fx:id="searchToDate" layoutX="175.0" layoutY="119.0" prefHeight="25.0" prefWidth="149.0" />
+						
+						<ComboBox fx:id="searchEigenschaft" layoutX="491.0" layoutY="13.0" prefWidth="150.0" />
+						
+						
+						
+						<ComboBox fx:id="searchSkala" layoutX="491.0" layoutY="46.0" prefWidth="150.0" />
+						<ComboBox fx:id="searchPerspektive" layoutX="491.0" layoutY="81.0" prefWidth="150.0" />
+						<Button fx:id="search" layoutX="566.0" layoutY="150.0" mnemonicParsing="false" text="%scene.all.filterbutton" />
+						<Button fx:id="reset" layoutX="448.0" layoutY="150.0" mnemonicParsing="false" text="%scene.all.resetbutton" />
+					</children>
+				</AnchorPane>
+			</content>
+		</TitledPane>
+		<TitledPane animated="false" layoutX="22.0" layoutY="235.0" prefHeight="288.0" prefWidth="679.0" text="%scene.frageboegen.lable.name">
+			<content>
+				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+					<children>
+						<TableView layoutX="-1.0" layoutY="-2.0" prefHeight="264.0" prefWidth="679.0">
+							<columns>
+								<TableColumn prefWidth="106.0" text="%scene.frageboegen.collabel.name" />
+								<TableColumn prefWidth="102.0" text="%scene.frageboegen.collabel.eigenschaft" />
+								<TableColumn prefWidth="95.0" text="%scene.frageboegen.collabel.perspektive" />
+								<TableColumn prefWidth="65.0" text="%scene.frageboegen.collabel.exportiert" />
+								<TableColumn prefWidth="112.0" text="%scene.frageboegen.collabel.lehrveranstaltung" />
+								<TableColumn prefWidth="109.0" text="%scene.frageboegen.collabel.erstellungsDatum" />
+								<TableColumn prefWidth="75.0" text="%scene.frageboegen.collabel.skala" />
+							</columns>
+						</TableView>
+					</children>
+				</AnchorPane>
+			</content>
+		</TitledPane>
+		<Button layoutX="558.0" layoutY="529.0" mnemonicParsing="false" text="%menu.item.questionaires.add.lable" />
+	</children>
+</AnchorPane>

@@ -77,6 +77,9 @@
 						<MenuItem fx:id="addFragebogen" mnemonicParsing="true"
 							text="%menu.item.questionaires.add.lable">
 						</MenuItem>
+						<MenuItem fx:id="showFragebogen" mnemonicParsing="true"
+							text="%menu.item.questionaires.show.lable">
+						</MenuItem>
 					</items>
 				</Menu>
 				

@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.dao.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -7,6 +8,8 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
@@ -34,6 +37,8 @@ public class Fragebogen extends BaseEntity {
 	private Eigenschaft eigenschaft;
 
 	private Perspektive perspektive;
+
+	private Date erstellungsDatum;
 
 	@ManyToOne(targetEntity = Skala.class, fetch = FetchType.EAGER)
 	public Skala getSkala() {
@@ -113,6 +118,15 @@ public class Fragebogen extends BaseEntity {
 
 	public void setEigenschaft(Eigenschaft eigenschaft) {
 		this.eigenschaft = eigenschaft;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
+	public Date getErstellungsDatum() {
+		return erstellungsDatum;
+	}
+
+	public void setErstellungsDatum(Date erstellungsDatum) {
+		this.erstellungsDatum = erstellungsDatum;
 	}
 
 	// public void addItem(Item i) {
