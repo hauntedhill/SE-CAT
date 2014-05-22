@@ -1,6 +1,7 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.ResourceBundle;
 
@@ -31,7 +32,6 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
-import edu.emory.mathcs.backport.java.util.Arrays;
 
 @Controller
 public class LehrveranstaltungController extends BaseController {
