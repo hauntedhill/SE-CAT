@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.hscoburg.evelin.secat.dao.FachDAO;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
+import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 
 @Repository
 @Transactional
@@ -31,5 +32,9 @@ public class FachModel {
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
+
+	public List<Lehrveranstaltung> getLehrveranstaltungenForFach(Fach f) {
+		return fachDAO.findById(f.getId()).getLehrveranstaltungen();
 	}
 }
