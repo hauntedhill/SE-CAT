@@ -28,24 +28,31 @@ public class ActionHelper {
 		});
 	}
 
-	public static void setAutoResizeToggleListenerForTitledPanel(final TitledPane searchPanel, final TitledPane dataPanel, final Control container,
-			final int heightDiff) {
+	public static void setAutoResizeToggleListenerForTitledPanel(final TitledPane searchPanel, final TitledPane dataPanel, final Control container) {
 		searchPanel.expandedProperty().addListener(new ChangeListener<Boolean>() {
+
+			private double originalDataPanelLayoutY = dataPanel.getLayoutY();
+
+			private double originalSearchPanelHeight = searchPanel.getPrefHeight();
+
+			private double originalDataHeight = dataPanel.getPrefHeight();
+
+			private double originalContainerHeight = container.getPrefHeight();
 
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if (newValue) {
-					dataPanel.setLayoutY(235);
+					dataPanel.setLayoutY(originalDataPanelLayoutY);
 					// tablePanel.setPrefHeight(205);
-					dataPanel.setPrefHeight(dataPanel.getPrefHeight() - heightDiff);
+					dataPanel.setPrefHeight(originalDataHeight);
 					// frageboegen.setPrefHeight(181);
-					container.setPrefHeight(container.getPrefHeight() - heightDiff);
+					container.setPrefHeight(originalContainerHeight);
 				} else {
-					dataPanel.setLayoutY(60);
+					dataPanel.setLayoutY(searchPanel.getLayoutY() + 30);
 					// tablePanel.setPrefHeight(380);
-					dataPanel.setPrefHeight(dataPanel.getPrefHeight() + heightDiff);
+					dataPanel.setPrefHeight(dataPanel.getPrefHeight() + originalSearchPanelHeight - 24);
 					// frageboegen.setPrefHeight(356);
-					container.setPrefHeight(container.getPrefHeight() + heightDiff);
+					container.setPrefHeight(container.getPrefHeight() + originalSearchPanelHeight - 24);
 				}
 
 			}

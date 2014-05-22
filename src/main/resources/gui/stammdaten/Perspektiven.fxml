@@ -8,7 +8,7 @@
 
 
 <children>
-		<TitledPane animated="false" layoutX="31.0" layoutY="142.0"
+		<TitledPane fx:id="tablePanel" animated="false" layoutX="31.0" layoutY="142.0"
 			prefHeight="242.0" prefWidth="409.0" text="%scene.perspective.lable">
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
@@ -20,7 +20,7 @@
 				</AnchorPane>
 			</content>
 		</TitledPane>
-		<TitledPane animated="false" layoutX="31.0" layoutY="21.0"
+		<TitledPane fx:id="addPanel" animated="false" layoutX="31.0" layoutY="21.0"
 			prefHeight="109.0" prefWidth="409.0" text="%scene.perspective.lable.new">
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="83.0"

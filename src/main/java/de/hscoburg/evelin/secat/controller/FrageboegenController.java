@@ -290,7 +290,7 @@ public class FrageboegenController extends BaseController {
 
 		});
 
-		ActionHelper.setAutoResizeToggleListenerForTitledPanel(searchPanel, tablePanel, frageboegen, 176);
+		ActionHelper.setAutoResizeToggleListenerForTitledPanel(searchPanel, tablePanel, frageboegen);
 
 		// searchPanel.expandedProperty().addListener(new ChangeListener<Boolean>() {
 		//

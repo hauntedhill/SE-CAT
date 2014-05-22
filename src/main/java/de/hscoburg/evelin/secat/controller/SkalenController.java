@@ -13,6 +13,7 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,11 +29,18 @@ import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 import de.hscoburg.evelin.secat.model.SkalenModel;
+import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class SkalenController extends BaseController {
+
+	@FXML
+	private TitledPane addPanel;
+
+	@FXML
+	private TitledPane tablePanel;
 
 	@FXML
 	private ListView<Skala> listSkalen;
@@ -128,7 +136,7 @@ public class SkalenController extends BaseController {
 				loadList();
 			}
 		});
-
+		ActionHelper.setAutoResizeToggleListenerForTitledPanel(addPanel, tablePanel, listSkalen);
 		buttonAdd.setOnKeyPressed(new SeCatEventHandle<Event>() {
 
 			@Override

@@ -11,6 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Callback;
@@ -28,6 +29,12 @@ import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class FachController extends BaseController {
+
+	@FXML
+	private TitledPane addPanel;
+
+	@FXML
+	private TitledPane tablePanel;
 
 	@FXML
 	private ListView<Fach> listFach;
@@ -68,7 +75,7 @@ public class FachController extends BaseController {
 		});
 
 		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
-
+		ActionHelper.setAutoResizeToggleListenerForTitledPanel(addPanel, tablePanel, listFach);
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
