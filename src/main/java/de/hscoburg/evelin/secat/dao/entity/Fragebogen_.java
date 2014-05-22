@@ -1,5 +1,7 @@
 package de.hscoburg.evelin.secat.dao.entity;
 
+import java.util.Date;
+
 import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -26,5 +28,7 @@ public class Fragebogen_ extends BaseEntity_ {
 	public static volatile SingularAttribute<Fragebogen, Eigenschaft> eigenschaft;
 
 	public static volatile SingularAttribute<Fragebogen, Perspektive> perspektive;
+
+	public static volatile SingularAttribute<Fragebogen, Date> erstellungsDatum;
 
 }

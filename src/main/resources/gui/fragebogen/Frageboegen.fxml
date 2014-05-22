@@ -38,13 +38,13 @@
 			<content>
 				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
 					<children>
-						<TableView layoutX="-1.0" layoutY="-2.0" prefHeight="264.0" prefWidth="679.0">
+						<TableView fx:id="frageboegen" layoutX="-1.0" layoutY="-2.0" prefHeight="264.0" prefWidth="679.0">
 							<columns>
 								<TableColumn prefWidth="106.0" text="%scene.frageboegen.collabel.name" />
 								<TableColumn prefWidth="102.0" text="%scene.frageboegen.collabel.eigenschaft" />
 								<TableColumn prefWidth="95.0" text="%scene.frageboegen.collabel.perspektive" />
 								<TableColumn prefWidth="65.0" text="%scene.frageboegen.collabel.exportiert" />
-								<TableColumn prefWidth="112.0" text="%scene.frageboegen.collabel.lehrveranstaltung" />
+								<TableColumn prefWidth="125.0" text="%scene.frageboegen.collabel.lehrveranstaltung" />
 								<TableColumn prefWidth="109.0" text="%scene.frageboegen.collabel.erstellungsDatum" />
 								<TableColumn prefWidth="75.0" text="%scene.frageboegen.collabel.skala" />
 							</columns>

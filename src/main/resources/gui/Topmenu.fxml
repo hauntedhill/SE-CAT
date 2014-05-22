@@ -11,7 +11,16 @@
 		<MenuBar fx:id="menuBar" layoutY="2.0" maxHeight="25.0"
 			prefHeight="25.0" prefWidth="800.0">
 			<menus>
-			
+			<Menu mnemonicParsing="true" text="%menu.item.questionnaires.label">
+					<items>
+						<MenuItem fx:id="addFragebogen" mnemonicParsing="true"
+							text="%menu.item.questionaires.add.lable">
+						</MenuItem>
+						<MenuItem fx:id="showFragebogen" mnemonicParsing="true"
+							text="%menu.item.questionaires.show.lable">
+						</MenuItem>
+					</items>
+				</Menu>
 
 				<Menu mnemonicParsing="true" text="%menu.item.masterdata.lable">
 					<items>
@@ -72,16 +81,7 @@
 
 				</Menu>
 				
-				<Menu mnemonicParsing="true" text="%menu.item.questionnaires.label">
-					<items>
-						<MenuItem fx:id="addFragebogen" mnemonicParsing="true"
-							text="%menu.item.questionaires.add.lable">
-						</MenuItem>
-						<MenuItem fx:id="showFragebogen" mnemonicParsing="true"
-							text="%menu.item.questionaires.show.lable">
-						</MenuItem>
-					</items>
-				</Menu>
+				
 				
 			</menus>
 		</MenuBar>

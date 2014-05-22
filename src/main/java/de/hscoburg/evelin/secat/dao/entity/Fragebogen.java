@@ -40,6 +40,8 @@ public class Fragebogen extends BaseEntity {
 
 	private Date erstellungsDatum;
 
+	private Boolean exportiert;
+
 	@ManyToOne(targetEntity = Skala.class, fetch = FetchType.EAGER)
 	public Skala getSkala() {
 		return skala;
@@ -127,6 +129,14 @@ public class Fragebogen extends BaseEntity {
 
 	public void setErstellungsDatum(Date erstellungsDatum) {
 		this.erstellungsDatum = erstellungsDatum;
+	}
+
+	public Boolean getExportiert() {
+		return exportiert;
+	}
+
+	public void setExportiert(Boolean exportiert) {
+		this.exportiert = exportiert;
 	}
 
 	// public void addItem(Item i) {
