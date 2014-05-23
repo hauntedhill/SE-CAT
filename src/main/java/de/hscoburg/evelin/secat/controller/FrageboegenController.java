@@ -25,8 +25,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -45,9 +49,12 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
+import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 @Controller
 public class FrageboegenController extends BaseController {
+
+	private static Logger logger = LoggerFactory.getLogger(FrageboegenController.class);
 
 	@FXML
 	private TitledPane searchPanel;
@@ -240,17 +247,16 @@ public class FrageboegenController extends BaseController {
 						// TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
 						// if (treeTableController.getSelectedTreeItem().getValue().isHandlungsfeld()) {
 						//
-						// Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addHandlungsfeld.fxml");
+						Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/fragebogen/editFragebogen.fxml");
 						//
-						// stage.show();
+						stage.show();
 						//
-						// stage.setOnHidden(new EventHandler<WindowEvent>() {
-						// public void handle(WindowEvent we) {
-						// logger.debug("Closing dialog stage.");
-						//
-						// }
-						// });
-						// }
+						stage.setOnHidden(new EventHandler<WindowEvent>() {
+							public void handle(WindowEvent we) {
+								logger.debug("Closing dialog stage.");
+
+							}
+						});
 					}
 
 				});
@@ -347,6 +353,11 @@ public class FrageboegenController extends BaseController {
 	public String getKeyForSceneName() {
 		// TODO Auto-generated method stub
 		return "scene.frageboegen.lable.title";
+	}
+
+	public Fragebogen getSelectedFragebogen() {
+		return frageboegen.getSelectionModel().getSelectedItem();
+
 	}
 
 }

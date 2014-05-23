@@ -4,18 +4,31 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane prefHeight="387.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.TreeTableController">
-<children>
 
-<TreeTableView fx:id="treeTable" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="800.0" >
-<columns>
-<TreeTableColumn prefWidth="180.0" text="%scene.all.item" />
-<TreeTableColumn prefWidth="50.0" text="%scene.all.active" />
-<TreeTableColumn prefWidth="250.0" text="%scene.all.notiz" />
-<TreeTableColumn prefWidth="110.0" text="%scene.all.property" />
-<TreeTableColumn prefWidth="110.0" text="%scene.all.perspective" />
-</columns>
-</TreeTableView>
+  			<AnchorPane prefHeight="340.0" prefWidth="620.0"  minHeight="0.0" minWidth="0.0"  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.TreeTableController">
+    			<MenuBar prefHeight="25.0" prefWidth="628.0">
+  					<menus>
+   					 <Menu fx:id="menuFilter" mnemonicParsing="false" text="%scene.handlungsfeld.menu.lable">
+    				  	<items>
+    				   		<MenuItem fx:id="menuItemFilterHandlungsfeld" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterHandlungsfeld" />
+  					   		<MenuItem fx:id="menuItemFilterItem" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterItem" />
+        					<MenuItem fx:id="menuItemFilterOff" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterOff" />
+      					</items>
+    				</Menu>
+  					</menus>
+				</MenuBar>
+    			
+    			<TreeTableView fx:id="treeTable" layoutY="25" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="628.0">
+					<columns>
+						<TreeTableColumn prefWidth="206.0" text="%scene.all.item" />
+						<TreeTableColumn prefWidth="35.0" text="%scene.all.active" />
+						<TreeTableColumn prefWidth="150.0" text="%scene.all.notiz" />
+						<TreeTableColumn prefWidth="120.0" text="%scene.all.property" />
+						<TreeTableColumn prefWidth="120.0" text="%scene.all.perspective" />
+					</columns>
+				</TreeTableView>
+			
+			</AnchorPane>
 
-</children>
-</Pane>
+
+

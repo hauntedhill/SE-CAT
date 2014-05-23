@@ -7,30 +7,6 @@
 <AnchorPane prefHeight="145.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.HandlungsfeldController">
 <children>
 
-<fx:include layoutY="26"  fx:id="treeTable" source="/gui/TreeTable.fxml"/>
- 
-<!-- <TreeTableView fx:id="treeTable"  layoutY="26.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="389.0" prefWidth="800.0">-->
-<!-- <columns>-->
-<!-- <TreeTableColumn prefWidth="180.0" text="%scene.all.item" />-->
-<!-- <TreeTableColumn prefWidth="50.0" text="%scene.all.active" />-->
-<!-- <TreeTableColumn prefWidth="250.0" text="%scene.all.notiz" />-->
-<!--  <TreeTableColumn prefWidth="98.0" text="Skala" />-->
-<!-- <TreeTableColumn prefWidth="110.0" text="%scene.all.property" />-->
-<!-- <TreeTableColumn prefWidth="110.0" text="%scene.all.perspective" />-->
-<!-- </columns>-->
-<!-- </TreeTableView> -->
+<fx:include fx:id="treeTable" source="/gui/TreeTable.fxml"/>
 
-
-
-<MenuBar  layoutY="2.0" prefHeight="25.0" prefWidth="800.0">
-  <menus>
-    <Menu fx:id="menuFilter" mnemonicParsing="false" text="%scene.handlungsfeld.menu.lable">
-      <items>
-        <MenuItem fx:id="menuItemFilterHandlungsfeld" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterHandlungsfeld" />
-        <MenuItem fx:id="menuItemFilterItem" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterItem" />
-        <MenuItem fx:id="menuItemFilterOff" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterOff" />
-      </items>
-    </Menu>
-  </menus>
-</MenuBar>
 </children></AnchorPane>

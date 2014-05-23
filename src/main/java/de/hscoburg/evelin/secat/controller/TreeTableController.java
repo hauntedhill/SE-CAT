@@ -9,8 +9,12 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
@@ -19,6 +23,8 @@ import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 import org.slf4j.Logger;
@@ -35,6 +41,7 @@ import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
+import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 @Controller
 public class TreeTableController extends BaseController {
@@ -47,8 +54,26 @@ public class TreeTableController extends BaseController {
 	@Autowired
 	private HandlungsfeldModel handlungsfeldModel;
 
+	@FXML
+	private Menu menuFilter;
+
+	@FXML
+	private MenuItem menuItemFilterHandlungsfeld;
+
+	@FXML
+	private MenuItem menuItemFilterItem;
+
+	@FXML
+	private MenuItem menuItemFilterOff;
+
+	private static boolean inaktiv = false;
+
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
+
+		menuItemFilterHandlungsfeld.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
+		menuItemFilterItem.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
+		menuItemFilterOff.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
 
 		((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(0))
 				.setCellValueFactory(new Callback<CellDataFeatures<TreeItemWrapper, String>, ObservableValue<String>>() {
@@ -125,6 +150,55 @@ public class TreeTableController extends BaseController {
 				});
 
 		buildTreeTable();
+
+		menuItemFilterItem.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent t) {
+
+				Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterAllItems.fxml");
+
+				stage.show();
+
+				stage.setOnHidden(new EventHandler<WindowEvent>() {
+					public void handle(WindowEvent we) {
+						logger.debug("Closing dialog stage.");
+
+					}
+				});
+
+			}
+
+		});
+
+		menuItemFilterHandlungsfeld.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent t) {
+				if (inaktiv == false) {
+					inaktiv = true;
+					buildFilteredTreeTable(handlungsfeldModel.getHandlungsfelderBy(false, false), false, false);
+				} else {
+
+					inaktiv = false;
+					buildFilteredTreeTable(handlungsfeldModel.getHandlungsfelderBy(true, true), true, true);
+
+				}
+
+			}
+
+		});
+
+		menuItemFilterOff.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent t) {
+				inaktiv = false;
+				buildTreeTable();
+			}
+
+		});
+
 	}
 
 	public void addHandlungsfeldToCurrentSelection(Handlungsfeld h) {
@@ -179,11 +253,7 @@ public class TreeTableController extends BaseController {
 			List<Bereich> bereiche = hf.getBereiche();
 			for (Bereich bereich : bereiche) {
 				bereich.setItems(handlungsfeldModel.getItemBy(bereich, itemAktiv, p, e, notizHandlungsfeld, notizItem, f));
-				// ONLY FOR TESTING
-				List<Item> items = handlungsfeldModel.getItemBy(bereich, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
-				for (Item i : items) {
-					System.out.println(i.getName());
-				}
+
 
 			}
 			hf.setBereiche(bereiche);

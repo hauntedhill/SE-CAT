@@ -10,7 +10,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TreeItem;
@@ -47,17 +46,15 @@ public class HandlungsfeldController extends BaseController {
 	@FXML
 	private MenuBar menuBar;
 
-	@FXML
-	private Menu menuFilter;
-
-	@FXML
-	private MenuItem menuItemFilterHandlungsfeld;
-
-	@FXML
-	private MenuItem menuItemFilterItem;
-
-	@FXML
-	private MenuItem menuItemFilterOff;
+	/*
+	 * @FXML private Menu menuFilter;
+	 * 
+	 * @FXML private MenuItem menuItemFilterHandlungsfeld;
+	 * 
+	 * @FXML private MenuItem menuItemFilterItem;
+	 * 
+	 * @FXML private MenuItem menuItemFilterOff;
+	 */
 
 	@Autowired
 	private HandlungsfeldDAO service;
@@ -68,13 +65,15 @@ public class HandlungsfeldController extends BaseController {
 	@Autowired
 	private TreeTableController treeTableController;
 
-	private static boolean inaktiv = false;
+	// private static boolean inaktiv = false;
 
 	public void initializeController(URL location, ResourceBundle resources) {
 
-		menuItemFilterHandlungsfeld.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
-		menuItemFilterItem.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
-		menuItemFilterOff.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
+		/*
+		 * menuItemFilterHandlungsfeld.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
+		 * menuItemFilterItem.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
+		 * menuItemFilterOff.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
+		 */
 
 		/*
 		 * ((TreeTableColumn<TreeItemWrapper, String>) treeTable.getColumns().get(0)) .setCellValueFactory(new
@@ -348,53 +347,44 @@ public class HandlungsfeldController extends BaseController {
 
 				});
 
-				menuItemFilterItem.setOnAction(new EventHandler<ActionEvent>() {
-
-					@Override
-					public void handle(ActionEvent t) {
-
-						Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterAllItems.fxml");
-
-						stage.show();
-
-						stage.setOnHidden(new EventHandler<WindowEvent>() {
-							public void handle(WindowEvent we) {
-								logger.debug("Closing dialog stage.");
-
-							}
-						});
-
-					}
-
-				});
-
-				menuItemFilterHandlungsfeld.setOnAction(new EventHandler<ActionEvent>() {
-
-					@Override
-					public void handle(ActionEvent t) {
-						if (inaktiv == false) {
-							inaktiv = true;
-							treeTableController.buildFilteredTreeTable(handlungsfeldModel.getHandlungsfelderBy(false, false), false, false);
-						} else {
-
-							inaktiv = false;
-							treeTableController.buildFilteredTreeTable(handlungsfeldModel.getHandlungsfelderBy(true, true), true, true);
-
-						}
-
-					}
-
-				});
-
-				menuItemFilterOff.setOnAction(new EventHandler<ActionEvent>() {
-
-					@Override
-					public void handle(ActionEvent t) {
-						inaktiv = false;
-						treeTableController.buildTreeTable();
-					}
-
-				});
+				/*
+				 * menuItemFilterItem.setOnAction(new EventHandler<ActionEvent>() {
+				 * 
+				 * @Override public void handle(ActionEvent t) {
+				 * 
+				 * Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterAllItems.fxml");
+				 * 
+				 * stage.show();
+				 * 
+				 * stage.setOnHidden(new EventHandler<WindowEvent>() { public void handle(WindowEvent we) {
+				 * logger.debug("Closing dialog stage.");
+				 * 
+				 * } });
+				 * 
+				 * }
+				 * 
+				 * });
+				 * 
+				 * menuItemFilterHandlungsfeld.setOnAction(new EventHandler<ActionEvent>() {
+				 * 
+				 * @Override public void handle(ActionEvent t) { if (inaktiv == false) { inaktiv = true;
+				 * treeTableController.buildFilteredTreeTable(handlungsfeldModel.getHandlungsfelderBy(false, false), false, false); } else {
+				 * 
+				 * inaktiv = false; treeTableController.buildFilteredTreeTable(handlungsfeldModel.getHandlungsfelderBy(true, true), true,
+				 * true);
+				 * 
+				 * }
+				 * 
+				 * }
+				 * 
+				 * });
+				 * 
+				 * menuItemFilterOff.setOnAction(new EventHandler<ActionEvent>() {
+				 * 
+				 * @Override public void handle(ActionEvent t) { inaktiv = false; treeTableController.buildTreeTable(); }
+				 * 
+				 * });
+				 */
 
 				rowMenu.getItems().add(activateItItem);
 				rowMenu.getItems().add(deactivateItItem);

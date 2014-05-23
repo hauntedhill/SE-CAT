@@ -87,7 +87,7 @@ public class Item extends StammdatenEntity {
 		this.bewertungen = bewertungen;
 	}
 
-	@ManyToMany(targetEntity = Fragebogen.class)
+	@ManyToMany(targetEntity = Fragebogen.class, fetch = FetchType.EAGER)
 	public List<Fragebogen> getFrageboegen() {
 		return frageboegen;
 	}

@@ -68,7 +68,7 @@ public class Fragebogen extends BaseEntity {
 		this.bewertungen = bewertungen;
 	}
 
-	@ManyToMany(targetEntity = Item.class, mappedBy = "frageboegen")
+	@ManyToMany(targetEntity = Item.class, mappedBy = "frageboegen", fetch = FetchType.EAGER)
 	public List<Item> getItems() {
 		return items;
 	}
@@ -95,7 +95,7 @@ public class Fragebogen extends BaseEntity {
 		this.lehrveranstaltung = lehrveranstaltung;
 	}
 
-	@OneToMany(targetEntity = Frage.class, mappedBy = "fragebogen")
+	@OneToMany(targetEntity = Frage.class, mappedBy = "fragebogen", fetch = FetchType.EAGER)
 	public List<Frage> getFragen() {
 		return fragen;
 	}

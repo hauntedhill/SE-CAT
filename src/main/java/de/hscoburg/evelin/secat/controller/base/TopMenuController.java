@@ -186,6 +186,7 @@ public class TopMenuController implements Initializable {
 				layout.setCenterNode(guiNode);
 			}
 		});
+
 	}
 
 }

@@ -3,36 +3,64 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.AddFragebogenController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.AddFragebogenController">
 <children>
-<MenuBar layoutY="2.0" prefHeight="25.0" prefWidth="800.0">
-  <menus>
-    <Menu fx:id="menuFilter" mnemonicParsing="false" text="%scene.handlungsfeld.menu.lable">
-      <items>
-        <MenuItem fx:id="menuItemFilterHandlungsfeld" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterHandlungsfeld" />
-        <MenuItem fx:id="menuItemFilterItem" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterItem" />
-        <MenuItem fx:id="menuItemFilterOff" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterOff" />
-      </items>
-    </Menu>
-  </menus>
-</MenuBar>
-
-<fx:include layoutY="26"  fx:id="treeTable" source="/gui/TreeTable.fxml"/>
-<Button fx:id="addItem" layoutX="10.0" layoutY="440.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="%scene.all.addbutton" />
-<Button fx:id="removeItem" layoutX="10.0" layoutY="470.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="%scene.all.removebutton" />
 
 
-<ComboBox fx:id="perspektive" layoutX="10.0" layoutY="500.0" prefHeight="25.0" prefWidth="150.0" />
-<ComboBox fx:id="eigenschaft" layoutX="10.0" layoutY="530.0" prefHeight="25.0" prefWidth="150.0" />
-<Label layoutX="170.0" layoutY="420.0" text="%scene.all.item" />
-<ListView fx:id="itemList" layoutX="170.0" layoutY="440.0" prefHeight="120.0" prefWidth="200.0" />
+		<TitledPane layoutY="5" layoutX="170" animated="false" prefHeight="400.0" prefWidth="630.0" text="%scene.all.item">
+  			<content>
+				<fx:include  fx:id="treeTable" source="/gui/TreeTable.fxml"/>
+			</content>
+		</TitledPane>
+	
+		<TitledPane layoutY="5" layoutX="5" animated="false" prefHeight="580.0" prefWidth="150.0" text="%menu.item.masterdata.lable">
+  			<content>	
+  				<AnchorPane prefHeight="400.0" prefWidth="150.0">
+ 					<ComboBox fx:id="perspektive" layoutX="3.0" layoutY="5.0" prefHeight="25.0" prefWidth="135.0" />
+					<ComboBox fx:id="eigenschaft" layoutX="3.0" layoutY="35.0" prefHeight="25.0" prefWidth="135.0" />
+					<ComboBox fx:id="skala" layoutX="3" layoutY="65.0" prefHeight="25.0" prefWidth="135.0" />
+					<Line endX="140" layoutX="0" layoutY="95.0" startX="-100.0" />
+					<ComboBox fx:id="fach" layoutX="3" layoutY="100.0" prefHeight="25.0" prefWidth="135.0" />
+					<ComboBox fx:id="lehrveranstaltung" layoutX="3" layoutY="130.0" prefHeight="25.0" prefWidth="135.0" />
+					<Line endX="140" layoutX="0" layoutY="160.0" startX="-100.0" />
+					<Label layoutX="3" layoutY="165" text="%scene.addItem.lable.title" prefHeight="25.0" prefWidth="135.0" />
+					<Button fx:id="addItem" layoutX="3.0" layoutY="195.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" text="%scene.all.addbutton" />
+					<Button fx:id="removeItem" layoutX="3.0" layoutY="230.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="135.0" text="%scene.all.removebutton" />
+  					<ListView fx:id="itemList" layoutX="3" layoutY="260.0" prefHeight="270.0" prefWidth="135.0" />
+  				</AnchorPane>
+  			</content>
+		</TitledPane>	
+		
+		<TitledPane layoutY="410" layoutX="170" animated="false" prefHeight="170.0" prefWidth="450.0" text="%scene.frageboegen.frage.label.title">
+  			<content>
+  			<AnchorPane prefHeight="170.0" prefWidth="450.0">
+  			<ComboBox fx:id="skalaFrage" layoutX="5.0" layoutY="43.0" prefHeight="25.0" prefWidth="100.0" />
+  			<ComboBox fx:id="positionFrage" layoutX="110.0" layoutY="43.0" prefHeight="25.0" prefWidth="100.0" />
+  			<Button fx:id="addFrage" layoutX="215.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="%scene.all.addbutton" />
+			<Button fx:id="removeFrage" layoutX="325.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="%scene.all.removebutton" />
+  			
+  			<Label layoutX="5" layoutY="70.0" text="%scene.frageboegen.frage.label" />
+			<TextArea fx:id="frageText" layoutX="5.0" layoutY="90.0" prefHeight="70.0" prefWidth="205.0" />
+			<ListView fx:id="frageList" layoutX="215" layoutY="90.0" prefHeight="70.0" prefWidth="215.0" />
+			</AnchorPane>
+			</content>
+		</TitledPane>
+				
+		<TitledPane layoutY="410" layoutX="625" animated="false" prefHeight="170.0" prefWidth="175.0" text="%scene.addFragebogen.lable.title">
+  			<content>
+  			<AnchorPane prefHeight="170.0" prefWidth="150.0">
+  				<ComboBox fx:id="vorlage" layoutX="5.0" layoutY="58.0" prefHeight="25.0" prefWidth="150.0" />
+				<Label layoutX="5" layoutY="100" text="%scene.addFragebogen.lable.title" />
+				<TextField fx:id="name" layoutX="5" layoutY="120.0" prefHeight="25.0" prefWidth="150.0" />
+				<Button fx:id="saveFragebogen" layoutX="5.0" layoutY="150.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="%scene.all.savebutton" />
+				
+			</AnchorPane>
+			</content>
+		</TitledPane>
 
-<Label layoutX="380.0" layoutY="420.0" text="%scene.addFragebogen.lable.name" />
-<TextField fx:id="name" layoutX="380.0" layoutY="440.0" prefHeight="25.0" prefWidth="150.0" />
-<ComboBox fx:id="skala" layoutX="380" layoutY="470.0" prefHeight="25.0" prefWidth="150.0" />
-<ComboBox fx:id="fach" layoutX="380" layoutY="500.0" prefHeight="25.0" prefWidth="150.0" />
-<ComboBox fx:id="lehrveranstaltung" layoutX="380" layoutY="530.0" prefHeight="25.0" prefWidth="150.0" />
+
 
 </children>
 
