@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 import javafx.util.StringConverter;
 
+import org.controlsfx.dialog.Dialogs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,7 +52,6 @@ import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 @Controller
 public class AddFragebogenController extends BaseController {
 
-	
 	private static Logger logger = LoggerFactory.getLogger(AddFragebogenController.class);
 
 	@FXML
@@ -112,14 +113,6 @@ public class AddFragebogenController extends BaseController {
 
 	private static Fragebogen editFragebogen;
 
-	private static ObservableList<Fach> fachOl = FXCollections.observableArrayList();
-
-	private static ObservableList<Item> items = FXCollections.observableArrayList();
-
-	private static ObservableList<Lehrveranstaltung> lvOl = FXCollections.observableArrayList();
-
-	private static ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
-
 	private static Perspektive selectedPerspektive = null;
 
 	private static Eigenschaft selectedEigenschaft = null;
@@ -133,14 +126,8 @@ public class AddFragebogenController extends BaseController {
 
 		treeTableController.setSelectionMode(SelectionMode.MULTIPLE);
 
-		// menuItemFilterItem.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
-		// menuItemFilterOff.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
-
 		addItem.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 		removeItem.setGraphic(new ImageView(new Image("/image/icons/edit_remove.png", 16, 16, true, true)));
-
-		itemList.setItems(items);
-		frageList.setItems(fragenOl);
 
 		perspektive.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.all.perspective"));
 		eigenschaft.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.all.property"));
@@ -150,7 +137,6 @@ public class AddFragebogenController extends BaseController {
 		lehrveranstaltung.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.lehrveranstaltung.lable"));
 		positionFrage.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.frageboegen.frage.label.position"));
 		vorlage.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.addItem.templatebox.prompttextproperty"));
-
 
 		perspektive.setConverter(new StringConverter<Perspektive>() {
 			@Override
@@ -175,8 +161,6 @@ public class AddFragebogenController extends BaseController {
 		}
 		perspektive.setItems(perspektiveOl);
 
-
-
 		eigenschaft.setConverter(new StringConverter<Eigenschaft>() {
 			@Override
 			public String toString(Eigenschaft object) {
@@ -195,12 +179,11 @@ public class AddFragebogenController extends BaseController {
 
 		ObservableList<Eigenschaft> eigenschaftOl = FXCollections.observableArrayList();
 		List<Eigenschaft> eList = handlungsfeldModel.getEigenschaften();
-			for(Eigenschaft e:eList){
+		for (Eigenschaft e : eList) {
 			eigenschaftOl.add(e);
-			}
+		}
 		eigenschaft.setItems(eigenschaftOl);
-			
-			
+
 		itemList.setCellFactory(new Callback<ListView<Item>, ListCell<Item>>() {
 
 			@Override
@@ -289,15 +272,12 @@ public class AddFragebogenController extends BaseController {
 			}
 
 		});
-
-
+		ObservableList<Fach> fachOl = FXCollections.observableArrayList();
 		List<Fach> faecher = handlungsfeldModel.getFaecher();
-
 		for (Fach f : faecher) {
 			fachOl.add(f);
 		}
 		fach.setItems(fachOl);
-
 
 		lehrveranstaltung.setConverter(new StringConverter<Lehrveranstaltung>() {
 			@Override
@@ -314,8 +294,6 @@ public class AddFragebogenController extends BaseController {
 			}
 
 		});
-
-		lehrveranstaltung.setItems(lvOl);
 
 		vorlage.setConverter(new StringConverter<Fragebogen>() {
 			@Override
@@ -334,6 +312,10 @@ public class AddFragebogenController extends BaseController {
 		});
 
 		ObservableList<Fragebogen> vorlageOl = FXCollections.observableArrayList();
+		Fragebogen keinFragebogen = new Fragebogen();
+		keinFragebogen.setName("Keine Vorlage");
+		keinFragebogen.setId(-1);
+		vorlageOl.add(keinFragebogen);
 		List<Fragebogen> fList = fragebogenModel.getFragebogenFor(null, null, null, null, null, null, null);
 		for (Fragebogen f : fList) {
 			vorlageOl.add(f);
@@ -368,45 +350,52 @@ public class AddFragebogenController extends BaseController {
 		fragePosOl.add("Top");
 		fragePosOl.add("Bottom");
 		positionFrage.setItems(fragePosOl);
-		/*
-		 * menuItemFilterItem.setOnAction(new EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent t) {
-		 * 
-		 * Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterAllItems.fxml");
-		 * 
-		 * stage.show();
-		 * 
-		 * stage.setOnHidden(new EventHandler<WindowEvent>() { public void handle(WindowEvent we) { logger.debug("Closing dialog stage.");
-		 * 
-		 * } });
-		 * 
-		 * }
-		 * 
-		 * });
-		 * 
-		 * menuItemFilterOff.setOnAction(new EventHandler<ActionEvent>() {
-		 * 
-		 * @Override public void handle(ActionEvent t) { // inaktiv = false; treeTableController.buildTreeTable(); }
-		 * 
-		 * });
-		 */
 
-		addItem.setOnAction(new EventHandler<ActionEvent>() {
+		addItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+			boolean addItemConflict = false;
 
 			@Override
-			public void handle(ActionEvent t) {
+			public void handleAction(ActionEvent event) throws Exception {
+				try {
+					ObservableList<TreeItem<TreeItemWrapper>> treeItems = treeTableController.getSelectedTreeItemList();
+					for (TreeItem<TreeItemWrapper> child : treeItems) {
+						if (!child.getValue().getPerspektiven().contains(selectedPerspektive)
+								|| !child.getValue().getEigenschaften().contains(selectedEigenschaft)) {
+							addItemConflict = true;
+							throw new IllegalArgumentException();
+						}
 
-				ObservableList<TreeItem<TreeItemWrapper>> treeItems = treeTableController.getSelectedTreeItemList();
-
-				for (TreeItem<TreeItemWrapper> child : treeItems) {
-					if (child.getValue().isItem() && !itemList.getItems().contains(child.getValue().getItem())) {
-						items.add(child.getValue().getItem());
 					}
+				} catch (IllegalArgumentException iae) {
+					Platform.runLater(new Runnable() {
+
+						@Override
+						public void run() {
+							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.input.error.title"))
+									.masthead(SeCatResourceBundle.getInstance().getString("scene.input.error.txt")).showError();
+
+						}
+					});
 				}
 
 			}
 
+			@Override
+			public void updateUI() {
+				if (addItemConflict == false) {
+					ObservableList<Item> items = itemList.getItems();
+					ObservableList<TreeItem<TreeItemWrapper>> treeItems = treeTableController.getSelectedTreeItemList();
+
+					for (TreeItem<TreeItemWrapper> child : treeItems) {
+						if (child.getValue().isItem() && !itemList.getItems().contains(child.getValue().getItem())) {
+							items.add(child.getValue().getItem());
+						}
+					}
+					itemList.setItems(items);
+				} else {
+					addItemConflict = false;
+				}
+			}
 		});
 
 		removeItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
@@ -418,7 +407,9 @@ public class AddFragebogenController extends BaseController {
 
 			@Override
 			public void updateUI() {
-				items.remove(itemList.getSelectionModel().getSelectedItem());
+				ObservableList<Item> items = itemList.getItems();
+				items.removeAll(itemsToRemove);
+				itemList.setItems(items);
 
 			}
 		});
@@ -430,13 +421,14 @@ public class AddFragebogenController extends BaseController {
 				selectedPerspektive = perspektive.getValue();
 
 			}
+
 			@Override
 			public void updateUI() {
 				filterTreeTable();
 			}
-	
+
 		});
-		
+
 		eigenschaft.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
@@ -444,25 +436,28 @@ public class AddFragebogenController extends BaseController {
 				selectedEigenschaft = eigenschaft.getValue();
 
 			}
+
 			@Override
 			public void updateUI() {
 				filterTreeTable();
 			}
 		});
 
-
 		fach.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
 
-				lvOl.setAll(fach.getValue().getLehrveranstaltungen());				
 			}
 
 			@Override
 			public void updateUI() {
 
-
+				if (fach.getValue() != null) {
+					ObservableList<Lehrveranstaltung> lvOl = FXCollections.observableArrayList();
+					lvOl.setAll(fach.getValue().getLehrveranstaltungen());
+					lehrveranstaltung.setItems(lvOl);
+				}
 			}
 		});
 
@@ -470,84 +465,114 @@ public class AddFragebogenController extends BaseController {
 
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
-				
 
-				if(editMode == false){
-					Fragebogen f = new Fragebogen();
-					f.setName(name.getText());
-					f.setItems(itemList.getItems());
-					f.setPerspektive(perspektive.getValue());
-					f.setEigenschaft(eigenschaft.getValue());
-					f.setSkala(skala.getValue());
-					f.setLehrveranstaltung(lehrveranstaltung.getValue());
-					f.setExportiert(false);
-					f.setErstellungsDatum(new Date());
-					f.setFragen(frageList.getItems());
-					fragebogenModel.persistFragebogen(f);
-
-					for (Frage frage : frageList.getItems()) {
-						frage.setFragebogen(f);
-						fragebogenModel.persistFrage(frage);
-					}
-
-
-					ArrayList<Fragebogen> itemFb = new ArrayList<Fragebogen>();
-					itemFb.add(f);
-
+				try {
+					if (name.getText().equals("") || selectedPerspektive == null || selectedPerspektive == null || skala.getValue() == null
+							|| lehrveranstaltung.getValue() == null || itemList.getItems().isEmpty())
+						throw new IllegalArgumentException();
 					for (Item item : itemList.getItems()) {
-						item.setFrageboegen(itemFb);
-						handlungsfeldModel.mergeItem(item);
-					}
-				
-				}
-				else{
-					
-					editFragebogen.setName(name.getText());
-					editFragebogen.setItems(itemList.getItems());
-					editFragebogen.setPerspektive(perspektive.getValue());
-					editFragebogen.setEigenschaft(eigenschaft.getValue());
-					editFragebogen.setSkala(skala.getValue());
-					editFragebogen.setLehrveranstaltung(lehrveranstaltung.getValue());
-					editFragebogen.setExportiert(false);
-					editFragebogen.setErstellungsDatum(new Date());
-					editFragebogen.setFragen(frageList.getItems());
-					fragebogenModel.mergeFragebogen(editFragebogen);
-
-					for (Frage frage : frageList.getItems()) {
-						if (!fragenToRemove.contains(frage)) {
-						frage.setFragebogen(editFragebogen);
-						fragebogenModel.mergeFrage(frage);
+						if (!item.getEigenschaften().contains(selectedEigenschaft) || !item.getPerspektiven().contains(selectedPerspektive)) {
+							throw new IllegalArgumentException();
 						}
 					}
-					ArrayList<Fragebogen> itemFb = new ArrayList<Fragebogen>();
-					itemFb.add(editFragebogen);
 
-					for (Item item : itemList.getItems()) {
-						if (!itemsToRemove.contains(item)) {
-						item.setFrageboegen(itemFb);
-						handlungsfeldModel.mergeItem(item);
+					if (editMode == false) {
+						Fragebogen f = new Fragebogen();
+						f.setName(name.getText());
+						f.setItems(itemList.getItems());
+						f.setPerspektive(perspektive.getValue());
+						f.setEigenschaft(eigenschaft.getValue());
+						f.setSkala(skala.getValue());
+						f.setLehrveranstaltung(lehrveranstaltung.getValue());
+						f.setExportiert(false);
+						f.setErstellungsDatum(new Date());
+						f.setFragen(frageList.getItems());
+						fragebogenModel.persistFragebogen(f);
+
+						for (Frage frage : frageList.getItems()) {
+							frage.setFragebogen(f);
+							fragebogenModel.persistFrage(frage);
 						}
-					}
-					
-					for (Item item : itemsToRemove) {
-						ArrayList<Fragebogen> fbs = new ArrayList<Fragebogen>();
-						for (Fragebogen f : item.getFrageboegen()) {
-							if (!editFragebogen.equals(f)) {
-								fbs.add(f);
-							}
-							item.setFrageboegen(fbs);
+
+						for (Item item : itemList.getItems()) {
+							item.addFragebogen(f);
 							handlungsfeldModel.mergeItem(item);
 						}
 
-					}
-					for (Frage frage : fragenToRemove) {
+					} else {
 
-						frage.setFragebogen(null);
-						fragebogenModel.mergeFrage(frage);
+						editFragebogen.setName(name.getText());
+						editFragebogen.setItems(itemList.getItems());
+						editFragebogen.setPerspektive(perspektive.getValue());
+						editFragebogen.setEigenschaft(eigenschaft.getValue());
+						editFragebogen.setSkala(skala.getValue());
+						editFragebogen.setLehrveranstaltung(lehrveranstaltung.getValue());
+						editFragebogen.setExportiert(false);
+						editFragebogen.setErstellungsDatum(new Date());
+						editFragebogen.setFragen(frageList.getItems());
+						fragebogenModel.mergeFragebogen(editFragebogen);
 
+						for (Frage frage : frageList.getItems()) {
+							if (!fragenToRemove.contains(frage)) {
+								frage.setFragebogen(editFragebogen);
+								fragebogenModel.mergeFrage(frage);
+							}
+						}
+						ArrayList<Fragebogen> itemFb = new ArrayList<Fragebogen>();
+						itemFb.add(editFragebogen);
+
+						for (Item item : itemList.getItems()) {
+							if (!itemsToRemove.contains(item)) {
+								item.setFrageboegen(itemFb);
+								handlungsfeldModel.mergeItem(item);
+							}
+						}
+
+						for (Item item : itemsToRemove) {
+							ArrayList<Fragebogen> fbs = new ArrayList<Fragebogen>();
+							for (Fragebogen f : item.getFrageboegen()) {
+								if (!editFragebogen.equals(f)) {
+									fbs.add(f);
+								}
+								item.setFrageboegen(fbs);
+								handlungsfeldModel.mergeItem(item);
+							}
+
+						}
+						for (Frage frage : fragenToRemove) {
+
+							frage.setFragebogen(null);
+							fragebogenModel.mergeFrage(frage);
+
+						}
 					}
+				} catch (IllegalArgumentException iae) {
+					Platform.runLater(new Runnable() {
+
+						@Override
+						public void run() {
+							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.input.error.title"))
+									.masthead(SeCatResourceBundle.getInstance().getString("scene.input.error.txt")).showError();
+
+						}
+					});
 				}
-				
+
+			}
+
+			@Override
+			public void updateUI() {
+				ObservableList<Item> items = FXCollections.observableArrayList();
+				ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
+				itemList.setItems(items);
+				frageList.setItems(fragenOl);
+				frageText.clear();
+				fach.getSelectionModel().clearSelection();
+				perspektive.getSelectionModel().clearSelection();
+				eigenschaft.getSelectionModel().clearSelection();
+				skala.getSelectionModel().clearSelection();
+				lehrveranstaltung.getSelectionModel().clearSelection();
+				name.setText("");
 
 			}
 
@@ -558,38 +583,55 @@ public class AddFragebogenController extends BaseController {
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
 
-				Fragebogen x = vorlage.getSelectionModel().getSelectedItem();
-
-				for (Item item : x.getItems()) {
-					items.add(item);
-				}
-
-				for (Frage frage : x.getFragen()) {
-					fragenOl.add(frage);
-				}
-
 			}
 
 			@Override
 			public void updateUI() {
 				Fragebogen x = vorlage.getSelectionModel().getSelectedItem();
+				System.out.println(x.getItems().toString());
+				ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
+				ObservableList<Item> items = FXCollections.observableArrayList();
 
+				if (x.getId() != -1) {
 
+					fragenOl.clear();
 
-				perspektive.getSelectionModel().select(x.getPerspektive());
-				eigenschaft.getSelectionModel().select(x.getEigenschaft());
-				skala.getSelectionModel().select(x.getSkala());
-				lehrveranstaltung.getSelectionModel().select(x.getLehrveranstaltung());
-				name.setText(x.getName());
+					for (Item item : x.getItems()) {
+						System.out.println("test" + item.getName());
+						items.add(item);
+					}
 
+					for (Frage frage : x.getFragen()) {
+						System.out.println(frage.getText());
+						fragenOl.add(frage);
+					}
 
+					perspektive.getSelectionModel().select(x.getPerspektive());
+					eigenschaft.getSelectionModel().select(x.getEigenschaft());
+					skala.getSelectionModel().select(x.getSkala());
+					lehrveranstaltung.getSelectionModel().select(x.getLehrveranstaltung());
+					name.setText(x.getName());
+					itemList.setItems(items);
+					frageList.setItems(fragenOl);
+				} else {
+					itemList.setItems(items);
+					frageList.setItems(fragenOl);
+					fach.getSelectionModel().clearSelection();
+					perspektive.getSelectionModel().clearSelection();
+					eigenschaft.getSelectionModel().clearSelection();
+					skala.getSelectionModel().clearSelection();
+					lehrveranstaltung.getSelectionModel().clearSelection();
+					name.setText("");
+
+				}
 			}
 		});
-		
+
 		addFrage.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override
 			public void handle(ActionEvent event) {
+				ObservableList<Frage> fragenOl = frageList.getItems();
 				Frage f = new Frage();
 				f.setText(frageText.getText());
 				f.setSkala(skalaFrage.getValue());
@@ -600,8 +642,7 @@ public class AddFragebogenController extends BaseController {
 				}
 
 				fragenOl.add(f);
-
-
+				frageList.setItems(fragenOl);
 
 			}
 
@@ -611,20 +652,21 @@ public class AddFragebogenController extends BaseController {
 
 			@Override
 			public void handle(ActionEvent event) {
+				ObservableList<Frage> fragenOl = frageList.getItems();
 				fragenToRemove.add(frageList.getSelectionModel().getSelectedItem());
 				fragenOl.remove(frageList.getSelectionModel().getSelectedItem());
-				
+				frageList.setItems(fragenOl);
+
 			}
 
 		});
 	}
-	
+
 	@Override
 	public String getKeyForSceneName() {
 
 		return "scene.addFragebogen.lable.title";
 	}
-
 
 	public void filterTreeTable() {
 
@@ -633,7 +675,8 @@ public class AddFragebogenController extends BaseController {
 	}
 
 	public void setFragebogenToEdit(Fragebogen f) {
-
+		ObservableList<Item> items = FXCollections.observableArrayList();
+		ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
 		editMode = true;
 		editFragebogen = f;
 		for (Item item : f.getItems()) {
@@ -649,6 +692,8 @@ public class AddFragebogenController extends BaseController {
 		skala.getSelectionModel().select(f.getSkala());
 		lehrveranstaltung.getSelectionModel().select(f.getLehrveranstaltung());
 		name.setText(f.getName());
+		itemList.setItems(items);
+		frageList.setItems(fragenOl);
 	}
 
 }
