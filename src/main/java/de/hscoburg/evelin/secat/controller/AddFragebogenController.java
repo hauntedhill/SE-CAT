@@ -347,8 +347,8 @@ public class AddFragebogenController extends BaseController {
 		skalaFrage.setItems(skalaFrageOl);
 
 		ObservableList<String> fragePosOl = FXCollections.observableArrayList();
-		fragePosOl.add("Top");
-		fragePosOl.add("Bottom");
+		fragePosOl.add(SeCatResourceBundle.getInstance().getString("scene.all.beginning"));
+		fragePosOl.add(SeCatResourceBundle.getInstance().getString("scene.all.end"));
 		positionFrage.setItems(fragePosOl);
 
 		addItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
@@ -635,7 +635,7 @@ public class AddFragebogenController extends BaseController {
 				Frage f = new Frage();
 				f.setText(frageText.getText());
 				f.setSkala(skalaFrage.getValue());
-				if (positionFrage.equals("Bottom")) {
+				if (positionFrage.equals(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.edit"))) {
 					f.setPosition(FragePosition.BOTTOM);
 				} else {
 					f.setPosition(FragePosition.TOP);

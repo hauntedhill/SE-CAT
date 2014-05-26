@@ -41,8 +41,9 @@
   			<Button fx:id="addFrage" layoutX="215.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="%scene.all.addbutton" />
 			<Button fx:id="removeFrage" layoutX="325.0" layoutY="43.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="105.0" text="%scene.all.removebutton" />
   			
-  			<Label layoutX="5" layoutY="70.0" text="%scene.frageboegen.frage.label" />
+  			<Label layoutX="5" layoutY="70.0" text="%scene.frageboegen.frage.label.add" />
 			<TextArea fx:id="frageText" layoutX="5.0" layoutY="90.0" prefHeight="70.0" prefWidth="205.0" />
+			 <Label layoutX="215" layoutY="70.0" text="%scene.frageboegen.frage.label" />
 			<ListView fx:id="frageList" layoutX="215" layoutY="90.0" prefHeight="70.0" prefWidth="215.0" />
 			</AnchorPane>
 			</content>
