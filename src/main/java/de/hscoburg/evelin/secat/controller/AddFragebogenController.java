@@ -490,7 +490,7 @@ public class AddFragebogenController extends BaseController {
 						fragebogenModel.persistFragebogen(f);
 
 						for (Frage frage : frageList.getItems()) {
-							frage.setFragebogen(f);
+							// frage.setFragebogen(f);
 							fragebogenModel.persistFrage(frage);
 						}
 
@@ -514,7 +514,7 @@ public class AddFragebogenController extends BaseController {
 
 						for (Frage frage : frageList.getItems()) {
 							if (!fragenToRemove.contains(frage)) {
-								frage.setFragebogen(editFragebogen);
+								// frage.setFragebogen(editFragebogen);
 								fragebogenModel.mergeFrage(frage);
 							}
 						}

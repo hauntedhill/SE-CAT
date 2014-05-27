@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
@@ -22,7 +23,7 @@ public class Frage extends BaseEntity {
 
 	private FragePosition position;
 
-	private Fragebogen fragebogen;
+	private List<Fragebogen> fragebogen;
 
 	private Skala skala;
 
@@ -37,12 +38,12 @@ public class Frage extends BaseEntity {
 		this.skala = skala;
 	}
 
-	@ManyToOne(targetEntity = Fragebogen.class)
-	public Fragebogen getFragebogen() {
+	@ManyToMany(targetEntity = Fragebogen.class)
+	public List<Fragebogen> getFragebogen() {
 		return fragebogen;
 	}
 
-	public void setFragebogen(Fragebogen fragebogen) {
+	public void setFragebogen(List<Fragebogen> fragebogen) {
 		this.fragebogen = fragebogen;
 	}
 

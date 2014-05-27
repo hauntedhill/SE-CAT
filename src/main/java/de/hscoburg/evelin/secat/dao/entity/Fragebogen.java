@@ -95,7 +95,7 @@ public class Fragebogen extends BaseEntity {
 		this.lehrveranstaltung = lehrveranstaltung;
 	}
 
-	@OneToMany(targetEntity = Frage.class, mappedBy = "fragebogen", fetch = FetchType.EAGER)
+	@ManyToMany(targetEntity = Frage.class, mappedBy = "fragebogen", fetch = FetchType.EAGER)
 	public List<Frage> getFragen() {
 		return fragen;
 	}

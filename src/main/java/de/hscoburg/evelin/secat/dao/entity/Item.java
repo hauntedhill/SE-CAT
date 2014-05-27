@@ -33,6 +33,8 @@ public class Item extends StammdatenEntity {
 
 	private List<Fragebogen> frageboegen;
 
+	private String frage;
+
 	// private Skala skala;
 
 	public String getName() {
@@ -126,5 +128,13 @@ public class Item extends StammdatenEntity {
 		}
 		frageboegen.add(f);
 
+	}
+
+	public String getFrage() {
+		return frage;
+	}
+
+	public void setFrage(String frage) {
+		this.frage = frage;
 	}
 }
