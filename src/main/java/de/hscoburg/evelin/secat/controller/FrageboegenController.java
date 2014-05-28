@@ -102,6 +102,9 @@ public class FrageboegenController extends BaseController {
 	@Autowired
 	private FragebogenModel fragebogenModel;
 
+	@Autowired
+	private ExportController exportController;
+
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 		searchName.requestFocus();
@@ -265,22 +268,12 @@ public class FrageboegenController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
-						// TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
-						// if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() !=
-						// -1) {
-						//
-						// Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addBereich.fxml");
-						//
-						// stage.show();
-						//
-						// stage.setOnHidden(new EventHandler<WindowEvent>() {
-						// public void handle(WindowEvent we) {
-						// logger.debug("Closing dialog stage.");
-						//
-						// }
-						// });
 
-						// }
+						Fragebogen f = new Fragebogen();
+
+						f.setId(3);
+
+						exportController.exportFragebogen(f);
 					}
 				});
 
