@@ -13,7 +13,6 @@ import de.hscoburg.evelin.secat.controller.xml.BaseXML;
 import de.hscoburg.evelin.secat.controller.xml.DiskretefrageXML;
 import de.hscoburg.evelin.secat.controller.xml.FragebogenXML;
 import de.hscoburg.evelin.secat.controller.xml.FragenblockXML;
-import de.hscoburg.evelin.secat.controller.xml.FreitextfrageXML;
 import de.hscoburg.evelin.secat.dao.FrageDAO;
 import de.hscoburg.evelin.secat.dao.FragebogenDAO;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
@@ -69,13 +68,13 @@ public class FragebogenModel {
 		for (i = 1; i <= f.getItems().size(); i++) {
 			Item item = f.getItems().get(i - 1);
 
-			block.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(f, item.getId()), i, f.getSkala().getWeight(), f.getSkala().getSteps(), f.getSkala()
+			block.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(f, item), i, f.getSkala().getWeight(), f.getSkala().getSteps(), f.getSkala()
 					.getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), item.getFrage()));
 		}
 
-		FreitextfrageXML ftf = new FreitextfrageXML(BaseXML.generateUniqueId(f, 99999), "Bla?", i + 1, 10);
+		// FreitextfrageXML ftf = new FreitextfrageXML(BaseXML.generateUniqueId(f, new Frage(99999), "Bla?", i + 1, 10);
 
-		block.addChild(ftf);
+		// block.addChild(ftf);
 
 		return fXML.generateXML();
 	}
