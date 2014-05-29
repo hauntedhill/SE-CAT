@@ -6,10 +6,9 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import de.hscoburg.evelin.secat.dao.BewertungDAO;
 import de.hscoburg.evelin.secat.dao.FrageDAO;
