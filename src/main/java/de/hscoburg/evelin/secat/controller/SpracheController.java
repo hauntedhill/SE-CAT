@@ -48,7 +48,9 @@ public class SpracheController extends BaseController {
 
 		List<Locale> items = new LinkedList<Locale>();
 		for (Locale l : list) {
-			items.add(l);
+			if ((l.getLanguage().toLowerCase().equals("en") || l.getLanguage().toLowerCase().trim().equals("de")) && l.getCountry().trim().equals("")) {
+				items.add(l);
+			}
 		}
 
 		items.sort(new Comparator<Locale>() {
