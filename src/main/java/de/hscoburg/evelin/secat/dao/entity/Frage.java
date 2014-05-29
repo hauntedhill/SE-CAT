@@ -2,6 +2,7 @@ package de.hscoburg.evelin.secat.dao.entity;
 
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.ManyToMany;
@@ -56,6 +57,7 @@ public class Frage extends BaseEntity {
 		this.position = position;
 	}
 
+	@Column(length = 1024)
 	public String getText() {
 		return text;
 	}

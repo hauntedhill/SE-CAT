@@ -3,6 +3,7 @@ package de.hscoburg.evelin.secat.dao.entity;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
@@ -46,6 +47,7 @@ public class Bereich extends BaseEntity {
 		this.handlungsfeld = handlungsfeld;
 	}
 
+	@Column(length = 1024)
 	public String getName() {
 		return name;
 	}
