@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
 
 @Entity
@@ -28,6 +31,7 @@ public class Fach extends StammdatenEntity {
 	}
 
 	@OneToMany(mappedBy = "fach", targetEntity = Lehrveranstaltung.class, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	public List<Lehrveranstaltung> getLehrveranstaltungen() {
 		return lehrveranstaltungen;
 	}

@@ -31,24 +31,22 @@ public class FreitextfrageXML extends BaseXML {
 	// </FREEQUESTION>
 
 	@Override
-	public StringBuilder getStartXML() {
-		StringBuilder builder = new StringBuilder();
+	public void getStartXML(StringBuilder builder) {
 
-		builder.append("<FREEQUESTION ROWS=\"" + rows + "\" PLACE=\"" + place + "\" TEXT=\"" + text + "\" ZWANG=\"false\" PUBLIC=\"false\" TUTOR=\"false\">");
-		builder.append("<META KEY=\"METAKEY_BARCODE_WIDTH\" VALUE=\"2.0\"/>");
-		builder.append("<META KEY=\"METAKEY_BARCODE_VALIDATION\" VALUE=\"\"/>");
-		builder.append("<META KEY=\"METAKEY_BARCODE_HEIGHT\" VALUE=\"1.0\"/>");
-		builder.append("<META KEY=\"FIXED_IN_PERMUTATION\" VALUE=\"f\"/>");
-		builder.append("<META KEY=\"METAKEY_BARCODE_FIELD_TEXT\" VALUE=\"\"/>");
-		builder.append("<META KEY=\"METAKEY_CODEPLAN_VALUE\" VALUE=\"" + id + "\"/>");
+		builder.append("<FREEQUESTION ROWS=\"" + rows + "\" PLACE=\"" + place + "\" TEXT=\"" + text + "\" ZWANG=\"false\" PUBLIC=\"false\" TUTOR=\"false\">\n");
+		builder.append("<META KEY=\"METAKEY_BARCODE_WIDTH\" VALUE=\"2.0\"/>\n");
+		builder.append("<META KEY=\"METAKEY_BARCODE_VALIDATION\" VALUE=\"\"/>\n");
+		builder.append("<META KEY=\"METAKEY_BARCODE_HEIGHT\" VALUE=\"1.0\"/>\n");
+		builder.append("<META KEY=\"FIXED_IN_PERMUTATION\" VALUE=\"f\"/>\n");
+		builder.append("<META KEY=\"METAKEY_BARCODE_FIELD_TEXT\" VALUE=\"\"/>\n");
+		builder.append("<META KEY=\"METAKEY_CODEPLAN_VALUE\" VALUE=\"" + id + "\"/>\n");
 
-		return builder;
 	}
 
 	@Override
-	public StringBuilder getEndXML() {
+	public void getEndXML(StringBuilder builder) {
 
-		return new StringBuilder().append("</FREEQUESTION>\n");
+		builder.append("</FREEQUESTION>\n");
 	}
 
 }

@@ -39,8 +39,7 @@ public class DiskretefrageXML extends BaseXML {
 	// </SCALEDQUESTION>
 
 	@Override
-	public StringBuilder getStartXML() {
-		StringBuilder builder = new StringBuilder();
+	public void getStartXML(StringBuilder builder) {
 
 		builder.append("<SCALEDQUESTION PLACE=\"" + place + "\" MINTEXT=\"" + minText + "\" ZWANG=\"false\" WEIGHT=\"" + weight + "\" STEPS=\"" + steps
 				+ "\" TUTOR=\"false\" MAXTEXT=\"" + maxText + "\" OPTIMUM=\"" + optimum + "\" TEXT=\"" + frage + "\">\n");
@@ -50,12 +49,11 @@ public class DiskretefrageXML extends BaseXML {
 		builder.append("<META KEY=\"METAKEY_USE_SLIDER\" VALUE=\"f\"/>\n");
 		builder.append("<META KEY=\"METAKEY_CODEPLAN_VALUE\" VALUE=\"" + id + "\"/>\n");
 
-		return builder;
 	}
 
 	@Override
-	public StringBuilder getEndXML() {
-		return new StringBuilder().append("</SCALEDQUESTION>\n");
+	public void getEndXML(StringBuilder builder) {
+		builder.append("</SCALEDQUESTION>\n");
 	}
 
 }

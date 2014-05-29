@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
@@ -25,6 +26,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
@@ -264,16 +266,43 @@ public class FrageboegenController extends BaseController {
 
 				});
 
-				exportItem.setOnAction(new EventHandler<ActionEvent>() {
+				exportItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+					private File file;
+
+					private ObservableList<Fragebogen> tableData;
 
 					@Override
-					public void handle(ActionEvent t) {
+					public void performBeforeEventsBlocked(ActionEvent event) throws Exception {
+						FileChooser fileChooser = new FileChooser();
 
-						Fragebogen f = new Fragebogen();
+						// Set extension filter
+						FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(SeCatResourceBundle.getInstance().getString(
+								"scene.filechooser.xmlname"), "*.xml");
+						fileChooser.getExtensionFilters().add(extFilter);
 
-						f.setId(3);
+						fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
 
-						exportController.exportFragebogen(f);
+						fileChooser.setInitialFileName(frageboegen.getSelectionModel().getSelectedItem().getName());
+
+						// Show save file dialog
+						file = fileChooser.showSaveDialog(getCurrentStage());
+					}
+
+					@Override
+					public void handleAction(ActionEvent t) throws Exception {
+
+						if (file != null) {
+							exportController.exportFragebogen(frageboegen.getSelectionModel().getSelectedItem(), file);
+							tableData = getFrageboegen();
+
+						}
+
+					}
+
+					@Override
+					public void updateUI() {
+						updateTable(tableData);
 					}
 				});
 
@@ -326,6 +355,8 @@ public class FrageboegenController extends BaseController {
 	}
 
 	private void updateTable(ObservableList<Fragebogen> boegen) {
+
+		frageboegen.getItems().clear();
 
 		frageboegen.setItems(boegen);
 	}

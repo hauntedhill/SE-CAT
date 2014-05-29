@@ -7,6 +7,9 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
 
 @Entity
@@ -40,6 +43,7 @@ public class Handlungsfeld extends StammdatenEntity {
 	}
 
 	@OneToMany(mappedBy = "handlungsfeld", targetEntity = Bereich.class, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	public List<Bereich> getBereiche() {
 		return bereiche;
 	}

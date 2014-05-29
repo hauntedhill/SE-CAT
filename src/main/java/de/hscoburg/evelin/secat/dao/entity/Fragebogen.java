@@ -11,6 +11,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
 @Entity
@@ -43,6 +46,7 @@ public class Fragebogen extends BaseEntity {
 	private Boolean exportiert;
 
 	@ManyToOne(targetEntity = Skala.class, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	public Skala getSkala() {
 		return skala;
 	}
@@ -69,6 +73,7 @@ public class Fragebogen extends BaseEntity {
 	}
 
 	@ManyToMany(targetEntity = Item.class, mappedBy = "frageboegen", fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	public List<Item> getItems() {
 		return items;
 	}
@@ -96,6 +101,7 @@ public class Fragebogen extends BaseEntity {
 	}
 
 	@ManyToMany(targetEntity = Frage.class, mappedBy = "fragebogen", fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	public List<Frage> getFragen() {
 		return fragen;
 	}

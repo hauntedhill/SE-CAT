@@ -9,6 +9,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
 
 @Entity
@@ -63,6 +66,7 @@ public class Item extends StammdatenEntity {
 	}
 
 	@ManyToMany(targetEntity = Eigenschaft.class, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	public List<Eigenschaft> getEigenschaften() {
 		return eigenschaften;
 	}
@@ -72,6 +76,7 @@ public class Item extends StammdatenEntity {
 	}
 
 	@ManyToMany(targetEntity = Perspektive.class, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	public List<Perspektive> getPerspektiven() {
 		return perspektiven;
 	}
@@ -90,6 +95,7 @@ public class Item extends StammdatenEntity {
 	}
 
 	@ManyToMany(targetEntity = Fragebogen.class, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	public List<Fragebogen> getFrageboegen() {
 		return frageboegen;
 	}

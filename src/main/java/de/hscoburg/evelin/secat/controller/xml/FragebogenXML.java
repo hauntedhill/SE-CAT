@@ -68,19 +68,17 @@ public class FragebogenXML extends BaseXML {
 	}
 
 	@Override
-	public StringBuilder getStartXML() {
-		StringBuilder builder = new StringBuilder();
+	public void getStartXML(StringBuilder builder) {
 
 		builder.append(START_XML);
 
 		builder.append("<QUESTIONNAIRE DESCRIPTION=\"\" ABOUT=\"\" VERSION=\"13\" NAME=\"" + fragebogenName + "\">\n");
 
-		return builder;
 	}
 
 	@Override
-	public StringBuilder getEndXML() {
-		return new StringBuilder().append("</QUESTIONNAIRE>\n\n");
+	public void getEndXML(StringBuilder builder) {
+		builder.append("</QUESTIONNAIRE>\n\n");
 	}
 
 }

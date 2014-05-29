@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.controller;
 
+import java.io.File;
 import java.io.FileWriter;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,16 +15,12 @@ public class ExportController {
 	@Autowired
 	private FragebogenModel fragebogenModel;
 
-	public void exportFragebogen(Fragebogen fb) {
+	public void exportFragebogen(Fragebogen fb, File f) throws Exception {
 
-		try {
+		FileWriter fw = new FileWriter(f);
+		fw.write(fragebogenModel.generateXMLFor(fb).toString());
+		fw.close();
 
-			FileWriter fw = new FileWriter("file.txt");
-			fw.write(fragebogenModel.generateXMLFor(fb).toString());
-			fw.close();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 
 }

@@ -12,14 +12,14 @@ public class FragenblockXML extends BaseXML {
 	}
 
 	@Override
-	public StringBuilder getStartXML() {
-		return new StringBuilder().append("<QUESTIONBLOCK PLACE=\"" + number + "\" TARGETLAYER=\"0\" RANDOMIZED=\"false\" NAME=\"" + name + "\">\n");
+	public void getStartXML(StringBuilder builder) {
+		builder.append("<QUESTIONBLOCK PLACE=\"" + number + "\" TARGETLAYER=\"0\" RANDOMIZED=\"false\" NAME=\"" + name + "\">\n");
 	}
 
 	@Override
-	public StringBuilder getEndXML() {
+	public void getEndXML(StringBuilder builder) {
 
-		return new StringBuilder().append("</QUESTIONBLOCK>\n\n");
+		builder.append("</QUESTIONBLOCK>\n\n");
 	}
 
 }

@@ -8,6 +8,9 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
 @Entity
@@ -25,6 +28,7 @@ public class Bereich extends BaseEntity {
 	private List<Item> items;
 
 	@OneToMany(mappedBy = "bereich", targetEntity = Item.class, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	public List<Item> getItems() {
 		return items;
 	}

@@ -28,23 +28,31 @@ public abstract class BaseXML {
 		childs.add(xml);
 	}
 
-	public StringBuilder generateXML() {
-		StringBuilder xml = new StringBuilder();
+	public int getChildSize() {
+		return childs.size();
+	}
 
-		xml.append(getStartXML());
+	public void generateXML(StringBuilder xml) {
+
+		getStartXML(xml);
 
 		for (BaseXML xmlChild : childs) {
-			xml.append(xmlChild.generateXML());
+			xmlChild.generateXML(xml);
 		}
 
-		xml.append(getEndXML());
-
-		return xml;
+		getEndXML(xml);
 
 	}
 
-	public abstract StringBuilder getStartXML();
+	public String generateXML() {
+		StringBuilder builder = new StringBuilder();
+		generateXML(builder);
 
-	public abstract StringBuilder getEndXML();
+		return builder.toString();
+	}
+
+	public abstract void getStartXML(StringBuilder builder);
+
+	public abstract void getEndXML(StringBuilder builder);
 
 }
