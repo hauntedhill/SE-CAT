@@ -26,9 +26,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 
 import org.slf4j.Logger;
@@ -42,6 +42,7 @@ import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
+import de.hscoburg.evelin.secat.model.BewertungModel;
 import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.FragebogenModel;
 import de.hscoburg.evelin.secat.model.LehrveranstaltungModel;
@@ -106,6 +107,9 @@ public class FrageboegenController extends BaseController {
 
 	@Autowired
 	private ExportController exportController;
+
+	@Autowired
+	private BewertungModel bewertungsModel;
 
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
@@ -240,28 +244,87 @@ public class FrageboegenController extends BaseController {
 				final TableRow<Fragebogen> row = new TableRow<>();
 				final ContextMenu rowMenu = new ContextMenu();
 
-				MenuItem editItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.edit"), new ImageView(new Image(
+				final MenuItem editItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.edit"), new ImageView(new Image(
 						"/image/icons/edit.png", 16, 16, true, true)));
+
+				final MenuItem importItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.import"), new ImageView(
+						new Image("/image/icons/up.png", 16, 16, true, true)));
+
 				MenuItem exportItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.export"), new ImageView(new Image(
 						"/image/icons/run.png", 16, 16, true, true)));
 
-				editItem.setOnAction(new EventHandler<ActionEvent>() {
+				row.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 
 					@Override
-					public void handle(ActionEvent t) {
+					public void handle(ContextMenuEvent event) {
+						if (frageboegen.getSelectionModel().getSelectedItem() != null) {
+							editItem.setDisable(frageboegen.getSelectionModel().getSelectedItem().getExportiert());
+							importItem.setDisable(!frageboegen.getSelectionModel().getSelectedItem().getExportiert());
+
+						}
+
+					}
+				});
+
+				editItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+					private Stage stage;
+
+					@Override
+					public void handleAction(ActionEvent t) {
 						// TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
 						// if (treeTableController.getSelectedTreeItem().getValue().isHandlungsfeld()) {
 						//
-						Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/fragebogen/editFragebogen.fxml");
+						stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/fragebogen/editFragebogen.fxml");
 						//
-						stage.show();
-						//
-						stage.setOnHidden(new EventHandler<WindowEvent>() {
-							public void handle(WindowEvent we) {
-								logger.debug("Closing dialog stage.");
 
-							}
-						});
+						//
+
+					}
+
+					@Override
+					public void updateUI() {
+						stage.show();
+					}
+
+				});
+
+				importItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+					private File file;
+
+					@Override
+					public void performBeforeEventsBlocked(ActionEvent event) throws Exception {
+						FileChooser fileChooser = new FileChooser();
+
+						// Set extension filter
+						FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(SeCatResourceBundle.getInstance().getString(
+								"scene.filechooser.csvname"), "*.csv");
+						fileChooser.getExtensionFilters().add(extFilter);
+
+						fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+						// Show open file dialog
+						file = fileChooser.showOpenDialog(getCurrentStage());
+
+					}
+
+					@Override
+					public void handleAction(ActionEvent t) throws Exception {
+						// TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
+						// if (treeTableController.getSelectedTreeItem().getValue().isHandlungsfeld()) {
+						//
+
+						bewertungsModel.importBewertungen(file);
+						//
+
+						//
+
+					}
+
+					@Override
+					public void updateUI() {
+						// stage.show();
 					}
 
 				});
@@ -308,6 +371,7 @@ public class FrageboegenController extends BaseController {
 
 				rowMenu.getItems().add(editItem);
 				rowMenu.getItems().add(exportItem);
+				rowMenu.getItems().add(importItem);
 
 				row.contextMenuProperty().bind(
 						javafx.beans.binding.Bindings.when(javafx.beans.binding.Bindings.isNotNull(row.itemProperty())).then(rowMenu)
@@ -319,30 +383,6 @@ public class FrageboegenController extends BaseController {
 		});
 
 		ActionHelper.setAutoResizeToggleListenerForTitledPanel(searchPanel, tablePanel, frageboegen);
-
-		// searchPanel.expandedProperty().addListener(new ChangeListener<Boolean>() {
-		//
-		// private int HEIGHT_DIFF = 176;
-		//
-		// @Override
-		// public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
-		// if (newValue) {
-		// tablePanel.setLayoutY(235);
-		// // tablePanel.setPrefHeight(205);
-		// tablePanel.setPrefHeight(tablePanel.getPrefHeight() - HEIGHT_DIFF);
-		// // frageboegen.setPrefHeight(181);
-		// frageboegen.setPrefHeight(frageboegen.getPrefHeight() - HEIGHT_DIFF);
-		// } else {
-		// tablePanel.setLayoutY(60);
-		// // tablePanel.setPrefHeight(380);
-		// tablePanel.setPrefHeight(tablePanel.getPrefHeight() + HEIGHT_DIFF);
-		// // frageboegen.setPrefHeight(356);
-		// frageboegen.setPrefHeight(frageboegen.getPrefHeight() + HEIGHT_DIFF);
-		// }
-		//
-		// }
-		//
-		// });
 
 		updateTable(getFrageboegen());
 
@@ -356,8 +396,9 @@ public class FrageboegenController extends BaseController {
 
 	private void updateTable(ObservableList<Fragebogen> boegen) {
 
-		frageboegen.getItems().clear();
-
+		if (frageboegen.getItems() != null) {
+			frageboegen.getItems().clear();
+		}
 		frageboegen.setItems(boegen);
 	}
 

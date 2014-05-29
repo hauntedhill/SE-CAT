@@ -23,6 +23,14 @@ public class Bewertung extends BaseEntity {
 
 	private Frage frage;
 
+	private String welle;
+
+	private String rawid;
+
+	private String source;
+
+	private String zeit;
+
 	public String getWert() {
 		return wert;
 	}
@@ -65,6 +73,38 @@ public class Bewertung extends BaseEntity {
 
 	public void setFrage(Frage frage) {
 		this.frage = frage;
+	}
+
+	public String getWelle() {
+		return welle;
+	}
+
+	public void setWelle(String welle) {
+		this.welle = welle;
+	}
+
+	public String getRawid() {
+		return rawid;
+	}
+
+	public void setRawid(String rawid) {
+		this.rawid = rawid;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
+	public void setSource(String source) {
+		this.source = source;
+	}
+
+	public String getZeit() {
+		return zeit;
+	}
+
+	public void setZeit(String zeit) {
+		this.zeit = zeit;
 	}
 
 }
