@@ -26,8 +26,6 @@ import javafx.util.Callback;
 import javafx.util.StringConverter;
 
 import org.controlsfx.dialog.Dialogs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -46,13 +44,13 @@ import de.hscoburg.evelin.secat.model.FachModel;
 import de.hscoburg.evelin.secat.model.FragebogenModel;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.model.LehrveranstaltungModel;
+import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class AddFragebogenController extends BaseController {
 
-	private static Logger logger = LoggerFactory.getLogger(AddFragebogenController.class);
 
 	@FXML
 	private Button addItem;
@@ -138,21 +136,7 @@ public class AddFragebogenController extends BaseController {
 		positionFrage.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.frageboegen.frage.label.position"));
 		vorlage.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.addItem.templatebox.prompttextproperty"));
 
-		perspektive.setConverter(new StringConverter<Perspektive>() {
-			@Override
-			public String toString(Perspektive object) {
-				if (object == null) {
-					return "";
-				}
-				return object.getName();
-			}
-
-			@Override
-			public Perspektive fromString(String string) {
-				throw new RuntimeException("not required for non editable ComboBox");
-			}
-
-		});
+		perspektive.setConverter(ConverterHelper.getConverterForPerspektive());
 
 		ObservableList<Perspektive> perspektiveOl = FXCollections.observableArrayList();
 		List<Perspektive> pList = handlungsfeldModel.getPerspektiven();
@@ -161,21 +145,7 @@ public class AddFragebogenController extends BaseController {
 		}
 		perspektive.setItems(perspektiveOl);
 
-		eigenschaft.setConverter(new StringConverter<Eigenschaft>() {
-			@Override
-			public String toString(Eigenschaft object) {
-				if (object == null) {
-					return "";
-				}
-				return object.getName();
-			}
-
-			@Override
-			public Eigenschaft fromString(String string) {
-				throw new RuntimeException("not required for non editable ComboBox");
-			}
-
-		});
+		eigenschaft.setConverter(ConverterHelper.getConverterForEigenschaft());
 
 		ObservableList<Eigenschaft> eigenschaftOl = FXCollections.observableArrayList();
 		List<Eigenschaft> eList = handlungsfeldModel.getEigenschaften();
@@ -234,21 +204,7 @@ public class AddFragebogenController extends BaseController {
 			}
 		});
 
-		skala.setConverter(new StringConverter<Skala>() {
-			@Override
-			public String toString(Skala object) {
-				if (object == null) {
-					return "";
-				}
-				return object.getName();
-			}
-
-			@Override
-			public Skala fromString(String string) {
-				throw new RuntimeException("not required for non editable ComboBox");
-			}
-
-		});
+		skala.setConverter(ConverterHelper.getConverterForSkala());
 
 		ObservableList<Skala> skalaOl = FXCollections.observableArrayList();
 		List<Skala> sList = handlungsfeldModel.getSkalen();
@@ -279,37 +235,10 @@ public class AddFragebogenController extends BaseController {
 		}
 		fach.setItems(fachOl);
 
-		lehrveranstaltung.setConverter(new StringConverter<Lehrveranstaltung>() {
-			@Override
-			public String toString(Lehrveranstaltung l) {
-				if (l == null) {
-					return "";
-				}
-				return l.getFach().getName() + " " + l.getSemester().name() + l.getJahr().getYear() + " " + l.getDozent();
-			}
+		lehrveranstaltung.setConverter(ConverterHelper.getConverterForLehrveranstaltung());
 
-			@Override
-			public Lehrveranstaltung fromString(String string) {
-				throw new RuntimeException("not required for non editable ComboBox");
-			}
+		vorlage.setConverter(ConverterHelper.getConverterForFragebogen());
 
-		});
-
-		vorlage.setConverter(new StringConverter<Fragebogen>() {
-			@Override
-			public String toString(Fragebogen object) {
-				if (object == null) {
-					return "";
-				}
-				return object.getName();
-			}
-
-			@Override
-			public Fragebogen fromString(String string) {
-				throw new RuntimeException("not required for non editable ComboBox");
-			}
-
-		});
 
 		ObservableList<Fragebogen> vorlageOl = FXCollections.observableArrayList();
 		Fragebogen keinFragebogen = new Fragebogen();
@@ -322,21 +251,8 @@ public class AddFragebogenController extends BaseController {
 		}
 		vorlage.setItems(vorlageOl);
 
-		skalaFrage.setConverter(new StringConverter<Skala>() {
-			@Override
-			public String toString(Skala object) {
-				if (object == null) {
-					return "";
-				}
-				return object.getName();
-			}
+		skalaFrage.setConverter(ConverterHelper.getConverterForSkala());
 
-			@Override
-			public Skala fromString(String string) {
-				throw new RuntimeException("not required for non editable ComboBox");
-			}
-
-		});
 
 		ObservableList<Skala> skalaFrageOl = FXCollections.observableArrayList();
 
@@ -402,6 +318,7 @@ public class AddFragebogenController extends BaseController {
 
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
+				itemsToRemove.clear();
 				itemsToRemove.add(itemList.getSelectionModel().getSelectedItem());
 			}
 
@@ -467,11 +384,11 @@ public class AddFragebogenController extends BaseController {
 			public void handleAction(ActionEvent event) throws Exception {
 
 				try {
-					if (name.getText().equals("") || selectedPerspektive == null || selectedPerspektive == null || skala.getValue() == null
+					if (name.getText().equals("") || selectedPerspektive == null || skala.getValue() == null
 							|| lehrveranstaltung.getValue() == null || itemList.getItems().isEmpty())
 						throw new IllegalArgumentException();
 					for (Item item : itemList.getItems()) {
-						if (!item.getEigenschaften().contains(selectedEigenschaft) || !item.getPerspektiven().contains(selectedPerspektive)) {
+						if (!item.getPerspektiven().contains(selectedPerspektive)) {
 							throw new IllegalArgumentException();
 						}
 					}
@@ -490,8 +407,20 @@ public class AddFragebogenController extends BaseController {
 						fragebogenModel.persistFragebogen(f);
 
 						for (Frage frage : frageList.getItems()) {
-							// frage.setFragebogen(f);
-							fragebogenModel.persistFrage(frage);
+							ArrayList<Fragebogen> fb = new ArrayList<Fragebogen>();
+							fb.add(f);
+							if (frage.getFragebogen() == null) {
+								frage.setFragebogen(fb);
+								fragebogenModel.mergeFrage(frage);
+							}
+							else {
+								Frage neueFrage = new Frage();
+								neueFrage.setFragebogen(fb);
+								neueFrage.setPosition(frage.getPosition());
+								neueFrage.setSkala(frage.getSkala());
+								neueFrage.setText(frage.getText());
+								fragebogenModel.persistFrage(neueFrage);
+							}
 						}
 
 						for (Item item : itemList.getItems()) {
@@ -514,6 +443,9 @@ public class AddFragebogenController extends BaseController {
 
 						for (Frage frage : frageList.getItems()) {
 							if (!fragenToRemove.contains(frage)) {
+								ArrayList<Fragebogen> fb = new ArrayList<Fragebogen>();
+								fb.add(editFragebogen);
+								frage.setFragebogen(fb);
 								// frage.setFragebogen(editFragebogen);
 								fragebogenModel.mergeFrage(frage);
 							}
@@ -588,7 +520,6 @@ public class AddFragebogenController extends BaseController {
 			@Override
 			public void updateUI() {
 				Fragebogen x = vorlage.getSelectionModel().getSelectedItem();
-				System.out.println(x.getItems().toString());
 				ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
 				ObservableList<Item> items = FXCollections.observableArrayList();
 
@@ -597,12 +528,10 @@ public class AddFragebogenController extends BaseController {
 					fragenOl.clear();
 
 					for (Item item : x.getItems()) {
-						System.out.println("test" + item.getName());
 						items.add(item);
 					}
 
 					for (Frage frage : x.getFragen()) {
-						System.out.println(frage.getText());
 						fragenOl.add(frage);
 					}
 
@@ -640,7 +569,7 @@ public class AddFragebogenController extends BaseController {
 				} else {
 					f.setPosition(FragePosition.TOP);
 				}
-
+				fragebogenModel.persistFrage(f);
 				fragenOl.add(f);
 				frageList.setItems(fragenOl);
 

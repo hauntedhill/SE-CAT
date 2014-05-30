@@ -3,8 +3,6 @@ package de.hscoburg.evelin.secat.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -20,10 +18,6 @@ public class EditFragebogenController extends BaseController {
 	private FrageboegenController frageboegenController;
 	@Autowired
 	private AddFragebogenController addFragebogenController;
-
-	private static Logger logger = LoggerFactory.getLogger(EditFragebogenController.class);
-
-
 
 
 	@Override
