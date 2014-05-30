@@ -276,7 +276,7 @@ public class FrageboegenController extends BaseController {
 						// TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
 						// if (treeTableController.getSelectedTreeItem().getValue().isHandlungsfeld()) {
 						//
-						stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/fragebogen/editFragebogen.fxml");
+
 						//
 
 						//
@@ -285,6 +285,7 @@ public class FrageboegenController extends BaseController {
 
 					@Override
 					public void updateUI() {
+						stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/fragebogen/editFragebogen.fxml");
 						stage.show();
 					}
 
@@ -362,9 +363,9 @@ public class FrageboegenController extends BaseController {
 
 						if (file != null) {
 							exportController.exportFragebogen(frageboegen.getSelectionModel().getSelectedItem(), file);
-							tableData = getFrageboegen();
 
 						}
+						tableData = getFrageboegen();
 
 					}
 
