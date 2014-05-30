@@ -402,6 +402,7 @@ public class AddFragebogenController extends BaseController {
 
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
+				itemsToRemove.clear();
 				itemsToRemove.add(itemList.getSelectionModel().getSelectedItem());
 			}
 
@@ -490,8 +491,20 @@ public class AddFragebogenController extends BaseController {
 						fragebogenModel.persistFragebogen(f);
 
 						for (Frage frage : frageList.getItems()) {
-							// frage.setFragebogen(f);
-							fragebogenModel.persistFrage(frage);
+							ArrayList<Fragebogen> fb = new ArrayList<Fragebogen>();
+							fb.add(f);
+							if (frage.getFragebogen() == null) {
+								frage.setFragebogen(fb);
+								fragebogenModel.mergeFrage(frage);
+							}
+							else {
+								Frage neueFrage = new Frage();
+								neueFrage.setFragebogen(fb);
+								neueFrage.setPosition(frage.getPosition());
+								neueFrage.setSkala(frage.getSkala());
+								neueFrage.setText(frage.getText());
+								fragebogenModel.persistFrage(neueFrage);
+							}
 						}
 
 						for (Item item : itemList.getItems()) {
@@ -514,6 +527,9 @@ public class AddFragebogenController extends BaseController {
 
 						for (Frage frage : frageList.getItems()) {
 							if (!fragenToRemove.contains(frage)) {
+								ArrayList<Fragebogen> fb = new ArrayList<Fragebogen>();
+								fb.add(editFragebogen);
+								frage.setFragebogen(fb);
 								// frage.setFragebogen(editFragebogen);
 								fragebogenModel.mergeFrage(frage);
 							}
@@ -588,7 +604,6 @@ public class AddFragebogenController extends BaseController {
 			@Override
 			public void updateUI() {
 				Fragebogen x = vorlage.getSelectionModel().getSelectedItem();
-				System.out.println(x.getItems().toString());
 				ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
 				ObservableList<Item> items = FXCollections.observableArrayList();
 
@@ -597,12 +612,10 @@ public class AddFragebogenController extends BaseController {
 					fragenOl.clear();
 
 					for (Item item : x.getItems()) {
-						System.out.println("test" + item.getName());
 						items.add(item);
 					}
 
 					for (Frage frage : x.getFragen()) {
-						System.out.println(frage.getText());
 						fragenOl.add(frage);
 					}
 
@@ -640,7 +653,7 @@ public class AddFragebogenController extends BaseController {
 				} else {
 					f.setPosition(FragePosition.TOP);
 				}
-
+				fragebogenModel.persistFrage(f);
 				fragenOl.add(f);
 				frageList.setItems(fragenOl);
 
