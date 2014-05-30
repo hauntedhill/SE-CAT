@@ -5,6 +5,8 @@ import java.util.Locale;
 import javafx.util.StringConverter;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
+import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
+import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
@@ -114,6 +116,42 @@ public class ConverterHelper {
 
 			@Override
 			public Locale fromString(String string) {
+				throw new RuntimeException("not required for non editable ComboBox");
+			}
+
+		};
+	}
+
+	public static StringConverter<Fragebogen> getConverterForFragebogen() {
+		return new StringConverter<Fragebogen>() {
+			@Override
+			public String toString(Fragebogen object) {
+				if (object == null) {
+					return "";
+				}
+				return object.getName();
+			}
+
+			@Override
+			public Fragebogen fromString(String string) {
+				throw new RuntimeException("not required for non editable ComboBox");
+			}
+
+		};
+	}
+
+	public static StringConverter<Item> getConverterForItem() {
+		return new StringConverter<Item>() {
+			@Override
+			public String toString(Item object) {
+				if (object == null) {
+					return "";
+				}
+				return object.getName();
+			}
+
+			@Override
+			public Item fromString(String string) {
 				throw new RuntimeException("not required for non editable ComboBox");
 			}
 

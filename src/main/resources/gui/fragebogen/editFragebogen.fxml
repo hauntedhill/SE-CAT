@@ -8,6 +8,5 @@
 
 
 <AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.EditFragebogenController">
-<fx:include fx:id="treeTable" source="/gui/fragebogen/addFragebogen.fxml"/>
-
+	<fx:include fx:id="treeTable" source="/gui/fragebogen/addFragebogen.fxml"/>
 </AnchorPane>

@@ -383,4 +383,11 @@ public class TreeTableController extends BaseController {
 		treeTable.setRowFactory(arg0);
 	}
 
+	public void updateHandlungsfeld(int hf, int b) {
+		buildTreeTable();
+		treeTable.getRoot().getChildren().get(hf).setExpanded(true);
+		treeTable.getRoot().getChildren().get(hf).getChildren().get(b).setExpanded(true);
+
+	}
+
 }
