@@ -38,7 +38,7 @@ public class LayoutController implements Initializable {
 
 	public static final String TOPMENU_FXML = GUI_PATH + "Topmenu.fxml";
 
-	public static final String SPLASHSCREEN_FXML = GUI_PATH + "splashScreen.fxml";
+	public static final String SPLASHSCREEN_FXML = GUI_PATH + "Splash.fxml";
 
 	public static final String LAYOUT_FXML = GUI_PATH + "Layout.fxml";
 
