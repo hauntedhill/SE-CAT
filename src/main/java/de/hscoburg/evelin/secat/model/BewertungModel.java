@@ -36,9 +36,11 @@ public class BewertungModel {
 	@Autowired
 	private BewertungDAO bewertungDAO;
 
-	public void importBewertungen(File f) throws Exception {
+	public int importBewertungen(File f) throws Exception {
 
 		Fragebogen fragebogen = null;
+
+		int anzCVSRows = 0;
 
 		List<BaseEntity> fragen = new ArrayList<>();
 
@@ -72,6 +74,9 @@ public class BewertungModel {
 
 					if (fragebogen != null && !tmpFragebogen.equals(fragebogen)) {
 						throw new IllegalArgumentException("Antworten aus mehreren Fragebögen(" + fragebogen + "und " + tmpFragebogen + ") gefunden.");
+					} else if (!tmpFragebogen.getExportiert()) {
+						throw new IllegalArgumentException("Fragebogen (" + tmpFragebogen + ") wurde noch nicht exportiert.");
+
 					} else {
 						fragebogen = tmpFragebogen;
 					}
@@ -105,6 +110,7 @@ public class BewertungModel {
 
 			while ((line = br.readLine()) != null) {
 				String fields[] = line.split(";");
+				anzCVSRows++;
 				for (int i = 4; i < fields.length; i++) {
 					Bewertung b = new Bewertung();
 
@@ -128,6 +134,7 @@ public class BewertungModel {
 		} finally {
 			br.close();
 		}
+		return anzCVSRows;
 	}
 
 }

@@ -76,33 +76,35 @@ public class FragebogenModel {
 		int blockCount = 1;
 		int questionCount = 1;
 
-		BaseXML currentBlock = fXML;
+		BaseXML mainBlock = new FragenblockXML("", 1);
+		fXML.addChild(mainBlock);
+		BaseXML currentBlock = mainBlock;
 
-		addFfragen(blockCount++, fXML, FragePosition.TOP, f.getFragen(), f);
+		addFfragen(blockCount++, mainBlock, FragePosition.TOP, f.getFragen(), f);
 
 		for (i = 1; i <= f.getItems().size(); i++) {
 			Item item = f.getItems().get(i - 1);
 
 			if (!item.getBereich().equals(currentBereich)) {
-				BaseXML innerBlock = new FragenblockXML(item.getBereich().getName(), blockCount++);
+				BaseXML innerBlock = new FragenblockXML(StringEscapeUtils.escapeXml(item.getBereich().getName()), blockCount++);
 				questionCount = 1;
-				fXML.addChild(innerBlock);
+				mainBlock.addChild(innerBlock);
 				currentBlock = innerBlock;
 				currentBereich = item.getBereich();
 			}
 
 			if (f.getSkala().getType().equals(SkalaType.DISCRET)) {
 				currentBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(f, item), questionCount++, f.getSkala().getWeight(), f.getSkala()
-						.getSteps(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), StringEscapeUtils.escapeHtml(item
-						.getFrage())));
+						.getSteps(), f.getSkala().getOptimum(), StringEscapeUtils.escapeXml(f.getSkala().getMinText()), StringEscapeUtils.escapeXml(f
+						.getSkala().getMaxText()), StringEscapeUtils.escapeXml(item.getFrage())));
 			} else if (f.getSkala().getType().equals(SkalaType.FREE)) {
-				currentBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(f, item), StringEscapeUtils.escapeHtml(item.getFrage()), questionCount++, f
+				currentBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(f, item), StringEscapeUtils.escapeXml(item.getFrage()), questionCount++, f
 						.getSkala().getRows()));
 
 			}
 
 		}
-		addFfragen(blockCount++, fXML, FragePosition.BOTTOM, f.getFragen(), f);
+		addFfragen(blockCount++, mainBlock, FragePosition.BOTTOM, f.getFragen(), f);
 		// FreitextfrageXML ftf = new FreitextfrageXML(BaseXML.generateUniqueId(f, new Frage(99999), "Bla?", i + 1, 10);
 
 		// block.addChild(ftf);
@@ -122,11 +124,11 @@ public class FragebogenModel {
 			if (f.getPosition().equals(position)) {
 				if (f.getSkala().getType().equals(SkalaType.DISCRET)) {
 					innerBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(fb, f), questionCount++, f.getSkala().getWeight(), f.getSkala()
-							.getSteps(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), StringEscapeUtils.escapeHtml(f
-							.getText())));
+							.getSteps(), f.getSkala().getOptimum(), StringEscapeUtils.escapeXml(f.getSkala().getMinText()), StringEscapeUtils.escapeXml(f
+							.getSkala().getMaxText()), StringEscapeUtils.escapeXml(f.getText())));
 
 				} else if (f.getSkala().getType().equals(SkalaType.FREE)) {
-					innerBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(fb, f), StringEscapeUtils.escapeHtml(f.getText()), questionCount++, f
+					innerBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(fb, f), StringEscapeUtils.escapeXml(f.getText()), questionCount++, f
 							.getSkala().getRows()));
 
 				}

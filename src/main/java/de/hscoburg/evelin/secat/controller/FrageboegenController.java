@@ -31,6 +31,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import org.controlsfx.dialog.Dialogs;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -293,6 +294,8 @@ public class FrageboegenController extends BaseController {
 
 					private File file;
 
+					private int anzCVSRows;
+
 					@Override
 					public void performBeforeEventsBlocked(ActionEvent event) throws Exception {
 						FileChooser fileChooser = new FileChooser();
@@ -315,7 +318,7 @@ public class FrageboegenController extends BaseController {
 						// if (treeTableController.getSelectedTreeItem().getValue().isHandlungsfeld()) {
 						//
 
-						bewertungsModel.importBewertungen(file);
+						anzCVSRows = bewertungsModel.importBewertungen(file);
 						//
 
 						//
@@ -324,7 +327,9 @@ public class FrageboegenController extends BaseController {
 
 					@Override
 					public void updateUI() {
-						// stage.show();
+						Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.import.title"))
+								.masthead(SeCatResourceBundle.getInstance().getString("scene.import.text") + " " + anzCVSRows).showInformation();
+
 					}
 
 				});
@@ -382,7 +387,7 @@ public class FrageboegenController extends BaseController {
 
 		});
 
-		ActionHelper.setAutoResizeToggleListenerForTitledPanel(searchPanel, tablePanel, frageboegen);
+		// ActionHelper.setAutoResizeToggleListenerForTitledPanel(searchPanel, tablePanel, frageboegen);
 
 		updateTable(getFrageboegen());
 

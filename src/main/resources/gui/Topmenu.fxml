@@ -5,60 +5,60 @@
 <?import javafx.scene.input.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="de.hscoburg.evelin.secat.controller.base.TopMenuController">
+
+
+<GridPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.base.TopMenuController">
+<columnConstraints>
+				<ColumnConstraints hgrow="ALWAYS" minWidth="10.0" />
+
+			</columnConstraints>
+			<rowConstraints>
+				<RowConstraints minHeight="30.0" vgrow="ALWAYS" />
+
+			</rowConstraints>
+
 	<children>
-		<MenuBar fx:id="menuBar" layoutY="2.0" maxHeight="25.0"
-			prefHeight="25.0" prefWidth="800.0">
+		<MenuBar fx:id="menuBar" layoutY="2.0" maxHeight="25.0" maxWidth="1.7976931348623157E308">
 			<menus>
 			<Menu mnemonicParsing="true" text="%menu.item.questionnaires.label">
 					<items>
-						<MenuItem fx:id="addFragebogen" mnemonicParsing="true"
-							text="%menu.item.questionaires.add.lable">
+						<MenuItem fx:id="addFragebogen" mnemonicParsing="true" text="%menu.item.questionaires.add.lable">
 						</MenuItem>
-						<MenuItem fx:id="showFragebogen" mnemonicParsing="true"
-							text="%menu.item.questionaires.show.lable">
+						<MenuItem fx:id="showFragebogen" mnemonicParsing="true" text="%menu.item.questionaires.show.lable">
 						</MenuItem>
 					</items>
 				</Menu>
 
 				<Menu mnemonicParsing="true" text="%menu.item.masterdata.lable">
 					<items>
-						<MenuItem fx:id="handlungsfeld" mnemonicParsing="true"
-							text="%menu.item.masterdata.activitysphere">
+						<MenuItem fx:id="handlungsfeld" mnemonicParsing="true" text="%menu.item.masterdata.activitysphere">
 							<accelerator>
-								<KeyCodeCombination alt="DOWN" code="H"
-									control="UP" meta="UP" shift="UP" shortcut="UP" />
+								<KeyCodeCombination alt="DOWN" code="H" control="UP" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
 						<MenuItem fx:id="eigenschaften" text="%menu.item.masterdata.property">
 							<accelerator>
-								<KeyCodeCombination alt="DOWN" code="E"
-									control="UP" meta="UP" shift="UP" shortcut="UP" />
+								<KeyCodeCombination alt="DOWN" code="E" control="UP" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
 						<MenuItem fx:id="perspektive" text="%menu.item.masterdata.perspective">
 							<accelerator>
-								<KeyCodeCombination alt="DOWN" code="P"
-									control="UP" meta="UP" shift="UP" shortcut="UP" />
+								<KeyCodeCombination alt="DOWN" code="P" control="UP" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
 						<MenuItem fx:id="skalen" text="%menu.item.masterdata.scale">
 							<accelerator>
-								<KeyCodeCombination alt="DOWN" code="S"
-									control="UP" meta="UP" shift="UP" shortcut="UP" />
+								<KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
 						<MenuItem fx:id="faecher" text="%menu.item.masterdata.fach">
 							<accelerator>
-								<KeyCodeCombination alt="DOWN" code="F"
-									control="UP" meta="UP" shift="UP" shortcut="UP" />
+								<KeyCodeCombination alt="DOWN" code="F" control="UP" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
 						<MenuItem fx:id="lehrveranstaltungen" text="%menu.item.masterdata.lehrveranstaltung">
 							<accelerator>
-								<KeyCodeCombination alt="DOWN" code="L"
-									control="UP" meta="UP" shift="UP" shortcut="UP" />
+								<KeyCodeCombination alt="DOWN" code="L" control="UP" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
 						
@@ -70,11 +70,9 @@
 				</Menu>
 				<Menu mnemonicParsing="true" text="%menu.item.settings.lable">
 					<items>
-						<MenuItem fx:id="sprache" mnemonicParsing="true"
-							text="%menu.item.settings.language.lable">
+						<MenuItem fx:id="sprache" mnemonicParsing="true" text="%menu.item.settings.language.lable">
 							<accelerator>
-								<KeyCodeCombination alt="DOWN" code="I"
-									control="UP" meta="UP" shift="UP" shortcut="UP" />
+								<KeyCodeCombination alt="DOWN" code="I" control="UP" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
 						</items>
@@ -86,4 +84,4 @@
 			</menus>
 		</MenuBar>
 	</children>
-</AnchorPane>
+</GridPane>

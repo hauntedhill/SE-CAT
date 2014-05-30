@@ -4,37 +4,56 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="419.0" prefWidth="470.0"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="de.hscoburg.evelin.secat.controller.FachController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="437.0" prefWidth="522.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.FachController">
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints maxHeight="150.0" minHeight="10.0" prefHeight="100.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+	</rowConstraints>
 	<children>
-		<TitledPane fx:id="tablePanel" animated="false" layoutX="31.0" layoutY="142.0"
-			prefHeight="242.0" prefWidth="409.0" text="%scene.fach.lable">
+		<TitledPane fx:id="tablePanel" animated="false" layoutX="31.0" layoutY="142.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%scene.fach.lable" GridPane.columnSpan="2" GridPane.rowIndex="2">
 			<content>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0"
-					prefWidth="200.0">
+
+				<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+					<columnConstraints>
+						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+					</columnConstraints>
+					<rowConstraints>
+						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+					</rowConstraints>
 					<children>
-						<ListView fx:id="listFach" layoutX="10.0" layoutY="8.0"
-							prefHeight="200.0" prefWidth="386.0" />
+						<ListView fx:id="listFach" layoutX="10.0" layoutY="8.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" />
 					</children>
-				</AnchorPane>
+				</GridPane>
+
 			</content>
 		</TitledPane>
-		<TitledPane fx:id="addPanel" animated="false" layoutX="31.0" layoutY="21.0"
-			prefHeight="109.0" prefWidth="409.0" text="%scene.fach.addlable">
+		<TitledPane fx:id="addPanel" animated="false" layoutX="31.0" layoutY="21.0" maxHeight="200.0" text="%scene.fach.addlable" GridPane.columnSpan="2">
 			<content>
-				<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="83.0"
-					prefWidth="351.0">
+
+				<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+					<columnConstraints>
+						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+					</columnConstraints>
+					<rowConstraints>
+						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+					</rowConstraints>
 					<children>
-						<Label layoutX="23.0" layoutY="33.0" prefHeight="17.0"
-							prefWidth="73.0" text="%scene.fach.namelable" />
-						<TextField fx:id="textNameFach" layoutX="96.24609375"
-							layoutY="29.0" />
-						<Button fx:id="buttonAdd" layoutX="260.1875" layoutY="29.0"
-							mnemonicParsing="false" text="%scene.all.addbutton" />
+						<Label layoutX="23.0" layoutY="33.0" prefHeight="17.0" prefWidth="73.0" text="%scene.fach.namelable" GridPane.rowIndex="1" />
+						<TextField fx:id="textNameFach" layoutX="96.24609375" layoutY="29.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+						<Button fx:id="buttonAdd" layoutX="260.1875" layoutY="29.0" mnemonicParsing="false" text="%scene.all.addbutton" GridPane.columnIndex="1" GridPane.rowIndex="2" />
 					</children>
-				</AnchorPane>
+				</GridPane>
+
 			</content>
 		</TitledPane>
 	</children>
-</AnchorPane>
+</GridPane>

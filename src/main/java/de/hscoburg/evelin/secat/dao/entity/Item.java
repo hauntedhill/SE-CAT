@@ -40,7 +40,7 @@ public class Item extends StammdatenEntity {
 	private String frage;
 
 	// private Skala skala;
-	@Column(length = 1024)
+	@Column(length=1024)
 	public String getName() {
 		return name;
 	}
