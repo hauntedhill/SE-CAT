@@ -4,13 +4,10 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
-import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
 
 @Entity
 public class Frage extends BaseEntity {
@@ -22,9 +19,9 @@ public class Frage extends BaseEntity {
 
 	private String text;
 
-	private FragePosition position;
+	// private FragePosition position;
 
-	private List<Fragebogen> fragebogen;
+	private List<CustomFrage> customFragen;
 
 	private Skala skala;
 
@@ -39,23 +36,24 @@ public class Frage extends BaseEntity {
 		this.skala = skala;
 	}
 
-	@ManyToMany(targetEntity = Fragebogen.class)
-	public List<Fragebogen> getFragebogen() {
-		return fragebogen;
+	@OneToMany(targetEntity = CustomFrage.class, mappedBy = "frage")
+	public List<CustomFrage> getCustomFragen() {
+		return customFragen;
 	}
 
-	public void setFragebogen(List<Fragebogen> fragebogen) {
-		this.fragebogen = fragebogen;
+	public void setCustomFragen(List<CustomFrage> fragebogen) {
+		this.customFragen = fragebogen;
 	}
 
-	@Enumerated
-	public FragePosition getPosition() {
-		return position;
-	}
-
-	public void setPosition(FragePosition position) {
-		this.position = position;
-	}
+	//
+	// @Enumerated
+	// public FragePosition getPosition() {
+	// return position;
+	// }
+	//
+	// public void setPosition(FragePosition position) {
+	// this.position = position;
+	// }
 
 	@Column(length = 1024)
 	public String getText() {

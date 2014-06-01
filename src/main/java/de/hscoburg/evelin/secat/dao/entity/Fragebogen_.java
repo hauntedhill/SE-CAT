@@ -23,7 +23,7 @@ public class Fragebogen_ extends BaseEntity_ {
 
 	public static volatile SingularAttribute<Fragebogen, Skala> skala;
 
-	public static volatile ListAttribute<Fragebogen, Frage> fragen;
+	public static volatile ListAttribute<Fragebogen, CustomFrage> customFragen;
 
 	public static volatile SingularAttribute<Fragebogen, Eigenschaft> eigenschaft;
 

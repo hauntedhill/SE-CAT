@@ -295,7 +295,7 @@ public class FrageboegenController extends BaseController {
 
 					private File file;
 
-					private int anzCVSRows;
+					private int anzCVSRows = -1;
 
 					@Override
 					public void performBeforeEventsBlocked(ActionEvent event) throws Exception {
@@ -328,9 +328,10 @@ public class FrageboegenController extends BaseController {
 
 					@Override
 					public void updateUI() {
-						Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.import.title"))
-								.masthead(SeCatResourceBundle.getInstance().getString("scene.import.text") + " " + anzCVSRows).showInformation();
-
+						if (anzCVSRows != -1) {
+							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.import.title"))
+									.masthead(SeCatResourceBundle.getInstance().getString("scene.import.text") + " " + anzCVSRows).showInformation();
+						}
 					}
 
 				});

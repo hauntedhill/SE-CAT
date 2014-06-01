@@ -23,6 +23,7 @@ import de.hscoburg.evelin.secat.controller.xml.FreitextfrageXML;
 import de.hscoburg.evelin.secat.dao.FrageDAO;
 import de.hscoburg.evelin.secat.dao.FragebogenDAO;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
+import de.hscoburg.evelin.secat.dao.entity.CustomFrage;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Frage;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
@@ -84,7 +85,7 @@ public class FragebogenModel {
 		fXML.addChild(mainBlock);
 		BaseXML currentBlock = mainBlock;
 
-		addFfragen(blockCount++, mainBlock, FragePosition.TOP, f.getFragen(), f);
+		addFfragen(blockCount++, mainBlock, FragePosition.TOP, f.getCustomFragen(), f);
 
 		for (i = 1; i <= f.getItems().size(); i++) {
 			Item item = f.getItems().get(i - 1);
@@ -108,7 +109,7 @@ public class FragebogenModel {
 			}
 
 		}
-		addFfragen(blockCount++, mainBlock, FragePosition.BOTTOM, f.getFragen(), f);
+		addFfragen(blockCount++, mainBlock, FragePosition.BOTTOM, f.getCustomFragen(), f);
 		// FreitextfrageXML ftf = new FreitextfrageXML(BaseXML.generateUniqueId(f, new Frage(99999), "Bla?", i + 1, 10);
 
 		// block.addChild(ftf);
@@ -119,13 +120,14 @@ public class FragebogenModel {
 		return fXML.generateXML();
 	}
 
-	private void addFfragen(int useBlockCount, BaseXML node, FragePosition position, List<Frage> fragen, Fragebogen fb) {
+	private void addFfragen(int useBlockCount, BaseXML node, FragePosition position, List<CustomFrage> fragen, Fragebogen fb) {
 
 		BaseXML innerBlock = new FragenblockXML("", useBlockCount);
 
 		int questionCount = 1;
-		for (Frage f : fragen != null ? fragen : new ArrayList<Frage>()) {
-			if (f.getPosition().equals(position)) {
+		for (CustomFrage cf : fragen != null ? fragen : new ArrayList<CustomFrage>()) {
+			Frage f = cf.getFrage();
+			if (cf.getPosition().equals(position)) {
 				if (f.getSkala().getType().equals(SkalaType.DISCRET)) {
 					innerBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(fb, f), questionCount++, f.getSkala().getWeight(), f.getSkala()
 							.getSteps(), f.getSkala().getOptimum(), stringXMLEscaper.translate(f.getSkala().getMinText()), stringXMLEscaper.translate(f

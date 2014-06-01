@@ -35,7 +35,7 @@ public class Fragebogen extends BaseEntity {
 
 	private Skala skala;
 
-	private List<Frage> fragen;
+	private List<CustomFrage> customFragen;
 
 	private Eigenschaft eigenschaft;
 
@@ -100,14 +100,14 @@ public class Fragebogen extends BaseEntity {
 		this.lehrveranstaltung = lehrveranstaltung;
 	}
 
-	@ManyToMany(targetEntity = Frage.class, mappedBy = "fragebogen", fetch = FetchType.EAGER)
+	@OneToMany(targetEntity = CustomFrage.class, mappedBy = "fragebogen", fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public List<Frage> getFragen() {
-		return fragen;
+	public List<CustomFrage> getCustomFragen() {
+		return customFragen;
 	}
 
-	public void setFragen(List<Frage> fragen) {
-		this.fragen = fragen;
+	public void setCustomFragen(List<CustomFrage> fragen) {
+		this.customFragen = fragen;
 	}
 
 	@ManyToOne(targetEntity = Perspektive.class)
