@@ -3,6 +3,7 @@ package de.hscoburg.evelin.secat.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -19,6 +20,8 @@ import org.springframework.stereotype.Controller;
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
+import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
+import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class AddHandlungsfeldController extends BaseController {
@@ -30,11 +33,6 @@ public class AddHandlungsfeldController extends BaseController {
 	private Button cancle;
 	@FXML
 	private TextField name;
-	/*
-	 * @FXML private TextField rolle;
-	 * 
-	 * @FXML private ListView<String> eigenschaft;
-	 */
 
 	@Autowired
 	private HandlungsfeldController handlungsfeldfeldController;
@@ -51,37 +49,56 @@ public class AddHandlungsfeldController extends BaseController {
 		save.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
 
-		save.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				if (name.getText() != null && !name.getText().equals("")) {
-					Handlungsfeld h = new Handlungsfeld();
+		save.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
+			@Override
+			public void handleAction(ActionEvent event) throws Exception {
+				try {
+					if (name.getText() == null || name.getText().equals("")) {
+						throw new IllegalArgumentException();
+					}
+					Handlungsfeld h = new Handlungsfeld();
 					h.setAktiv(true);
 					h.setName(name.getText());
 					handlungsfeldModel.persistHandlungsfeld(h);
-
 					treeTableController.addHandlungsfeldToCurrentSelection(h);
-				} else {
 
-					Dialogs.create().title("Warnung").masthead("Handlungsfeld konnte nich angelegt werden!").message("Kein Name vergeben!").showWarning();
+				} catch (IllegalArgumentException iae) {
+					Platform.runLater(new Runnable() {
+
+						@Override
+						public void run() {
+							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.input.error.title"))
+									.masthead(SeCatResourceBundle.getInstance().getString("scene.input.error.txt")).showError();
+
+						}
+					});
 				}
-				Stage stage = (Stage) save.getScene().getWindow();
-
-				stage.close();
 
 			}
+
+			@Override
+			public void updateUI() {
+				Stage stage = (Stage) save.getScene().getWindow();
+				stage.close();
+			}
+
 		});
 
-		cancle.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
+		cancle.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
-				Stage stage = (Stage) cancle.getScene().getWindow();
-				// do what you have to do
-				stage.close();
+			@Override
+			public void handleAction(ActionEvent event) throws Exception {
 
 			}
+
+			@Override
+			public void updateUI() {
+
+				Stage stage = (Stage) cancle.getScene().getWindow();
+				stage.close();
+			}
+
 		});
 	}
 

@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="145.0" prefWidth="361.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.HandlungsfeldController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="435.0" prefWidth="784.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.HandlungsfeldController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="5.0" prefWidth="15.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="584.0" />
+  </columnConstraints>
+ 	 <rowConstraints>
+		<RowConstraints maxHeight="15.0" minHeight="5.0" prefHeight="15.0" vgrow="SOMETIMES" />
+    	<RowConstraints maxHeight="1.7976931348623157E308" minHeight="100.0" prefHeight="316.0" vgrow="SOMETIMES" />
+
+  	</rowConstraints>
 <children>
-
-<fx:include fx:id="treeTable" source="/gui/TreeTable.fxml"/>
-
-</children></AnchorPane>
+	<fx:include source="/gui/TreeTable.fxml" GridPane.columnIndex="1" GridPane.rowIndex="1"/>	
+</children>
+</GridPane>
