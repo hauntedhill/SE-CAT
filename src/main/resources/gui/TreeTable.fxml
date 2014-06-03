@@ -4,31 +4,38 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="0.0" minWidth="0.0" prefHeight="417.0" prefWidth="841.0" text="%scene.all.handlungsfelder" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.TreeTableController">
+<content>
+	<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="391.0" prefWidth="887.0">
+		<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" prefWidth="743.0" />
+		</columnConstraints>
+		<rowConstraints>
+		<RowConstraints maxHeight="233.0" minHeight="22.0" prefHeight="24.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="1.7976931348623157E308" minHeight="138.0" prefHeight="347.0" vgrow="SOMETIMES" />
+		</rowConstraints>
+		<children>
+		<MenuBar maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="857.0" GridPane.halignment="LEFT" GridPane.hgrow="SOMETIMES" GridPane.valignment="TOP" GridPane.vgrow="SOMETIMES">
+		<menus>
+		<Menu mnemonicParsing="false" text="%scene.handlungsfeld.menu.lable">
+		<items>
+			<MenuItem fx:id="menuItemFilterHandlungsfeld" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterHandlungsfeld" />
+			<MenuItem fx:id="menuItemFilterItem" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterItem" />
+			<MenuItem fx:id="menuItemFilterOff" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterOff" />
+		</items>
+	</Menu>
+	</menus>
+</MenuBar>
+<TreeTableView fx:id="treeTable" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="449.0" prefWidth="867.0" GridPane.halignment="LEFT" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="TOP" GridPane.vgrow="ALWAYS">
+<columns>
+<TreeTableColumn maxWidth="1.7976931348623157E308" prefWidth="206.0" text="%scene.all.item" />
+<TreeTableColumn maxWidth="1.7976931348623157E308" prefWidth="35.0" text="%scene.all.active" />
+<TreeTableColumn maxWidth="1.7976931348623157E308" prefWidth="150.0" text="%scene.all.notiz" />
+<TreeTableColumn maxWidth="1.7976931348623157E308" prefWidth="120.0" text="%scene.all.property" />
+<TreeTableColumn maxWidth="1.7976931348623157E308" prefWidth="120.0" text="%scene.all.perspective" />
+</columns>
+</TreeTableView>
+</children>
 
-  			<AnchorPane prefHeight="340.0" prefWidth="620.0"  minHeight="0.0" minWidth="0.0"  xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.TreeTableController">
-    			<MenuBar prefHeight="25.0" prefWidth="628.0">
-  					<menus>
-   					 <Menu fx:id="menuFilter" mnemonicParsing="false" text="%scene.handlungsfeld.menu.lable">
-    				  	<items>
-    				   		<MenuItem fx:id="menuItemFilterHandlungsfeld" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterHandlungsfeld" />
-  					   		<MenuItem fx:id="menuItemFilterItem" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterItem" />
-        					<MenuItem fx:id="menuItemFilterOff" mnemonicParsing="false" text="%scene.handlungsfeld.menu.menuItemFilterOff" />
-      					</items>
-    				</Menu>
-  					</menus>
-				</MenuBar>
-    			
-    			<TreeTableView fx:id="treeTable" layoutY="25" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="628.0">
-					<columns>
-						<TreeTableColumn prefWidth="206.0" text="%scene.all.item" />
-						<TreeTableColumn prefWidth="35.0" text="%scene.all.active" />
-						<TreeTableColumn prefWidth="150.0" text="%scene.all.notiz" />
-						<TreeTableColumn prefWidth="120.0" text="%scene.all.property" />
-						<TreeTableColumn prefWidth="120.0" text="%scene.all.perspective" />
-					</columns>
-				</TreeTableView>
-			
-			</AnchorPane>
-
-
-
+</GridPane>
+</content></TitledPane>

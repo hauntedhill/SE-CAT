@@ -254,7 +254,6 @@ public class TreeTableController extends BaseController {
 			for (Bereich bereich : bereiche) {
 				bereich.setItems(handlungsfeldModel.getItemBy(bereich, itemAktiv, p, e, notizHandlungsfeld, notizItem, f));
 
-
 			}
 			hf.setBereiche(bereiche);
 			root.getChildren().add(createNode(new TreeItemWrapper(hf)));
@@ -386,8 +385,9 @@ public class TreeTableController extends BaseController {
 	public void updateHandlungsfeld(int hf, int b) {
 		buildTreeTable();
 		treeTable.getRoot().getChildren().get(hf).setExpanded(true);
-		treeTable.getRoot().getChildren().get(hf).getChildren().get(b).setExpanded(true);
-
+		if (b != -1) {
+			treeTable.getRoot().getChildren().get(hf).getChildren().get(b).setExpanded(true);
+		}
 	}
 
 }

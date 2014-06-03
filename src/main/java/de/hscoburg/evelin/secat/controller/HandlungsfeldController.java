@@ -1,6 +1,7 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.beans.InvalidationListener;
@@ -17,6 +18,7 @@ import javafx.scene.control.TreeTableRow;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
@@ -28,6 +30,7 @@ import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.HandlungsfeldDAO;
+import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
@@ -43,7 +46,6 @@ public class HandlungsfeldController extends BaseController {
 	@FXML
 	private MenuBar menuBar;
 
-
 	@Autowired
 	private HandlungsfeldDAO service;
 
@@ -53,9 +55,9 @@ public class HandlungsfeldController extends BaseController {
 	@Autowired
 	private TreeTableController treeTableController;
 
+	private ArrayList<Item> exportedItems;
 
 	public void initializeController(URL location, ResourceBundle resources) {
-
 
 		treeTableController.setRowFactory(new Callback<TreeTableView<TreeItemWrapper>, TreeTableRow<TreeItemWrapper>>() {
 
@@ -73,7 +75,7 @@ public class HandlungsfeldController extends BaseController {
 						new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
 				MenuItem activateItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.activateItItem"),
 						new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
-				MenuItem editItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.editItItem"), new ImageView(
+				final MenuItem editItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.editItItem"), new ImageView(
 						new Image("/image/icons/edit.png", 16, 16, true, true)));
 				MenuItem deactivateHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.deactivateHfItem"),
 						new ImageView(new Image("/image/icons/bookmark_Silver.png", 16, 16, true, true)));
@@ -131,18 +133,16 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
+						if (exportedItems.contains(treeTableController.getSelectedTreeItem().getValue().getItem())) {
+							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/editItem.fxml");
+							stage.show();
+							stage.setOnHidden(new EventHandler<WindowEvent>() {
+								public void handle(WindowEvent we) {
+									logger.debug("Closing dialog stage.");
 
-						Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/editItem.fxml");
-
-						stage.show();
-
-						stage.setOnHidden(new EventHandler<WindowEvent>() {
-							public void handle(WindowEvent we) {
-								logger.debug("Closing dialog stage.");
-
-							}
-						});
-
+								}
+							});
+						}
 					}
 				});
 
@@ -270,7 +270,6 @@ public class HandlungsfeldController extends BaseController {
 
 				});
 
-
 				rowMenu.getItems().add(activateItItem);
 				rowMenu.getItems().add(deactivateItItem);
 				rowMenu.getItems().add(editItItem);
@@ -281,6 +280,26 @@ public class HandlungsfeldController extends BaseController {
 				rowMenuHf.getItems().add(addBereichItem);
 				rowMenuHf.getItems().add(addItItem);
 				rowMenuHf.getItems().add(moveItems);
+
+				row.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+					@Override
+					public void handle(ContextMenuEvent event) {
+
+						if (treeTableController.getSelectedTreeItem() != null && treeTableController.getSelectedTreeItem().getValue().isItem()) {
+							Item selected = treeTableController.getSelectedTreeItem().getValue().getItem();
+							for (Fragebogen fragebogen : selected.getFrageboegen()) {
+								if (fragebogen.getExportiert()) {
+									editItItem.setDisable(true);
+									break;
+								}
+
+							}
+
+						}
+
+					}
+				});
 
 				ObservableObjectValue<TreeItemWrapper> rowMenuObserver = new ObservableObjectValue<TreeItemWrapper>() {
 
@@ -334,9 +353,7 @@ public class HandlungsfeldController extends BaseController {
 
 		});
 
-
 	}
-
 
 	@Override
 	public String getKeyForSceneName() {

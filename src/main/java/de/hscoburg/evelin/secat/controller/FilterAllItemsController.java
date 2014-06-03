@@ -2,20 +2,17 @@ package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.ResourceBundle;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TreeItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
@@ -28,11 +25,11 @@ import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
-import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
 import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
 import de.hscoburg.evelin.secat.model.SkalenModel;
+import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 
 @Controller
 public class FilterAllItemsController extends BaseController {
@@ -41,32 +38,23 @@ public class FilterAllItemsController extends BaseController {
 	private Button filter;
 
 	@FXML
-	private Button cancle;
-
+	private Button cancel;
 	@FXML
 	private TextArea notiz;
-
 	@FXML
 	private CheckBox isInaktiv;
-
 	@FXML
 	private ListView<Eigenschaft> eigenschaftList;
-
 	@FXML
 	private ListView<Perspektive> perspektiveList;
-
 	@Autowired
 	private HandlungsfeldController handlungsfeldController;
-
 	@Autowired
 	private HandlungsfeldModel handlungsfeldModel;
-
 	@Autowired
 	private PerspektivenModel perspektivenModel;
-
 	@Autowired
 	private SkalenModel skalenModel;
-
 	@Autowired
 	private EigenschaftenModel eigenschaftModel;
 	@Autowired
@@ -76,7 +64,7 @@ public class FilterAllItemsController extends BaseController {
 	public void initializeController(URL location, ResourceBundle resources) {
 
 		filter.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
-		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
+		cancel.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
 
 		perspektiveList.setCellFactory(new Callback<ListView<Perspektive>, ListCell<Perspektive>>() {
 
@@ -101,11 +89,10 @@ public class FilterAllItemsController extends BaseController {
 
 		ObservableList<Perspektive> perspektivenOl = FXCollections.observableArrayList();
 		List<Perspektive> persList = perspektivenModel.getPerspektiven();
-		ListIterator<Perspektive> itpers = persList.listIterator();
 
-		while (itpers.hasNext()) {
+		for (Perspektive perspektive : persList) {
 
-			perspektivenOl.add(itpers.next());
+			perspektivenOl.add(perspektive);
 		}
 
 		perspektiveList.setItems(perspektivenOl);
@@ -133,20 +120,22 @@ public class FilterAllItemsController extends BaseController {
 
 		ObservableList<Eigenschaft> eigenschaftOl = FXCollections.observableArrayList();
 		List<Eigenschaft> eigenList = eigenschaftModel.getEigenschaften();
-		ListIterator<Eigenschaft> iteigenschaft = eigenList.listIterator();
 
-		while (iteigenschaft.hasNext()) {
+		for (Eigenschaft eigenschaft : eigenList) {
 
-			eigenschaftOl.add(iteigenschaft.next());
+			eigenschaftOl.add(eigenschaft);
 		}
 
 		eigenschaftList.setItems(eigenschaftOl);
 
-		filter.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent e) {
-				TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
+		filter.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
+			@Override
+			public void handleAction(ActionEvent event) throws Exception {
+			}
+
+			@Override
+			public void updateUI() {
 				List<Handlungsfeld> result = handlungsfeldModel.getHandlungsfelderBy(true, !isInaktiv.isSelected(), perspektiveList.getSelectionModel()
 						.getSelectedItem(), eigenschaftList.getSelectionModel().getSelectedItem(), null, notiz.getText(), null);
 
@@ -155,19 +144,24 @@ public class FilterAllItemsController extends BaseController {
 
 				Stage stage = (Stage) filter.getScene().getWindow();
 				stage.close();
-
 			}
+
 		});
 
-		cancle.setOnAction(new EventHandler<ActionEvent>() {
+		cancel.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
 			@Override
-			public void handle(ActionEvent e) {
-
-				Stage stage = (Stage) cancle.getScene().getWindow();
-				stage.close();
-
+			public void handleAction(ActionEvent event) throws Exception {
 			}
+
+			@Override
+			public void updateUI() {
+				Stage stage = (Stage) filter.getScene().getWindow();
+				stage.close();
+			}
+
 		});
+
 	}
 
 	@Override
