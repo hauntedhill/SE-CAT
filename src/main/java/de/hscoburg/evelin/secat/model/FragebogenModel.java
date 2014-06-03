@@ -8,9 +8,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.text.translate.CharSequenceTranslator;
-import org.apache.commons.lang3.text.translate.NumericEntityEscaper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,12 +17,13 @@ import de.hscoburg.evelin.secat.controller.xml.DiskretefrageXML;
 import de.hscoburg.evelin.secat.controller.xml.FragebogenXML;
 import de.hscoburg.evelin.secat.controller.xml.FragenblockXML;
 import de.hscoburg.evelin.secat.controller.xml.FreitextfrageXML;
+import de.hscoburg.evelin.secat.controller.xml.MultipleChoicefrageXML;
 import de.hscoburg.evelin.secat.dao.FrageDAO;
 import de.hscoburg.evelin.secat.dao.FragebogenDAO;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
-import de.hscoburg.evelin.secat.dao.entity.CustomFrage;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Frage;
+import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
@@ -37,9 +35,6 @@ import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 @Repository
 @Transactional
 public class FragebogenModel {
-
-	private static CharSequenceTranslator stringXMLEscaper = StringEscapeUtils.ESCAPE_XML11.with(NumericEntityEscaper.between(0x0a, 0x0a).with(
-			NumericEntityEscaper.between(0x80, 0xff)));
 
 	@Autowired
 	private FragebogenDAO fragebogenDAO;
@@ -92,7 +87,7 @@ public class FragebogenModel {
 			Item item = f.getItems().get(i - 1);
 
 			if (!item.getBereich().equals(currentBereich)) {
-				BaseXML innerBlock = new FragenblockXML(stringXMLEscaper.translate(item.getBereich().getName()), blockCount++);
+				BaseXML innerBlock = new FragenblockXML(item.getBereich().getName(), blockCount++);
 				questionCount = 1;
 				mainBlock.addChild(innerBlock);
 				currentBlock = innerBlock;
@@ -101,11 +96,13 @@ public class FragebogenModel {
 
 			if (f.getSkala().getType().equals(SkalaType.DISCRET)) {
 				currentBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(f, item), questionCount++, f.getSkala().getWeight(), f.getSkala()
-						.getSteps(), f.getSkala().getOptimum(), stringXMLEscaper.translate(f.getSkala().getMinText()), stringXMLEscaper.translate(f.getSkala()
-						.getMaxText()), stringXMLEscaper.translate(item.getFrage())));
+						.getSteps(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), item.getFrage()));
 			} else if (f.getSkala().getType().equals(SkalaType.FREE)) {
-				currentBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(f, item), stringXMLEscaper.translate(item.getFrage()), questionCount++, f
-						.getSkala().getRows()));
+				currentBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(f, item), item.getFrage(), questionCount++, f.getSkala().getRows()));
+
+			} else if (f.getSkala().getType().equals(SkalaType.MULTIPLECHOICE)) {
+				currentBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getDefaultAnswer(), f.getSkala().getWeight(), item.getFrage(), f.getSkala()
+						.getChoices(), BaseXML.generateUniqueId(f, item), questionCount++));
 
 			}
 
@@ -121,22 +118,24 @@ public class FragebogenModel {
 		return fXML.generateXML();
 	}
 
-	private void addFfragen(int useBlockCount, BaseXML node, FragePosition position, List<CustomFrage> fragen, Fragebogen fb) {
+	private void addFfragen(int useBlockCount, BaseXML node, FragePosition position, List<Frage_Fragebogen> fragen, Fragebogen fb) {
 
 		BaseXML innerBlock = new FragenblockXML("", useBlockCount);
 
 		int questionCount = 1;
-		for (CustomFrage cf : fragen != null ? fragen : new ArrayList<CustomFrage>()) {
+		for (Frage_Fragebogen cf : fragen != null ? fragen : new ArrayList<Frage_Fragebogen>()) {
 			Frage f = cf.getFrage();
 			if (cf.getPosition().equals(position)) {
 				if (f.getSkala().getType().equals(SkalaType.DISCRET)) {
 					innerBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(fb, f), questionCount++, f.getSkala().getWeight(), f.getSkala()
-							.getSteps(), f.getSkala().getOptimum(), stringXMLEscaper.translate(f.getSkala().getMinText()), stringXMLEscaper.translate(f
-							.getSkala().getMaxText()), stringXMLEscaper.translate(f.getText())));
+							.getSteps(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), f.getText()));
 
 				} else if (f.getSkala().getType().equals(SkalaType.FREE)) {
-					innerBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(fb, f), stringXMLEscaper.translate(f.getText()), questionCount++, f
-							.getSkala().getRows()));
+					innerBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(fb, f), f.getText(), questionCount++, f.getSkala().getRows()));
+
+				} else if (f.getSkala().getType().equals(SkalaType.MULTIPLECHOICE)) {
+					innerBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getDefaultAnswer(), f.getSkala().getWeight(), f.getText(), f.getSkala()
+							.getChoices(), BaseXML.generateUniqueId(fb, f), questionCount++));
 
 				}
 			}

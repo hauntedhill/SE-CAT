@@ -21,7 +21,7 @@ public class Frage extends BaseEntity {
 
 	// private FragePosition position;
 
-	private List<CustomFrage> customFragen;
+	private List<Frage_Fragebogen> customFragen;
 
 	private Skala skala;
 
@@ -38,12 +38,12 @@ public class Frage extends BaseEntity {
 		this.skala = skala;
 	}
 
-	@OneToMany(targetEntity = CustomFrage.class, mappedBy = "frage")
-	public List<CustomFrage> getCustomFragen() {
+	@OneToMany(targetEntity = Frage_Fragebogen.class, mappedBy = "frage")
+	public List<Frage_Fragebogen> getCustomFragen() {
 		return customFragen;
 	}
 
-	public void setCustomFragen(List<CustomFrage> fragebogen) {
+	public void setCustomFragen(List<Frage_Fragebogen> fragebogen) {
 		this.customFragen = fragebogen;
 	}
 

@@ -8,7 +8,7 @@ import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
 
 @Entity
-public class CustomFrage extends BaseEntity {
+public class Frage_Fragebogen extends BaseEntity {
 
 	private Fragebogen fragebogen;
 

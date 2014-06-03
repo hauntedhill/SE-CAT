@@ -41,8 +41,9 @@ public class DiskretefrageXML extends BaseXML {
 	@Override
 	public void getStartXML(StringBuilder builder) {
 
-		builder.append("<SCALEDQUESTION PLACE=\"" + place + "\" MINTEXT=\"" + minText + "\" ZWANG=\"false\" WEIGHT=\"" + weight + "\" STEPS=\"" + steps
-				+ "\" TUTOR=\"false\" MAXTEXT=\"" + maxText + "\" OPTIMUM=\"" + optimum + "\" TEXT=\"" + frage + "\">\n");
+		builder.append("<SCALEDQUESTION PLACE=\"" + place + "\" MINTEXT=\"" + XML_ESCAPER.translate(minText) + "\" ZWANG=\"false\" WEIGHT=\"" + weight
+				+ "\" STEPS=\"" + steps + "\" TUTOR=\"false\" MAXTEXT=\"" + XML_ESCAPER.translate(maxText) + "\" OPTIMUM=\"" + optimum + "\" TEXT=\""
+				+ XML_ESCAPER.translate(frage) + "\">\n");
 
 		builder.append("<META KEY=\"METAKEY_MARKING_SIZE\" VALUE=\"0.25\"/>\n");
 		builder.append("<META KEY=\"FIXED_IN_PERMUTATION\" VALUE=\"f\"/>\n");

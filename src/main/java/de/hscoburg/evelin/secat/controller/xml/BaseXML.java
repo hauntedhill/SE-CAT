@@ -3,11 +3,18 @@ package de.hscoburg.evelin.secat.controller.xml;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.text.translate.CharSequenceTranslator;
+import org.apache.commons.lang3.text.translate.NumericEntityEscaper;
+
 import de.hscoburg.evelin.secat.dao.entity.Frage;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 
 public abstract class BaseXML {
+
+	public static CharSequenceTranslator XML_ESCAPER = StringEscapeUtils.ESCAPE_XML11.with(NumericEntityEscaper.between(0x0a, 0x0a).with(
+			NumericEntityEscaper.between(0x80, 0xff)));
 
 	private List<BaseXML> childs;
 

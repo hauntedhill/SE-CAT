@@ -15,7 +15,7 @@ import de.hscoburg.evelin.secat.dao.FrageDAO;
 import de.hscoburg.evelin.secat.dao.FragebogenDAO;
 import de.hscoburg.evelin.secat.dao.ItemDAO;
 import de.hscoburg.evelin.secat.dao.entity.Bewertung;
-import de.hscoburg.evelin.secat.dao.entity.CustomFrage;
+import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Frage;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Item;
@@ -92,7 +92,7 @@ public class BewertungModel {
 						Frage frage = frageDAO.findById(Integer.parseInt(ids[3]));
 
 						boolean foundQuestion = false;
-						for (CustomFrage cf : fragebogen.getCustomFragen()) {
+						for (Frage_Fragebogen cf : fragebogen.getCustomFragen()) {
 							if (cf.getFrage().equals(frage)) {
 								foundQuestion = true;
 								break;
