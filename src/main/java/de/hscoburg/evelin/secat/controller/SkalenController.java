@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
@@ -19,6 +20,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
 
 import org.controlsfx.dialog.Dialogs;
@@ -57,6 +59,9 @@ public class SkalenController extends BaseController {
 	@FXML
 	private RadioButton freeQuestion;
 
+	@FXML
+	private RadioButton multipleQuestion;
+
 	@Autowired
 	private SkalenModel skalenModel;
 
@@ -74,6 +79,15 @@ public class SkalenController extends BaseController {
 	@FXML
 	private TextField textOptimum;
 
+	@FXML
+	private GridPane diskretePanel;
+
+	@FXML
+	private GridPane freePanel;
+
+	@FXML
+	private GridPane multiplePanel;
+
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -81,11 +95,125 @@ public class SkalenController extends BaseController {
 
 		discretQuestion.setToggleGroup(group);
 		freeQuestion.setToggleGroup(group);
+		multipleQuestion.setToggleGroup(group);
 
 		freeQuestion.setSelected(true);
 
 		loadList();
 		textNameSkalen.requestFocus();
+
+		multipleQuestion.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				freePanel.setVisible(false);
+				diskretePanel.setVisible(false);
+				multiplePanel.setVisible(true);
+
+			}
+		});
+
+		multipleQuestion.setOnKeyPressed(new SeCatEventHandle<Event>() {
+
+			private boolean newSelection = false;
+
+			@Override
+			public void handleAction(Event event) {
+				if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+					newSelection = true;
+				} else {
+					newSelection = false;
+				}
+
+			}
+
+			@Override
+			public void updateUI() {
+				if (newSelection) {
+					multipleQuestion.setSelected(true);
+					freePanel.setVisible(false);
+					diskretePanel.setVisible(false);
+					multiplePanel.setVisible(true);
+				}
+			}
+
+		});
+
+		discretQuestion.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				freePanel.setVisible(false);
+				diskretePanel.setVisible(true);
+				multiplePanel.setVisible(false);
+
+			}
+		});
+
+		discretQuestion.setOnKeyPressed(new SeCatEventHandle<Event>() {
+
+			private boolean newSelection = false;
+
+			@Override
+			public void handleAction(Event event) {
+				if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+					newSelection = true;
+				} else {
+					newSelection = false;
+				}
+
+			}
+
+			@Override
+			public void updateUI() {
+				if (newSelection) {
+					discretQuestion.setSelected(true);
+					freePanel.setVisible(false);
+					diskretePanel.setVisible(true);
+					multiplePanel.setVisible(false);
+				}
+			}
+
+		});
+
+		freeQuestion.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent event) {
+				freePanel.setVisible(true);
+				diskretePanel.setVisible(false);
+				multiplePanel.setVisible(false);
+
+			}
+		});
+
+		freeQuestion.setOnKeyPressed(new SeCatEventHandle<Event>() {
+
+			private boolean newSelection = false;
+
+			@Override
+			public void handleAction(Event event) {
+				if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+					newSelection = true;
+				} else {
+					newSelection = false;
+				}
+
+			}
+
+			@Override
+			public void updateUI() {
+				if (newSelection) {
+					freeQuestion.setSelected(true);
+					freePanel.setVisible(true);
+					diskretePanel.setVisible(false);
+					multiplePanel.setVisible(false);
+
+				}
+			}
+
+		});
+
 		listSkalen.setCellFactory(new Callback<ListView<Skala>, ListCell<Skala>>() {
 
 			@Override
