@@ -8,22 +8,23 @@
 <content><TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE">
   <tabs>
     <Tab text="Stammdaten">
-<content><GridPane>
+<content><GridPane prefHeight="429.0" prefWidth="628.0">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="202.0" />
 <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
-<ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="250.0" />
+<ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="202.0" />
+<ColumnConstraints hgrow="SOMETIMES" maxWidth="425.0" minWidth="0.0" prefWidth="193.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="399.0" minHeight="10.0" prefHeight="398.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="185.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
   </rowConstraints>
-<children><TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="250.0" prefHeight="399.0" prefWidth="319.0" text="%menu.item.masterdata.lable" GridPane.columnIndex="1" GridPane.rowIndex="1">
-<content><GridPane maxWidth="250.0">
+<children><TitledPane animated="false" maxHeight="-Infinity" maxWidth="200.0" prefHeight="270.0" prefWidth="200.0" text="%menu.item.masterdata.lable" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
+<content><GridPane maxWidth="200.0" prefHeight="357.0" prefWidth="200.0">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="5.0" minWidth="5.0" prefWidth="5.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="292.0" minWidth="10.0" prefWidth="284.0" />
   </columnConstraints>
   <rowConstraints>
@@ -34,8 +35,7 @@
 <RowConstraints maxHeight="315.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
 <RowConstraints maxHeight="35.0" minHeight="30.0" vgrow="SOMETIMES" />
 <RowConstraints maxHeight="35.0" minHeight="30.0" vgrow="SOMETIMES" />
-<RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="134.0" vgrow="SOMETIMES" />
-<RowConstraints maxHeight="315.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
+<RowConstraints maxHeight="315.0" minHeight="4.0" prefHeight="4.0" vgrow="SOMETIMES" />
   </rowConstraints>
   	<children>
   			<ComboBox fx:id="perspektive" layoutX="3.0" layoutY="5.0" prefHeight="25.0" prefWidth="135.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
@@ -46,11 +46,11 @@
   	</children>
 </GridPane>
 </content>
-</TitledPane><TitledPane maxHeight="1.7976931348623157E308" maxWidth="250.0" text="%scene.addItem.lable.vorlage" GridPane.columnIndex="3" GridPane.rowIndex="1">
-<content><GridPane>
+</TitledPane><TitledPane maxHeight="-Infinity" maxWidth="202.0" prefHeight="270.0" prefWidth="202.0" text="%scene.addItem.lable.vorlage" GridPane.columnIndex="3" GridPane.rowIndex="1" GridPane.valignment="TOP">
+<content><GridPane prefHeight="244.0" prefWidth="183.0">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="250.0" minWidth="10.0" prefWidth="280.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="5.0" minWidth="5.0" prefWidth="5.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="200.0" minWidth="10.0" prefWidth="195.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
@@ -78,7 +78,7 @@
     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="385.0" vgrow="SOMETIMES" />
   </rowConstraints>
 <children>
-	<fx:include source="/gui/TreeTable.fxml" GridPane.columnIndex="3" GridPane.rowIndex="1"/> 
+	<fx:include source="/gui/TreeTable.fxml" GridPane.columnIndex="3" GridPane.rowIndex="1"/>
 		<TitledPane maxHeight="1.7976931348623157E308" maxWidth="350.0" prefHeight="409.0" prefWidth="186.0" text="%scene.all.item" GridPane.columnIndex="1" GridPane.rowIndex="1">
 	<content><GridPane>
   <columnConstraints>
@@ -141,18 +141,18 @@
 <content><GridPane>
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="653.0" minWidth="10.0" prefWidth="653.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="213.0" minWidth="10.0" prefWidth="213.0" />
+<ColumnConstraints hgrow="SOMETIMES" maxWidth="653.0" minWidth="10.0" prefWidth="435.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="399.0" minHeight="10.0" prefHeight="398.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="16.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="399.0" minHeight="10.0" prefHeight="393.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="260.0" minHeight="10.0" prefHeight="21.0" vgrow="SOMETIMES" />
   </rowConstraints>
-<children><TitledPane prefHeight="396.0" prefWidth="568.0" text="%scene.addFragebogen.lable.title" GridPane.columnIndex="1" GridPane.rowIndex="1">
-<content><GridPane>
+<children><TitledPane maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" text="%scene.addFragebogen.lable.title" GridPane.columnIndex="1" GridPane.rowIndex="1" GridPane.valignment="TOP">
+<content><GridPane maxWidth="-Infinity" prefHeight="174.0" prefWidth="170.0">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="308.0" minWidth="10.0" prefWidth="152.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="531.0" minWidth="10.0" prefWidth="474.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="200.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="35.0" minHeight="30.0" vgrow="SOMETIMES" />
