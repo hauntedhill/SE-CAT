@@ -15,6 +15,8 @@ import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import org.controlsfx.dialog.Dialogs;
@@ -120,6 +122,9 @@ public class FragenController extends BaseController {
 				loadTable();
 			}
 		}, buttonAdd);
+
+		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
+
 		loadTable();
 
 	}

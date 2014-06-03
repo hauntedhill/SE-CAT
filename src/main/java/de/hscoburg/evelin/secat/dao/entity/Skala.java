@@ -2,6 +2,7 @@ package de.hscoburg.evelin.secat.dao.entity;
 
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
 import javax.persistence.OneToMany;
@@ -47,6 +48,8 @@ public class Skala extends BaseEntity {
 	private String minText;
 
 	private String maxText;
+
+	private List<String> choices;
 
 	// @OneToMany(targetEntity = Fragebogen.class, mappedBy = "skala")
 	// public List<Fragebogen> getFrageboegen() {
@@ -138,6 +141,15 @@ public class Skala extends BaseEntity {
 
 	public void setOptimum(Integer optimum) {
 		this.optimum = optimum;
+	}
+
+	@ElementCollection
+	public List<String> getChoices() {
+		return choices;
+	}
+
+	public void setChoices(List<String> keys) {
+		this.choices = keys;
 	}
 
 }

@@ -88,6 +88,20 @@ public class SkalenController extends BaseController {
 	@FXML
 	private GridPane multiplePanel;
 
+	@FXML
+	private ListView<String> listKeys;
+	@FXML
+	private Button up;
+	@FXML
+	private Button down;
+	@FXML
+	private Button add;
+	@FXML
+	private Button del;
+
+	@FXML
+	private TextField textKey;
+
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -244,8 +258,9 @@ public class SkalenController extends BaseController {
 
 				try {
 
-					skalenModel.saveSkala(freeQuestion.isSelected() ? SkalaType.FREE : SkalaType.DISCRET, textNameSkalen.getText(), textZeilen.getText(),
-							textSchritte.getText(), textSchrittweite.getText(), textMinimal.getText(), textMaximal.getText(), textOptimum.getText());
+					skalenModel.saveSkala(freeQuestion.isSelected() ? SkalaType.FREE : discretQuestion.isSelected() ? SkalaType.DISCRET
+							: SkalaType.MULTIPLECHOICE, textNameSkalen.getText(), textZeilen.getText(), textSchritte.getText(), textSchrittweite.getText(),
+							textMinimal.getText(), textMaximal.getText(), textOptimum.getText(), listKeys.getItems());
 				} catch (NumberFormatException nfe) {
 					Platform.runLater(new Runnable() {
 
@@ -282,6 +297,80 @@ public class SkalenController extends BaseController {
 				loadList();
 			}
 		});
+
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
+
+			@Override
+			public void handleAction(ActionEvent event) throws Exception {
+
+			}
+
+			@Override
+			public void updateUI() {
+				listKeys.getItems().add(textKey.getText());
+			}
+		}, add);
+
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
+
+			@Override
+			public void handleAction(ActionEvent event) throws Exception {
+
+			}
+
+			@Override
+			public void updateUI() {
+
+				String tmp = listKeys.getSelectionModel().getSelectedItem();
+				int index = listKeys.getSelectionModel().getSelectedIndex() - 1;
+				if (index >= 0) {
+					listKeys.getItems().remove(tmp);
+					listKeys.getItems().add(index, tmp);
+					listKeys.getSelectionModel().select(tmp);
+
+				}
+			}
+		}, up);
+
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
+
+			@Override
+			public void handleAction(ActionEvent event) throws Exception {
+
+			}
+
+			@Override
+			public void updateUI() {
+
+				String tmp = listKeys.getSelectionModel().getSelectedItem();
+				int index = listKeys.getSelectionModel().getSelectedIndex();
+				if (index >= 0 && index + 1 < listKeys.getItems().size()) {
+					listKeys.getItems().remove(tmp);
+					listKeys.getItems().add(index + 1, tmp);
+					listKeys.getSelectionModel().select(tmp);
+
+				}
+			}
+		}, down);
+
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
+
+			@Override
+			public void handleAction(ActionEvent event) throws Exception {
+
+			}
+
+			@Override
+			public void updateUI() {
+				listKeys.getItems().remove(listKeys.getSelectionModel().getSelectedItem());
+			}
+		}, del);
+		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
+		add.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
+		del.setGraphic(new ImageView(new Image("/image/icons/edit_remove.png", 16, 16, true, true)));
+		up.setGraphic(new ImageView(new Image("/image/icons/1uparrow.png", 16, 16, true, true)));
+		down.setGraphic(new ImageView(new Image("/image/icons/1downarrow.png", 16, 16, true, true)));
+		loadList();
 
 	}
 
