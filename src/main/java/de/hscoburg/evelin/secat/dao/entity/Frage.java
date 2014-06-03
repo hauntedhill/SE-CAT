@@ -25,6 +25,8 @@ public class Frage extends BaseEntity {
 
 	private Skala skala;
 
+	private String name;
+
 	private List<Bewertung> bewertungen;
 
 	@ManyToOne(targetEntity = Skala.class)
@@ -71,6 +73,14 @@ public class Frage extends BaseEntity {
 
 	public void setBewertungen(List<Bewertung> bewertungen) {
 		this.bewertungen = bewertungen;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

@@ -52,6 +52,9 @@ public class TopMenuController implements Initializable {
 	@Autowired
 	private LayoutController layout;
 
+	@FXML
+	private MenuItem fragen;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -179,6 +182,21 @@ public class TopMenuController implements Initializable {
 			@Override
 			public void handleAction(ActionEvent event) {
 				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.SHOW_FRAGEBOGEN_FXML);
+			}
+
+			@Override
+			public void updateUI() {
+				layout.setCenterNode(guiNode);
+			}
+		});
+
+		fragen.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+			private Node guiNode;
+
+			@Override
+			public void handleAction(ActionEvent event) {
+				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.FRAGEN_FXML);
 			}
 
 			@Override

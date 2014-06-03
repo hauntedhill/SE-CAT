@@ -38,7 +38,8 @@ import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 @Transactional
 public class FragebogenModel {
 
-	private static CharSequenceTranslator stringXMLEscaper = StringEscapeUtils.ESCAPE_XML.with(NumericEntityEscaper.between(0x0a, 0x0a));
+	private static CharSequenceTranslator stringXMLEscaper = StringEscapeUtils.ESCAPE_XML11.with(NumericEntityEscaper.between(0x0a, 0x0a).with(
+			NumericEntityEscaper.between(0x80, 0xff)));
 
 	@Autowired
 	private FragebogenDAO fragebogenDAO;

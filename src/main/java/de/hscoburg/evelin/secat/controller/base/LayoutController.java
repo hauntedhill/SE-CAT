@@ -48,6 +48,8 @@ public class LayoutController implements Initializable {
 
 	public static final String SHOW_FRAGEBOGEN_FXML = FRAGEBOGEN_PATH + "Frageboegen.fxml";
 
+	public static final String FRAGEN_FXML = FRAGEBOGEN_PATH + "Fragen.fxml";
+
 	@FXML
 	private BorderPane layout;
 

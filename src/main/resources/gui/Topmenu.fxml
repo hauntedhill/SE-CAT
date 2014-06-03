@@ -26,6 +26,8 @@
 						</MenuItem>
 						<MenuItem fx:id="showFragebogen" mnemonicParsing="true" text="%menu.item.questionaires.show.lable">
 						</MenuItem>
+						<MenuItem fx:id="fragen" mnemonicParsing="true" text="%menu.item.questionaires.question.lable">
+						</MenuItem>
 					</items>
 				</Menu>
 
