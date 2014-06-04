@@ -53,6 +53,8 @@ public class Skala extends BaseEntity {
 
 	private String defaultAnswer;
 
+	private String refuseAnswer;
+
 	// @OneToMany(targetEntity = Fragebogen.class, mappedBy = "skala")
 	// public List<Fragebogen> getFrageboegen() {
 	// return frageboegen;
@@ -160,6 +162,14 @@ public class Skala extends BaseEntity {
 
 	public void setDefaultAnswer(String defaultAnswer) {
 		this.defaultAnswer = defaultAnswer;
+	}
+
+	public String getRefuseAnswer() {
+		return refuseAnswer;
+	}
+
+	public void setRefuseAnswer(String refuseAnswer) {
+		this.refuseAnswer = refuseAnswer;
 	}
 
 }

@@ -102,7 +102,7 @@ public class FragebogenModel {
 
 			} else if (f.getSkala().getType().equals(SkalaType.MULTIPLECHOICE)) {
 				currentBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getDefaultAnswer(), f.getSkala().getWeight(), item.getFrage(), f.getSkala()
-						.getChoices(), BaseXML.generateUniqueId(f, item), questionCount++));
+						.getChoices(), BaseXML.generateUniqueId(f, item), questionCount++, f.getSkala().getRefuseAnswer()));
 
 			}
 
@@ -135,7 +135,7 @@ public class FragebogenModel {
 
 				} else if (f.getSkala().getType().equals(SkalaType.MULTIPLECHOICE)) {
 					innerBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getDefaultAnswer(), f.getSkala().getWeight(), f.getText(), f.getSkala()
-							.getChoices(), BaseXML.generateUniqueId(fb, f), questionCount++));
+							.getChoices(), BaseXML.generateUniqueId(fb, f), questionCount++, f.getSkala().getRefuseAnswer()));
 
 				}
 			}

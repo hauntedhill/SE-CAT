@@ -8,6 +8,8 @@ public class MultipleChoicefrageXML extends BaseXML {
 
 	private String defaultAnswer;
 
+	private String refuseAnswer;
+
 	private int weight;
 
 	private String text;
@@ -16,13 +18,14 @@ public class MultipleChoicefrageXML extends BaseXML {
 
 	private String id;
 
-	public MultipleChoicefrageXML(String defaultAnswer, int weight, String text, List<String> choices, String id, int place) {
+	public MultipleChoicefrageXML(String defaultAnswer, int weight, String text, List<String> choices, String id, int place, String refuseAnswer) {
 		this.choices = choices;
 		this.defaultAnswer = defaultAnswer;
 		this.weight = weight;
 		this.text = text;
 		this.place = place;
 		this.id = id;
+		this.refuseAnswer = refuseAnswer;
 	}
 
 	// <MCQUESTION PLACE="1" TEXT="Wetter?" ZWANG="false" WEIGHT="1" OTHERANSWER="sonstiges" TUTOR="false">
@@ -37,8 +40,15 @@ public class MultipleChoicefrageXML extends BaseXML {
 
 	@Override
 	public void getStartXML(StringBuilder builder) {
-		builder.append("<MCQUESTION PLACE=\"" + place + "\" TEXT=\"" + XML_ESCAPER.translate(text) + "\" ZWANG=\"false\" WEIGHT=\"" + weight
-				+ "\" OTHERANSWER=\"" + XML_ESCAPER.translate(defaultAnswer) + "\" TUTOR=\"false\">\n");
+		builder.append("<MCQUESTION PLACE=\"" + place + "\" TEXT=\"" + XML_ESCAPER.translate(text) + "\" ZWANG=\"false\" WEIGHT=\"" + weight + "\" ");
+
+		if (defaultAnswer != null && !"".equals(defaultAnswer)) {
+			builder.append(" OTHERANSWER=\"" + XML_ESCAPER.translate(defaultAnswer) + "\" ");
+		}
+		if (refuseAnswer != null && !"".equals(refuseAnswer)) {
+			builder.append(" REFUSEANSWER=\"" + XML_ESCAPER.translate(refuseAnswer) + "\" ");
+		}
+		builder.append(" TUTOR=\"false\">\n");
 		builder.append("<META KEY=\"METAKEY_MC_WEB_LAYOUT\" VALUE=\"one_col\"/>\n");
 		builder.append("<META KEY=\"METAKEY_MARKING_SIZE\" VALUE=\"0.25\"/>\n");
 		builder.append("<META KEY=\"FIXED_IN_PERMUTATION\" VALUE=\"f\"/>\n");

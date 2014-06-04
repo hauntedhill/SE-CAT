@@ -26,7 +26,7 @@ public class SkalenModel {
 	// }
 
 	public void saveSkala(SkalaType type, String name, String zeilen, String schritte, String schrittWeite, String minText, String maxText, String optimum,
-			List<String> keys, String schrittWeiteMC, String defaultAnswer) throws NumberFormatException {
+			List<String> keys, String schrittWeiteMC, String defaultAnswer, String refuseAnswer) throws NumberFormatException {
 
 		Skala s = new Skala();
 		if ("".equals(name.trim()) || type == null) {
@@ -46,12 +46,13 @@ public class SkalenModel {
 			s.setWeight(Integer.parseInt(schrittWeite));
 			s.setSteps(Integer.parseInt(schritte));
 		} else if (SkalaType.MULTIPLECHOICE.equals(type)) {
-			if ("".equals(defaultAnswer.trim()) || "".equals(schrittWeiteMC.trim())) {
+			if (keys.size() > 1) {
 				throw new NumberFormatException("Empty String");
 			}
 			s.setChoices(keys);
 			s.setDefaultAnswer(defaultAnswer);
 			s.setWeight(Integer.parseInt(schrittWeiteMC));
+			s.setRefuseAnswer(refuseAnswer);
 		}
 		skalaDAO.persist(s);
 

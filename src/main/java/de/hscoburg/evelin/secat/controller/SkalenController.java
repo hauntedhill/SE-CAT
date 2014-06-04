@@ -108,6 +108,9 @@ public class SkalenController extends BaseController {
 	@FXML
 	private TextField textSchrittweiteMC;
 
+	@FXML
+	private TextField textRefuse;
+
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -267,7 +270,7 @@ public class SkalenController extends BaseController {
 					skalenModel.saveSkala(freeQuestion.isSelected() ? SkalaType.FREE : discretQuestion.isSelected() ? SkalaType.DISCRET
 							: SkalaType.MULTIPLECHOICE, textNameSkalen.getText(), textZeilen.getText(), textSchritte.getText(), textSchrittweite.getText(),
 							textMinimal.getText(), textMaximal.getText(), textOptimum.getText(), listKeys.getItems(), textSchrittweiteMC.getText(),
-							textStandardAntwort.getText());
+							textStandardAntwort.getText(), textRefuse.getText());
 				} catch (NumberFormatException nfe) {
 					Platform.runLater(new Runnable() {
 
