@@ -5,7 +5,10 @@ import java.util.List;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
+
+import org.hibernate.annotations.Fetch;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
@@ -51,7 +54,7 @@ public class Skala extends BaseEntity {
 
 	private List<String> choices;
 
-	private String defaultAnswer;
+	private String otherAnswer;
 
 	private String refuseAnswer;
 
@@ -147,7 +150,8 @@ public class Skala extends BaseEntity {
 		this.optimum = optimum;
 	}
 
-	@ElementCollection
+	@ElementCollection(fetch = FetchType.EAGER)
+	@Fetch(org.hibernate.annotations.FetchMode.SELECT)
 	public List<String> getChoices() {
 		return choices;
 	}
@@ -156,12 +160,12 @@ public class Skala extends BaseEntity {
 		this.choices = keys;
 	}
 
-	public String getDefaultAnswer() {
-		return defaultAnswer;
+	public String getOtherAnswer() {
+		return otherAnswer;
 	}
 
-	public void setDefaultAnswer(String defaultAnswer) {
-		this.defaultAnswer = defaultAnswer;
+	public void setOtherAnswer(String defaultAnswer) {
+		this.otherAnswer = defaultAnswer;
 	}
 
 	public String getRefuseAnswer() {

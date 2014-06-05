@@ -101,7 +101,7 @@ public class FragebogenModel {
 				currentBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(f, item), item.getFrage(), questionCount++, f.getSkala().getRows()));
 
 			} else if (f.getSkala().getType().equals(SkalaType.MULTIPLECHOICE)) {
-				currentBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getDefaultAnswer(), f.getSkala().getWeight(), item.getFrage(), f.getSkala()
+				currentBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getOtherAnswer(), f.getSkala().getWeight(), item.getFrage(), f.getSkala()
 						.getChoices(), BaseXML.generateUniqueId(f, item), questionCount++, f.getSkala().getRefuseAnswer()));
 
 			}
@@ -134,7 +134,7 @@ public class FragebogenModel {
 					innerBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(fb, f), f.getText(), questionCount++, f.getSkala().getRows()));
 
 				} else if (f.getSkala().getType().equals(SkalaType.MULTIPLECHOICE)) {
-					innerBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getDefaultAnswer(), f.getSkala().getWeight(), f.getText(), f.getSkala()
+					innerBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getOtherAnswer(), f.getSkala().getWeight(), f.getText(), f.getSkala()
 							.getChoices(), BaseXML.generateUniqueId(fb, f), questionCount++, f.getSkala().getRefuseAnswer()));
 
 				}

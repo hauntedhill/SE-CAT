@@ -50,7 +50,7 @@ public class SkalenModel {
 				throw new NumberFormatException("Empty String");
 			}
 			s.setChoices(keys);
-			s.setDefaultAnswer(defaultAnswer);
+			s.setOtherAnswer(defaultAnswer);
 			s.setWeight(Integer.parseInt(schrittWeiteMC));
 			s.setRefuseAnswer(refuseAnswer);
 		}
