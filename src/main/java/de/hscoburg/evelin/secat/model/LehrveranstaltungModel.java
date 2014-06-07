@@ -32,7 +32,13 @@ public class LehrveranstaltungModel {
 
 			e.setAktiv(true);
 			e.setFach(fach);
-			e.setJahr(new Date(jahr, 1, 1));
+
+			Date d = new Date();
+			d.setYear(jahr);
+			// d.setDate(1);
+			// d.setMonth(1);
+
+			e.setJahr(d);
 			e.setSemester(semester);
 			e.setDozent(dozent);
 

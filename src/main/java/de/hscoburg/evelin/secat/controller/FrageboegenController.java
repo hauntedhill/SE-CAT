@@ -254,6 +254,8 @@ public class FrageboegenController extends BaseController {
 				MenuItem exportItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.export"), new ImageView(new Image(
 						"/image/icons/run.png", 16, 16, true, true)));
 
+				final MenuItem exportCoreItem = new MenuItem("Export to CORE", new ImageView(new Image("/image/icons/run.png", 16, 16, true, true)));
+
 				row.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 
 					@Override
@@ -261,6 +263,9 @@ public class FrageboegenController extends BaseController {
 						if (frageboegen.getSelectionModel().getSelectedItem() != null) {
 							editItem.setDisable(frageboegen.getSelectionModel().getSelectedItem().getExportiert());
 							importItem.setDisable(!frageboegen.getSelectionModel().getSelectedItem().getExportiert());
+
+							exportCoreItem.setDisable(frageboegen.getSelectionModel().getSelectedItem().getBewertungen() == null
+									|| frageboegen.getSelectionModel().getSelectedItem().getBewertungen().size() == 0);
 
 						}
 
@@ -376,9 +381,51 @@ public class FrageboegenController extends BaseController {
 					}
 				});
 
+				exportCoreItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+					private File file;
+
+					private ObservableList<Fragebogen> tableData;
+
+					@Override
+					public void performBeforeEventsBlocked(ActionEvent event) throws Exception {
+						// FileChooser fileChooser = new FileChooser();
+						//
+						// // Set extension filter
+						// FileChooser.ExtensionFilter extFilter = new
+						// FileChooser.ExtensionFilter(SeCatResourceBundle.getInstance().getString(
+						// "scene.filechooser.xmlname"), "*.xml");
+						// fileChooser.getExtensionFilters().add(extFilter);
+						//
+						// fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+						//
+						// fileChooser.setInitialFileName(frageboegen.getSelectionModel().getSelectedItem().getName());
+						//
+						// // Show save file dialog
+						// file = fileChooser.showSaveDialog(getCurrentStage());
+					}
+
+					@Override
+					public void handleAction(ActionEvent t) throws Exception {
+
+						fragebogenModel.exportQuestionarieForCore(frageboegen.getSelectionModel().getSelectedItem());
+
+						// exportController.exportFragebogen(frageboegen.getSelectionModel().getSelectedItem(), file);
+
+						// tableData = getFrageboegen();
+
+					}
+
+					@Override
+					public void updateUI() {
+						// updateTable(tableData);
+					}
+				});
+
 				rowMenu.getItems().add(editItem);
 				rowMenu.getItems().add(exportItem);
 				rowMenu.getItems().add(importItem);
+				rowMenu.getItems().add(exportCoreItem);
 
 				row.contextMenuProperty().bind(
 						javafx.beans.binding.Bindings.when(javafx.beans.binding.Bindings.isNotNull(row.itemProperty())).then(rowMenu)

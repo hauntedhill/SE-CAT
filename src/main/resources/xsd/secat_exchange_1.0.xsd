@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           xmlns="http://www.hs-coburg.de/evelin/secat/exchange/1.0"
+           targetNamespace="http://www.hs-coburg.de/evelin/secat/exchange/1.0"
+           elementFormDefault="qualified">
+
+	<xs:complexType name="propertieType">
+		<xs:sequence>
+		<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
+			
+		</xs:sequence>	
+	</xs:complexType>
+
+	<xs:complexType name="sphereActivityType">
+		<xs:sequence>
+		<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
+		</xs:sequence>	
+	</xs:complexType>
+
+	<xs:complexType name="choicesType">
+		<xs:sequence>
+		<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
+		</xs:sequence>	
+	</xs:complexType>
+
+
+		<xs:simpleType  name="scaleTypeType">
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="FREE"/>
+				<xs:enumeration value="DISCRETE"/>
+				<xs:enumeration value="MC"/>
+			</xs:restriction>
+		</xs:simpleType>
+
+
+	<xs:complexType name="scaleType">
+	
+		<xs:sequence>
+		<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
+			 
+              
+            
+			<xs:element name="type" type="scaleTypeType" minOccurs="1" maxOccurs="1"  />
+			<xs:element name="rows" minOccurs="0" maxOccurs="1" type="xs:int" />
+			<xs:element name="steps" minOccurs="0" maxOccurs="1" type="xs:int" />
+			<xs:element name="weight" minOccurs="0" maxOccurs="1" type="xs:int" />
+			<xs:element name="optimum" minOccurs="0" maxOccurs="1" type="xs:int" />
+			<xs:element name="minText" minOccurs="0" maxOccurs="1" type="xs:string" />
+			<xs:element name="maxText" minOccurs="0" maxOccurs="1" type="xs:string" />
+			<xs:element name="refuseAnswer" minOccurs="0" maxOccurs="1" type="xs:string" />
+			<xs:element name="otherAnswer" minOccurs="0" maxOccurs="1" type="xs:string" />
+			<xs:element name="choices" type="choicesType" minOccurs="1" maxOccurs="unbounded"  />
+		</xs:sequence>	
+	</xs:complexType>    
+
+	<xs:complexType name="perspectiveType">
+		<xs:sequence>
+		<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
+		</xs:sequence>	
+	</xs:complexType>  
+
+
+
+	
+		<xs:simpleType name="semesterType">
+			<xs:restriction base="xs:string">
+				<xs:enumeration value="WS"/>
+				<xs:enumeration value="SS"/>
+			</xs:restriction>
+		</xs:simpleType>
+   
+
+	<xs:complexType name="areaType">
+		<xs:sequence>
+		<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="area" type="sphereActivityType" minOccurs="1" maxOccurs="1" />
+		</xs:sequence>	
+	</xs:complexType>
+
+	<xs:complexType name="subjectType">
+		<xs:sequence>
+		<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
+		</xs:sequence>	
+	</xs:complexType>
+
+	<xs:complexType name="courseType">
+		<xs:sequence>
+		<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="instructor" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="semester" type="semesterType" minOccurs="1" maxOccurs="1"  />
+			<xs:element name="year" minOccurs="1" maxOccurs="1" type="xs:date" />
+			<xs:element name="subject" type="subjectType" minOccurs="1" maxOccurs="1"  />
+		</xs:sequence>	
+	</xs:complexType> 
+
+	<xs:complexType name="evaluationType">
+		<xs:sequence>
+		<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="value" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="wave" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="rawid" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="source" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="date" minOccurs="1" maxOccurs="1" type="xs:date" />
+		</xs:sequence>	
+	</xs:complexType> 
+
+	<xs:complexType name="questionType">
+		<xs:sequence>
+		<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="text" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="scale" type="scaleType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="evaluations" type="evaluationType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>	
+	</xs:complexType>   
+
+	<xs:complexType name="itemType">
+		<xs:sequence>
+		<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="frage" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="area" type="areaType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="properties" type="propertieType" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="perspectives" type="perspectiveType" minOccurs="1" maxOccurs="unbounded" />
+			<xs:element name="evaluations" type="evaluationType" minOccurs="1" maxOccurs="unbounded"/>
+
+		</xs:sequence>
+
+	</xs:complexType>
+
+	<xs:element name="Questionarie">
+		<xs:complexType>
+			<xs:sequence>
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+				<xs:element name="items" type="itemType" minOccurs="1" maxOccurs="unbounded" />
+				<xs:element name="course" type="courseType" minOccurs="1" maxOccurs="1" />
+				<xs:element name="scale" type="scaleType" minOccurs="1" maxOccurs="1" />
+				<xs:element name="propertie" type="propertieType" minOccurs="0" maxOccurs="1" />
+				<xs:element name="perspective" type="perspectiveType" minOccurs="0" maxOccurs="1" />
+				<xs:element name="questions" type="questionType" minOccurs="0" maxOccurs="1" />
+				<xs:element name="creationDate" minOccurs="1" maxOccurs="1" type="xs:date" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</xs:schema>

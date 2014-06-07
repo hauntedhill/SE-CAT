@@ -45,7 +45,7 @@ public class SkalenModel {
 			s.setOptimum(Integer.parseInt(optimum));
 			s.setWeight(Integer.parseInt(schrittWeite));
 			s.setSteps(Integer.parseInt(schritte));
-		} else if (SkalaType.MULTIPLECHOICE.equals(type)) {
+		} else if (SkalaType.MC.equals(type)) {
 			if (keys.size() > 1) {
 				throw new NumberFormatException("Empty String");
 			}

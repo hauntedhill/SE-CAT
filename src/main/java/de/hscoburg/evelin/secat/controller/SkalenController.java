@@ -425,7 +425,7 @@ public class SkalenController extends BaseController {
 				try {
 
 					skalenModel.saveSkala(freeQuestion.isSelected() ? SkalaType.FREE : discretQuestion.isSelected() ? SkalaType.DISCRET
-							: SkalaType.MULTIPLECHOICE, textNameSkalen.getText(), textZeilen.getText(), textSchritte.getText(), textSchrittweite.getText(),
+							: SkalaType.MC, textNameSkalen.getText(), textZeilen.getText(), textSchritte.getText(), textSchrittweite.getText(),
 							textMinimal.getText(), textMaximal.getText(), textOptimum.getText(), listKeys.getItems(), textSchrittweiteMC.getText(),
 							textStandardAntwort.getText(), textRefuse.getText());
 				} catch (NumberFormatException nfe) {

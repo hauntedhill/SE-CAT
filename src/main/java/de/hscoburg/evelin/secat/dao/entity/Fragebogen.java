@@ -63,7 +63,8 @@ public class Fragebogen extends BaseEntity {
 		this.name = name;
 	}
 
-	@OneToMany(mappedBy = "fragebogen", targetEntity = Bewertung.class)
+	@OneToMany(mappedBy = "fragebogen", targetEntity = Bewertung.class, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SELECT)
 	public List<Bewertung> getBewertungen() {
 		return bewertungen;
 	}
