@@ -28,6 +28,9 @@
 						</MenuItem>
 						<MenuItem fx:id="fragen" mnemonicParsing="true" text="%menu.item.questionaires.question.lable">
 						</MenuItem>
+						<MenuItem fx:id="bewertung" mnemonicParsing="true" text="%menu.item.questionaires.evaluation.lable">
+						</MenuItem>
+						
 					</items>
 				</Menu>
 

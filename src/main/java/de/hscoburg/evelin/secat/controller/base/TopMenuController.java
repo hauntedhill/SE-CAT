@@ -55,6 +55,9 @@ public class TopMenuController implements Initializable {
 	@FXML
 	private MenuItem fragen;
 
+	@FXML
+	private MenuItem bewertung;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -205,6 +208,20 @@ public class TopMenuController implements Initializable {
 			}
 		});
 
+		bewertung.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+			private Node guiNode;
+
+			@Override
+			public void handleAction(ActionEvent event) {
+				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.BEWERTUNG_FXML);
+			}
+
+			@Override
+			public void updateUI() {
+				layout.setCenterNode(guiNode);
+			}
+		});
 	}
 
 }
