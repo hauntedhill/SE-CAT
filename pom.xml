@@ -107,11 +107,11 @@
 			<version>0.7.0.201403182114</version>
 			<scope>test</scope>
 		</dependency>
-<dependency>
-	<groupId>org.apache.commons</groupId>
-	<artifactId>commons-lang3</artifactId>
-	<version>3.3.2</version>
-</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>3.3.2</version>
+		</dependency>
 
 
 	</dependencies>
@@ -124,6 +124,36 @@
 			</resource>
 		</resources>
 		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>jaxb2-maven-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>xjc</id>
+						<goals>
+							<goal>xjc</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<schemaDirectory>${basedir}/src/main/resources/xsd/</schemaDirectory>
+					<outputDirectory>${basedir}/src/main/java</outputDirectory>
+					<schemaFiles>secat_exchange_1.0.xsd</schemaFiles>
+					<clearOutputDir>flase</clearOutputDir>
+					<packageName>de.hscoburg.evelin.secat.exchange.dto</packageName> <!-- The name of your generated source package -->
+				</configuration>
+			</plugin>
+			<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-javadoc-plugin</artifactId>
+        <version>2.9.1</version>
+        <configuration>
+         
+          <failOnError>false</failOnError>
+        
+        </configuration>
+      </plugin>
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
