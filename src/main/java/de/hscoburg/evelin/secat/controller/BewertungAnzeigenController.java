@@ -57,6 +57,8 @@ public class BewertungAnzeigenController extends BaseController {
 		final Text source = new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.source"));
 		final Text zeit = new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.zeit"));
 
+		bereiche.clear();
+		tableView.getColumns().clear();
 		TableColumn col0 = new TableColumn();
 		TableColumn col1 = new TableColumn();
 		TableColumn col2 = new TableColumn();
@@ -116,7 +118,6 @@ public class BewertungAnzeigenController extends BaseController {
 		}
 
 		tableView.setItems(ehList);
-
 		((TableColumn<EvaluationHelper, String>) tableView.getColumns().get(0))
 				.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
 
@@ -155,14 +156,16 @@ public class BewertungAnzeigenController extends BaseController {
 		itemCount = 0;
 		actualColumn = 1;
 		for (Bereich bereich : bereiche) {
+
 			TableColumn col = new TableColumn();
 			Text t = new Text(bereich.getName());
-			t.setWrappingWidth(200);
+			if (bereich.getName().length() > 15) {
+				t.setWrappingWidth(200);
+			}
 			col.setGraphic(t);
 			int count = 0;
 			for (Item item : f.getItems()) {
 				if (item.getBereich().equals(bereich)) {
-
 					TableColumn itemCol = new TableColumn();
 					Text itemName = new Text(item.getFrage());
 					itemName.setWrappingWidth(125);
@@ -197,7 +200,6 @@ public class BewertungAnzeigenController extends BaseController {
 			tableView.getColumns().add(col);
 
 		}
-		System.out.println(tableView.getColumns().size());
 
 		// itemCount = 0;
 		// for (Item item : f.getItems()) {
