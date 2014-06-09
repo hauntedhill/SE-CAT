@@ -36,6 +36,7 @@ import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Frage;
+import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
@@ -419,26 +420,16 @@ public class AddFragebogenController extends BaseController {
 						f.setLehrveranstaltung(lehrveranstaltung.getValue());
 						f.setExportiert(false);
 						f.setErstellungsDatum(new Date());
-						// f.setFragen(frageList.getItems());
-						fragebogenModel.persistFragebogen(f);
 
+						ArrayList<Frage_Fragebogen> fragenSetList = new ArrayList<Frage_Fragebogen>();
 						for (Frage frage : fragenList.getItems()) {
-							// frage.se
-							// ArrayList<Fragebogen> fb = new ArrayList<Fragebogen>();
-							// fb.add(f);
-							// if (frage.getFragebogen() == null) {
-							// frage.setFragebogen(fb);
-							// fragebogenModel.mergeFrage(frage);
-							// }
-							// else {
-							// Frage neueFrage = new Frage();
-							// neueFrage.setFragebogen(fb);
-							// neueFrage.setPosition(frage.getPosition());
-							// neueFrage.setSkala(frage.getSkala());
-							// neueFrage.setText(frage.getText());
-							// fragebogenModel.persistFrage(neueFrage);
-							// }
+
+							Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
+							frageFragebogen.setFrage(frage);
+							fragenSetList.add(frageFragebogen);
 						}
+						f.setCustomFragen(fragenSetList);
+						fragebogenModel.persistFragebogen(f);
 
 						for (Item item : itemList.getItems()) {
 							item.addFragebogen(f);
@@ -455,17 +446,16 @@ public class AddFragebogenController extends BaseController {
 						editFragebogen.setLehrveranstaltung(lehrveranstaltung.getValue());
 						editFragebogen.setExportiert(false);
 						editFragebogen.setErstellungsDatum(new Date());
-						// editFragebogen.setFragen(frageList.getItems());
+						ArrayList<Frage_Fragebogen> fragenSetList = new ArrayList<Frage_Fragebogen>();
+						for (Frage frage : fragenList.getItems()) {
+
+							Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
+							frageFragebogen.setFrage(frage);
+							fragenSetList.add(frageFragebogen);
+						}
+						editFragebogen.setCustomFragen(fragenSetList);
 						fragebogenModel.mergeFragebogen(editFragebogen);
 
-						// for (Frage frage : frageList.getItems()) {
-						// if (!fragenToRemove.contains(frage)) {
-						// ArrayList<Fragebogen> fb = new ArrayList<Fragebogen>();
-						// fb.add(editFragebogen);
-						// frage.setFragebogen(fb);
-						// frage.setFragebogen(editFragebogen);
-						// fragebogenModel.mergeFrage(frage);
-						// }
 					}
 					ArrayList<Fragebogen> itemFb = new ArrayList<Fragebogen>();
 					itemFb.add(editFragebogen);
@@ -548,9 +538,9 @@ public class AddFragebogenController extends BaseController {
 						items.add(item);
 					}
 
-					// for (Frage frage : x.getFragen()) {
-					// fragenOl.add(frage);
-					// }
+					for (Frage_Fragebogen frage : x.getCustomFragen()) {
+						fragenOl.add(frage.getFrage());
+					}
 
 					perspektive.getSelectionModel().select(x.getPerspektive());
 					eigenschaft.getSelectionModel().select(x.getEigenschaft());
@@ -558,10 +548,10 @@ public class AddFragebogenController extends BaseController {
 					lehrveranstaltung.getSelectionModel().select(x.getLehrveranstaltung());
 					name.setText(x.getName());
 					itemList.setItems(items);
-					// frageList.setItems(fragenOl);
+					fragenList.setItems(fragenOl);
 				} else {
 					itemList.setItems(items);
-					// frageList.setItems(fragenOl);
+					fragenList.setItems(fragenOl);
 					fach.getSelectionModel().clearSelection();
 					perspektive.getSelectionModel().clearSelection();
 					eigenschaft.getSelectionModel().clearSelection();
@@ -616,18 +606,6 @@ public class AddFragebogenController extends BaseController {
 		}, removeFrage);
 
 	}
-
-	/*
-	 * removeFrage.setOnAction(new EventHandler<ActionEvent>() {
-	 * 
-	 * @Override public void handle(ActionEvent event) { ObservableList<Frage> fragenOl = frageList.getItems();
-	 * fragenToRemove.add(frageList.getSelectionModel().getSelectedItem());
-	 * fragenOl.remove(frageList.getSelectionModel().getSelectedItem()); frageList.setItems(fragenOl);
-	 * 
-	 * }
-	 * 
-	 * }); }
-	 */
 
 	@Override
 	public String getKeyForSceneName() {

@@ -23,10 +23,13 @@ import org.springframework.stereotype.Controller;
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Bewertung;
+import de.hscoburg.evelin.secat.dao.entity.Frage;
+import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.model.BewertungModel;
 import de.hscoburg.evelin.secat.model.FragebogenModel;
+import de.hscoburg.evelin.secat.model.FragenModel;
 import de.hscoburg.evelin.secat.util.javafx.EvaluationHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
@@ -43,8 +46,12 @@ public class BewertungAnzeigenController extends BaseController {
 	FragebogenModel fragebogenModel;
 	@Autowired
 	BewertungController bewertungController;
+	@Autowired
+	FragenModel fragenModel;
 
 	private int itemCount;
+	private int frageColCount;
+	private int wertungCount;
 	private int constColumns;
 	private int actualColumn;
 	private ArrayList<Bereich> bereiche = new ArrayList<Bereich>();
@@ -59,6 +66,7 @@ public class BewertungAnzeigenController extends BaseController {
 
 		bereiche.clear();
 		tableView.getColumns().clear();
+
 		TableColumn col0 = new TableColumn();
 		TableColumn col1 = new TableColumn();
 		TableColumn col2 = new TableColumn();
@@ -76,12 +84,18 @@ public class BewertungAnzeigenController extends BaseController {
 		col1.setGraphic(colHeaderTextRawId);
 		col2.setGraphic(colHeaderTextSource);
 		col3.setGraphic(colHeaderTextZeit);
+
 		tableView.getColumns().addAll(col0, col1, col2, col3);
 
 		Fragebogen f = bewertungController.getSelectedFragebogen();
 		List<Bewertung> bewertungenList = f.getBewertungen();
+		List<Frage_Fragebogen> fragen = f.getCustomFragen();
+		ArrayList<Frage> fragenList = new ArrayList<Frage>();
 
-		ObservableList<EvaluationHelper> ehList = FXCollections.observableArrayList();
+		for (Frage_Fragebogen frage : fragen) {
+			fragenList.add(frage.getFrage());
+		}
+
 		ObservableList<Bewertung> bewertungOl = FXCollections.observableArrayList(f.getBewertungen());
 
 		for (Bewertung bewertung : bewertungOl) {
@@ -90,7 +104,7 @@ public class BewertungAnzeigenController extends BaseController {
 					bereiche.add(bewertung.getItem().getBereich());
 			}
 		}
-
+		ObservableList<EvaluationHelper> ehList = FXCollections.observableArrayList();
 		ArrayList<String> erste = new ArrayList<String>();
 
 		if (!bewertungOl.isEmpty()) {
@@ -105,53 +119,70 @@ public class BewertungAnzeigenController extends BaseController {
 					eh.setZeit(bewertung.getZeit());
 					List<Bewertung> temp = bewertungOl.subList(bewertungOl.indexOf(bewertung), bewertungOl.size() - 1);
 					for (Bewertung b : temp) {
+
 						if (b.getRawid().equals(eh.getRawId())) {
 							if (b.getItem() != null) {
 								eh.addItemWertung(b.getWert());
 							}
 
 						}
+
 					}
+
 					ehList.add(eh);
 				}
 			}
 		}
 
+		for (EvaluationHelper eh : ehList) {
+			ArrayList<String> frageWertungen = new ArrayList<String>();
+			for (Bewertung bewertung : bewertungOl) {
+				if (eh.getRawId().equals(bewertung.getRawid()) && bewertung.getFrage() != null) {
+					for (Frage frage : fragenList) {
+						if (bewertung.getFrage().getId() == frage.getId()) {
+							frageWertungen.add(fragenList.indexOf(frage), bewertung.getWert());
+						}
+					}
+
+				}
+			}
+
+			eh.setFrageWertung(frageWertungen);
+		}
+
 		tableView.setItems(ehList);
-		((TableColumn<EvaluationHelper, String>) tableView.getColumns().get(0))
-				.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
 
-					public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getWelle());
+		col0.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
 
-					}
-				});
+			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getWelle());
 
-		((TableColumn<EvaluationHelper, String>) tableView.getColumns().get(1))
-				.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
+			}
+		});
 
-					public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getRawId());
+		col1.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
 
-					}
-				});
-		((TableColumn<EvaluationHelper, String>) tableView.getColumns().get(2))
-				.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getRawId());
 
-					public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getZeit());
+			}
+		});
+		col2.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
 
-					}
-				});
-		((TableColumn<EvaluationHelper, String>) tableView.getColumns().get(3))
-				.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
+			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getZeit());
 
-					public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
+			}
+		});
+		col3.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
 
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getSource());
+			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
 
-					}
-				});
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getSource());
+
+			}
+		});
+
 		constColumns = 4;
 		itemCount = 0;
 		actualColumn = 1;
@@ -201,71 +232,42 @@ public class BewertungAnzeigenController extends BaseController {
 
 		}
 
-		// itemCount = 0;
-		// for (Item item : f.getItems()) {
-		// TableColumn col = new TableColumn();
-		// Text t = new Text(item.getFrage());
-		// t.setWrappingWidth(125);
-		// col.setGraphic(t);
-		// col.setMinWidth(125);
-		// col.setMaxWidth(125);
-		// tableView.getColumns().add(col);
+		if (!fragenList.isEmpty()) {
+			wertungCount = 0;
 
-		/*
-		 * ((TableColumn<EvaluationHelper, String>) tableView.getColumns().get(colCount)) .setCellValueFactory(new
-		 * Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
-		 * 
-		 * public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) { if (itemCount ==
-		 * (tableView.getColumns().size() - (4 + bereiche.size()))) { itemCount = 0; } return new
-		 * ReadOnlyObjectWrapper<String>(p.getValue().getItemWertung().get(itemCount++));
-		 * 
-		 * } });
-		 */
+			for (Frage frage : fragenList) {
 
-		// }
+				TableColumn colFrage = new TableColumn();
+				colFrage.setMinWidth(125);
+				colFrage.setMaxWidth(125);
+				Text frageText;
+				if (frage.getText().length() > 170) {
+					frageText = new Text(frage.getText().substring(0, 170) + "...");
+				} else {
+					frageText = new Text(frage.getText());
+				}
+				if (frage.getText().length() > 15) {
+					frageText.setWrappingWidth(125);
+				}
+				colFrage.setGraphic(frageText);
+				tableView.getColumns().add(colFrage);
+
+				colFrage.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<Text>>() {
+
+					public ObservableValue<Text> call(CellDataFeatures<EvaluationHelper, String> p) {
+						if (wertungCount == p.getValue().getFrageWertung().size()) {
+							wertungCount = 0;
+						}
+						Text t = new Text(p.getValue().getFrageWertung().get(wertungCount++));
+						t.setWrappingWidth(125);
+						return new ReadOnlyObjectWrapper<Text>(t);
+					}
+				});
+
+			}
+		}
 
 	}
-
-	/*
-	 * ListView list = new ListView(); ListView list2 = new ListView(); ListView list3 = new ListView(); ListView list4 = new ListView();
-	 * ListView list5 = new ListView(); ListView list6 = new ListView(); ListView list7 = new ListView();
-	 * 
-	 * ObservableList<String> values = FXCollections.observableArrayList(); values.addAll("test1", "test2", "test2", "test2", "test2",
-	 * "test2", "test2", "test2"); list.setItems(values); list2.setItems(values); list3.setItems(values); list4.setItems(values);
-	 * list5.setItems(values); list6.setItems(values); list7.setItems(values);
-	 * 
-	 * list.setMaxSize(Double.MAX_VALUE, Double.MAX_VALUE);
-	 * 
-	 * final Text welle = new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.welle")); final Text rawid = new
-	 * Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.rawid")); final Text source = new
-	 * Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.source")); final Text zeit = new
-	 * Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.zeit"));
-	 * 
-	 * welle.setWrappingWidth(125); rawid.setWrappingWidth(125); source.setWrappingWidth(125); zeit.setWrappingWidth(125);
-	 * 
-	 * gridPane.add(welle, 0, 0); gridPane.add(rawid, 1, 0); gridPane.add(source, 2, 0); gridPane.add(zeit, 3, 0);
-	 * 
-	 * colCount = 4;
-	 * 
-	 * Fragebogen f = fragebogenModel.getFragebogenFor(null, null, null, "SECAT SMA 2014 Zwischeneva", null, null, null).get(0); for (Item
-	 * item : f.getItems()) { Text t = new Text(item.getFrage()); t.setWrappingWidth(125); gridPane.add(t, ++colCount, 0);
-	 * 
-	 * }
-	 * 
-	 * final Text welle5 = new Text(); welle5.setWrappingWidth(125); welle5.setText(
-	 * "Ich finde das Thema Anforderungserhebung aufgrund der Lehrveranstaltung interessanter als zu Beginn der Lehrveranstaltung.");
-	 * 
-	 * final Text welle6 = new Text(); welle6.setWrappingWidth(120); welle6.setText(
-	 * "Ich finde das Thema Anforderungserhebung aufgrund der Lehrveranstaltung interessanter als zu Beginn der Lehrveranstaltung.");
-	 * 
-	 * final Text welle7 = new Text(); welle7.setWrappingWidth(120); welle7.setText(
-	 * "Ich finde das Thema Anforderungserhebung aufgrund der Lehrveranstaltung interessanter als zu Beginn der Lehrveranstaltung.");
-	 * 
-	 * gridPane.getColumnConstraints().clear(); gridPane.setMaxWidth(Double.MAX_VALUE); gridPane.setHgap(5); gridPane.setVgap(5);
-	 * 
-	 * gridPane.add(list, 0, 1); gridPane.add(list2, 1, 1); gridPane.add(list3, 2, 1); gridPane.add(list4, 3, 1); gridPane.add(list5, 4, 1);
-	 * gridPane.add(list6, 5, 1); gridPane.add(list7, 6, 1);
-	 */
 
 	@Override
 	public String getKeyForSceneName() {
