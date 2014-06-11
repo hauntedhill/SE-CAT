@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2014.06.07 um 03:56:09 PM CEST 
+// Generiert: 2014.06.11 um 07:39:45 PM CEST 
 //
 
 
@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="maxText" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="refuseAnswer" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="otherAnswer" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="choices" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}choicesType"/>
+ *         &lt;element name="choices" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}choicesType" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -74,7 +74,6 @@ public class ScaleType {
     protected String maxText;
     protected String refuseAnswer;
     protected String otherAnswer;
-    @XmlElement(required = true)
     protected ChoicesType choices;
 
     /**
