@@ -420,16 +420,18 @@ public class AddFragebogenController extends BaseController {
 						f.setLehrveranstaltung(lehrveranstaltung.getValue());
 						f.setExportiert(false);
 						f.setErstellungsDatum(new Date());
-
-						ArrayList<Frage_Fragebogen> fragenSetList = new ArrayList<Frage_Fragebogen>();
+						fragebogenModel.persistFragebogen(f);
+						// ArrayList<Frage_Fragebogen> fragenSetList = new ArrayList<Frage_Fragebogen>();
 						for (Frage frage : fragenList.getItems()) {
 
 							Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
 							frageFragebogen.setFrage(frage);
-							fragenSetList.add(frageFragebogen);
+							f.addFrage_Fragebogen(frageFragebogen);
+							fragenModel.persist(frageFragebogen);
+							// fragenSetList.add(frageFragebogen);
 						}
-						f.setCustomFragen(fragenSetList);
-						fragebogenModel.persistFragebogen(f);
+						// f.setCustomFragen(fragenSetList);
+						fragebogenModel.mergeFragebogen(f);
 
 						for (Item item : itemList.getItems()) {
 							item.addFragebogen(f);
@@ -451,6 +453,7 @@ public class AddFragebogenController extends BaseController {
 
 							Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
 							frageFragebogen.setFrage(frage);
+
 							fragenSetList.add(frageFragebogen);
 						}
 						editFragebogen.setCustomFragen(fragenSetList);
