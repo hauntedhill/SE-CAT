@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2014.06.07 um 02:57:41 PM CEST 
+// Generiert: 2014.06.07 um 03:56:09 PM CEST 
 //
 
 
@@ -11,9 +11,7 @@ package de.hscoburg.evelin.secat.exchange.dto;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -31,7 +29,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="wave" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="rawid" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="source" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="date" type="{http://www.w3.org/2001/XMLSchema}date"/>
+ *         &lt;element name="date" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -61,8 +59,7 @@ public class EvaluationType {
     @XmlElement(required = true)
     protected String source;
     @XmlElement(required = true)
-    @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar date;
+    protected String date;
 
     /**
      * Ruft den Wert der id-Eigenschaft ab.
@@ -181,10 +178,10 @@ public class EvaluationType {
      * 
      * @return
      *     possible object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link String }
      *     
      */
-    public XMLGregorianCalendar getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -193,10 +190,10 @@ public class EvaluationType {
      * 
      * @param value
      *     allowed object is
-     *     {@link XMLGregorianCalendar }
+     *     {@link String }
      *     
      */
-    public void setDate(XMLGregorianCalendar value) {
+    public void setDate(String value) {
         this.date = value;
     }
 

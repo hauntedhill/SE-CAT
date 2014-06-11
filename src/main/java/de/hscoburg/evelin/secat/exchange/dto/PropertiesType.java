@@ -17,16 +17,16 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java-Klasse für choicesType complex type.
+ * <p>Java-Klasse für propertiesType complex type.
  * 
  * <p>Das folgende Schemafragment gibt den erwarteten Content an, der in dieser Klasse enthalten ist.
  * 
  * <pre>
- * &lt;complexType name="choicesType">
+ * &lt;complexType name="propertiesType">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="choice" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}choiceType" maxOccurs="unbounded"/>
+ *         &lt;element name="property" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}propertyType" maxOccurs="unbounded"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -36,41 +36,41 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "choicesType", propOrder = {
-    "choice"
+@XmlType(name = "propertiesType", propOrder = {
+    "property"
 })
-public class ChoicesType {
+public class PropertiesType {
 
     @XmlElement(required = true)
-    protected List<ChoiceType> choice;
+    protected List<PropertyType> property;
 
     /**
-     * Gets the value of the choice property.
+     * Gets the value of the property property.
      * 
      * <p>
      * This accessor method returns a reference to the live list,
      * not a snapshot. Therefore any modification you make to the
      * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the choice property.
+     * This is why there is not a <CODE>set</CODE> method for the property property.
      * 
      * <p>
      * For example, to add a new item, do as follows:
      * <pre>
-     *    getChoice().add(newItem);
+     *    getProperty().add(newItem);
      * </pre>
      * 
      * 
      * <p>
      * Objects of the following type(s) are allowed in the list
-     * {@link ChoiceType }
+     * {@link PropertyType }
      * 
      * 
      */
-    public List<ChoiceType> getChoice() {
-        if (choice == null) {
-            choice = new ArrayList<ChoiceType>();
+    public List<PropertyType> getProperty() {
+        if (property == null) {
+            property = new ArrayList<PropertyType>();
         }
-        return this.choice;
+        return this.property;
     }
 
 }

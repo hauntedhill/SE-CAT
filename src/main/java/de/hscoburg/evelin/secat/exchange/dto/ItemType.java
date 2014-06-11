@@ -2,14 +2,12 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2014.06.07 um 02:57:41 PM CEST 
+// Generiert: 2014.06.07 um 03:56:09 PM CEST 
 //
 
 
 package de.hscoburg.evelin.secat.exchange.dto;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -28,11 +26,11 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="frage" type="{http://www.w3.org/2001/XMLSchema}string"/>
+ *         &lt;element name="question" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="area" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}areaType"/>
- *         &lt;element name="properties" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}propertieType" maxOccurs="unbounded"/>
- *         &lt;element name="perspectives" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}perspectiveType" maxOccurs="unbounded"/>
- *         &lt;element name="evaluations" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}evaluationType" maxOccurs="unbounded"/>
+ *         &lt;element name="properties" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}propertiesType"/>
+ *         &lt;element name="perspectives" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}perspectivesType"/>
+ *         &lt;element name="evaluations" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}evaluationsType"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -45,7 +43,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "itemType", propOrder = {
     "id",
     "name",
-    "frage",
+    "question",
     "area",
     "properties",
     "perspectives",
@@ -57,15 +55,15 @@ public class ItemType {
     @XmlElement(required = true)
     protected String name;
     @XmlElement(required = true)
-    protected String frage;
+    protected String question;
     @XmlElement(required = true)
     protected AreaType area;
     @XmlElement(required = true)
-    protected List<PropertieType> properties;
+    protected PropertiesType properties;
     @XmlElement(required = true)
-    protected List<PerspectiveType> perspectives;
+    protected PerspectivesType perspectives;
     @XmlElement(required = true)
-    protected List<EvaluationType> evaluations;
+    protected EvaluationsType evaluations;
 
     /**
      * Ruft den Wert der id-Eigenschaft ab.
@@ -108,27 +106,27 @@ public class ItemType {
     }
 
     /**
-     * Ruft den Wert der frage-Eigenschaft ab.
+     * Ruft den Wert der question-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getFrage() {
-        return frage;
+    public String getQuestion() {
+        return question;
     }
 
     /**
-     * Legt den Wert der frage-Eigenschaft fest.
+     * Legt den Wert der question-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setFrage(String value) {
-        this.frage = value;
+    public void setQuestion(String value) {
+        this.question = value;
     }
 
     /**
@@ -156,90 +154,75 @@ public class ItemType {
     }
 
     /**
-     * Gets the value of the properties property.
+     * Ruft den Wert der properties-Eigenschaft ab.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the properties property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getProperties().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link PropertieType }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link PropertiesType }
+     *     
      */
-    public List<PropertieType> getProperties() {
-        if (properties == null) {
-            properties = new ArrayList<PropertieType>();
-        }
-        return this.properties;
+    public PropertiesType getProperties() {
+        return properties;
     }
 
     /**
-     * Gets the value of the perspectives property.
+     * Legt den Wert der properties-Eigenschaft fest.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the perspectives property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getPerspectives().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link PerspectiveType }
-     * 
-     * 
+     * @param value
+     *     allowed object is
+     *     {@link PropertiesType }
+     *     
      */
-    public List<PerspectiveType> getPerspectives() {
-        if (perspectives == null) {
-            perspectives = new ArrayList<PerspectiveType>();
-        }
-        return this.perspectives;
+    public void setProperties(PropertiesType value) {
+        this.properties = value;
     }
 
     /**
-     * Gets the value of the evaluations property.
+     * Ruft den Wert der perspectives-Eigenschaft ab.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the evaluations property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getEvaluations().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link EvaluationType }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link PerspectivesType }
+     *     
      */
-    public List<EvaluationType> getEvaluations() {
-        if (evaluations == null) {
-            evaluations = new ArrayList<EvaluationType>();
-        }
-        return this.evaluations;
+    public PerspectivesType getPerspectives() {
+        return perspectives;
+    }
+
+    /**
+     * Legt den Wert der perspectives-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link PerspectivesType }
+     *     
+     */
+    public void setPerspectives(PerspectivesType value) {
+        this.perspectives = value;
+    }
+
+    /**
+     * Ruft den Wert der evaluations-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link EvaluationsType }
+     *     
+     */
+    public EvaluationsType getEvaluations() {
+        return evaluations;
+    }
+
+    /**
+     * Legt den Wert der evaluations-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link EvaluationsType }
+     *     
+     */
+    public void setEvaluations(EvaluationsType value) {
+        this.evaluations = value;
     }
 
 }

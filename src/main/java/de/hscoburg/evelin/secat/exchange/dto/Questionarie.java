@@ -2,14 +2,12 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2014.06.07 um 02:57:41 PM CEST 
+// Generiert: 2014.06.07 um 03:56:09 PM CEST 
 //
 
 
 package de.hscoburg.evelin.secat.exchange.dto;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -30,13 +28,13 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
- *         &lt;element name="items" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}itemType" maxOccurs="unbounded"/>
+ *         &lt;element name="creationDate" type="{http://www.w3.org/2001/XMLSchema}date"/>
  *         &lt;element name="course" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}courseType"/>
  *         &lt;element name="scale" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}scaleType"/>
- *         &lt;element name="propertie" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}propertieType" minOccurs="0"/>
+ *         &lt;element name="property" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}propertyType" minOccurs="0"/>
  *         &lt;element name="perspective" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}perspectiveType" minOccurs="0"/>
- *         &lt;element name="questions" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}questionType" minOccurs="0"/>
- *         &lt;element name="creationDate" type="{http://www.w3.org/2001/XMLSchema}date"/>
+ *         &lt;element name="items" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}itemsType"/>
+ *         &lt;element name="questions" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}questionsType" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -48,30 +46,30 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
     "id",
-    "items",
+    "creationDate",
     "course",
     "scale",
-    "propertie",
+    "property",
     "perspective",
-    "questions",
-    "creationDate"
+    "items",
+    "questions"
 })
-@XmlRootElement(name = "Questionarie")
+@XmlRootElement(name = "questionarie")
 public class Questionarie {
 
     protected int id;
     @XmlElement(required = true)
-    protected List<ItemType> items;
+    @XmlSchemaType(name = "date")
+    protected XMLGregorianCalendar creationDate;
     @XmlElement(required = true)
     protected CourseType course;
     @XmlElement(required = true)
     protected ScaleType scale;
-    protected PropertieType propertie;
+    protected PropertyType property;
     protected PerspectiveType perspective;
-    protected QuestionType questions;
     @XmlElement(required = true)
-    @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar creationDate;
+    protected ItemsType items;
+    protected QuestionsType questions;
 
     /**
      * Ruft den Wert der id-Eigenschaft ab.
@@ -90,32 +88,27 @@ public class Questionarie {
     }
 
     /**
-     * Gets the value of the items property.
+     * Ruft den Wert der creationDate-Eigenschaft ab.
      * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the items property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getItems().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link ItemType }
-     * 
-     * 
+     * @return
+     *     possible object is
+     *     {@link XMLGregorianCalendar }
+     *     
      */
-    public List<ItemType> getItems() {
-        if (items == null) {
-            items = new ArrayList<ItemType>();
-        }
-        return this.items;
+    public XMLGregorianCalendar getCreationDate() {
+        return creationDate;
+    }
+
+    /**
+     * Legt den Wert der creationDate-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link XMLGregorianCalendar }
+     *     
+     */
+    public void setCreationDate(XMLGregorianCalendar value) {
+        this.creationDate = value;
     }
 
     /**
@@ -167,27 +160,27 @@ public class Questionarie {
     }
 
     /**
-     * Ruft den Wert der propertie-Eigenschaft ab.
+     * Ruft den Wert der property-Eigenschaft ab.
      * 
      * @return
      *     possible object is
-     *     {@link PropertieType }
+     *     {@link PropertyType }
      *     
      */
-    public PropertieType getPropertie() {
-        return propertie;
+    public PropertyType getProperty() {
+        return property;
     }
 
     /**
-     * Legt den Wert der propertie-Eigenschaft fest.
+     * Legt den Wert der property-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
-     *     {@link PropertieType }
+     *     {@link PropertyType }
      *     
      */
-    public void setPropertie(PropertieType value) {
-        this.propertie = value;
+    public void setProperty(PropertyType value) {
+        this.property = value;
     }
 
     /**
@@ -215,14 +208,38 @@ public class Questionarie {
     }
 
     /**
+     * Ruft den Wert der items-Eigenschaft ab.
+     * 
+     * @return
+     *     possible object is
+     *     {@link ItemsType }
+     *     
+     */
+    public ItemsType getItems() {
+        return items;
+    }
+
+    /**
+     * Legt den Wert der items-Eigenschaft fest.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link ItemsType }
+     *     
+     */
+    public void setItems(ItemsType value) {
+        this.items = value;
+    }
+
+    /**
      * Ruft den Wert der questions-Eigenschaft ab.
      * 
      * @return
      *     possible object is
-     *     {@link QuestionType }
+     *     {@link QuestionsType }
      *     
      */
-    public QuestionType getQuestions() {
+    public QuestionsType getQuestions() {
         return questions;
     }
 
@@ -231,35 +248,11 @@ public class Questionarie {
      * 
      * @param value
      *     allowed object is
-     *     {@link QuestionType }
+     *     {@link QuestionsType }
      *     
      */
-    public void setQuestions(QuestionType value) {
+    public void setQuestions(QuestionsType value) {
         this.questions = value;
-    }
-
-    /**
-     * Ruft den Wert der creationDate-Eigenschaft ab.
-     * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public XMLGregorianCalendar getCreationDate() {
-        return creationDate;
-    }
-
-    /**
-     * Legt den Wert der creationDate-Eigenschaft fest.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
-     */
-    public void setCreationDate(XMLGregorianCalendar value) {
-        this.creationDate = value;
     }
 
 }

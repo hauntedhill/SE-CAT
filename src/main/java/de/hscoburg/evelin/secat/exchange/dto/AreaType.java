@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2014.06.07 um 02:57:41 PM CEST 
+// Generiert: 2014.06.07 um 03:56:09 PM CEST 
 //
 
 
@@ -26,7 +26,7 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence>
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string"/>
- *         &lt;element name="area" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}sphereActivityType"/>
+ *         &lt;element name="sphereActivity" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}sphereActivityType"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -39,7 +39,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "areaType", propOrder = {
     "id",
     "name",
-    "area"
+    "sphereActivity"
 })
 public class AreaType {
 
@@ -47,7 +47,7 @@ public class AreaType {
     @XmlElement(required = true)
     protected String name;
     @XmlElement(required = true)
-    protected SphereActivityType area;
+    protected SphereActivityType sphereActivity;
 
     /**
      * Ruft den Wert der id-Eigenschaft ab.
@@ -90,27 +90,27 @@ public class AreaType {
     }
 
     /**
-     * Ruft den Wert der area-Eigenschaft ab.
+     * Ruft den Wert der sphereActivity-Eigenschaft ab.
      * 
      * @return
      *     possible object is
      *     {@link SphereActivityType }
      *     
      */
-    public SphereActivityType getArea() {
-        return area;
+    public SphereActivityType getSphereActivity() {
+        return sphereActivity;
     }
 
     /**
-     * Legt den Wert der area-Eigenschaft fest.
+     * Legt den Wert der sphereActivity-Eigenschaft fest.
      * 
      * @param value
      *     allowed object is
      *     {@link SphereActivityType }
      *     
      */
-    public void setArea(SphereActivityType value) {
-        this.area = value;
+    public void setSphereActivity(SphereActivityType value) {
+        this.sphereActivity = value;
     }
 
 }

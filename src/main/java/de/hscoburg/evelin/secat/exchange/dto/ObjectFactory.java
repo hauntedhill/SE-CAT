@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2014.06.07 um 02:57:41 PM CEST 
+// Generiert: 2014.06.07 um 03:56:09 PM CEST 
 //
 
 
@@ -45,14 +45,6 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link ItemType }
-     * 
-     */
-    public ItemType createItemType() {
-        return new ItemType();
-    }
-
-    /**
      * Create an instance of {@link CourseType }
      * 
      */
@@ -69,11 +61,11 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link PropertieType }
+     * Create an instance of {@link PropertyType }
      * 
      */
-    public PropertieType createPropertieType() {
-        return new PropertieType();
+    public PropertyType createPropertyType() {
+        return new PropertyType();
     }
 
     /**
@@ -85,11 +77,19 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link QuestionType }
+     * Create an instance of {@link ItemsType }
      * 
      */
-    public QuestionType createQuestionType() {
-        return new QuestionType();
+    public ItemsType createItemsType() {
+        return new ItemsType();
+    }
+
+    /**
+     * Create an instance of {@link QuestionsType }
+     * 
+     */
+    public QuestionsType createQuestionsType() {
+        return new QuestionsType();
     }
 
     /**
@@ -101,11 +101,35 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link ItemType }
+     * 
+     */
+    public ItemType createItemType() {
+        return new ItemType();
+    }
+
+    /**
      * Create an instance of {@link SubjectType }
      * 
      */
     public SubjectType createSubjectType() {
         return new SubjectType();
+    }
+
+    /**
+     * Create an instance of {@link EvaluationsType }
+     * 
+     */
+    public EvaluationsType createEvaluationsType() {
+        return new EvaluationsType();
+    }
+
+    /**
+     * Create an instance of {@link ChoiceType }
+     * 
+     */
+    public ChoiceType createChoiceType() {
+        return new ChoiceType();
     }
 
     /**
@@ -130,6 +154,30 @@ public class ObjectFactory {
      */
     public AreaType createAreaType() {
         return new AreaType();
+    }
+
+    /**
+     * Create an instance of {@link PropertiesType }
+     * 
+     */
+    public PropertiesType createPropertiesType() {
+        return new PropertiesType();
+    }
+
+    /**
+     * Create an instance of {@link QuestionType }
+     * 
+     */
+    public QuestionType createQuestionType() {
+        return new QuestionType();
+    }
+
+    /**
+     * Create an instance of {@link PerspectivesType }
+     * 
+     */
+    public PerspectivesType createPerspectivesType() {
+        return new PerspectivesType();
     }
 
 }

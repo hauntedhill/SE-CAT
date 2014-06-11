@@ -34,12 +34,14 @@ import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Frage;
 import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
+import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
 import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
+import de.hscoburg.evelin.secat.exchange.dto.AreaType;
 import de.hscoburg.evelin.secat.exchange.dto.ChoiceType;
 import de.hscoburg.evelin.secat.exchange.dto.ChoicesType;
 import de.hscoburg.evelin.secat.exchange.dto.CourseType;
@@ -50,14 +52,15 @@ import de.hscoburg.evelin.secat.exchange.dto.ItemsType;
 import de.hscoburg.evelin.secat.exchange.dto.ObjectFactory;
 import de.hscoburg.evelin.secat.exchange.dto.PerspectiveType;
 import de.hscoburg.evelin.secat.exchange.dto.PerspectivesType;
-import de.hscoburg.evelin.secat.exchange.dto.PropertieType;
 import de.hscoburg.evelin.secat.exchange.dto.PropertiesType;
+import de.hscoburg.evelin.secat.exchange.dto.PropertyType;
 import de.hscoburg.evelin.secat.exchange.dto.QuestionType;
 import de.hscoburg.evelin.secat.exchange.dto.Questionarie;
 import de.hscoburg.evelin.secat.exchange.dto.QuestionsType;
 import de.hscoburg.evelin.secat.exchange.dto.ScaleType;
 import de.hscoburg.evelin.secat.exchange.dto.ScaleTypeType;
 import de.hscoburg.evelin.secat.exchange.dto.SemesterType;
+import de.hscoburg.evelin.secat.exchange.dto.SphereActivityType;
 import de.hscoburg.evelin.secat.exchange.dto.SubjectType;
 
 @Repository
@@ -109,7 +112,7 @@ public class FragebogenModel {
 
 		q.setCreationDate(createXMLGregorienDate(f.getErstellungsDatum()));
 		q.setScale(createScaleType(f.getSkala()));
-		q.setPropertie(createPropertieType(f.getEigenschaft()));
+		q.setProperty(createPropertieType(f.getEigenschaft()));
 		q.setPerspective(createPerspectiveType(f.getPerspektive()));
 		q.setCourse(createCourseType(f.getLehrveranstaltung()));
 		q.setQuestions(createQuestions(f.getCustomFragen()));
@@ -134,7 +137,7 @@ public class FragebogenModel {
 			ItemType it = xmlFactory.createItemType();
 			it.setId(i.getId());
 			it.setName(i.getName());
-			it.setFrage(i.getFrage());
+			it.setQuestion(i.getFrage());
 
 			List<Bewertung> currentBewertungen = new ArrayList<>();
 
@@ -144,6 +147,8 @@ public class FragebogenModel {
 				}
 			}
 
+			it.setArea(createArea(i.getBereich()));
+
 			it.setEvaluations(createEvaluation(currentBewertungen));
 			it.setPerspectives(createPerspectiveType(i.getPerspektiven()));
 			it.setProperties(createPropertieType(i.getEigenschaften()));
@@ -152,6 +157,21 @@ public class FragebogenModel {
 		}
 
 		return result;
+	}
+
+	private AreaType createArea(Bereich b) {
+		AreaType a = xmlFactory.createAreaType();
+		a.setId(b.getId());
+		a.setName(b.getName());
+		a.setSphereActivity(createSphereActivity(b.getHandlungsfeld()));
+		return a;
+	}
+
+	private SphereActivityType createSphereActivity(Handlungsfeld h) {
+		SphereActivityType sphere = xmlFactory.createSphereActivityType();
+		sphere.setId(h.getId());
+		sphere.setName(h.getName());
+		return sphere;
 	}
 
 	private QuestionsType createQuestions(List<Frage_Fragebogen> fragen) {
@@ -246,14 +266,14 @@ public class FragebogenModel {
 	private PropertiesType createPropertieType(List<Eigenschaft> e) {
 		PropertiesType st = xmlFactory.createPropertiesType();
 		for (Eigenschaft p : e) {
-			st.getPropertie().add(createPropertieType(p));
+			st.getProperty().add(createPropertieType(p));
 		}
 
 		return st;
 	}
 
-	private PropertieType createPropertieType(Eigenschaft e) {
-		PropertieType st = xmlFactory.createPropertieType();
+	private PropertyType createPropertieType(Eigenschaft e) {
+		PropertyType st = xmlFactory.createPropertyType();
 		st.setId(e.getId());
 		st.setName(e.getName());
 

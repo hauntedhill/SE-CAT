@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.dao.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -109,6 +110,15 @@ public class Fragebogen extends BaseEntity {
 
 	public void setCustomFragen(List<Frage_Fragebogen> fragen) {
 		this.customFragen = fragen;
+	}
+
+	public void addFrage_Fragebogen(Frage_Fragebogen f) {
+		if (this.customFragen == null) {
+			this.customFragen = new ArrayList<Frage_Fragebogen>();
+		}
+
+		f.setFragebogen(this);
+		this.customFragen.add(f);
 	}
 
 	@ManyToOne(targetEntity = Perspektive.class)

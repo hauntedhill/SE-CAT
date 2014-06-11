@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2014.06.07 um 02:57:41 PM CEST 
+// Generiert: 2014.06.07 um 03:56:09 PM CEST 
 //
 
 
@@ -11,9 +11,7 @@ package de.hscoburg.evelin.secat.exchange.dto;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
-import javax.xml.datatype.XMLGregorianCalendar;
 
 
 /**
@@ -29,7 +27,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="instructor" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="semester" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}semesterType"/>
- *         &lt;element name="year" type="{http://www.w3.org/2001/XMLSchema}date"/>
+ *         &lt;element name="year" type="{http://www.w3.org/2001/XMLSchema}int"/>
  *         &lt;element name="subject" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}subjectType"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -54,9 +52,7 @@ public class CourseType {
     protected String instructor;
     @XmlElement(required = true)
     protected SemesterType semester;
-    @XmlElement(required = true)
-    @XmlSchemaType(name = "date")
-    protected XMLGregorianCalendar year;
+    protected int year;
     @XmlElement(required = true)
     protected SubjectType subject;
 
@@ -127,24 +123,16 @@ public class CourseType {
     /**
      * Ruft den Wert der year-Eigenschaft ab.
      * 
-     * @return
-     *     possible object is
-     *     {@link XMLGregorianCalendar }
-     *     
      */
-    public XMLGregorianCalendar getYear() {
+    public int getYear() {
         return year;
     }
 
     /**
      * Legt den Wert der year-Eigenschaft fest.
      * 
-     * @param value
-     *     allowed object is
-     *     {@link XMLGregorianCalendar }
-     *     
      */
-    public void setYear(XMLGregorianCalendar value) {
+    public void setYear(int value) {
         this.year = value;
     }
 

@@ -4,7 +4,7 @@
            targetNamespace="http://www.hs-coburg.de/evelin/secat/exchange/1.0"
            elementFormDefault="qualified">
 
-	<xs:complexType name="propertieType">
+	<xs:complexType name="propertyType">
 		<xs:sequence>
 			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
@@ -14,7 +14,7 @@
 
 	<xs:complexType name="propertiesType">
 		<xs:sequence>
-			<xs:element name="propertie" type="propertieType" minOccurs="1" maxOccurs="unbounded"  />
+			<xs:element name="property" type="propertyType" minOccurs="1" maxOccurs="unbounded"  />
 
 		</xs:sequence>	
 	</xs:complexType>
@@ -66,7 +66,7 @@
 			<xs:element name="maxText" minOccurs="0" maxOccurs="1" type="xs:string" />
 			<xs:element name="refuseAnswer" minOccurs="0" maxOccurs="1" type="xs:string" />
 			<xs:element name="otherAnswer" minOccurs="0" maxOccurs="1" type="xs:string" />
-			<xs:element name="choices" type="choicesType" minOccurs="1" maxOccurs="1"  />
+			<xs:element name="choices" type="choicesType" minOccurs="0" maxOccurs="1"  />
 		</xs:sequence>	
 	</xs:complexType>    
 
@@ -98,7 +98,7 @@
 		<xs:sequence>
 			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
-			<xs:element name="area" type="sphereActivityType" minOccurs="1" maxOccurs="1" />
+			<xs:element name="sphereActivity" type="sphereActivityType" minOccurs="1" maxOccurs="1" />
 		</xs:sequence>	
 	</xs:complexType>
 
@@ -150,7 +150,7 @@
 		<xs:sequence>
 			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
-			<xs:element name="frage" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="question" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="area" type="areaType" minOccurs="1" maxOccurs="1" />
 			<xs:element name="properties" type="propertiesType" minOccurs="1" maxOccurs="1" />
 			<xs:element name="perspectives" type="perspectivesType" minOccurs="1" maxOccurs="1" />
@@ -176,14 +176,14 @@
 
 	</xs:complexType>
 
-	<xs:element name="Questionarie">
+	<xs:element name="questionarie">
 		<xs:complexType>
 			<xs:sequence>
 				<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
 				<xs:element name="creationDate" minOccurs="1" maxOccurs="1" type="xs:date" />
 				<xs:element name="course" type="courseType" minOccurs="1" maxOccurs="1" />
 				<xs:element name="scale" type="scaleType" minOccurs="1" maxOccurs="1" />
-				<xs:element name="propertie" type="propertieType" minOccurs="0" maxOccurs="1" />
+				<xs:element name="property" type="propertyType" minOccurs="0" maxOccurs="1" />
 				<xs:element name="perspective" type="perspectiveType" minOccurs="0" maxOccurs="1" />
 				<xs:element name="items" type="itemsType" minOccurs="1" maxOccurs="1" />
 				<xs:element name="questions" type="questionsType" minOccurs="0" maxOccurs="1" />
