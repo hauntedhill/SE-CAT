@@ -10,6 +10,7 @@ import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
+import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
 
 public class ConverterHelper {
 
@@ -152,6 +153,24 @@ public class ConverterHelper {
 
 			@Override
 			public Item fromString(String string) {
+				throw new RuntimeException("not required for non editable ComboBox");
+			}
+
+		};
+	}
+
+	public static StringConverter<FragePosition> getConverterForPosition() {
+		return new StringConverter<FragePosition>() {
+			@Override
+			public String toString(FragePosition object) {
+				if (object.equals(FragePosition.TOP)) {
+					return SeCatResourceBundle.getInstance().getString("scene.all.beginning");
+				}
+				return SeCatResourceBundle.getInstance().getString("scene.all.end");
+			}
+
+			@Override
+			public FragePosition fromString(String string) {
 				throw new RuntimeException("not required for non editable ComboBox");
 			}
 

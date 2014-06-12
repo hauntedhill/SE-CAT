@@ -71,6 +71,10 @@ public class FragebogenModel {
 	private FragebogenDAO fragebogenDAO;
 	@Autowired
 	private FrageDAO frageDAO;
+	@Autowired
+	private FragenModel fragenModel;
+	@Autowired
+	HandlungsfeldModel handlungsfeldModel;
 
 	private ObjectFactory xmlFactory = new ObjectFactory();
 
@@ -400,6 +404,109 @@ public class FragebogenModel {
 			// int dateComparison = a.getBereich().compareTo(b.date);
 			return a.getBereich().getName().compareTo(b.getBereich().getName());
 		}
+	}
+
+	public void addFragebogen(Fragebogen f, String name, List<Item> itemList, Perspektive p, Eigenschaft e, Skala s, Lehrveranstaltung l,
+			List<Frage> fragenList, FragePosition positionFrage) {
+		f.setName(name);
+		f.setItems(itemList);
+		f.setPerspektive(p);
+		f.setEigenschaft(e);
+		f.setSkala(s);
+		f.setLehrveranstaltung(l);
+		f.setExportiert(false);
+		f.setErstellungsDatum(new Date());
+
+		mergeFragebogen(f);
+		for (Frage frage : fragenList) {
+
+			Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
+			frageFragebogen.setPosition(positionFrage);
+			frageFragebogen.setFrage(frage);
+			f.addFrage_Fragebogen(frageFragebogen);
+			fragenModel.persist(frageFragebogen);
+		}
+		mergeFragebogen(f);
+
+		for (Item item : itemList) {
+			item.addFragebogen(f);
+			handlungsfeldModel.mergeItem(item);
+		}
+
+	}
+
+	public void editFragebogen(Fragebogen edit, String name, List<Item> itemList, Perspektive p, Eigenschaft e, Skala s, Lehrveranstaltung l,
+			List<Frage> fragenList, List<Frage> fragenToRemove, List<Item> itemsToRemove, FragePosition positionFrage) {
+
+		edit.setName(name);
+		edit.setItems(itemList);
+		edit.setPerspektive(p);
+		edit.setEigenschaft(e);
+		edit.setSkala(s);
+		edit.setLehrveranstaltung(l);
+		edit.setExportiert(false);
+		edit.setErstellungsDatum(new Date());
+
+		ArrayList<Frage> fragenExist = new ArrayList<Frage>();
+		for (Frage_Fragebogen frage_fragebogen : edit.getCustomFragen()) {
+			fragenExist.add(frage_fragebogen.getFrage());
+		}
+
+		if (fragenToRemove != null) {
+			for (Frage frage : fragenToRemove) {
+				for (Frage_Fragebogen frage_fragebogen : edit.getCustomFragen()) {
+					if (frage_fragebogen.getFrage().equals(frage)) {
+						fragenExist.remove(frage);
+						frage_fragebogen.setFragebogen(null);
+						fragenModel.merge(frage_fragebogen);
+					}
+				}
+			}
+		}
+
+		for (Frage frage : fragenList) {
+
+			if (!fragenExist.contains(frage) || fragenExist.isEmpty()) {
+				Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
+				frageFragebogen.setPosition(positionFrage);
+				frageFragebogen.setFrage(frage);
+				edit.addFrage_Fragebogen(frageFragebogen);
+				fragenModel.persist(frageFragebogen);
+				mergeFragebogen(edit);
+			} else {
+				for (Frage_Fragebogen frageFragebogen : edit.getCustomFragen()) {
+					if (frageFragebogen.getFrage().equals(frage)) {
+						frageFragebogen.setPosition(positionFrage);
+						fragenModel.merge(frageFragebogen);
+					}
+
+				}
+
+			}
+
+		}
+		ArrayList<Fragebogen> itemFb = new ArrayList<Fragebogen>();
+		itemFb.add(edit);
+
+		for (Item item : itemList) {
+			if (!itemsToRemove.contains(item)) {
+				item.setFrageboegen(itemFb);
+				handlungsfeldModel.mergeItem(item);
+			}
+		}
+
+		for (Item item : itemsToRemove) {
+			ArrayList<Fragebogen> fbs = new ArrayList<Fragebogen>();
+			for (Fragebogen f : item.getFrageboegen()) {
+				if (!edit.equals(f)) {
+					fbs.add(f);
+				}
+				item.setFrageboegen(fbs);
+				handlungsfeldModel.mergeItem(item);
+			}
+
+		}
+
 	}
 
 }

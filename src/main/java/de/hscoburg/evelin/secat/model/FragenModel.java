@@ -30,6 +30,10 @@ public class FragenModel {
 		frageFragebogenDAO.persist(f);
 	}
 
+	public void merge(Frage_Fragebogen f) {
+		frageFragebogenDAO.merge(f);
+	}
+
 	public void saveFrage(String name, String text, Skala skala) throws IllegalArgumentException {
 		if (name == null || text == null || "".equals(name) || "".equals(text) || skala == null) {
 			throw new IllegalArgumentException();

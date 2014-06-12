@@ -2,7 +2,6 @@ package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -43,6 +42,7 @@ import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
+import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
 import de.hscoburg.evelin.secat.model.FachModel;
 import de.hscoburg.evelin.secat.model.FragebogenModel;
 import de.hscoburg.evelin.secat.model.FragenModel;
@@ -79,7 +79,7 @@ public class AddFragebogenController extends BaseController {
 	@FXML
 	// private ComboBox<Skala> skalaFrage;
 	// @FXML
-	private ComboBox<String> positionFrage;
+	private ComboBox<FragePosition> positionFrage;
 	@FXML
 	private ComboBox<Eigenschaft> eigenschaft;
 	@FXML
@@ -280,10 +280,11 @@ public class AddFragebogenController extends BaseController {
 		}
 		vorlage.setItems(vorlageOl);
 
-		ObservableList<String> fragePosOl = FXCollections.observableArrayList();
-		fragePosOl.add(SeCatResourceBundle.getInstance().getString("scene.all.beginning"));
-		fragePosOl.add(SeCatResourceBundle.getInstance().getString("scene.all.end"));
+		ObservableList<FragePosition> fragePosOl = FXCollections.observableArrayList();
+		fragePosOl.add(FragePosition.TOP);
+		fragePosOl.add(FragePosition.BOTTOM);
 		positionFrage.setItems(fragePosOl);
+		positionFrage.getSelectionModel().select(0);
 
 		addItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
 			boolean addItemConflict = false;
@@ -322,6 +323,9 @@ public class AddFragebogenController extends BaseController {
 					for (TreeItem<TreeItemWrapper> child : treeItems) {
 						if (child.getValue().isItem() && !itemList.getItems().contains(child.getValue().getItem())) {
 							items.add(child.getValue().getItem());
+							if (itemsToRemove.contains(child.getValue().getItem())) {
+								itemsToRemove.remove(child.getValue().getItem());
+							}
 						}
 					}
 					itemList.setItems(items);
@@ -402,7 +406,7 @@ public class AddFragebogenController extends BaseController {
 
 				try {
 					if (name.getText().equals("") || selectedPerspektive == null || skala.getValue() == null || lehrveranstaltung.getValue() == null
-							|| itemList.getItems().isEmpty())
+							|| itemList.getItems().isEmpty() || positionFrage == null)
 						throw new IllegalArgumentException();
 					for (Item item : itemList.getItems()) {
 						if (!item.getPerspektiven().contains(selectedPerspektive)) {
@@ -411,84 +415,69 @@ public class AddFragebogenController extends BaseController {
 					}
 
 					if (editMode == false) {
+
 						Fragebogen f = new Fragebogen();
-						f.setName(name.getText());
-						f.setItems(itemList.getItems());
-						f.setPerspektive(perspektive.getValue());
-						f.setEigenschaft(eigenschaft.getValue());
-						f.setSkala(skala.getValue());
-						f.setLehrveranstaltung(lehrveranstaltung.getValue());
-						f.setExportiert(false);
-						f.setErstellungsDatum(new Date());
 						fragebogenModel.persistFragebogen(f);
-						// ArrayList<Frage_Fragebogen> fragenSetList = new ArrayList<Frage_Fragebogen>();
-						for (Frage frage : fragenList.getItems()) {
 
-							Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
-							frageFragebogen.setFrage(frage);
-							f.addFrage_Fragebogen(frageFragebogen);
-							fragenModel.persist(frageFragebogen);
-							// fragenSetList.add(frageFragebogen);
-						}
-						// f.setCustomFragen(fragenSetList);
-						fragebogenModel.mergeFragebogen(f);
+						fragebogenModel.addFragebogen(f, name.getText(), itemList.getItems(), perspektive.getValue(), eigenschaft.getValue(), skala.getValue(),
+								lehrveranstaltung.getValue(), fragenList.getItems(), positionFrage.getValue());
 
-						for (Item item : itemList.getItems()) {
-							item.addFragebogen(f);
-							handlungsfeldModel.mergeItem(item);
-						}
-
+						/*
+						 * for (Frage frage : fragenList.getItems()) {
+						 * 
+						 * Frage_Fragebogen frageFragebogen = new Frage_Fragebogen(); frageFragebogen.setPosition(positionFrage.getValue());
+						 * frageFragebogen.setFrage(frage); f.addFrage_Fragebogen(frageFragebogen); fragenModel.persist(frageFragebogen); }
+						 * fragebogenModel.mergeFragebogen(f);
+						 * 
+						 * for (Item item : itemList.getItems()) { item.addFragebogen(f); handlungsfeldModel.mergeItem(item); }
+						 */
 					} else {
 
-						editFragebogen.setName(name.getText());
-						editFragebogen.setItems(itemList.getItems());
-						editFragebogen.setPerspektive(perspektive.getValue());
-						editFragebogen.setEigenschaft(eigenschaft.getValue());
-						editFragebogen.setSkala(skala.getValue());
-						editFragebogen.setLehrveranstaltung(lehrveranstaltung.getValue());
-						editFragebogen.setExportiert(false);
-						editFragebogen.setErstellungsDatum(new Date());
-						ArrayList<Frage_Fragebogen> fragenSetList = new ArrayList<Frage_Fragebogen>();
-						for (Frage frage : fragenList.getItems()) {
-
-							Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
-							frageFragebogen.setFrage(frage);
-
-							fragenSetList.add(frageFragebogen);
-						}
-						editFragebogen.setCustomFragen(fragenSetList);
-						fragebogenModel.mergeFragebogen(editFragebogen);
-
+						fragebogenModel.editFragebogen(editFragebogen, name.getText(), itemList.getItems(), perspektive.getValue(), eigenschaft.getValue(),
+								skala.getValue(), lehrveranstaltung.getValue(), fragenList.getItems(), fragenToRemove, itemsToRemove, positionFrage.getValue());
 					}
-					ArrayList<Fragebogen> itemFb = new ArrayList<Fragebogen>();
-					itemFb.add(editFragebogen);
-
-					for (Item item : itemList.getItems()) {
-						if (!itemsToRemove.contains(item)) {
-							item.setFrageboegen(itemFb);
-							handlungsfeldModel.mergeItem(item);
-						}
-					}
-
-					for (Item item : itemsToRemove) {
-						ArrayList<Fragebogen> fbs = new ArrayList<Fragebogen>();
-						for (Fragebogen f : item.getFrageboegen()) {
-							if (!editFragebogen.equals(f)) {
-								fbs.add(f);
-							}
-							item.setFrageboegen(fbs);
-							handlungsfeldModel.mergeItem(item);
-						}
-
-					}
-					// for (Frage frage : fragenToRemove) {
-
-					// frage.setFragebogen(null);
-					// fragebogenModel.mergeFrage(frage);
-
-					// }
-					// }
-				} catch (IllegalArgumentException iae) {
+				}
+				/*
+				 * editFragebogen.setName(name.getText()); editFragebogen.setItems(itemList.getItems());
+				 * editFragebogen.setPerspektive(perspektive.getValue()); editFragebogen.setEigenschaft(eigenschaft.getValue());
+				 * editFragebogen.setSkala(skala.getValue()); editFragebogen.setLehrveranstaltung(lehrveranstaltung.getValue());
+				 * editFragebogen.setExportiert(false); editFragebogen.setErstellungsDatum(new Date());
+				 * 
+				 * ArrayList<Frage> fragenExist = new ArrayList<Frage>(); for (Frage_Fragebogen frage_fragebogen :
+				 * editFragebogen.getCustomFragen()) { fragenExist.add(frage_fragebogen.getFrage()); }
+				 * 
+				 * for (Frage frage : fragenToRemove) { for (Frage_Fragebogen frage_fragebogen : editFragebogen.getCustomFragen()) { if
+				 * (frage_fragebogen.getFrage().equals(frage)) { fragenExist.remove(frage); frage_fragebogen.setFragebogen(null);
+				 * fragenModel.merge(frage_fragebogen); } } }
+				 * 
+				 * for (Frage frage : fragenList.getItems()) {
+				 * 
+				 * if (!fragenExist.contains(frage) || fragenExist.isEmpty()) { Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
+				 * frageFragebogen.setPosition(positionFrage.getValue()); frageFragebogen.setFrage(frage);
+				 * editFragebogen.addFrage_Fragebogen(frageFragebogen); fragenModel.persist(frageFragebogen);
+				 * fragebogenModel.mergeFragebogen(editFragebogen); } else { for (Frage_Fragebogen frageFragebogen :
+				 * editFragebogen.getCustomFragen()) { if (frageFragebogen.getFrage().equals(frage)) {
+				 * frageFragebogen.setPosition(positionFrage.getValue()); fragenModel.merge(frageFragebogen); }
+				 * 
+				 * }
+				 * 
+				 * }
+				 * 
+				 * } ArrayList<Fragebogen> itemFb = new ArrayList<Fragebogen>(); itemFb.add(editFragebogen);
+				 * 
+				 * for (Item item : itemList.getItems()) { if (!itemsToRemove.contains(item)) { item.setFrageboegen(itemFb);
+				 * handlungsfeldModel.mergeItem(item); } }
+				 * 
+				 * for (Item item : itemsToRemove) { ArrayList<Fragebogen> fbs = new ArrayList<Fragebogen>(); for (Fragebogen f :
+				 * item.getFrageboegen()) { if (!editFragebogen.equals(f)) { fbs.add(f); } item.setFrageboegen(fbs);
+				 * handlungsfeldModel.mergeItem(item); }
+				 * 
+				 * }
+				 * 
+				 * }
+				 * 
+				 * }
+				 */catch (IllegalArgumentException iae) {
 					Platform.runLater(new Runnable() {
 
 						@Override
@@ -506,7 +495,7 @@ public class AddFragebogenController extends BaseController {
 			public void updateUI() {
 				ObservableList<Item> items = FXCollections.observableArrayList();
 				ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
-				itemList.setItems(items);
+				// itemList.setItems(items);
 				// frageList.setItems(fragenOl);
 				// frageText.clear();
 				fach.getSelectionModel().clearSelection();
@@ -543,6 +532,7 @@ public class AddFragebogenController extends BaseController {
 
 					for (Frage_Fragebogen frage : x.getCustomFragen()) {
 						fragenOl.add(frage.getFrage());
+						positionFrage.setValue(frage.getPosition());
 					}
 
 					perspektive.getSelectionModel().select(x.getPerspektive());
@@ -582,7 +572,9 @@ public class AddFragebogenController extends BaseController {
 					if (!fragenOl.contains(frage)) {
 						fragenOl.add(frage);
 					}
-
+					if (fragenToRemove.contains(frage)) {
+						fragenToRemove.remove(frage);
+					}
 				}
 
 				fragenList.setItems(fragenOl);
@@ -601,6 +593,7 @@ public class AddFragebogenController extends BaseController {
 			public void updateUI() {
 				ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
 				fragenOl = fragenList.getItems();
+				fragenToRemove.add(fragenList.getSelectionModel().getSelectedItem());
 				fragenOl.remove(fragenList.getSelectionModel().getSelectedItem());
 
 				fragenList.setItems(fragenOl);
@@ -631,17 +624,18 @@ public class AddFragebogenController extends BaseController {
 			items.add(item);
 		}
 
-		// for (Frage frage : f.getFragen()) {
-		// fragenOl.add(frage);
-		// }
+		for (Frage_Fragebogen frage : f.getCustomFragen()) {
+			fragenOl.add(frage.getFrage());
+			positionFrage.setValue(frage.getPosition());
 
+		}
+		fragenList.setItems(fragenOl);
 		perspektive.getSelectionModel().select(f.getPerspektive());
 		eigenschaft.getSelectionModel().select(f.getEigenschaft());
 		skala.getSelectionModel().select(f.getSkala());
 		lehrveranstaltung.getSelectionModel().select(f.getLehrveranstaltung());
 		name.setText(f.getName());
 		itemList.setItems(items);
-		// frageList.setItems(fragenOl);
 	}
 
 }
