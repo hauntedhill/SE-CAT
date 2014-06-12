@@ -9,7 +9,7 @@ import javax.persistence.MappedSuperclass;
 /**
  * Basis Klasse fuer alle Entities
  * 
- * @author Haunted
+ * @author zuch1000
  * 
  */
 @MappedSuperclass

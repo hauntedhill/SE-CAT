@@ -15,12 +15,19 @@ import de.hscoburg.evelin.secat.dao.FrageDAO;
 import de.hscoburg.evelin.secat.dao.FragebogenDAO;
 import de.hscoburg.evelin.secat.dao.ItemDAO;
 import de.hscoburg.evelin.secat.dao.entity.Bewertung;
-import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Frage;
+import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
+import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
+/**
+ * Model zur Verarbeitung aller Funktionalitaeten die Bewertungen betreffen.
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 @Transactional
 public class BewertungModel {
@@ -37,6 +44,15 @@ public class BewertungModel {
 	@Autowired
 	private BewertungDAO bewertungDAO;
 
+	/**
+	 * Liest aus dem uebergebenen {@link File} alle Bewertungen von QUestorProaus und speichert diese in der Datenbank.
+	 * 
+	 * @param f
+	 *            - Das {@link File}
+	 * @return {@link Integer} mit dem Wert der eingelesenen Bewertungen
+	 * @throws Exception
+	 *             Sollte die importierten Bewertungen nicht dem Fragebogen entsprechen.
+	 */
 	public int importBewertungen(File f) throws Exception {
 
 		Fragebogen fragebogen = null;
@@ -54,13 +70,13 @@ public class BewertungModel {
 				String[] fields = line.split(";");
 
 				if (fields.length <= 4) {
-					throw new IllegalArgumentException("Ungültige Anzahl an Antworten.");
+					throw new IllegalArgumentException(SeCatResourceBundle.getInstance().getString("scene.evaluation.import.error.incorrectCountAnswers"));
 				}
 
 				for (int i = 4; i < fields.length; i++) {
 					String[] ids = fields[i].split("_");
 					if (ids.length != 4) {
-						throw new IllegalArgumentException("Ungültige ID (" + fields[i] + ") in Datei.");
+						throw new IllegalArgumentException(SeCatResourceBundle.getInstance().getString("scene.evaluation.import.error.incorrectId") + fields[i]);
 					}
 
 					Fragebogen tmpFragebogen = fragebogenDAO.findById(Integer.parseInt(ids[1]));
@@ -74,17 +90,21 @@ public class BewertungModel {
 					}
 
 					if (fragebogen != null && !tmpFragebogen.equals(fragebogen)) {
-						throw new IllegalArgumentException("Antworten aus mehreren Fragebögen(" + fragebogen + "und " + tmpFragebogen + ") gefunden.");
+						throw new IllegalArgumentException(SeCatResourceBundle.getInstance().getString("scene.evaluation.import.error.incorrectQuestionaryId")
+								+ fragebogen + ", " + tmpFragebogen);
 					} else if (!tmpFragebogen.getExportiert()) {
-						throw new IllegalArgumentException("Fragebogen (" + tmpFragebogen + ") wurde noch nicht exportiert.");
+						throw new IllegalArgumentException(SeCatResourceBundle.getInstance().getString(
+								"scene.evaluation.import.error.incorrectQuestionaryStatus")
+								+ tmpFragebogen);
 
 					} else {
 						fragebogen = tmpFragebogen;
 					}
 
 					if (fragebogen.getItems().size() + fragebogen.getCustomFragen().size() != fields.length - 4) {
-						throw new IllegalArgumentException("Anzahl erwartete Antworten (Erwartet: " + fragebogen.getItems().size()
-								+ fragebogen.getCustomFragen().size() + " Gefunden:" + (fields.length - 4) + ") nicht korrekt.");
+						throw new IllegalArgumentException(SeCatResourceBundle.getInstance()
+								.getString("scene.evaluation.import.error.incorrectEvaluationCount")
+								+ (fragebogen.getItems().size() + fragebogen.getCustomFragen().size()) + ", " + (fields.length - 4));
 					}
 
 					if (ids[2].equals("frage")) {
@@ -100,7 +120,8 @@ public class BewertungModel {
 						}
 
 						if (!foundQuestion) {
-							throw new IllegalArgumentException("Frage (" + frage + ") nicht im Fragebogen vorhanden.");
+							throw new IllegalArgumentException(SeCatResourceBundle.getInstance().getString("scene.evaluation.import.error.questionNotFound")
+									+ frage);
 						}
 
 						fragen.add(frage);
@@ -109,7 +130,7 @@ public class BewertungModel {
 						Item item = itemDAO.findById(Integer.parseInt(ids[3]));
 
 						if (!fragebogen.getItems().contains(item)) {
-							throw new IllegalArgumentException("Item (" + item + ") nicht im Fragebogen vorhanden.");
+							throw new IllegalArgumentException(SeCatResourceBundle.getInstance().getString("scene.evaluation.import.error.itemNotFound") + item);
 						}
 						fragen.add(itemDAO.findById(Integer.parseInt(ids[3])));
 					}

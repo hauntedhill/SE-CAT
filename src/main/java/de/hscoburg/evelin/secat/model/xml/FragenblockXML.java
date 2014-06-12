@@ -1,5 +1,11 @@
-package de.hscoburg.evelin.secat.controller.xml;
+package de.hscoburg.evelin.secat.model.xml;
 
+/**
+ * Klasse zur definition eines Fragenblockes innerhalb des open QUestionarie Formates
+ * 
+ * @author zuch1000
+ * 
+ */
 public class FragenblockXML extends BaseXML {
 
 	private int number;
@@ -11,11 +17,23 @@ public class FragenblockXML extends BaseXML {
 		this.name = name;
 	}
 
+	/**
+	 * Gibt den Starttag zurueck.
+	 * 
+	 * @param builder
+	 *            - {@link StringBuilder} zum speichern des Tags.
+	 */
 	@Override
 	public void getStartXML(StringBuilder builder) {
 		builder.append("<QUESTIONBLOCK PLACE=\"" + number + "\" TARGETLAYER=\"0\" RANDOMIZED=\"false\" NAME=\"" + XML_ESCAPER.translate(name) + "\">\n");
 	}
 
+	/**
+	 * Gibt den Endtag zurueck.
+	 * 
+	 * @param builder
+	 *            - {@link StringBuilder} zum speichern des Tags.
+	 */
 	@Override
 	public void getEndXML(StringBuilder builder) {
 

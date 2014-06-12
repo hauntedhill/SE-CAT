@@ -1,5 +1,11 @@
-package de.hscoburg.evelin.secat.controller.xml;
+package de.hscoburg.evelin.secat.model.xml;
 
+/**
+ * Klasse dient zum beschreiben des grundaufbaues eines Fragebogens innerhalb des open QUestionarie Formats
+ * 
+ * @author zuch1000
+ * 
+ */
 public class FragebogenXML extends BaseXML {
 
 	private String fragebogenName;
@@ -67,6 +73,12 @@ public class FragebogenXML extends BaseXML {
 		fragebogenName = name;
 	}
 
+	/**
+	 * Gibt den Starttag zurueck.
+	 * 
+	 * @param builder
+	 *            - {@link StringBuilder} zum speichern des Tags.
+	 */
 	@Override
 	public void getStartXML(StringBuilder builder) {
 
@@ -76,6 +88,12 @@ public class FragebogenXML extends BaseXML {
 
 	}
 
+	/**
+	 * Gibt den Endtag zurueck.
+	 * 
+	 * @param builder
+	 *            - {@link StringBuilder} zum speichern des Tags.
+	 */
 	@Override
 	public void getEndXML(StringBuilder builder) {
 		builder.append("</QUESTIONNAIRE>\n\n");

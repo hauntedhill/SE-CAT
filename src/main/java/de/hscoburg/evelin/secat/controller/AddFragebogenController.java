@@ -43,11 +43,14 @@ import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
 import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
+import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.FachModel;
 import de.hscoburg.evelin.secat.model.FragebogenModel;
 import de.hscoburg.evelin.secat.model.FragenModel;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.model.LehrveranstaltungModel;
+import de.hscoburg.evelin.secat.model.PerspektivenModel;
+import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
@@ -103,6 +106,12 @@ public class AddFragebogenController extends BaseController {
 	private FragebogenModel fragebogenModel;
 	@Autowired
 	private FragenModel fragenModel;
+	@Autowired
+	private EigenschaftenModel eigenschaftenModel;
+	@Autowired
+	private PerspektivenModel perspektivenModel;
+	@Autowired
+	private SkalenModel skalenModel;
 
 	private static boolean editMode = false;
 	private static Fragebogen editFragebogen;
@@ -169,7 +178,7 @@ public class AddFragebogenController extends BaseController {
 		perspektive.setConverter(ConverterHelper.getConverterForPerspektive());
 
 		ObservableList<Perspektive> perspektiveOl = FXCollections.observableArrayList();
-		List<Perspektive> pList = handlungsfeldModel.getPerspektiven();
+		List<Perspektive> pList = perspektivenModel.getPerspektiven();
 		for (Perspektive p : pList) {
 			perspektiveOl.add(p);
 		}
@@ -178,7 +187,7 @@ public class AddFragebogenController extends BaseController {
 		eigenschaft.setConverter(ConverterHelper.getConverterForEigenschaft());
 
 		ObservableList<Eigenschaft> eigenschaftOl = FXCollections.observableArrayList();
-		List<Eigenschaft> eList = handlungsfeldModel.getEigenschaften();
+		List<Eigenschaft> eList = eigenschaftenModel.getEigenschaften();
 		for (Eigenschaft e : eList) {
 			eigenschaftOl.add(e);
 		}
@@ -237,7 +246,7 @@ public class AddFragebogenController extends BaseController {
 		skala.setConverter(ConverterHelper.getConverterForSkala());
 
 		ObservableList<Skala> skalaOl = FXCollections.observableArrayList();
-		List<Skala> sList = handlungsfeldModel.getSkalen();
+		List<Skala> sList = skalenModel.getSkalen();
 		for (Skala s : sList) {
 			skalaOl.add(s);
 		}
@@ -259,7 +268,7 @@ public class AddFragebogenController extends BaseController {
 
 		});
 		ObservableList<Fach> fachOl = FXCollections.observableArrayList();
-		List<Fach> faecher = handlungsfeldModel.getFaecher();
+		List<Fach> faecher = fachModel.getFaecher();
 		for (Fach f : faecher) {
 			fachOl.add(f);
 		}
@@ -401,14 +410,28 @@ public class AddFragebogenController extends BaseController {
 
 		saveFragebogen.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
+			private List<Item> currentItems = new ArrayList<>();
+
+			private List<Frage> currentFragen = new ArrayList<>();
+
+			@Override
+			public void performBeforeEventsBlocked(ActionEvent event) throws Exception {
+				// TODO:
+				/**
+				 * Hinzugefuegt da Exception bei Zugriff aus einem No FX Thread, ich frage mich blos warum ....
+				 */
+				currentItems.addAll(itemList.getItems());
+				currentFragen.addAll(fragenList.getItems());
+			}
+
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
 
 				try {
 					if (name.getText().equals("") || selectedPerspektive == null || skala.getValue() == null || lehrveranstaltung.getValue() == null
-							|| itemList.getItems().isEmpty() || positionFrage == null)
+							|| currentItems.isEmpty() || positionFrage == null)
 						throw new IllegalArgumentException();
-					for (Item item : itemList.getItems()) {
+					for (Item item : currentItems) {
 						if (!item.getPerspektiven().contains(selectedPerspektive)) {
 							throw new IllegalArgumentException();
 						}
@@ -416,11 +439,11 @@ public class AddFragebogenController extends BaseController {
 
 					if (editMode == false) {
 
-						Fragebogen f = new Fragebogen();
-						fragebogenModel.persistFragebogen(f);
+						// Fragebogen f = new Fragebogen();
+						// fragebogenModel.persistFragebogen(f);
 
-						fragebogenModel.addFragebogen(f, name.getText(), itemList.getItems(), perspektive.getValue(), eigenschaft.getValue(), skala.getValue(),
-								lehrveranstaltung.getValue(), fragenList.getItems(), positionFrage.getValue());
+						fragebogenModel.addFragebogen(name.getText(), currentItems, perspektive.getValue(), eigenschaft.getValue(), skala.getValue(),
+								lehrveranstaltung.getValue(), currentFragen, positionFrage.getValue());
 
 						/*
 						 * for (Frage frage : fragenList.getItems()) {
@@ -433,8 +456,8 @@ public class AddFragebogenController extends BaseController {
 						 */
 					} else {
 
-						fragebogenModel.editFragebogen(editFragebogen, name.getText(), itemList.getItems(), perspektive.getValue(), eigenschaft.getValue(),
-								skala.getValue(), lehrveranstaltung.getValue(), fragenList.getItems(), fragenToRemove, itemsToRemove, positionFrage.getValue());
+						fragebogenModel.editFragebogen(editFragebogen, name.getText(), currentItems, perspektive.getValue(), eigenschaft.getValue(),
+								skala.getValue(), lehrveranstaltung.getValue(), currentFragen, fragenToRemove, itemsToRemove, positionFrage.getValue());
 					}
 				}
 				/*

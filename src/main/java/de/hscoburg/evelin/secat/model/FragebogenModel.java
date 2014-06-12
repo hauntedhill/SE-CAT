@@ -19,14 +19,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import de.hscoburg.evelin.secat.controller.xml.BaseXML;
-import de.hscoburg.evelin.secat.controller.xml.DiskretefrageXML;
-import de.hscoburg.evelin.secat.controller.xml.FragebogenXML;
-import de.hscoburg.evelin.secat.controller.xml.FragenblockXML;
-import de.hscoburg.evelin.secat.controller.xml.FreitextfrageXML;
-import de.hscoburg.evelin.secat.controller.xml.MultipleChoicefrageXML;
 import de.hscoburg.evelin.secat.dao.FrageDAO;
+import de.hscoburg.evelin.secat.dao.Frage_FragebogenDAO;
 import de.hscoburg.evelin.secat.dao.FragebogenDAO;
+import de.hscoburg.evelin.secat.dao.ItemDAO;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Bewertung;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
@@ -62,7 +58,19 @@ import de.hscoburg.evelin.secat.exchange.dto.ScaleTypeType;
 import de.hscoburg.evelin.secat.exchange.dto.SemesterType;
 import de.hscoburg.evelin.secat.exchange.dto.SphereActivityType;
 import de.hscoburg.evelin.secat.exchange.dto.SubjectType;
+import de.hscoburg.evelin.secat.model.xml.BaseXML;
+import de.hscoburg.evelin.secat.model.xml.DiskretefrageXML;
+import de.hscoburg.evelin.secat.model.xml.FragebogenXML;
+import de.hscoburg.evelin.secat.model.xml.FragenblockXML;
+import de.hscoburg.evelin.secat.model.xml.FreitextfrageXML;
+import de.hscoburg.evelin.secat.model.xml.MultipleChoicefrageXML;
 
+/**
+ * Model fuer die Verarbeitung von Frageboegen
+ * 
+ * @author zuch1000
+ * 
+ */
 @Repository
 @Transactional
 public class FragebogenModel {
@@ -72,12 +80,35 @@ public class FragebogenModel {
 	@Autowired
 	private FrageDAO frageDAO;
 	@Autowired
-	private FragenModel fragenModel;
+	private HandlungsfeldModel handlungsfeldModel;
+
 	@Autowired
-	HandlungsfeldModel handlungsfeldModel;
+	private ItemDAO itemDAO;
+
+	@Autowired
+	private Frage_FragebogenDAO frageFragebogenDAO;
 
 	private ObjectFactory xmlFactory = new ObjectFactory();
 
+	/**
+	 * Gibt alle Frageboegen die den Uebergabeparametern entsprechen zurueck, werden bei null ignoriert.
+	 * 
+	 * @param e
+	 *            - Die zu suchende {@link Eigenschaft} oder null
+	 * @param p
+	 *            - Die zu suchende {@link Perspektive} oder null
+	 * @param l
+	 *            - Die zu suchende {@link Lehrveranstaltung} der null
+	 * @param name
+	 *            - Den zu suchenden Namen
+	 * @param von
+	 *            - Von {@link LocalDate}
+	 * @param bis
+	 *            - Bis {@link LocalDate}
+	 * @param s
+	 *            - Die zu suchende {@link Skala}
+	 * @return Eine {@link List} mit allen {@link Fragebogen}
+	 */
 	public List<Fragebogen> getFragebogenFor(Eigenschaft e, Perspektive p, Lehrveranstaltung l, String name, LocalDate von, LocalDate bis, Skala s) {
 		Date vonDate = von != null ? Date.from(von.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()) : null;
 		Date bisDate = bis != null ? Date.from(bis.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()) : null;
@@ -85,29 +116,29 @@ public class FragebogenModel {
 		return fragebogenDAO.getFrageboegenFor(e, p, l, name, vonDate, bisDate, s);
 	}
 
-	public void persistFragebogen(Fragebogen f) {
-		fragebogenDAO.persist(f);
-	}
-
-	public void mergeFragebogen(Fragebogen f) {
-		fragebogenDAO.merge(f);
-	}
-
-	public void persistFrage(Frage f) {
-		frageDAO.persist(f);
-	}
-
-	public void mergeFrage(Frage f) {
-		frageDAO.merge(f);
-	}
-
+	/**
+	 * Erzeugt ein {@link XMLGregorianCalendar} aus einem {@link Date}
+	 * 
+	 * @param d
+	 *            - Das zu verwendende {@link Date}
+	 * @return Das {@link XMLGregorianCalendar}-Object.
+	 * @throws Exception
+	 */
 	private XMLGregorianCalendar createXMLGregorienDate(Date d) throws Exception {
 		GregorianCalendar c = new GregorianCalendar();
 		c.setTime(d);
 		return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 	}
 
-	public String exportQuestionarieForCore(Fragebogen f) throws Exception {
+	/**
+	 * Erzeugt ein XML des {@link Fragebogen}s fuer den export zu CORE.
+	 * 
+	 * @param f
+	 *            - Der zu exportierende {@link Fragebogen}
+	 * @return Das XML als {@link String}
+	 * @throws Exception
+	 */
+	public String exportQuestionarieToCore(Fragebogen f) throws Exception {
 		f = fragebogenDAO.findById(f.getId());
 
 		Questionarie q = xmlFactory.createQuestionarie();
@@ -134,6 +165,15 @@ public class FragebogenModel {
 		return null;
 	}
 
+	/**
+	 * Erzeugt ein {@link ItemType} aus einem {@link Item}
+	 * 
+	 * @param items
+	 *            - {@link List} mit {@link Item}s
+	 * @param fb
+	 *            - {@link Fragebogen} der Items.
+	 * @return Der erzeugte {@link ItemsType}
+	 */
 	private ItemsType createItems(List<Item> items, Fragebogen fb) {
 		ItemsType result = xmlFactory.createItemsType();
 
@@ -163,6 +203,13 @@ public class FragebogenModel {
 		return result;
 	}
 
+	/**
+	 * Erzeugt einen {@link AreaType} aus einem {@link Bereich}
+	 * 
+	 * @param b
+	 *            - Der zu verwendende {@link Bereich}
+	 * @return Der erzeugte {@link AreaType}
+	 */
 	private AreaType createArea(Bereich b) {
 		AreaType a = xmlFactory.createAreaType();
 		a.setId(b.getId());
@@ -171,6 +218,13 @@ public class FragebogenModel {
 		return a;
 	}
 
+	/**
+	 * Erzeugt eine {@link SphereActivityType} aus einem {@link Handlungsfeld}
+	 * 
+	 * @param h
+	 *            - Das zu verwendende {@link Handlungsfeld}
+	 * @return Das erzeugte {@link SphereActivityType}-Object.
+	 */
 	private SphereActivityType createSphereActivity(Handlungsfeld h) {
 		SphereActivityType sphere = xmlFactory.createSphereActivityType();
 		sphere.setId(h.getId());
@@ -178,6 +232,13 @@ public class FragebogenModel {
 		return sphere;
 	}
 
+	/**
+	 * Erzeugt eine {@link QuestionsType} aus den uebergebenen {@link Frage_Fragebogen}
+	 * 
+	 * @param fragen
+	 *            - Die zu verwendenden {@link Frage_Fragebogen}
+	 * @return Das erzeugte {@link QuestionsType}-Object.
+	 */
 	private QuestionsType createQuestions(List<Frage_Fragebogen> fragen) {
 
 		QuestionsType result = xmlFactory.createQuestionsType();
@@ -205,6 +266,13 @@ public class FragebogenModel {
 		return result;
 	}
 
+	/**
+	 * Erzeugt einen {@link EvaluationsType} aus den uebergebenen {@link Bewertung}en
+	 * 
+	 * @param bewertungen
+	 *            - Die zu verwendenden {@link Bewertung}
+	 * @return Das erzeugte {@link EvaluationsType}-Object.
+	 */
 	private EvaluationsType createEvaluation(List<Bewertung> bewertungen) {
 		EvaluationsType result = xmlFactory.createEvaluationsType();
 
@@ -225,6 +293,15 @@ public class FragebogenModel {
 		return result;
 	}
 
+	/**
+	 * Erzeugt einen {@link CourseType} aus der uebergebenen {@link Lehrveranstaltung}
+	 * 
+	 * @param l
+	 *            - DIe zu verwendende {@link Lehrveranstaltung}
+	 * @return Das erzeugte {@link CourseType}-Object.
+	 * @throws Exception
+	 */
+	@SuppressWarnings("deprecation")
 	private CourseType createCourseType(Lehrveranstaltung l) throws Exception {
 		CourseType st = xmlFactory.createCourseType();
 		st.setId(l.getId());
@@ -242,6 +319,14 @@ public class FragebogenModel {
 		return st;
 	}
 
+	/**
+	 * Erzeugt ein {@link SubjectType} aus einem {@link Fach}
+	 * 
+	 * @param l
+	 *            - Das zu verwendende {@link Fach}
+	 * @return Das erzeugte {@link SubjectType}-Object.
+	 * @throws Exception
+	 */
 	private SubjectType createSubject(Fach l) throws Exception {
 		SubjectType st = xmlFactory.createSubjectType();
 		st.setId(l.getId());
@@ -250,6 +335,13 @@ public class FragebogenModel {
 		return st;
 	}
 
+	/**
+	 * Erzeugt ein {@link PerspectivesType} aus den uebergebenen {@link Perspektive}n
+	 * 
+	 * @param e
+	 *            - Die zu verwendenden {@link Perspektive}n
+	 * @return Das erzeugte {@link PerspectivesType}-Object.
+	 */
 	private PerspectivesType createPerspectiveType(List<Perspektive> e) {
 		PerspectivesType st = xmlFactory.createPerspectivesType();
 		for (Perspektive p : e) {
@@ -259,6 +351,13 @@ public class FragebogenModel {
 		return st;
 	}
 
+	/**
+	 * Erzeugt ein {@link PerspectiveType} aus der {@link Perspektive}
+	 * 
+	 * @param e
+	 *            - Die zu verwendende {@link Perspektive}
+	 * @return Das erzeugte {@link PerspectiveType}-Object.
+	 */
 	private PerspectiveType createPerspectiveType(Perspektive e) {
 		PerspectiveType st = xmlFactory.createPerspectiveType();
 		st.setId(e.getId());
@@ -267,6 +366,13 @@ public class FragebogenModel {
 		return st;
 	}
 
+	/**
+	 * Erzeugt ein {@link PropertiesType} aus den {@link Eigenschaft}en
+	 * 
+	 * @param e
+	 *            - Die zu verwendenden {@link Eigenschaft}en
+	 * @return Das erzeugte {@link PropertiesType}-Object.
+	 */
 	private PropertiesType createPropertieType(List<Eigenschaft> e) {
 		PropertiesType st = xmlFactory.createPropertiesType();
 		for (Eigenschaft p : e) {
@@ -276,6 +382,13 @@ public class FragebogenModel {
 		return st;
 	}
 
+	/**
+	 * Erzeugt ein {@link PropertyType} aus der uebergebenen {@link Eigenschaft}
+	 * 
+	 * @param e
+	 *            - Die zu verwendende {@link Eigenschaft}
+	 * @return Das erzeugte {@link PropertyType}-Object.
+	 */
 	private PropertyType createPropertieType(Eigenschaft e) {
 		PropertyType st = xmlFactory.createPropertyType();
 		st.setId(e.getId());
@@ -284,6 +397,13 @@ public class FragebogenModel {
 		return st;
 	}
 
+	/**
+	 * Erzeugt einen {@link ScaleType} aus der uebergebenen {@link Skala}
+	 * 
+	 * @param s
+	 *            - Die zu verwendende {@link Skala}
+	 * @return Das erzeugte {@link ScaleType}-Object.
+	 */
 	private ScaleType createScaleType(Skala s) {
 		ScaleType st = xmlFactory.createScaleType();
 		st.setId(s.getId());
@@ -318,7 +438,14 @@ public class FragebogenModel {
 		return st;
 	}
 
-	public String generateXMLFor(Fragebogen f) {
+	/**
+	 * Erzeugt ein XML fuer den export zu CORE fuer einen Fragebogen
+	 * 
+	 * @param f
+	 *            - Den zu exportierenden {@link Fragebogen}
+	 * @return Das erzeugte XML
+	 */
+	public String generateXMLtoCoreFor(Fragebogen f) {
 
 		f = fragebogenDAO.findById(f.getId());
 
@@ -335,7 +462,7 @@ public class FragebogenModel {
 		fXML.addChild(mainBlock);
 		BaseXML currentBlock = mainBlock;
 
-		addFfragen(blockCount++, mainBlock, FragePosition.TOP, f.getCustomFragen(), f);
+		addFfragen(blockCount++, mainBlock, FragePosition.TOP, f.getCustomFragen());
 
 		for (i = 1; i <= f.getItems().size(); i++) {
 			Item item = f.getItems().get(i - 1);
@@ -361,7 +488,7 @@ public class FragebogenModel {
 			}
 
 		}
-		addFfragen(blockCount++, mainBlock, FragePosition.BOTTOM, f.getCustomFragen(), f);
+		addFfragen(blockCount++, mainBlock, FragePosition.BOTTOM, f.getCustomFragen());
 		// FreitextfrageXML ftf = new FreitextfrageXML(BaseXML.generateUniqueId(f, new Frage(99999), "Bla?", i + 1, 10);
 
 		// block.addChild(ftf);
@@ -372,7 +499,19 @@ public class FragebogenModel {
 		return fXML.generateXML();
 	}
 
-	private void addFfragen(int useBlockCount, BaseXML node, FragePosition position, List<Frage_Fragebogen> fragen, Fragebogen fb) {
+	/**
+	 * Fuegt einem {@link BaseXML} Fragen als Kind-Elemente hinzu.
+	 * 
+	 * @param useBlockCount
+	 *            - Aktueller Blockcount
+	 * @param node
+	 *            - Element an den die Fragen angehaengt werden sollen
+	 * @param position
+	 *            - Bestimmt ob TOP oder BOTTOM Fragen beruecksichtig werden
+	 * @param fragen
+	 *            - Die Fragen die hinzugefuegt werden sollen
+	 */
+	private void addFfragen(int useBlockCount, BaseXML node, FragePosition position, List<Frage_Fragebogen> fragen) {
 
 		BaseXML innerBlock = new FragenblockXML("", useBlockCount);
 
@@ -381,15 +520,16 @@ public class FragebogenModel {
 			Frage f = cf.getFrage();
 			if (cf.getPosition().equals(position)) {
 				if (f.getSkala().getType().equals(SkalaType.DISCRET)) {
-					innerBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(fb, f), questionCount++, f.getSkala().getWeight(), f.getSkala()
-							.getSteps(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), f.getText()));
+					innerBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(cf.getFragebogen(), f), questionCount++, f.getSkala().getWeight(), f
+							.getSkala().getSteps(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), f.getText()));
 
 				} else if (f.getSkala().getType().equals(SkalaType.FREE)) {
-					innerBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(fb, f), f.getText(), questionCount++, f.getSkala().getRows()));
+					innerBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(cf.getFragebogen(), f), f.getText(), questionCount++, f.getSkala()
+							.getRows()));
 
 				} else if (f.getSkala().getType().equals(SkalaType.MC)) {
 					innerBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getOtherAnswer(), f.getSkala().getWeight(), f.getText(), f.getSkala()
-							.getChoices(), BaseXML.generateUniqueId(fb, f), questionCount++, f.getSkala().getRefuseAnswer()));
+							.getChoices(), BaseXML.generateUniqueId(cf.getFragebogen(), f), questionCount++, f.getSkala().getRefuseAnswer()));
 
 				}
 			}
@@ -399,15 +539,23 @@ public class FragebogenModel {
 		}
 	}
 
-	public class ItemComparator implements Comparator<Item> {
+	/**
+	 * Comperator zum sortieren der Items nach Bereich
+	 * 
+	 * @author zuch1000
+	 * 
+	 */
+	private class ItemComparator implements Comparator<Item> {
 		public int compare(Item a, Item b) {
 			// int dateComparison = a.getBereich().compareTo(b.date);
 			return a.getBereich().getName().compareTo(b.getBereich().getName());
 		}
 	}
 
-	public void addFragebogen(Fragebogen f, String name, List<Item> itemList, Perspektive p, Eigenschaft e, Skala s, Lehrveranstaltung l,
-			List<Frage> fragenList, FragePosition positionFrage) {
+	public void addFragebogen(String name, List<Item> itemList, Perspektive p, Eigenschaft e, Skala s, Lehrveranstaltung l, List<Frage> fragenList,
+			FragePosition positionFrage) {
+		Fragebogen f = new Fragebogen();
+		fragebogenDAO.persist(f);
 		f.setName(name);
 		f.setItems(itemList);
 		f.setPerspektive(p);
@@ -417,20 +565,20 @@ public class FragebogenModel {
 		f.setExportiert(false);
 		f.setErstellungsDatum(new Date());
 
-		mergeFragebogen(f);
+		fragebogenDAO.merge(f);
 		for (Frage frage : fragenList) {
 
 			Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
 			frageFragebogen.setPosition(positionFrage);
 			frageFragebogen.setFrage(frage);
 			f.addFrage_Fragebogen(frageFragebogen);
-			fragenModel.persist(frageFragebogen);
+			frageFragebogenDAO.persist(frageFragebogen);
 		}
-		mergeFragebogen(f);
+		fragebogenDAO.merge(f);
 
 		for (Item item : itemList) {
 			item.addFragebogen(f);
-			handlungsfeldModel.mergeItem(item);
+			itemDAO.merge(item);
 		}
 
 	}
@@ -458,7 +606,7 @@ public class FragebogenModel {
 					if (frage_fragebogen.getFrage().equals(frage)) {
 						fragenExist.remove(frage);
 						frage_fragebogen.setFragebogen(null);
-						fragenModel.merge(frage_fragebogen);
+						frageFragebogenDAO.merge(frage_fragebogen);
 					}
 				}
 			}
@@ -471,13 +619,13 @@ public class FragebogenModel {
 				frageFragebogen.setPosition(positionFrage);
 				frageFragebogen.setFrage(frage);
 				edit.addFrage_Fragebogen(frageFragebogen);
-				fragenModel.persist(frageFragebogen);
-				mergeFragebogen(edit);
+				frageFragebogenDAO.persist(frageFragebogen);
+				fragebogenDAO.merge(edit);
 			} else {
 				for (Frage_Fragebogen frageFragebogen : edit.getCustomFragen()) {
 					if (frageFragebogen.getFrage().equals(frage)) {
 						frageFragebogen.setPosition(positionFrage);
-						fragenModel.merge(frageFragebogen);
+						frageFragebogenDAO.merge(frageFragebogen);
 					}
 
 				}
@@ -491,7 +639,7 @@ public class FragebogenModel {
 		for (Item item : itemList) {
 			if (!itemsToRemove.contains(item)) {
 				item.setFrageboegen(itemFb);
-				handlungsfeldModel.mergeItem(item);
+				itemDAO.merge(item);
 			}
 		}
 
@@ -502,7 +650,7 @@ public class FragebogenModel {
 					fbs.add(f);
 				}
 				item.setFrageboegen(fbs);
-				handlungsfeldModel.mergeItem(item);
+				itemDAO.merge(item);
 			}
 
 		}

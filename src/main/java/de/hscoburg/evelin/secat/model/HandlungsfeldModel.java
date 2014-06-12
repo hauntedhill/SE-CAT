@@ -19,8 +19,13 @@ import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
-import de.hscoburg.evelin.secat.dao.entity.Skala;
 
+/**
+ * Klasse zur Verwaltung von Handlungsfeldern und Items
+ * 
+ * @author zuch1000
+ * 
+ */
 @Repository
 @Transactional
 public class HandlungsfeldModel {
@@ -43,131 +48,124 @@ public class HandlungsfeldModel {
 	@Autowired
 	private BereichDAO bereichDAO;
 
+	/**
+	 * Gibt alle Items fuer einen Bereich zurueck, null values werden ignoriert.
+	 * 
+	 * @param h
+	 *            - Der {@link Bereich}
+	 * @param itemAktiv
+	 *            - {@link Boolean} ob itemAKtiv ist oder nicht
+	 * @param p
+	 *            - {@link Perspektive} des Items
+	 * @param e
+	 *            - {@link Eigenschaft} des Items
+	 * @param notizHandlungsfeld
+	 *            - Notiz des Handlungsfeldes
+	 * @param notizItem
+	 *            - Notiz des Items
+	 * @param f
+	 *            - {@link Fach} des Items
+	 * @return {@link List} mit {@link Item}s
+	 */
 	public List<Item> getItemBy(Bereich h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
 		return itemDAO.getItemBy(h, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
 	}
 
+	/**
+	 * Gibt alle Bereiche fuer einen Handlungsfeld zurueck, null values werden ignoriert.
+	 * 
+	 * @param h
+	 *            - Das {@link Handlungsfeld}
+	 * @param itemAktiv
+	 *            - {@link Boolean} ob itemAKtiv ist oder nicht
+	 * @param p
+	 *            - {@link Perspektive} des Items
+	 * @param e
+	 *            - {@link Eigenschaft} des Items
+	 * @param notizHandlungsfeld
+	 *            - Notiz des Handlungsfeldes
+	 * @param notizItem
+	 *            - Notiz des Items
+	 * @param f
+	 *            - {@link Fach} des Items
+	 * @return {@link List} mit {@link Bereich}en
+	 */
 	public List<Bereich> getBereichBy(Handlungsfeld h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
 		return bereichDAO.getBereicheBy(h, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
 	}
 
+	/**
+	 * Gibt Handlungsfelder anhand der aktiv KZs zurueck.
+	 * 
+	 * @param handlungsfeldAktiv
+	 * @param itemAktiv
+	 * @return {@link List} mit {@link Handlungsfeld}ern
+	 */
 	public List<Handlungsfeld> getHandlungsfelderBy(Boolean handlungsfeldAktiv, Boolean itemAktiv) {
 		return getHandlungsfelderBy(handlungsfeldAktiv, itemAktiv, null, null, null, null, null);
 	}
 
+	/**
+	 * Gibt alleHandlungsfelder zurueck, null values werden ignoriert.
+	 * 
+	 * 
+	 * @param itemAktiv
+	 *            - {@link Boolean} ob itemAKtiv ist oder nicht
+	 * @param p
+	 *            - {@link Perspektive} des Items
+	 * @param e
+	 *            - {@link Eigenschaft} des Items
+	 * @param notizHandlungsfeld
+	 *            - Notiz des Handlungsfeldes
+	 * @param notizItem
+	 *            - Notiz des Items
+	 * @param f
+	 *            - {@link Fach} des Items
+	 * @return
+	 */
 	public List<Handlungsfeld> getHandlungsfelderBy(Boolean handlungsfeldAktiv, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld,
 			String notizItem, Fach f) {
-
-		// List<Handlungsfeld> dummy = new ArrayList<>();
-		//
-		// Handlungsfeld e1 = new Handlungsfeld();
-		// e1.setName("Clarity");
-		//
-		// Item i = new Item();
-		// i.setAktiv(true);
-		// Eigenschaft eig = new Eigenschaft();
-		// eig.setName("teamleistung");
-		// i.addEigenschaft(eig);
-		// Perspektive p1 = new Perspektive();
-		// p1.setName("Kunde");
-		// i.addPerspektive(p1);
-		//
-		// i.setName("irgend etwas");
-		// e1.addItem(i);
-		//
-		// i = new Item();
-		// i.setAktiv(true);
-		// eig = new Eigenschaft();
-		// eig.setName("einzelleistung");
-		// i.addEigenschaft(eig);
-		// p1 = new Perspektive();
-		// p1.setName("Dozent");
-		// i.addPerspektive(p1);
-		//
-		// i.setName("irgend etwas²");
-		// e1.addItem(i);
-		//
-		// dummy.add(e1);
-		// e1 = new Handlungsfeld();
-		// e1.setName("Creativity of solutions");
-		//
-		// i = new Item();
-		// i.setAktiv(true);
-		// eig = new Eigenschaft();
-		// eig.setName("teamleistung1");
-		// i.addEigenschaft(eig);
-		// p1 = new Perspektive();
-		// p1.setName("Kunde1");
-		// i.addPerspektive(p1);
-		//
-		// i.setName("irgend etwa1s");
-		// e1.addItem(i);
-		//
-		// i = new Item();
-		// i.setAktiv(true);
-		// eig = new Eigenschaft();
-		// eig.setName("einzelleistung1");
-		// i.addEigenschaft(eig);
-		// p1 = new Perspektive();
-		// p1.setName("Dozent1");
-		// i.addPerspektive(p1);
-		//
-		// i.setName("irgend etwas²1");
-		// e1.addItem(i);
-		//
-		// dummy.add(e1);
 
 		return handlungsfeldDAO.getHandlungsfelderBy(handlungsfeldAktiv, itemAktiv, p, e, notizHandlungsfeld, notizItem, f);
 	}
 
+	@Deprecated
 	public void persistHandlungsfeld(Handlungsfeld h) {
 		handlungsfeldDAO.persist(h);
 	}
 
+	@Deprecated
 	public void mergeHandlugsfeld(Handlungsfeld h) {
 		handlungsfeldDAO.merge(h);
 	}
 
+	@Deprecated
 	public void persistItem(Item i) {
 		itemDAO.persist(i);
 	}
 
+	@Deprecated
 	public void mergeItem(Item i) {
 		itemDAO.merge(i);
 	}
 
+	@Deprecated
 	public void persistBereich(Bereich b) {
 		bereichDAO.persist(b);
 	}
 
+	@Deprecated
 	public void mergeBereich(Bereich b) {
 		bereichDAO.merge(b);
 	}
 
-	public List<Eigenschaft> getEigenschaften() {
-
-		return eigenschaftenDAO.findAll();
-	}
-
-	public List<Perspektive> getPerspektiven() {
-
-		return perspektiveDAO.findAll();
-	}
-
-	public List<Skala> getSkalen() {
-
-		return skalaDAO.findAll();
-	}
-
-	public List<Fach> getFaecher() {
-
-		return fachDAO.findAll();
-	}
-
-	public Item findItemById(int id) {
-		return itemDAO.findById(id);
-	}
-
+	/**
+	 * Sucht ein Handlungsfeld anhand dessen eindeutiger ID
+	 * 
+	 * @param id
+	 *            - {@link Integer} mit der ID
+	 * @return Das gefundene {@link Handlungsfeld} oder null
+	 */
 	public Handlungsfeld findHandlungsfeldById(int id) {
 		return handlungsfeldDAO.findById(id);
 	}

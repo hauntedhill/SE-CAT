@@ -1,5 +1,11 @@
-package de.hscoburg.evelin.secat.controller.xml;
+package de.hscoburg.evelin.secat.model.xml;
 
+/**
+ * Definiert eine Freitextfrage innerhalb des open Questionarie Formates
+ * 
+ * @author zuch1000
+ * 
+ */
 public class FreitextfrageXML extends BaseXML {
 
 	private int rows;
@@ -29,7 +35,12 @@ public class FreitextfrageXML extends BaseXML {
 	// <META KEY="FIXED_IN_PERMUTATION" VALUE="f"/>
 	// <META KEY="METAKEY_BARCODE_FIELD_TEXT" VALUE=""/>
 	// </FREEQUESTION>
-
+	/**
+	 * Gibt den Starttag zurueck.
+	 * 
+	 * @param builder
+	 *            - {@link StringBuilder} zum speichern des Tags.
+	 */
 	@Override
 	public void getStartXML(StringBuilder builder) {
 
@@ -44,6 +55,12 @@ public class FreitextfrageXML extends BaseXML {
 
 	}
 
+	/**
+	 * Gibt den Endtag zurueck.
+	 * 
+	 * @param builder
+	 *            - {@link StringBuilder} zum speichern des Tags.
+	 */
 	@Override
 	public void getEndXML(StringBuilder builder) {
 

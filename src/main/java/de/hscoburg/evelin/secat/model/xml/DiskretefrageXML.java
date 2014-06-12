@@ -1,5 +1,11 @@
-package de.hscoburg.evelin.secat.controller.xml;
+package de.hscoburg.evelin.secat.model.xml;
 
+/**
+ * Stellt eine DiskreteFrage im open Questionarie Format dar.
+ * 
+ * @author zuch1000
+ * 
+ */
 public class DiskretefrageXML extends BaseXML {
 
 	private int place;
@@ -38,6 +44,12 @@ public class DiskretefrageXML extends BaseXML {
 	// <META KEY="METAKEY_USE_SLIDER" VALUE="f"/>
 	// </SCALEDQUESTION>
 
+	/**
+	 * Gibt den Starttag zurueck.
+	 * 
+	 * @param builder
+	 *            - {@link StringBuilder} zum speichern des Tags.
+	 */
 	@Override
 	public void getStartXML(StringBuilder builder) {
 
@@ -52,6 +64,12 @@ public class DiskretefrageXML extends BaseXML {
 
 	}
 
+	/**
+	 * Gibt den Endtag zurueck.
+	 * 
+	 * @param builder
+	 *            - {@link StringBuilder} zum speichern des Tags.
+	 */
 	@Override
 	public void getEndXML(StringBuilder builder) {
 		builder.append("</SCALEDQUESTION>\n");

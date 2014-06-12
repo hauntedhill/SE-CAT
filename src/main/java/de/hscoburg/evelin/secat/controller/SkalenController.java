@@ -424,10 +424,10 @@ public class SkalenController extends BaseController {
 
 				try {
 
-					skalenModel.saveSkala(freeQuestion.isSelected() ? SkalaType.FREE : discretQuestion.isSelected() ? SkalaType.DISCRET
-							: SkalaType.MC, textNameSkalen.getText(), textZeilen.getText(), textSchritte.getText(), textSchrittweite.getText(),
-							textMinimal.getText(), textMaximal.getText(), textOptimum.getText(), listKeys.getItems(), textSchrittweiteMC.getText(),
-							textStandardAntwort.getText(), textRefuse.getText());
+					skalenModel.saveSkala(freeQuestion.isSelected() ? SkalaType.FREE : discretQuestion.isSelected() ? SkalaType.DISCRET : SkalaType.MC,
+							textNameSkalen.getText(), textZeilen.getText(), textSchritte.getText(), textSchrittweite.getText(), textMinimal.getText(),
+							textMaximal.getText(), textOptimum.getText(), listKeys.getItems(), textSchrittweiteMC.getText(), textStandardAntwort.getText(),
+							textRefuse.getText());
 				} catch (NumberFormatException nfe) {
 					Platform.runLater(new Runnable() {
 
@@ -446,7 +446,7 @@ public class SkalenController extends BaseController {
 				loadList();
 			}
 		});
-		ActionHelper.setAutoResizeToggleListenerForTitledPanel(addPanel, tablePanel, tableSkalen);
+
 		buttonAdd.setOnKeyPressed(new SeCatEventHandle<Event>() {
 
 			@Override

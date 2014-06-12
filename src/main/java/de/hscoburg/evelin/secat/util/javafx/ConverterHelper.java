@@ -12,8 +12,19 @@ import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
 
+/**
+ * Klasse fuer allgemein benutzbarer Converter fuer die entsprechende Entities.
+ * 
+ * @author zuch1000
+ * 
+ */
 public class ConverterHelper {
 
+	/**
+	 * Gibt den Converter fuer die {@link Perspektive} zurueck.
+	 * 
+	 * @return ein {@link StringConverter}-Object.
+	 */
 	public static StringConverter<Perspektive> getConverterForPerspektive() {
 		return new StringConverter<Perspektive>() {
 			@Override
@@ -32,6 +43,11 @@ public class ConverterHelper {
 		};
 	}
 
+	/**
+	 * Gibt den Converter fuer die {@link Eigenschaft} zurueck.
+	 * 
+	 * @return ein {@link StringConverter}-Object.
+	 */
 	public static StringConverter<Eigenschaft> getConverterForEigenschaft() {
 		return new StringConverter<Eigenschaft>() {
 			@Override
@@ -50,8 +66,14 @@ public class ConverterHelper {
 		};
 	}
 
+	/**
+	 * Gibt den Converter fuer die {@link Lehrveranstaltung} zurueck.
+	 * 
+	 * @return ein {@link StringConverter}-Object.
+	 */
 	public static StringConverter<Lehrveranstaltung> getConverterForLehrveranstaltung() {
 		return new StringConverter<Lehrveranstaltung>() {
+			@SuppressWarnings("deprecation")
 			@Override
 			public String toString(Lehrveranstaltung t) {
 				if (t == null) {
@@ -68,6 +90,11 @@ public class ConverterHelper {
 		};
 	}
 
+	/**
+	 * Gibt den Converter fuer die {@link Skala} zurueck.
+	 * 
+	 * @return ein {@link StringConverter}-Object.
+	 */
 	public static StringConverter<Skala> getConverterForSkala() {
 		return new StringConverter<Skala>() {
 			@Override
@@ -86,6 +113,11 @@ public class ConverterHelper {
 		};
 	}
 
+	/**
+	 * Gibt den Converter fuer die {@link Fach} zurueck.
+	 * 
+	 * @return ein {@link StringConverter}-Object.
+	 */
 	public static StringConverter<Fach> getConverterForFach() {
 		return new StringConverter<Fach>() {
 			@Override
@@ -104,6 +136,11 @@ public class ConverterHelper {
 		};
 	}
 
+	/**
+	 * Gibt den Converter fuer die {@link Locale} zurueck.
+	 * 
+	 * @return ein {@link StringConverter}-Object.
+	 */
 	public static StringConverter<Locale> getConverterForLocale() {
 		return new StringConverter<Locale>() {
 			@Override
@@ -123,6 +160,11 @@ public class ConverterHelper {
 		};
 	}
 
+	/**
+	 * Gibt den Converter fuer die {@link Fragebogen} zurueck.
+	 * 
+	 * @return ein {@link StringConverter}-Object.
+	 */
 	public static StringConverter<Fragebogen> getConverterForFragebogen() {
 		return new StringConverter<Fragebogen>() {
 			@Override
@@ -141,6 +183,11 @@ public class ConverterHelper {
 		};
 	}
 
+	/**
+	 * Gibt den Converter fuer die {@link Item} zurueck.
+	 * 
+	 * @return ein {@link StringConverter}-Object.
+	 */
 	public static StringConverter<Item> getConverterForItem() {
 		return new StringConverter<Item>() {
 			@Override
@@ -159,6 +206,11 @@ public class ConverterHelper {
 		};
 	}
 
+	/**
+	 * Gibt den Converter fuer die {@link FragePosition} zurueck.
+	 * 
+	 * @return ein {@link StringConverter}-Object.
+	 */
 	public static StringConverter<FragePosition> getConverterForPosition() {
 		return new StringConverter<FragePosition>() {
 			@Override

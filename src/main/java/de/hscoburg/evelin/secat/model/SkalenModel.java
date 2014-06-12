@@ -10,6 +10,12 @@ import de.hscoburg.evelin.secat.dao.SkalaDAO;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 
+/**
+ * Model zur Verwaltung von Skalen
+ * 
+ * @author zuch1000
+ * 
+ */
 @Repository
 @Transactional
 public class SkalenModel {
@@ -17,14 +23,44 @@ public class SkalenModel {
 	@Autowired
 	private SkalaDAO skalaDAO;
 
+	/**
+	 * Gibt alle Skalen zurueck.
+	 * 
+	 * @return {@link List} mit {@link Skala}
+	 */
 	public List<Skala> getSkalen() {
 		return skalaDAO.findAll();
 	}
 
-	// public void persist(Skala e) {
-	// skalaDAO.persist(e);
-	// }
-
+	/**
+	 * Speichert eine Skala im System
+	 * 
+	 * @param type
+	 *            - {@link SkalaType} der Skala
+	 * @param name
+	 *            - {@link String} mit dem Namen der Skala
+	 * @param zeilen
+	 *            - Zeilen der Skala bei Freitext
+	 * @param schritte
+	 *            - Schritte der Skala bei Diskret
+	 * @param schrittWeite
+	 *            - SchrittWeite bei Diskret
+	 * @param minText
+	 *            - MinText als {@link String} bei Diskret
+	 * @param maxText
+	 *            - MaxText als {@link String} bei Diskret
+	 * @param optimum
+	 *            - Definiert das Optimum bei Diskret
+	 * @param keys
+	 *            - Definiert die Auswahl,oeglichkeiten bei MC
+	 * @param schrittWeiteMC
+	 *            - SchrittWeite bei MC
+	 * @param defaultAnswer
+	 *            - definiert die default ANtwort bei MC
+	 * @param refuseAnswer
+	 *            - definiert die refuse Antowrt bei MC
+	 * @throws NumberFormatException
+	 */
 	public void saveSkala(SkalaType type, String name, String zeilen, String schritte, String schrittWeite, String minText, String maxText, String optimum,
 			List<String> keys, String schrittWeiteMC, String defaultAnswer, String refuseAnswer) throws NumberFormatException {
 

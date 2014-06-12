@@ -75,7 +75,7 @@ public class FachController extends BaseController {
 		});
 
 		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
-		ActionHelper.setAutoResizeToggleListenerForTitledPanel(addPanel, tablePanel, listFach);
+
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override

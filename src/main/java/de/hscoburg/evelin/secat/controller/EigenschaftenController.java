@@ -76,8 +76,6 @@ public class EigenschaftenController extends BaseController {
 
 		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 
-		ActionHelper.setAutoResizeToggleListenerForTitledPanel(addPanel, tablePanel, listEigenschaften);
-
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override

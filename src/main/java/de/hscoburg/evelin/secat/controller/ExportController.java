@@ -18,7 +18,7 @@ public class ExportController {
 	public void exportFragebogen(Fragebogen fb, File f) throws Exception {
 
 		FileWriter fw = new FileWriter(f);
-		fw.write(fragebogenModel.generateXMLFor(fb).toString());
+		fw.write(fragebogenModel.generateXMLtoCoreFor(fb).toString());
 		fw.close();
 
 	}

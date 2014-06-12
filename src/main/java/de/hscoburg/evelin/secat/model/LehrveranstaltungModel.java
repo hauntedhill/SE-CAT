@@ -12,20 +12,41 @@ import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.dao.entity.base.SemesterType;
 
+/**
+ * Model zur Verarbeitung von Lehrveranstaltungen
+ * 
+ * @author zuch1000
+ * 
+ */
 @Repository
 @Transactional
 public class LehrveranstaltungModel {
 	@Autowired
 	private LehrveranstaltungDAO lehrveranstaltungsDAO;;
 
+	/**
+	 * Gibt alle Lehrveranstaltungen zurueck.
+	 * 
+	 * @return {@link List} {@link Lehrveranstaltung}
+	 */
 	public List<Lehrveranstaltung> getLehrveranstaltung() {
 		return lehrveranstaltungsDAO.findAll();
 	}
 
-	// public void persist(Lehrveranstaltung e) {
-	// lehrveranstaltungsDAO.persist(e);
-	// }
-
+	/**
+	 * Speichert eine Lehrveranstaltung innerhalb des Systems
+	 * 
+	 * @param dozent
+	 *            - {@link String} mit dem Namen des Dozenten
+	 * @param fach
+	 *            - Das {@link Fach}
+	 * @param jahr
+	 *            - Das Jahr als {@link Integer}
+	 * @param semester
+	 *            - Den SemesterType
+	 * @throws IllegalArgumentException
+	 */
+	@SuppressWarnings("deprecation")
 	public void saveLehrveranstaltung(String dozent, Fach fach, Integer jahr, SemesterType semester) throws IllegalArgumentException {
 		if (jahr != null && semester != null && fach != null && !"".equals(dozent)) {
 			Lehrveranstaltung e = new Lehrveranstaltung();

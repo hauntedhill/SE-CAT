@@ -1,7 +1,13 @@
-package de.hscoburg.evelin.secat.controller.xml;
+package de.hscoburg.evelin.secat.model.xml;
 
 import java.util.List;
 
+/**
+ * Definiert eine MultipleChoice Frage innerhalb des open Questionarie Formates
+ * 
+ * @author zuch1000
+ * 
+ */
 public class MultipleChoicefrageXML extends BaseXML {
 
 	private List<String> choices;
@@ -37,7 +43,12 @@ public class MultipleChoicefrageXML extends BaseXML {
 	// <ANSWER PLACE="2" TEXT="schlecht" WEIGHT="0"/>
 	// <ANSWER PLACE="3" TEXT="mies" WEIGHT="0"/>
 	// </MCQUESTION>
-
+	/**
+	 * Gibt den Starttag zurueck.
+	 * 
+	 * @param builder
+	 *            - {@link StringBuilder} zum speichern des Tags.
+	 */
 	@Override
 	public void getStartXML(StringBuilder builder) {
 		builder.append("<MCQUESTION PLACE=\"" + place + "\" TEXT=\"" + XML_ESCAPER.translate(text) + "\" ZWANG=\"false\" WEIGHT=\"" + weight + "\" ");
@@ -61,6 +72,12 @@ public class MultipleChoicefrageXML extends BaseXML {
 
 	}
 
+	/**
+	 * Gibt den Endtag zurueck.
+	 * 
+	 * @param builder
+	 *            - {@link StringBuilder} zum speichern des Tags.
+	 */
 	@Override
 	public void getEndXML(StringBuilder builder) {
 		builder.append("</MCQUESTION>\n");

@@ -412,7 +412,7 @@ public class FrageboegenController extends BaseController {
 					@Override
 					public void handleAction(ActionEvent t) throws Exception {
 
-						fragebogenModel.exportQuestionarieForCore(frageboegen.getSelectionModel().getSelectedItem());
+						fragebogenModel.exportQuestionarieToCore(frageboegen.getSelectionModel().getSelectedItem());
 
 						// exportController.exportFragebogen(frageboegen.getSelectionModel().getSelectedItem(), file);
 
