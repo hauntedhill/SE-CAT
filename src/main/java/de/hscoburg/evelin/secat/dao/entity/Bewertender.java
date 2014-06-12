@@ -8,12 +8,15 @@ import javax.persistence.OneToMany;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
+/**
+ * Entitie repraesentiert einen Bewertenden in der Datenbank
+ * 
+ * @author zuch1000
+ * 
+ */
 @Entity
 public class Bewertender extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 6291965813651020474L;
 
 	private String name;

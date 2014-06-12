@@ -8,12 +8,15 @@ import javax.persistence.OneToMany;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
+/**
+ * Entitie repraesentiert eine Perspektive in der Datenbank
+ * 
+ * @author zuch1000
+ * 
+ */
 @Entity
 public class Perspektive extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -1561076949919552247L;
 	private String name;
 

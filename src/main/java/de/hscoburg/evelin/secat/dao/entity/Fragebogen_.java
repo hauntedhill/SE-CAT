@@ -8,6 +8,12 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity_;
 
+/**
+ * Staticmetamodel fuer die {@link Fragebogen}-Entitie
+ * 
+ * @author zuch1000
+ * 
+ */
 @StaticMetamodel(Fragebogen.class)
 public class Fragebogen_ extends BaseEntity_ {
 
@@ -23,12 +29,14 @@ public class Fragebogen_ extends BaseEntity_ {
 
 	public static volatile SingularAttribute<Fragebogen, Skala> skala;
 
-	public static volatile ListAttribute<Fragebogen, Frage_Fragebogen> customFragen;
+	public static volatile ListAttribute<Fragebogen, Frage_Fragebogen> frageFragebogen;
 
 	public static volatile SingularAttribute<Fragebogen, Eigenschaft> eigenschaft;
 
 	public static volatile SingularAttribute<Fragebogen, Perspektive> perspektive;
 
 	public static volatile SingularAttribute<Fragebogen, Date> erstellungsDatum;
+
+	public static volatile SingularAttribute<Fragebogen, Boolean> exportiert;
 
 }

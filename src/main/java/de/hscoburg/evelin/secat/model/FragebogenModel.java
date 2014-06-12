@@ -150,7 +150,7 @@ public class FragebogenModel {
 		q.setProperty(createPropertieType(f.getEigenschaft()));
 		q.setPerspective(createPerspectiveType(f.getPerspektive()));
 		q.setCourse(createCourseType(f.getLehrveranstaltung()));
-		q.setQuestions(createQuestions(f.getCustomFragen()));
+		q.setQuestions(createQuestions(f.getFrageFragebogen()));
 		q.setItems(createItems(f.getItems(), f));
 
 		JAXBContext jaxbContext = JAXBContext.newInstance(Questionarie.class);
@@ -279,8 +279,8 @@ public class FragebogenModel {
 		for (Bewertung f : bewertungen) {
 			EvaluationType q = xmlFactory.createEvaluationType();
 			q.setId(f.getId());
-			q.setRawid(f.getRawid());
-			q.setSource(f.getSource());
+			q.setRawid(f.getZeilenid());
+			q.setSource(f.getQuelle());
 			q.setValue(f.getWert());
 			q.setWave(f.getWelle());
 			q.setDate(f.getZeit());
@@ -411,11 +411,11 @@ public class FragebogenModel {
 		st.setMinText(s.getMinText());
 		st.setName(s.getName());
 		st.setOptimum(s.getOptimum());
-		st.setOtherAnswer(s.getOtherAnswer());
-		st.setRefuseAnswer(s.getRefuseAnswer());
-		st.setRows(s.getRows());
-		st.setSteps(s.getSteps());
-		st.setWeight(s.getWeight());
+		st.setOtherAnswer(s.getAndereAntwort());
+		st.setRefuseAnswer(s.getVerweigerungsAntwort());
+		st.setRows(s.getZeilen());
+		st.setSteps(s.getSchritte());
+		st.setWeight(s.getSchrittWeite());
 
 		if (s.getType().equals(SkalaType.FREE)) {
 			st.setType(ScaleTypeType.FREE);
@@ -423,7 +423,7 @@ public class FragebogenModel {
 			st.setType(ScaleTypeType.MC);
 			ChoicesType t1 = xmlFactory.createChoicesType();
 			int i = 1;
-			for (String value : s.getChoices()) {
+			for (String value : s.getAuswahl()) {
 				ChoiceType t = xmlFactory.createChoiceType();
 				t.setId(i++);
 				t.setName(value);
@@ -462,7 +462,7 @@ public class FragebogenModel {
 		fXML.addChild(mainBlock);
 		BaseXML currentBlock = mainBlock;
 
-		addFfragen(blockCount++, mainBlock, FragePosition.TOP, f.getCustomFragen());
+		addFfragen(blockCount++, mainBlock, FragePosition.TOP, f.getFrageFragebogen());
 
 		for (i = 1; i <= f.getItems().size(); i++) {
 			Item item = f.getItems().get(i - 1);
@@ -476,19 +476,19 @@ public class FragebogenModel {
 			}
 
 			if (f.getSkala().getType().equals(SkalaType.DISCRET)) {
-				currentBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(f, item), questionCount++, f.getSkala().getWeight(), f.getSkala()
-						.getSteps(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), item.getFrage()));
+				currentBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(f, item), questionCount++, f.getSkala().getSchrittWeite(), f.getSkala()
+						.getSchritte(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), item.getFrage()));
 			} else if (f.getSkala().getType().equals(SkalaType.FREE)) {
-				currentBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(f, item), item.getFrage(), questionCount++, f.getSkala().getRows()));
+				currentBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(f, item), item.getFrage(), questionCount++, f.getSkala().getZeilen()));
 
 			} else if (f.getSkala().getType().equals(SkalaType.MC)) {
-				currentBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getOtherAnswer(), f.getSkala().getWeight(), item.getFrage(), f.getSkala()
-						.getChoices(), BaseXML.generateUniqueId(f, item), questionCount++, f.getSkala().getRefuseAnswer()));
+				currentBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getAndereAntwort(), f.getSkala().getSchrittWeite(), item.getFrage(), f.getSkala()
+						.getAuswahl(), BaseXML.generateUniqueId(f, item), questionCount++, f.getSkala().getVerweigerungsAntwort()));
 
 			}
 
 		}
-		addFfragen(blockCount++, mainBlock, FragePosition.BOTTOM, f.getCustomFragen());
+		addFfragen(blockCount++, mainBlock, FragePosition.BOTTOM, f.getFrageFragebogen());
 		// FreitextfrageXML ftf = new FreitextfrageXML(BaseXML.generateUniqueId(f, new Frage(99999), "Bla?", i + 1, 10);
 
 		// block.addChild(ftf);
@@ -520,16 +520,16 @@ public class FragebogenModel {
 			Frage f = cf.getFrage();
 			if (cf.getPosition().equals(position)) {
 				if (f.getSkala().getType().equals(SkalaType.DISCRET)) {
-					innerBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(cf.getFragebogen(), f), questionCount++, f.getSkala().getWeight(), f
-							.getSkala().getSteps(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), f.getText()));
+					innerBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(cf.getFragebogen(), f), questionCount++, f.getSkala().getSchrittWeite(), f
+							.getSkala().getSchritte(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), f.getText()));
 
 				} else if (f.getSkala().getType().equals(SkalaType.FREE)) {
 					innerBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(cf.getFragebogen(), f), f.getText(), questionCount++, f.getSkala()
-							.getRows()));
+							.getZeilen()));
 
 				} else if (f.getSkala().getType().equals(SkalaType.MC)) {
-					innerBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getOtherAnswer(), f.getSkala().getWeight(), f.getText(), f.getSkala()
-							.getChoices(), BaseXML.generateUniqueId(cf.getFragebogen(), f), questionCount++, f.getSkala().getRefuseAnswer()));
+					innerBlock.addChild(new MultipleChoicefrageXML(f.getSkala().getAndereAntwort(), f.getSkala().getSchrittWeite(), f.getText(), f.getSkala()
+							.getAuswahl(), BaseXML.generateUniqueId(cf.getFragebogen(), f), questionCount++, f.getSkala().getVerweigerungsAntwort()));
 
 				}
 			}
@@ -571,7 +571,7 @@ public class FragebogenModel {
 			Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
 			frageFragebogen.setPosition(positionFrage);
 			frageFragebogen.setFrage(frage);
-			f.addFrage_Fragebogen(frageFragebogen);
+			f.addFrageFragebogen(frageFragebogen);
 			frageFragebogenDAO.persist(frageFragebogen);
 		}
 		fragebogenDAO.merge(f);
@@ -596,13 +596,13 @@ public class FragebogenModel {
 		edit.setErstellungsDatum(new Date());
 
 		ArrayList<Frage> fragenExist = new ArrayList<Frage>();
-		for (Frage_Fragebogen frage_fragebogen : edit.getCustomFragen()) {
+		for (Frage_Fragebogen frage_fragebogen : edit.getFrageFragebogen()) {
 			fragenExist.add(frage_fragebogen.getFrage());
 		}
 
 		if (fragenToRemove != null) {
 			for (Frage frage : fragenToRemove) {
-				for (Frage_Fragebogen frage_fragebogen : edit.getCustomFragen()) {
+				for (Frage_Fragebogen frage_fragebogen : edit.getFrageFragebogen()) {
 					if (frage_fragebogen.getFrage().equals(frage)) {
 						fragenExist.remove(frage);
 						frage_fragebogen.setFragebogen(null);
@@ -618,11 +618,11 @@ public class FragebogenModel {
 				Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
 				frageFragebogen.setPosition(positionFrage);
 				frageFragebogen.setFrage(frage);
-				edit.addFrage_Fragebogen(frageFragebogen);
+				edit.addFrageFragebogen(frageFragebogen);
 				frageFragebogenDAO.persist(frageFragebogen);
 				fragebogenDAO.merge(edit);
 			} else {
-				for (Frage_Fragebogen frageFragebogen : edit.getCustomFragen()) {
+				for (Frage_Fragebogen frageFragebogen : edit.getFrageFragebogen()) {
 					if (frageFragebogen.getFrage().equals(frage)) {
 						frageFragebogen.setPosition(positionFrage);
 						frageFragebogenDAO.merge(frageFragebogen);

@@ -9,19 +9,20 @@ import javax.persistence.OneToMany;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
+/**
+ * Entitie repraesentiert einen Frage in der Datenbank
+ * 
+ * @author zuch1000
+ * 
+ */
 @Entity
 public class Frage extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2970730609022537155L;
 
 	private String text;
 
-	// private FragePosition position;
-
-	private List<Frage_Fragebogen> customFragen;
+	private List<Frage_Fragebogen> frageFragebogen;
 
 	private Skala skala;
 
@@ -39,23 +40,13 @@ public class Frage extends BaseEntity {
 	}
 
 	@OneToMany(targetEntity = Frage_Fragebogen.class, mappedBy = "frage")
-	public List<Frage_Fragebogen> getCustomFragen() {
-		return customFragen;
+	public List<Frage_Fragebogen> getFrageFragebogen() {
+		return frageFragebogen;
 	}
 
-	public void setCustomFragen(List<Frage_Fragebogen> fragebogen) {
-		this.customFragen = fragebogen;
+	public void setFrageFragebogen(List<Frage_Fragebogen> fragebogen) {
+		this.frageFragebogen = fragebogen;
 	}
-
-	//
-	// @Enumerated
-	// public FragePosition getPosition() {
-	// return position;
-	// }
-	//
-	// public void setPosition(FragePosition position) {
-	// this.position = position;
-	// }
 
 	@Column(length = 1024)
 	public String getText() {

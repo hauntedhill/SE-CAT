@@ -1,7 +1,13 @@
-package de.hscoburg.evelin.secat.dao.entity;
+package de.hscoburg.evelin.secat.controller.helper;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import de.hscoburg.evelin.secat.dao.entity.Bereich;
+import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
+import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
+import de.hscoburg.evelin.secat.dao.entity.Item;
+import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 
 public class TreeItemWrapper {
 

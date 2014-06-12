@@ -9,6 +9,12 @@ import javax.persistence.metamodel.StaticMetamodel;
 import de.hscoburg.evelin.secat.dao.entity.base.SemesterType;
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity_;
 
+/**
+ * Staticmetamodel fuer die {@link Lehrveranstaltung}-Entitie
+ * 
+ * @author zuch1000
+ * 
+ */
 @StaticMetamodel(Lehrveranstaltung.class)
 public class Lehrveranstaltung_ extends StammdatenEntity_ {
 

@@ -6,6 +6,12 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity_;
 
+/**
+ * Staticmetamodel fuer die {@link Fach}-Entitie
+ * 
+ * @author zuch1000
+ * 
+ */
 @StaticMetamodel(Fach.class)
 public class Fach_ extends StammdatenEntity_ {
 

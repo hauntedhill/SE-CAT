@@ -5,12 +5,15 @@ import javax.persistence.ManyToOne;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
+/**
+ * Entitie repraesentiert einen Bewertung in der Datenbank
+ * 
+ * @author zuch1000
+ * 
+ */
 @Entity
 public class Bewertung extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5994796060198831594L;
 
 	private String wert;
@@ -25,9 +28,9 @@ public class Bewertung extends BaseEntity {
 
 	private String welle;
 
-	private String rawid;
+	private String zeilenid;
 
-	private String source;
+	private String quelle;
 
 	private String zeit;
 
@@ -83,20 +86,20 @@ public class Bewertung extends BaseEntity {
 		this.welle = welle;
 	}
 
-	public String getRawid() {
-		return rawid;
+	public String getZeilenid() {
+		return zeilenid;
 	}
 
-	public void setRawid(String rawid) {
-		this.rawid = rawid;
+	public void setZeilenid(String rawid) {
+		this.zeilenid = rawid;
 	}
 
-	public String getSource() {
-		return source;
+	public String getQuelle() {
+		return quelle;
 	}
 
-	public void setSource(String source) {
-		this.source = source;
+	public void setQuelle(String source) {
+		this.quelle = source;
 	}
 
 	public String getZeit() {

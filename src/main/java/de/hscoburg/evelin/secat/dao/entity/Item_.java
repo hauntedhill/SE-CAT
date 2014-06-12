@@ -6,12 +6,20 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity_;
 
+/**
+ * Staticmetamodel fuer die {@link Item}-Entitie
+ * 
+ * @author zuch1000
+ * 
+ */
 @StaticMetamodel(Item.class)
 public class Item_ extends StammdatenEntity_ {
 
 	public static volatile SingularAttribute<Item, String> name;
 
 	public static volatile SingularAttribute<Item, String> notiz;
+
+	public static volatile SingularAttribute<Item, String> frage;
 
 	public static volatile SingularAttribute<Item, Bereich> bereich;
 

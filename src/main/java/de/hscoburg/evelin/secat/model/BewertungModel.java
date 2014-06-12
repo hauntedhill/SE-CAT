@@ -101,10 +101,10 @@ public class BewertungModel {
 						fragebogen = tmpFragebogen;
 					}
 
-					if (fragebogen.getItems().size() + fragebogen.getCustomFragen().size() != fields.length - 4) {
+					if (fragebogen.getItems().size() + fragebogen.getFrageFragebogen().size() != fields.length - 4) {
 						throw new IllegalArgumentException(SeCatResourceBundle.getInstance()
 								.getString("scene.evaluation.import.error.incorrectEvaluationCount")
-								+ (fragebogen.getItems().size() + fragebogen.getCustomFragen().size()) + ", " + (fields.length - 4));
+								+ (fragebogen.getItems().size() + fragebogen.getFrageFragebogen().size()) + ", " + (fields.length - 4));
 					}
 
 					if (ids[2].equals("frage")) {
@@ -112,7 +112,7 @@ public class BewertungModel {
 						Frage frage = frageDAO.findById(Integer.parseInt(ids[3]));
 
 						boolean foundQuestion = false;
-						for (Frage_Fragebogen cf : fragebogen.getCustomFragen()) {
+						for (Frage_Fragebogen cf : fragebogen.getFrageFragebogen()) {
 							if (cf.getFrage().equals(frage)) {
 								foundQuestion = true;
 								break;
@@ -146,8 +146,8 @@ public class BewertungModel {
 					Bewertung b = new Bewertung();
 
 					b.setWelle(fields[0]);
-					b.setRawid(fields[1]);
-					b.setSource(fields[2]);
+					b.setZeilenid(fields[1]);
+					b.setQuelle(fields[2]);
 					b.setZeit(fields[3]);
 					b.setWert(fields[i]);
 					if (fragen.get(i - 4) instanceof Frage) {

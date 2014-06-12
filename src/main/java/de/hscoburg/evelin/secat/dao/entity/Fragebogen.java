@@ -17,12 +17,15 @@ import org.hibernate.annotations.FetchMode;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
+/**
+ * Entitie repraesentiert einen Fragebogen in der Datenbank
+ * 
+ * @author zuch1000
+ * 
+ */
 @Entity
 public class Fragebogen extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -5324256359163782598L;
 	private String name;
 
@@ -36,7 +39,7 @@ public class Fragebogen extends BaseEntity {
 
 	private Skala skala;
 
-	private List<Frage_Fragebogen> customFragen;
+	private List<Frage_Fragebogen> frageFragebogen;
 
 	private Eigenschaft eigenschaft;
 
@@ -104,21 +107,21 @@ public class Fragebogen extends BaseEntity {
 
 	@OneToMany(targetEntity = Frage_Fragebogen.class, mappedBy = "fragebogen", fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
-	public List<Frage_Fragebogen> getCustomFragen() {
-		return customFragen;
+	public List<Frage_Fragebogen> getFrageFragebogen() {
+		return frageFragebogen;
 	}
 
-	public void setCustomFragen(List<Frage_Fragebogen> fragen) {
-		this.customFragen = fragen;
+	public void setFrageFragebogen(List<Frage_Fragebogen> fragen) {
+		this.frageFragebogen = fragen;
 	}
 
-	public void addFrage_Fragebogen(Frage_Fragebogen f) {
-		if (this.customFragen == null) {
-			this.customFragen = new ArrayList<Frage_Fragebogen>();
+	public void addFrageFragebogen(Frage_Fragebogen f) {
+		if (this.frageFragebogen == null) {
+			this.frageFragebogen = new ArrayList<Frage_Fragebogen>();
 		}
 
 		f.setFragebogen(this);
-		this.customFragen.add(f);
+		this.frageFragebogen.add(f);
 	}
 
 	@ManyToOne(targetEntity = Perspektive.class)
@@ -155,12 +158,5 @@ public class Fragebogen extends BaseEntity {
 	public void setExportiert(Boolean exportiert) {
 		this.exportiert = exportiert;
 	}
-
-	// public void addItem(Item i) {
-	// if (items == null) {
-	// items = new ArrayList<Item>();
-	// }
-	// items.add(i);
-	// }
 
 }

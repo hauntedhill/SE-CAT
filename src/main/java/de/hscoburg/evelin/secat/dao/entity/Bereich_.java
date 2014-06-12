@@ -6,6 +6,12 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity_;
 
+/**
+ * Staticmetamodel fuer die {@link Bereich}-Entitie
+ * 
+ * @author zuch1000
+ * 
+ */
 @StaticMetamodel(Bereich.class)
 public class Bereich_ extends BaseEntity_ {
 

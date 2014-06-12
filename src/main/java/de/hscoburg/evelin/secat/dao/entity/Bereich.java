@@ -14,12 +14,15 @@ import org.hibernate.annotations.FetchMode;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
+/**
+ * Entitie repraesentiert einen Bereich in der Datenbank
+ * 
+ * @author zuch1000
+ * 
+ */
 @Entity
 public class Bereich extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4107832969718646738L;
 
 	private Handlungsfeld handlungsfeld;

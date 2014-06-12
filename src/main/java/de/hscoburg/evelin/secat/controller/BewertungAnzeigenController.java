@@ -89,7 +89,7 @@ public class BewertungAnzeigenController extends BaseController {
 
 		Fragebogen f = bewertungController.getSelectedFragebogen();
 		List<Bewertung> bewertungenList = f.getBewertungen();
-		List<Frage_Fragebogen> fragen = f.getCustomFragen();
+		List<Frage_Fragebogen> fragen = f.getFrageFragebogen();
 		ArrayList<Frage> fragenList = new ArrayList<Frage>();
 
 		for (Frage_Fragebogen frage : fragen) {
@@ -110,17 +110,17 @@ public class BewertungAnzeigenController extends BaseController {
 		if (!bewertungOl.isEmpty()) {
 
 			for (Bewertung bewertung : bewertungOl) {
-				if (!erste.contains(bewertung.getRawid())) {
-					erste.add(bewertung.getRawid());
+				if (!erste.contains(bewertung.getZeilenid())) {
+					erste.add(bewertung.getZeilenid());
 					EvaluationHelper eh = new EvaluationHelper();
 					eh.setWelle(bewertung.getWelle());
-					eh.setRawId(bewertung.getRawid());
-					eh.setSource(bewertung.getSource());
+					eh.setRawId(bewertung.getZeilenid());
+					eh.setSource(bewertung.getQuelle());
 					eh.setZeit(bewertung.getZeit());
 					List<Bewertung> temp = bewertungOl.subList(bewertungOl.indexOf(bewertung), bewertungOl.size() - 1);
 					for (Bewertung b : temp) {
 
-						if (b.getRawid().equals(eh.getRawId())) {
+						if (b.getZeilenid().equals(eh.getRawId())) {
 							if (b.getItem() != null) {
 								eh.addItemWertung(b.getWert());
 							}
@@ -137,7 +137,7 @@ public class BewertungAnzeigenController extends BaseController {
 		for (EvaluationHelper eh : ehList) {
 			ArrayList<String> frageWertungen = new ArrayList<String>();
 			for (Bewertung bewertung : bewertungOl) {
-				if (eh.getRawId().equals(bewertung.getRawid()) && bewertung.getFrage() != null) {
+				if (eh.getRawId().equals(bewertung.getZeilenid()) && bewertung.getFrage() != null) {
 					for (Frage frage : fragenList) {
 						if (bewertung.getFrage().getId() == frage.getId()) {
 							frageWertungen.add(fragenList.indexOf(frage), bewertung.getWert());

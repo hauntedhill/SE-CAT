@@ -71,7 +71,7 @@ public class SkalenModel {
 		s.setName(name);
 		s.setType(type);
 		if (SkalaType.FREE.equals(type)) {
-			s.setRows(Integer.parseInt(zeilen));
+			s.setZeilen(Integer.parseInt(zeilen));
 		} else if (SkalaType.DISCRET.equals(type)) {
 			if ("".equals(minText.trim()) || "".equals(maxText.trim())) {
 				throw new NumberFormatException("Empty String");
@@ -79,16 +79,16 @@ public class SkalenModel {
 			s.setMaxText(maxText);
 			s.setMinText(minText);
 			s.setOptimum(Integer.parseInt(optimum));
-			s.setWeight(Integer.parseInt(schrittWeite));
-			s.setSteps(Integer.parseInt(schritte));
+			s.setSchrittWeite(Integer.parseInt(schrittWeite));
+			s.setSchritte(Integer.parseInt(schritte));
 		} else if (SkalaType.MC.equals(type)) {
-			if (keys.size() > 1) {
+			if (keys.size() < 1) {
 				throw new NumberFormatException("Empty String");
 			}
-			s.setChoices(keys);
-			s.setOtherAnswer(defaultAnswer);
-			s.setWeight(Integer.parseInt(schrittWeiteMC));
-			s.setRefuseAnswer(refuseAnswer);
+			s.setAuswahl(keys);
+			s.setAndereAntwort(defaultAnswer);
+			s.setSchrittWeite(Integer.parseInt(schrittWeiteMC));
+			s.setVerweigerungsAntwort(refuseAnswer);
 		}
 		skalaDAO.persist(s);
 

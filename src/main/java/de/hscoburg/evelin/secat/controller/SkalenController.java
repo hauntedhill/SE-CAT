@@ -294,8 +294,8 @@ public class SkalenController extends BaseController {
 
 					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
 
-						if (p.getValue().getRows() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getRows()));
+						if (p.getValue().getZeilen() != null) {
+							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getZeilen()));
 						} else {
 							return new ReadOnlyObjectWrapper<String>("");
 						}
@@ -308,8 +308,8 @@ public class SkalenController extends BaseController {
 
 					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
 
-						if (p.getValue().getSteps() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getSteps()));
+						if (p.getValue().getSchritte() != null) {
+							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getSchritte()));
 						} else {
 							return new ReadOnlyObjectWrapper<String>("");
 						}
@@ -322,8 +322,8 @@ public class SkalenController extends BaseController {
 
 					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
 
-						if (p.getValue().getWeight() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getWeight()));
+						if (p.getValue().getSchrittWeite() != null) {
+							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getSchrittWeite()));
 						} else {
 							return new ReadOnlyObjectWrapper<String>("");
 						}
@@ -378,8 +378,8 @@ public class SkalenController extends BaseController {
 
 					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
 
-						if (p.getValue().getRefuseAnswer() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getRefuseAnswer()));
+						if (p.getValue().getVerweigerungsAntwort() != null) {
+							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getVerweigerungsAntwort()));
 						} else {
 							return new ReadOnlyObjectWrapper<String>("");
 						}
@@ -392,8 +392,8 @@ public class SkalenController extends BaseController {
 
 					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
 
-						if (p.getValue().getOtherAnswer() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getOtherAnswer()));
+						if (p.getValue().getAndereAntwort() != null) {
+							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getAndereAntwort()));
 						} else {
 							return new ReadOnlyObjectWrapper<String>("");
 						}
@@ -406,8 +406,8 @@ public class SkalenController extends BaseController {
 
 					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
 
-						if (p.getValue().getChoices() != null && p.getValue().getChoices().size() > 0) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getChoices()));
+						if (p.getValue().getAuswahl() != null && p.getValue().getAuswahl().size() > 0) {
+							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getAuswahl()));
 						} else {
 							return new ReadOnlyObjectWrapper<String>("");
 						}

@@ -15,12 +15,15 @@ import org.hibernate.annotations.FetchMode;
 
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
 
+/**
+ * Entitie repraesentiert einen Item in der Datenbank
+ * 
+ * @author zuch1000
+ * 
+ */
 @Entity
 public class Item extends StammdatenEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1592944199003666766L;
 
 	private String name;
@@ -40,7 +43,7 @@ public class Item extends StammdatenEntity {
 	private String frage;
 
 	// private Skala skala;
-	@Column(length=1024)
+	@Column(length = 1024)
 	public String getName() {
 		return name;
 	}

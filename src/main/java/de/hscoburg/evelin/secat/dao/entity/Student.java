@@ -7,12 +7,15 @@ import javax.persistence.ManyToMany;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
+/**
+ * Entitie repraesentiert einen Studenten in der Datenbank
+ * 
+ * @author zuch1000
+ * 
+ */
 @Entity
 public class Student extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -4314439908648758052L;
 	private String name;
 

@@ -13,26 +13,18 @@ import org.hibernate.annotations.Fetch;
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 
+/**
+ * Entitie repraesentiert eine Skala in der Datenbank
+ * 
+ * @author zuch1000
+ * 
+ */
 @Entity
 public class Skala extends BaseEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 2303425624469317407L;
 
 	private String name;
-
-	// private List<Item> items;
-
-	// @OneToMany(targetEntity = Item.class, mappedBy = "skala")
-	// public List<Item> getItems() {
-	// return items;
-	// }
-	//
-	// public void setItems(List<Item> items) {
-	// this.items = items;
-	// }
 
 	private List<Fragebogen> frageboegen;
 
@@ -40,11 +32,11 @@ public class Skala extends BaseEntity {
 
 	private SkalaType type;
 
-	private Integer rows;
+	private Integer zeilen;
 
-	private Integer steps;
+	private Integer schritte;
 
-	private Integer weight;
+	private Integer schrittWeite;
 
 	private Integer optimum;
 
@@ -52,20 +44,11 @@ public class Skala extends BaseEntity {
 
 	private String maxText;
 
-	private List<String> choices;
+	private List<String> auswahl;
 
-	private String otherAnswer;
+	private String andereAntwort;
 
-	private String refuseAnswer;
-
-	// @OneToMany(targetEntity = Fragebogen.class, mappedBy = "skala")
-	// public List<Fragebogen> getFrageboegen() {
-	// return frageboegen;
-	// }
-	//
-	// public void setItems(List<Fragebogen> frageboegen) {
-	// this.frageboegen = frageboegen;
-	// }
+	private String verweigerungsAntwort;
 
 	public String getName() {
 		return name;
@@ -102,28 +85,28 @@ public class Skala extends BaseEntity {
 		this.type = type;
 	}
 
-	public Integer getRows() {
-		return rows;
+	public Integer getZeilen() {
+		return zeilen;
 	}
 
-	public void setRows(Integer rows) {
-		this.rows = rows;
+	public void setZeilen(Integer rows) {
+		this.zeilen = rows;
 	}
 
-	public Integer getSteps() {
-		return steps;
+	public Integer getSchritte() {
+		return schritte;
 	}
 
-	public void setSteps(Integer steps) {
-		this.steps = steps;
+	public void setSchritte(Integer steps) {
+		this.schritte = steps;
 	}
 
-	public Integer getWeight() {
-		return weight;
+	public Integer getSchrittWeite() {
+		return schrittWeite;
 	}
 
-	public void setWeight(Integer weight) {
-		this.weight = weight;
+	public void setSchrittWeite(Integer weight) {
+		this.schrittWeite = weight;
 	}
 
 	public String getMinText() {
@@ -152,28 +135,28 @@ public class Skala extends BaseEntity {
 
 	@ElementCollection(fetch = FetchType.EAGER)
 	@Fetch(org.hibernate.annotations.FetchMode.SELECT)
-	public List<String> getChoices() {
-		return choices;
+	public List<String> getAuswahl() {
+		return auswahl;
 	}
 
-	public void setChoices(List<String> keys) {
-		this.choices = keys;
+	public void setAuswahl(List<String> keys) {
+		this.auswahl = keys;
 	}
 
-	public String getOtherAnswer() {
-		return otherAnswer;
+	public String getAndereAntwort() {
+		return andereAntwort;
 	}
 
-	public void setOtherAnswer(String defaultAnswer) {
-		this.otherAnswer = defaultAnswer;
+	public void setAndereAntwort(String defaultAnswer) {
+		this.andereAntwort = defaultAnswer;
 	}
 
-	public String getRefuseAnswer() {
-		return refuseAnswer;
+	public String getVerweigerungsAntwort() {
+		return verweigerungsAntwort;
 	}
 
-	public void setRefuseAnswer(String refuseAnswer) {
-		this.refuseAnswer = refuseAnswer;
+	public void setVerweigerungsAntwort(String refuseAnswer) {
+		this.verweigerungsAntwort = refuseAnswer;
 	}
 
 }

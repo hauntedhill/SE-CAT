@@ -32,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
+import de.hscoburg.evelin.secat.controller.helper.TreeItemWrapper;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Frage;
@@ -41,7 +42,6 @@ import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
-import de.hscoburg.evelin.secat.dao.entity.TreeItemWrapper;
 import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
 import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.FachModel;
@@ -553,7 +553,7 @@ public class AddFragebogenController extends BaseController {
 						items.add(item);
 					}
 
-					for (Frage_Fragebogen frage : x.getCustomFragen()) {
+					for (Frage_Fragebogen frage : x.getFrageFragebogen()) {
 						fragenOl.add(frage.getFrage());
 						positionFrage.setValue(frage.getPosition());
 					}
@@ -647,7 +647,7 @@ public class AddFragebogenController extends BaseController {
 			items.add(item);
 		}
 
-		for (Frage_Fragebogen frage : f.getCustomFragen()) {
+		for (Frage_Fragebogen frage : f.getFrageFragebogen()) {
 			fragenOl.add(frage.getFrage());
 			positionFrage.setValue(frage.getPosition());
 

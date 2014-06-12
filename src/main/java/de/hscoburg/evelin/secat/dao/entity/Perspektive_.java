@@ -6,6 +6,12 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity_;
 
+/**
+ * Staticmetamodel fuer die {@link Perspektive}-Entitie
+ * 
+ * @author zuch1000
+ * 
+ */
 @StaticMetamodel(Perspektive.class)
 public class Perspektive_ extends StammdatenEntity_ {
 

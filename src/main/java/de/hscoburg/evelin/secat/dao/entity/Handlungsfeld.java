@@ -13,6 +13,12 @@ import org.hibernate.annotations.FetchMode;
 
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
 
+/**
+ * Entitie repraesentiert ein Handlungsfeld in der Datenbank
+ * 
+ * @author zuch1000
+ * 
+ */
 @Entity
 public class Handlungsfeld extends StammdatenEntity {
 

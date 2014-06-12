@@ -13,12 +13,15 @@ import javax.persistence.TemporalType;
 import de.hscoburg.evelin.secat.dao.entity.base.SemesterType;
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
 
+/**
+ * Entitie repraesentiert einen Lehrveranstaltung in der Datenbank
+ * 
+ * @author zuch1000
+ * 
+ */
 @Entity
 public class Lehrveranstaltung extends StammdatenEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 8711293069943587392L;
 	private Date jahr;
 
