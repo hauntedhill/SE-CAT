@@ -16,6 +16,7 @@ public class EvaluationHelper {
 	private String zeit;
 
 	public EvaluationHelper() {
+		this.items = new ArrayList<Item>();
 		this.itemWertung = new ArrayList<String>();
 		this.frageWertung = new ArrayList<String>();
 
