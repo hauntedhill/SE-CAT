@@ -20,6 +20,7 @@ import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
+import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 /**
@@ -75,7 +76,7 @@ public class BewertungModel {
 
 				for (int i = 4; i < fields.length; i++) {
 					String[] ids = fields[i].split("_");
-					if (ids.length != 4) {
+					if (ids.length != 4 && ids.length != 5) {
 						throw new IllegalArgumentException(SeCatResourceBundle.getInstance().getString("scene.evaluation.import.error.incorrectId") + fields[i]);
 					}
 
@@ -101,10 +102,20 @@ public class BewertungModel {
 						fragebogen = tmpFragebogen;
 					}
 
-					if (fragebogen.getItems().size() + fragebogen.getFrageFragebogen().size() != fields.length - 4) {
+					int countMCQUentsions = 0;
+					for (Frage_Fragebogen ff : fragebogen.getFrageFragebogen()) {
+						if (ff.getFrage().getSkala().getType().equals(SkalaType.MC)) {
+							countMCQUentsions++;
+						}
+					}
+					if (fragebogen.getSkala().equals(SkalaType.MC)) {
+						countMCQUentsions += fragebogen.getItems().size();
+					}
+
+					if (fragebogen.getItems().size() + fragebogen.getFrageFragebogen().size() + countMCQUentsions != fields.length - 4) {
 						throw new IllegalArgumentException(SeCatResourceBundle.getInstance()
 								.getString("scene.evaluation.import.error.incorrectEvaluationCount")
-								+ (fragebogen.getItems().size() + fragebogen.getFrageFragebogen().size()) + ", " + (fields.length - 4));
+								+ (fragebogen.getItems().size() + fragebogen.getFrageFragebogen().size() + countMCQUentsions) + ", " + (fields.length - 4));
 					}
 
 					if (ids[2].equals("frage")) {
