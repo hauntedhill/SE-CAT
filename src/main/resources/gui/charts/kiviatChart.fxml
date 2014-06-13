@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="de.hscoburg.evelin.secat.controller.KiviatController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="582.0" minWidth="10.0" prefWidth="582.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="293.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+<children><TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+<content><GridPane fx:id="contentPane">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
+    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="540.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="220.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+</GridPane>
+</content></TitledPane>
+</children>
+</GridPane>

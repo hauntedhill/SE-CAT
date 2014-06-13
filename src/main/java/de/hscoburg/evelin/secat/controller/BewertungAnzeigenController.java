@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.controller;
 
+import java.awt.Font;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,14 +10,37 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.embed.swing.SwingNode;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.BoxAndWhiskerToolTipGenerator;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.SpiderWebPlot;
+import org.jfree.chart.renderer.category.BoxAndWhiskerRenderer;
+import org.jfree.chart.title.LegendTitle;
+import org.jfree.chart.title.TextTitle;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
+import org.jfree.ui.RectangleEdge;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -31,13 +55,18 @@ import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.model.BewertungModel;
 import de.hscoburg.evelin.secat.model.FragebogenModel;
 import de.hscoburg.evelin.secat.model.FragenModel;
+import de.hscoburg.evelin.secat.util.charts.RadarChart;
+import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
+import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 @Controller
 public class BewertungAnzeigenController extends BaseController {
 
 	@FXML
 	GridPane gridPane;
+	@FXML
+	GridPane visuals;
 	@FXML
 	TableView<EvaluationHelper> tableView;
 	@Autowired
@@ -55,9 +84,56 @@ public class BewertungAnzeigenController extends BaseController {
 	private int constColumns;
 	private int actualColumn;
 	private ArrayList<Bereich> bereiche = new ArrayList<Bereich>();
+	private Fragebogen fragebogen;
+	private List<EvaluationHelper> allEvaluationHelper;
 
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
+
+		tableView.setRowFactory(new Callback<TableView<EvaluationHelper>, TableRow<EvaluationHelper>>() {
+
+			public TableRow<EvaluationHelper> call(TableView<EvaluationHelper> treeTableView) {
+
+				final TableRow<EvaluationHelper> row = new TableRow<>();
+				final ContextMenu rowMenu = new ContextMenu();
+
+				final MenuItem showRadarChart = new MenuItem("Kiviat Chart", new ImageView(new Image("/image/icons/demo.png", 16, 16, true, true)));
+
+				row.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+
+					@Override
+					public void handle(ContextMenuEvent event) {
+
+					}
+				});
+
+				showRadarChart.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+					private Stage stage;
+
+					@Override
+					public void handleAction(ActionEvent t) {
+
+					}
+
+					@Override
+					public void updateUI() {
+						stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/charts/kiviatChart.fxml");
+						stage.show();
+					}
+
+				});
+
+				rowMenu.getItems().add(showRadarChart);
+
+				row.contextMenuProperty().bind(
+						javafx.beans.binding.Bindings.when(javafx.beans.binding.Bindings.isNotNull(row.itemProperty())).then(rowMenu)
+								.otherwise((ContextMenu) null));
+				return row;
+
+			}
+
+		});
 
 		final Text welle = new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.welle"));
 		final Text rawid = new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.rawid"));
@@ -88,6 +164,7 @@ public class BewertungAnzeigenController extends BaseController {
 		tableView.getColumns().addAll(col0, col1, col2, col3);
 
 		Fragebogen f = bewertungController.getSelectedFragebogen();
+		fragebogen = f;
 		List<Bewertung> bewertungenList = f.getBewertungen();
 		List<Frage_Fragebogen> fragen = f.getFrageFragebogen();
 		ArrayList<Frage> fragenList = new ArrayList<Frage>();
@@ -117,12 +194,14 @@ public class BewertungAnzeigenController extends BaseController {
 					eh.setRawId(bewertung.getZeilenid());
 					eh.setSource(bewertung.getQuelle());
 					eh.setZeit(bewertung.getZeit());
-					List<Bewertung> temp = bewertungOl.subList(bewertungOl.indexOf(bewertung), bewertungOl.size() - 1);
+					List<Bewertung> temp = bewertungOl;
 					for (Bewertung b : temp) {
 
 						if (b.getZeilenid().equals(eh.getRawId())) {
 							if (b.getItem() != null) {
+
 								eh.addItemWertung(b.getWert());
+								eh.addItem(b.getItem());
 							}
 
 						}
@@ -186,6 +265,12 @@ public class BewertungAnzeigenController extends BaseController {
 		constColumns = 4;
 		itemCount = 0;
 		actualColumn = 1;
+		// int test = 0;
+		// System.out.println(ehList.get(3).getItems().size());
+		// for (String b : ehList.get(3).getItemWertung()) {
+		// System.out.println(test++ + " " + b);
+		// }
+		// System.out.println(ehList.get(3).getItemWertung().size());
 		for (Bereich bereich : bereiche) {
 
 			TableColumn col = new TableColumn();
@@ -219,6 +304,8 @@ public class BewertungAnzeigenController extends BaseController {
 
 									}
 									actualColumn++;
+									// System.out.println(p.getValue().getItemWertung().get(itemCount));
+									System.out.println(itemCount);
 									return new ReadOnlyObjectWrapper<String>(p.getValue().getItemWertung().get(itemCount++));
 
 								}
@@ -266,7 +353,176 @@ public class BewertungAnzeigenController extends BaseController {
 
 			}
 		}
+		allEvaluationHelper = ehList;
+		final SwingNode chartSwingNode = new SwingNode();
+		chartSwingNode.setContent(new ChartPanel(createAverageRadarChart()));
+		visuals.add(chartSwingNode, 1, 1);
+		final SwingNode boxPlotChartSwingNode = new SwingNode();
+		boxPlotChartSwingNode.setContent(new ChartPanel(createBoxPlot()));
+		visuals.add(boxPlotChartSwingNode, 2, 1);
 
+	}
+
+	public JFreeChart createRadarChart(EvaluationHelper eh, Fragebogen fragebogen) {
+
+		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+
+		String s;
+
+		int iBewertung = 0;
+		s = eh.getRawId();
+		int z = 0;
+		for (Item item : eh.getItems()) {
+			if (item != null) {
+				defaultcategorydataset.addValue((Double.parseDouble(eh.getItemWertung().get(iBewertung++))), s, z + ": " + item.getName());
+			}
+
+		}
+
+		RadarChart rc = new RadarChart(defaultcategorydataset, fragebogen.getSkala().getSchritte());
+		SpiderWebPlot spiderwebplot = rc.getPlot();
+		spiderwebplot.setMaxValue(fragebogen.getSkala().getSchritte());
+		JFreeChart jfreechart = new JFreeChart(fragebogen.getName(), TextTitle.DEFAULT_FONT, spiderwebplot, false);
+		LegendTitle legendtitle = new LegendTitle(spiderwebplot);
+		legendtitle.setPosition(RectangleEdge.BOTTOM);
+		jfreechart.addSubtitle(legendtitle);
+
+		return jfreechart;
+
+	}
+
+	public JFreeChart createAverageRadarChart() {
+		DefaultCategoryDataset defaultcategorydataset = getAverageDataSet();
+
+		RadarChart rc = new RadarChart(defaultcategorydataset, fragebogen.getSkala().getSchritte());
+		SpiderWebPlot spiderwebplot = rc.getPlot();
+		spiderwebplot.setMaxValue(fragebogen.getSkala().getSchritte());
+
+		JFreeChart jfreechart = new JFreeChart(fragebogen.getName(), TextTitle.DEFAULT_FONT, spiderwebplot, false);
+		LegendTitle legendtitle = new LegendTitle(spiderwebplot);
+		legendtitle.setPosition(RectangleEdge.BOTTOM);
+		jfreechart.addSubtitle(legendtitle);
+
+		return jfreechart;
+	}
+
+	public JFreeChart createMixedRadarChart(EvaluationHelper eh, Fragebogen fragebogen) {
+
+		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+
+		int z = 0;
+
+		int anzItems = allEvaluationHelper.get(0).getItems().size();
+		double[] werte = new double[anzItems];
+
+		for (EvaluationHelper evalHelper : allEvaluationHelper) {
+			int iWerte = 0;
+			for (Item item : evalHelper.getItems()) {
+				if (item != null) {
+
+					werte[iWerte] += ((Double.parseDouble(evalHelper.getItemWertung().get(iWerte++))));
+				}
+			}
+			z = 0;
+			for (int j = 0; j < anzItems; j++)
+				defaultcategorydataset.addValue((werte[j] / allEvaluationHelper.size()),
+						SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), z++ + ": "
+								+ allEvaluationHelper.get(0).getItems().get(j).getName());
+
+		}
+
+		RadarChart rc = new RadarChart(defaultcategorydataset, fragebogen.getSkala().getSchritte());
+		SpiderWebPlot spiderwebplot = rc.getPlot();
+
+		JFreeChart jfreechart = new JFreeChart(fragebogen.getName(), TextTitle.DEFAULT_FONT, spiderwebplot, false);
+		LegendTitle legendtitle = new LegendTitle(spiderwebplot);
+		legendtitle.setPosition(RectangleEdge.BOTTOM);
+		jfreechart.addSubtitle(legendtitle);
+
+		String s;
+
+		int iBewertung = 0;
+		s = eh.getRawId();
+		z = 0;
+		for (Item item : eh.getItems()) {
+			if (item != null) {
+
+				defaultcategorydataset.addValue((Double.parseDouble(eh.getItemWertung().get(iBewertung++))), s, z++ + ": " + item.getName());
+			}
+
+		}
+
+		return jfreechart;
+
+	}
+
+	public DefaultCategoryDataset getAverageDataSet() {
+		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+		if (!allEvaluationHelper.isEmpty()) {
+
+			int anzItems = allEvaluationHelper.get(0).getItems().size();
+			double[] werte = new double[anzItems];
+
+			for (EvaluationHelper evalHelper : allEvaluationHelper) {
+				int iWerte = 0;
+				for (Item item : evalHelper.getItems()) {
+					if (item != null) {
+
+						werte[iWerte] += ((Double.parseDouble(evalHelper.getItemWertung().get(iWerte++))));
+					}
+				}
+
+				for (int j = 0; j < anzItems; j++)
+					defaultcategorydataset.addValue((werte[j] / allEvaluationHelper.size()),
+							SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"),
+							j + ": " + allEvaluationHelper.get(0).getItems().get(j).getName());
+
+			}
+
+		}
+		return defaultcategorydataset;
+	}
+
+	public JFreeChart createBoxPlot() {
+		final int seriesCount = 3;
+		final int categoryCount = 4;
+		final int entityCount = 22;
+
+		final DefaultBoxAndWhiskerCategoryDataset dataset = new DefaultBoxAndWhiskerCategoryDataset();
+		for (int i = 0; i < seriesCount; i++) {
+			for (int j = 0; j < categoryCount; j++) {
+				final List list = new ArrayList();
+				// add some values...
+				for (int k = 0; k < entityCount; k++) {
+					final double value1 = 10.0 + Math.random() * 3;
+					list.add(new Double(value1));
+					final double value2 = 11.25 + Math.random(); // concentrate values in the middle
+					list.add(new Double(value2));
+				}
+				dataset.add(list, "Series " + i, " Type " + j);
+			}
+
+		}
+
+		final CategoryAxis xAxis = new CategoryAxis("Type");
+		final NumberAxis yAxis = new NumberAxis("Value");
+		yAxis.setAutoRangeIncludesZero(false);
+		final BoxAndWhiskerRenderer renderer = new BoxAndWhiskerRenderer();
+		renderer.setFillBox(false);
+		renderer.setToolTipGenerator(new BoxAndWhiskerToolTipGenerator());
+		final CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
+
+		final JFreeChart chart = new JFreeChart("BoxPLot", new Font("SansSerif", Font.BOLD, 14), plot, true);
+		return chart;
+
+	}
+
+	public Fragebogen getFragebogen() {
+		return fragebogen;
+	}
+
+	public EvaluationHelper getSelectedItem() {
+		return tableView.getSelectionModel().getSelectedItem();
 	}
 
 	@Override
