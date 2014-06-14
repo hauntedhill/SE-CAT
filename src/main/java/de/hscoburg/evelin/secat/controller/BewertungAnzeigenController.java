@@ -412,7 +412,7 @@ public class BewertungAnzeigenController extends BaseController {
 			}
 			value /= eh.getItemWertung().size();
 
-			defaultcategorydataset.addValue(value, "stud", eh.getRawId());
+			defaultcategorydataset.addValue(value, SeCatResourceBundle.getInstance().getString("scene.chart.studentincrease"), eh.getRawId());
 		}
 
 		RadarChart rc = new RadarChart(defaultcategorydataset, fragebogen.getSkala().getSchritte());
