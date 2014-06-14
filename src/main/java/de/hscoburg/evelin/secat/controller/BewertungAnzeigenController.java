@@ -84,6 +84,7 @@ public class BewertungAnzeigenController extends BaseController {
 	private int constColumns;
 	private int actualColumn;
 	private ArrayList<Bereich> bereiche = new ArrayList<Bereich>();
+	private double[] avValueBereich;
 	private Fragebogen fragebogen;
 	private List<EvaluationHelper> allEvaluationHelper;
 
@@ -181,6 +182,23 @@ public class BewertungAnzeigenController extends BaseController {
 					bereiche.add(bewertung.getItem().getBereich());
 			}
 		}
+		avValueBereich = new double[bereiche.size()];
+		int valCount = 0;
+		for (Bereich bereich : bereiche) {
+			valCount = 0;
+			for (Bewertung bewertung : bewertungOl) {
+				if (bewertung.getItem() != null) {
+					if (bereich.equals(bewertung.getItem().getBereich())) {
+						avValueBereich[bereiche.indexOf(bereich)] += Double.parseDouble(bewertung.getWert());
+						valCount++;
+					}
+				}
+			}
+			if (valCount != 0) {
+				avValueBereich[bereiche.indexOf(bereich)] /= valCount;
+			}
+		}
+
 		ObservableList<EvaluationHelper> ehList = FXCollections.observableArrayList();
 		ArrayList<String> erste = new ArrayList<String>();
 
@@ -265,12 +283,6 @@ public class BewertungAnzeigenController extends BaseController {
 		constColumns = 4;
 		itemCount = 0;
 		actualColumn = 1;
-		// int test = 0;
-		// System.out.println(ehList.get(3).getItems().size());
-		// for (String b : ehList.get(3).getItemWertung()) {
-		// System.out.println(test++ + " " + b);
-		// }
-		// System.out.println(ehList.get(3).getItemWertung().size());
 		for (Bereich bereich : bereiche) {
 
 			TableColumn col = new TableColumn();
@@ -304,8 +316,6 @@ public class BewertungAnzeigenController extends BaseController {
 
 									}
 									actualColumn++;
-									// System.out.println(p.getValue().getItemWertung().get(itemCount));
-									System.out.println(itemCount);
 									return new ReadOnlyObjectWrapper<String>(p.getValue().getItemWertung().get(itemCount++));
 
 								}
@@ -353,9 +363,15 @@ public class BewertungAnzeigenController extends BaseController {
 
 			}
 		}
+
+		for (EvaluationHelper eh : ehList) {
+
+		}
+
 		allEvaluationHelper = ehList;
+
 		final SwingNode chartSwingNode = new SwingNode();
-		chartSwingNode.setContent(new ChartPanel(createAverageRadarChart()));
+		chartSwingNode.setContent(new ChartPanel(createAverageRadarChartForBereich()));
 		visuals.add(chartSwingNode, 1, 1);
 		final SwingNode boxPlotChartSwingNode = new SwingNode();
 		boxPlotChartSwingNode.setContent(new ChartPanel(createBoxPlot()));
@@ -391,8 +407,8 @@ public class BewertungAnzeigenController extends BaseController {
 
 	}
 
-	public JFreeChart createAverageRadarChart() {
-		DefaultCategoryDataset defaultcategorydataset = getAverageDataSet();
+	public JFreeChart createAverageRadarChartForBereich() {
+		DefaultCategoryDataset defaultcategorydataset = getAverageDataSetForBereich();
 
 		RadarChart rc = new RadarChart(defaultcategorydataset, fragebogen.getSkala().getSchritte());
 		SpiderWebPlot spiderwebplot = rc.getPlot();
@@ -406,7 +422,7 @@ public class BewertungAnzeigenController extends BaseController {
 		return jfreechart;
 	}
 
-	public JFreeChart createMixedRadarChart(EvaluationHelper eh, Fragebogen fragebogen) {
+	public JFreeChart createMixedRadarChartForItem(EvaluationHelper eh, Fragebogen fragebogen) {
 
 		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
 
@@ -431,14 +447,6 @@ public class BewertungAnzeigenController extends BaseController {
 
 		}
 
-		RadarChart rc = new RadarChart(defaultcategorydataset, fragebogen.getSkala().getSchritte());
-		SpiderWebPlot spiderwebplot = rc.getPlot();
-
-		JFreeChart jfreechart = new JFreeChart(fragebogen.getName(), TextTitle.DEFAULT_FONT, spiderwebplot, false);
-		LegendTitle legendtitle = new LegendTitle(spiderwebplot);
-		legendtitle.setPosition(RectangleEdge.BOTTOM);
-		jfreechart.addSubtitle(legendtitle);
-
 		String s;
 
 		int iBewertung = 0;
@@ -452,12 +460,71 @@ public class BewertungAnzeigenController extends BaseController {
 
 		}
 
+		RadarChart rc = new RadarChart(defaultcategorydataset, fragebogen.getSkala().getSchritte());
+		SpiderWebPlot spiderwebplot = rc.getPlot();
+
+		JFreeChart jfreechart = new JFreeChart(fragebogen.getName(), TextTitle.DEFAULT_FONT, spiderwebplot, false);
+		LegendTitle legendtitle = new LegendTitle(spiderwebplot);
+		legendtitle.setPosition(RectangleEdge.BOTTOM);
+		jfreechart.addSubtitle(legendtitle);
+
 		return jfreechart;
 
 	}
 
-	public DefaultCategoryDataset getAverageDataSet() {
+	public JFreeChart createMixedRadarChartForBereich(EvaluationHelper eh, Fragebogen fragebogen) {
+
 		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+
+		double avValue[] = new double[bereiche.size()];
+		int valCount = 0;
+		for (Bereich bereich : bereiche) {
+			valCount = 0;
+			for (Item item : eh.getItems()) {
+
+				if (bereich.equals(item.getBereich())) {
+					avValue[bereiche.indexOf(bereich)] += Double.parseDouble(eh.getItemWertung().get(valCount));
+					valCount++;
+				}
+
+			}
+			if (valCount != 0) {
+				avValue[bereiche.indexOf(bereich)] /= valCount;
+			}
+		}
+		for (int j = 0; j < avValue.length; j++) {
+			defaultcategorydataset.addValue(avValue[j], eh.getRawId(), bereiche.get(j).getName());
+
+		}
+		for (int i = 0; i < bereiche.size(); i++) {
+			defaultcategorydataset.addValue(avValueBereich[i], SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), bereiche.get(i)
+					.getName());
+		}
+
+		RadarChart rc = new RadarChart(defaultcategorydataset, fragebogen.getSkala().getSchritte());
+		SpiderWebPlot spiderwebplot = rc.getPlot();
+
+		JFreeChart jfreechart = new JFreeChart(fragebogen.getName(), TextTitle.DEFAULT_FONT, spiderwebplot, false);
+		LegendTitle legendtitle = new LegendTitle(spiderwebplot);
+		legendtitle.setPosition(RectangleEdge.BOTTOM);
+		jfreechart.addSubtitle(legendtitle);
+
+		return jfreechart;
+
+	}
+
+	public DefaultCategoryDataset getAverageDataSetForBereich() {
+		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+		for (int i = 0; i < bereiche.size(); i++)
+			defaultcategorydataset.addValue(avValueBereich[i], SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), bereiche.get(i)
+					.getName());
+
+		return defaultcategorydataset;
+	}
+
+	public DefaultCategoryDataset getAverageDataSetForItem() {
+		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+
 		if (!allEvaluationHelper.isEmpty()) {
 
 			int anzItems = allEvaluationHelper.get(0).getItems().size();
@@ -480,6 +547,7 @@ public class BewertungAnzeigenController extends BaseController {
 			}
 
 		}
+
 		return defaultcategorydataset;
 	}
 

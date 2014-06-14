@@ -25,7 +25,7 @@ public class KiviatController extends BaseController {
 
 		final SwingNode chartSwingNode = new SwingNode();
 		// System.out.println(ehList.get(0).getItems().size());
-		chartSwingNode.setContent(new ChartPanel(bewertungAnzeigenController.createMixedRadarChart(bewertungAnzeigenController.getSelectedItem(),
+		chartSwingNode.setContent(new ChartPanel(bewertungAnzeigenController.createMixedRadarChartForBereich(bewertungAnzeigenController.getSelectedItem(),
 				bewertungAnzeigenController.getFragebogen())));
 
 		contentPane.add(chartSwingNode, 1, 1);
