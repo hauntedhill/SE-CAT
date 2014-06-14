@@ -16,6 +16,12 @@ import org.springframework.stereotype.Controller;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
+/**
+ * Controller zum verwalten des TopMenues sowie deren Actions.
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 public class TopMenuController implements Initializable {
 
@@ -58,6 +64,9 @@ public class TopMenuController implements Initializable {
 	@FXML
 	private MenuItem bewertung;
 
+	/**
+	 * Initialisiert die Actions der MenuItems
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 

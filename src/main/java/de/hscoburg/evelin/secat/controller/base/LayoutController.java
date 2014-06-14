@@ -13,9 +13,18 @@ import org.springframework.stereotype.Controller;
 import de.hscoburg.evelin.secat.SeCat;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
+/**
+ * Controller zur Steuerung des Layoutes
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 public class LayoutController implements Initializable {
 
+	/**
+	 * Adressen der einzelnen Scenen
+	 */
 	private static final String GUI_PATH = "/gui/";
 
 	private static final String STAMMDATEN_PATH = GUI_PATH + "stammdaten/";
@@ -57,6 +66,9 @@ public class LayoutController implements Initializable {
 	@FXML
 	private BorderPane layout;
 
+	/**
+	 * Methode zum initialisieren des Layoutes
+	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -65,10 +77,20 @@ public class LayoutController implements Initializable {
 
 	}
 
+	/**
+	 * Setzt die Center Node
+	 * 
+	 * @param url
+	 */
 	public void setCenterNode(Node url) {
 		layout.setCenter(url);
 	}
 
+	/**
+	 * Setzt die Top Node
+	 * 
+	 * @param url
+	 */
 	public void setTop(Node url) {
 		layout.setTop(url);
 	}

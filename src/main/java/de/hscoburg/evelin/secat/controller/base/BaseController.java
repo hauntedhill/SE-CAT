@@ -10,8 +10,17 @@ import javafx.stage.Stage;
 import de.hscoburg.evelin.secat.SeCat;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
+/**
+ * Abstrakter-Controller zur grundlegenden Steuerung der einzelnen Scenen
+ * 
+ * @author zuch1000
+ * 
+ */
 public abstract class BaseController implements Initializable {
 
+	/**
+	 * Stage der Scene
+	 */
 	private Stage currentStage;
 
 	public void setCurrentStage(Stage currentStage) {
@@ -21,37 +30,39 @@ public abstract class BaseController implements Initializable {
 	public Stage getCurrentStage() {
 		return this.currentStage;
 
-		// return (Stage) org.controlsfx.tools.Utils.getWindow(null);
-
-		// if (_owner == null) {
-		// _owner = org.controlsfx.tools.Utils.getWindow(_owner);
-		// }
-		//
-		// if (_owner instanceof Scene) {
-		// this.scene = (Scene) _owner;
-		// } else if (_owner instanceof Stage) {
-		// this.scene = ((Stage) _owner).getScene();
-		// } else if (_owner instanceof Tab) {
-		// // special case for people wanting to show a lightweight dialog inside
-		// // one tab whilst the rest of the TabPane remains responsive.
-		// // we keep going up until the styleclass is "tab-content-area"
-		// owner = (Parent) ((Tab)_owner).getContent();
-		// } else if (_owner instanceof Node) {
-		// owner = getFirstParent((Node)_owner);
-		// } else {
-		//            throw new IllegalArgumentException("Unknown owner: " + _owner.getClass()); //$NON-NLS-1$
-		// }
 	}
 
+	/**
+	 * Methode zum initialisieren des Controllers
+	 * 
+	 * @param location
+	 * @param resources
+	 */
 	public abstract void initializeController(URL location, ResourceBundle resources);
 
+	/**
+	 * Gibt den Namen der Scenen zurueck
+	 * 
+	 * @return {@link String}
+	 */
 	public String getSceneName() {
 
 		return SeCatResourceBundle.getInstance().getObject(getKeyForSceneName()).toString();
 	}
 
+	/**
+	 * Definiert den Key fuer den Namen der Scene
+	 * 
+	 * @return {@link String}
+	 */
 	public abstract String getKeyForSceneName();
 
+	/**
+	 * Methode die von JavaFX aufgerufen wird.
+	 * 
+	 * @param location
+	 * @param resources
+	 */
 	@Override
 	public final void initialize(URL location, ResourceBundle resources) {
 
@@ -59,6 +70,9 @@ public abstract class BaseController implements Initializable {
 
 	}
 
+	/**
+	 * Setzt den Titles sowie das Icon der Scene in die Titlebar
+	 */
 	public void setTitle() {
 
 		Platform.runLater(new Runnable() {
