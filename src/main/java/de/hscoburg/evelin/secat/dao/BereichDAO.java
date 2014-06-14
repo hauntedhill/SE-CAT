@@ -30,14 +30,39 @@ import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung_;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive_;
 
+/**
+ * DAO zum Zugriff auf die Entitie Bereich
+ * 
+ * @author zuch1000
+ * 
+ */
 @Repository
 public class BereichDAO extends BaseDAO<Bereich> {
 
 	public BereichDAO() {
 		super(Bereich.class);
-		// TODO Auto-generated constructor stub
+
 	}
 
+	/**
+	 * Gibt eine Liste mit allen Bereichen zurueck, die den Kriterien entsprechen
+	 * 
+	 * @param h
+	 *            - Das {@link Handlungsfeld} des Bereich
+	 * @param itemAktiv
+	 *            - ItemAktiv {@link Boolean} der Items des Bereiches
+	 * @param p
+	 *            - {@link Perspektive} der Items
+	 * @param e
+	 *            - {@link Eigenschaft} der Items
+	 * @param notizHandlungsfeld
+	 *            - notiz des Handlungsfeldes
+	 * @param notizItem
+	 *            - notiz des Items
+	 * @param f
+	 *            - {@link Fach} des Items des Bereiches
+	 * @return {@link List} mit gefundenen {@link Bereich}
+	 */
 	public List<Bereich> getBereicheBy(Handlungsfeld h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();

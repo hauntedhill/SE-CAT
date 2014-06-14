@@ -11,6 +11,13 @@ import javax.persistence.criteria.Root;
 
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
+/**
+ * ABstrakte-Klasse zur Definition des Basisverhaltens eines DAOs
+ * 
+ * @author zuch1000
+ * 
+ * @param <T>
+ */
 public abstract class BaseDAO<T extends BaseEntity> {
 
 	@PersistenceContext
@@ -22,23 +29,49 @@ public abstract class BaseDAO<T extends BaseEntity> {
 		this.type = type;
 	}
 
+	/**
+	 * Speichert das Objekt in der DB und setzt ID
+	 * 
+	 * @param o
+	 */
 	public void persist(T o) {
 		em.persist(o);
 		em.flush();
 	}
 
+	/**
+	 * Aktualisiert das Objekt bzw. attached es mit der DB
+	 * 
+	 * @param o
+	 */
 	public void merge(T o) {
 		em.merge(o);
 	}
 
+	/**
+	 * Loescht ein Objekt aus der DB
+	 * 
+	 * @param o
+	 */
 	public void remove(T o) {
 		em.remove(o);
 	}
 
+	/**
+	 * Holt die Entitie mit der entsprechenden ID
+	 * 
+	 * @param id
+	 * @return T
+	 */
 	public T findById(Integer id) {
 		return em.find(type, id);
 	}
 
+	/**
+	 * Gibt alle Entities des Typs zurueck.
+	 * 
+	 * @return {@link List} mit T
+	 */
 	public List<T> findAll() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 

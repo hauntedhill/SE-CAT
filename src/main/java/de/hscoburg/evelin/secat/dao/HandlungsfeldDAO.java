@@ -31,6 +31,12 @@ import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung_;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive_;
 
+/**
+ * DAO zum Zugriff auf Handlungsfeld Entities
+ * 
+ * @author zuch1000
+ * 
+ */
 @Repository
 public class HandlungsfeldDAO extends BaseDAO<Handlungsfeld> {
 
@@ -39,6 +45,26 @@ public class HandlungsfeldDAO extends BaseDAO<Handlungsfeld> {
 
 	}
 
+	/**
+	 * Gibt eine Liste mit allen Bereichen zurueck, die den Kriterien entsprechen
+	 * 
+	 * 
+	 * @param handlungsfeldAktiv
+	 *            - HandlungsfeldAktiv {@link Boolean} der Items des Bereiches
+	 * @param itemAktiv
+	 *            - ItemAktiv {@link Boolean} der Items des Bereiches
+	 * @param p
+	 *            - {@link Perspektive} der Items
+	 * @param e
+	 *            - {@link Eigenschaft} der Items
+	 * @param notizHandlungsfeld
+	 *            - notiz des Handlungsfeldes
+	 * @param notizItem
+	 *            - notiz des Items
+	 * @param f
+	 *            - {@link Fach} des Items des Bereiches
+	 * @return {@link List} mit gefundenen {@link Bereich}
+	 */
 	public List<Handlungsfeld> getHandlungsfelderBy(Boolean handlungsfeldAktiv, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld,
 			String notizItem, Fach f) {
 

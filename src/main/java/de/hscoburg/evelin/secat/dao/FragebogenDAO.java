@@ -20,6 +20,12 @@ import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
 
+/**
+ * DAO zum Zugriff auf Fragebogen Entities
+ * 
+ * @author zuch1000
+ * 
+ */
 @Repository
 public class FragebogenDAO extends BaseDAO<Fragebogen> {
 
@@ -28,6 +34,25 @@ public class FragebogenDAO extends BaseDAO<Fragebogen> {
 
 	}
 
+	/**
+	 * Gibt alle Frageboegen fuer die uebergebenen Parameter zurueck. (null wird ignoriert)
+	 * 
+	 * @param e
+	 *            - {@link Eigenschaft} oder null
+	 * @param p
+	 *            - {@link Perspektive} oder null
+	 * @param l
+	 *            - {@link Lehrveranstaltung} oder null
+	 * @param name
+	 *            - Name des Fragebogens
+	 * @param von
+	 *            - Von {@link Date}
+	 * @param bis
+	 *            - Bis {@link Date}
+	 * @param s
+	 *            - Gesuchte {@link Skala} oder null
+	 * @return {@link List} mit gefundenen {@link Fragebogen}
+	 */
 	public List<Fragebogen> getFrageboegenFor(Eigenschaft e, Perspektive p, Lehrveranstaltung l, String name, Date von, Date bis, Skala s) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -36,8 +61,7 @@ public class FragebogenDAO extends BaseDAO<Fragebogen> {
 
 		CriteriaQuery<Fragebogen> fragebogenCriteria = cb.createQuery(Fragebogen.class);
 		Root<Fragebogen> fragebogenRoot = fragebogenCriteria.from(Fragebogen.class);
-		// Person.address is an embedded attribute
-		// Address.country is a ManyToOne
+
 		if (e != null) {
 
 			predicates.add(cb.equal(fragebogenRoot.get(Fragebogen_.eigenschaft), e));

@@ -16,28 +16,36 @@ import javafx.stage.WindowEvent;
 import org.controlsfx.dialog.Dialogs;
 
 import de.hscoburg.evelin.secat.controller.base.LayoutController;
+import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
+/**
+ * Main-Klasse als Einstiegspunkt der Applikation
+ * 
+ * @author zuch1000
+ * 
+ */
 public class SeCat extends Application {
 
+	/**
+	 * Globale Instance der Primary Stage
+	 */
 	public static Stage PRIMARY_STAGE;
 
+	/**
+	 * Name der Applikation
+	 */
 	public static String MAIN_STAGE_TITLE = "SE-CAT";
 
+	/**
+	 * Methode fuehrt das initialisieren der Applikation durch und laed die default Seite.
+	 * 
+	 * @param primarStage
+	 *            - PrimaryStage
+	 */
 	public void start(final Stage primaryStage) {
 		PRIMARY_STAGE = primaryStage;
-		// final ImageView imageView = new ImageView(new Image(Felix.class.getResourceAsStream("/ajax_loader_blue_512.gif")));
-		//
-		// imageView.setFitHeight(29.0);
-		// imageView.setFitWidth(34.0);
-		//
-		// StackPane glass = new StackPane();
-		//
-		// glass.getChildren().addAll(imageView);
-		// glass.setStyle("-fx-background-color: rgba(0, 100, 100, 0.5);");
 
-		// primaryStage.setScene(new Scene(glass));
-		// primaryStage.show();
 		try {
 
 			FXMLLoader loader = new FXMLLoader();
@@ -86,8 +94,8 @@ public class SeCat extends Application {
 							} catch (Exception e) {
 								splashStage.hide();
 								splashStage.close();
-								Dialogs.create().title("Es ist ein Fehler aufgetreten").masthead("Die Anwendung konnte nicht gestartet werden.")
-										.showException(e);
+								Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.error.title"))
+										.masthead(SeCatResourceBundle.getInstance().getString("scene.error.text")).showException(e);
 
 							}
 
@@ -101,6 +109,11 @@ public class SeCat extends Application {
 		}
 	}
 
+	/**
+	 * Einstiegspunkt der Applikation
+	 * 
+	 * @param args
+	 */
 	public static void main(String[] args) {
 		launch(args);
 
