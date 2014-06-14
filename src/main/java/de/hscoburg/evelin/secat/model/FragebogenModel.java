@@ -439,6 +439,15 @@ public class FragebogenModel {
 		return st;
 	}
 
+	/**
+	 * Speichert im uebergebenen File einen Fragbogen der in QuestorPro importiert werden kann.
+	 * 
+	 * @param fb
+	 *            - {@link Fragebogen}
+	 * @param f
+	 *            - {@link File}
+	 * @throws Exception
+	 */
 	public void exportFragebogenToQuestorPro(Fragebogen fb, File f) throws Exception {
 
 		FileWriter fw = new FileWriter(f);
