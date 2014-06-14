@@ -14,18 +14,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
-import javafx.util.Callback;
 
 import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,9 +32,17 @@ import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
+import de.hscoburg.evelin.secat.util.javafx.ColumnHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
+import de.hscoburg.evelin.secat.util.javafx.TableCellAction;
 
+/**
+ * Controller zur Anzeige der Skalen
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 public class SkalenController extends BaseController {
 
@@ -115,6 +119,12 @@ public class SkalenController extends BaseController {
 	@FXML
 	private TextField textRefuse;
 
+	/**
+	 * Initialisiert die View
+	 * 
+	 * @param location
+	 * @param resources
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -241,181 +251,132 @@ public class SkalenController extends BaseController {
 
 		});
 
-		// listSkalen.setCellFactory(new Callback<ListView<Skala>, ListCell<Skala>>() {
-		//
-		// @Override
-		// public ListCell<Skala> call(ListView<Skala> p) {
-		//
-		// ListCell<Skala> cell = new ListCell<Skala>() {
-		//
-		// @Override
-		// protected void updateItem(Skala t, boolean bln) {
-		// super.updateItem(t, bln);
-		// if (t != null) {
-		// setText(t.getName());
-		// }
-		// }
-		//
-		// };
-		//
-		// return cell;
-		// }
-		// });
+		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(0), new TableCellAction<Skala, String>() {
 
-		((TableColumn<Skala, String>) tableSkalen.getColumns().get(0))
-				.setCellValueFactory(new Callback<CellDataFeatures<Skala, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+				if (p.getValue().getName() != null) {
+					return new ReadOnlyObjectWrapper<String>(p.getValue().getName());
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(1), new TableCellAction<Skala, String>() {
 
-					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
-						if (p.getValue().getName() != null) {
-							return new ReadOnlyObjectWrapper<String>(p.getValue().getName());
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+				if (p.getValue().getType() != null) {
+					return new ReadOnlyObjectWrapper<String>(p.getValue().getType().name());
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(2), new TableCellAction<Skala, String>() {
 
-					}
-				});
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+				if (p.getValue().getZeilen() != null) {
+					return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getZeilen()));
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(3), new TableCellAction<Skala, String>() {
 
-		((TableColumn<Skala, String>) tableSkalen.getColumns().get(1))
-				.setCellValueFactory(new Callback<CellDataFeatures<Skala, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+				if (p.getValue().getSchritte() != null) {
+					return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getSchritte()));
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(4), new TableCellAction<Skala, String>() {
 
-					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+				if (p.getValue().getSchrittWeite() != null) {
+					return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getSchrittWeite()));
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(5), new TableCellAction<Skala, String>() {
 
-						if (p.getValue().getType() != null) {
-							return new ReadOnlyObjectWrapper<String>(p.getValue().getType().name());
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+				if (p.getValue().getMinText() != null) {
+					return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getMinText()));
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(6), new TableCellAction<Skala, String>() {
 
-					}
-				});
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+				if (p.getValue().getMaxText() != null) {
+					return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getMaxText()));
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(7), new TableCellAction<Skala, String>() {
 
-		((TableColumn<Skala, String>) tableSkalen.getColumns().get(2))
-				.setCellValueFactory(new Callback<CellDataFeatures<Skala, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+				if (p.getValue().getOptimum() != null) {
+					return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getOptimum()));
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
 
-					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(8), new TableCellAction<Skala, String>() {
 
-						if (p.getValue().getZeilen() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getZeilen()));
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+				if (p.getValue().getVerweigerungsAntwort() != null) {
+					return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getVerweigerungsAntwort()));
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
 
-					}
-				});
+		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(9), new TableCellAction<Skala, String>() {
 
-		((TableColumn<Skala, String>) tableSkalen.getColumns().get(3))
-				.setCellValueFactory(new Callback<CellDataFeatures<Skala, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
 
-					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
+				if (p.getValue().getAndereAntwort() != null) {
+					return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getAndereAntwort()));
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
 
-						if (p.getValue().getSchritte() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getSchritte()));
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
+		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(10), new TableCellAction<Skala, String>() {
 
-					}
-				});
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
 
-		((TableColumn<Skala, String>) tableSkalen.getColumns().get(4))
-				.setCellValueFactory(new Callback<CellDataFeatures<Skala, String>, ObservableValue<String>>() {
-
-					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
-
-						if (p.getValue().getSchrittWeite() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getSchrittWeite()));
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
-
-					}
-				});
-
-		((TableColumn<Skala, String>) tableSkalen.getColumns().get(5))
-				.setCellValueFactory(new Callback<CellDataFeatures<Skala, String>, ObservableValue<String>>() {
-
-					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
-
-						if (p.getValue().getMinText() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getMinText()));
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
-
-					}
-				});
-
-		((TableColumn<Skala, String>) tableSkalen.getColumns().get(6))
-				.setCellValueFactory(new Callback<CellDataFeatures<Skala, String>, ObservableValue<String>>() {
-
-					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
-
-						if (p.getValue().getMaxText() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getMaxText()));
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
-
-					}
-				});
-
-		((TableColumn<Skala, String>) tableSkalen.getColumns().get(7))
-				.setCellValueFactory(new Callback<CellDataFeatures<Skala, String>, ObservableValue<String>>() {
-
-					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
-
-						if (p.getValue().getOptimum() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getOptimum()));
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
-
-					}
-				});
-
-		((TableColumn<Skala, String>) tableSkalen.getColumns().get(8))
-				.setCellValueFactory(new Callback<CellDataFeatures<Skala, String>, ObservableValue<String>>() {
-
-					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
-
-						if (p.getValue().getVerweigerungsAntwort() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getVerweigerungsAntwort()));
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
-
-					}
-				});
-
-		((TableColumn<Skala, String>) tableSkalen.getColumns().get(9))
-				.setCellValueFactory(new Callback<CellDataFeatures<Skala, String>, ObservableValue<String>>() {
-
-					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
-
-						if (p.getValue().getAndereAntwort() != null) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getAndereAntwort()));
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
-
-					}
-				});
-
-		((TableColumn<Skala, String>) tableSkalen.getColumns().get(10))
-				.setCellValueFactory(new Callback<CellDataFeatures<Skala, String>, ObservableValue<String>>() {
-
-					public ObservableValue<String> call(CellDataFeatures<Skala, String> p) {
-
-						if (p.getValue().getAuswahl() != null && p.getValue().getAuswahl().size() > 0) {
-							return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getAuswahl()));
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
-
-					}
-				});
-
-		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
+				if (p.getValue().getAuswahl() != null && p.getValue().getAuswahl().size() > 0) {
+					return new ReadOnlyObjectWrapper<String>(String.valueOf(p.getValue().getAuswahl()));
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
 
 		buttonAdd.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
@@ -532,15 +493,13 @@ public class SkalenController extends BaseController {
 				listKeys.getItems().remove(listKeys.getSelectionModel().getSelectedItem());
 			}
 		}, del);
-		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
-		add.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
-		del.setGraphic(new ImageView(new Image("/image/icons/edit_remove.png", 16, 16, true, true)));
-		up.setGraphic(new ImageView(new Image("/image/icons/1uparrow.png", 16, 16, true, true)));
-		down.setGraphic(new ImageView(new Image("/image/icons/1downarrow.png", 16, 16, true, true)));
 		loadList();
 
 	}
 
+	/**
+	 * Laedt die Skalen aus der DB und setzt diese in der View
+	 */
 	private void loadList() {
 
 		tableSkalen.setItems(FXCollections.observableList(skalenModel.getSkalen()));

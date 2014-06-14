@@ -12,8 +12,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import org.controlsfx.dialog.Dialogs;
@@ -27,6 +25,12 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
+/**
+ * Controller zur Anzeige der Faecher
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 public class FachController extends BaseController {
 
@@ -48,6 +52,12 @@ public class FachController extends BaseController {
 	@Autowired
 	private FachModel fachModel;
 
+	/**
+	 * Initialisiert die View
+	 * 
+	 * @param location
+	 * @param resources
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -73,8 +83,6 @@ public class FachController extends BaseController {
 				return cell;
 			}
 		});
-
-		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
@@ -105,6 +113,9 @@ public class FachController extends BaseController {
 
 	}
 
+	/**
+	 * Laed und setzt die vorhandenen Faecher
+	 */
 	private void loadList() {
 
 		listFach.setItems(FXCollections.observableList(fachModel.getFaecher()));

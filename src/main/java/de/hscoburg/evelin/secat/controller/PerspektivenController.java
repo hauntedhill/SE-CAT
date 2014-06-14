@@ -12,8 +12,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import org.controlsfx.dialog.Dialogs;
@@ -27,6 +25,12 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
+/**
+ * Controller zur Anzeige der Perspektiven
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 public class PerspektivenController extends BaseController {
 
@@ -48,6 +52,9 @@ public class PerspektivenController extends BaseController {
 	@Autowired
 	private PerspektivenModel perspektivenModel;
 
+	/**
+	 * Initialisiert die View
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -73,8 +80,6 @@ public class PerspektivenController extends BaseController {
 				return cell;
 			}
 		});
-
-		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
@@ -106,6 +111,9 @@ public class PerspektivenController extends BaseController {
 
 	}
 
+	/**
+	 * Loadt die Perspektiven und setzt diese in der View
+	 */
 	private void loadList() {
 
 		listPerspektiven.setItems(FXCollections.observableList(perspektivenModel.getPerspektiven()));

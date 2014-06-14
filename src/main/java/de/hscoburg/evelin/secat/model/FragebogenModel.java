@@ -1,6 +1,7 @@
 package de.hscoburg.evelin.secat.model;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -138,7 +139,7 @@ public class FragebogenModel {
 	 * @return Das XML als {@link String}
 	 * @throws Exception
 	 */
-	public String exportQuestionarieToCore(Fragebogen f) throws Exception {
+	public String exportQuestionarieToCore(Fragebogen f, File file) throws Exception {
 		f = fragebogenDAO.findById(f.getId());
 
 		Questionarie q = xmlFactory.createQuestionarie();
@@ -160,7 +161,7 @@ public class FragebogenModel {
 		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
 		// jaxbMarshaller.marshal(customer, file);
-		jaxbMarshaller.marshal(q, new File("test.xml"));
+		jaxbMarshaller.marshal(q, file);
 
 		return null;
 	}
@@ -438,6 +439,14 @@ public class FragebogenModel {
 		return st;
 	}
 
+	public void exportFragebogenToQuestorPro(Fragebogen fb, File f) throws Exception {
+
+		FileWriter fw = new FileWriter(f);
+		fw.write(generateXMLtoQuestorPro(fb).toString());
+		fw.close();
+
+	}
+
 	/**
 	 * Erzeugt ein XML fuer den export zu CORE fuer einen Fragebogen
 	 * 
@@ -445,7 +454,7 @@ public class FragebogenModel {
 	 *            - Den zu exportierenden {@link Fragebogen}
 	 * @return Das erzeugte XML
 	 */
-	public String generateXMLtoCoreFor(Fragebogen f) {
+	public String generateXMLtoQuestorPro(Fragebogen f) {
 
 		f = fragebogenDAO.findById(f.getId());
 
@@ -520,8 +529,8 @@ public class FragebogenModel {
 			Frage f = cf.getFrage();
 			if (cf.getPosition().equals(position)) {
 				if (f.getSkala().getType().equals(SkalaType.DISCRET)) {
-					innerBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(cf.getFragebogen(), f), questionCount++, f.getSkala().getSchrittWeite(), f
-							.getSkala().getSchritte(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), f.getText()));
+					innerBlock.addChild(new DiskretefrageXML(BaseXML.generateUniqueId(cf.getFragebogen(), f), questionCount++, f.getSkala().getSchrittWeite(),
+							f.getSkala().getSchritte(), f.getSkala().getOptimum(), f.getSkala().getMinText(), f.getSkala().getMaxText(), f.getText()));
 
 				} else if (f.getSkala().getType().equals(SkalaType.FREE)) {
 					innerBlock.addChild(new FreitextfrageXML(BaseXML.generateUniqueId(cf.getFragebogen(), f), f.getText(), questionCount++, f.getSkala()

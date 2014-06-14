@@ -15,8 +15,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import org.controlsfx.dialog.Dialogs;
@@ -34,6 +32,12 @@ import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
+/**
+ * Controller zur Anzeige von Lehrveranstaltungen
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 public class LehrveranstaltungController extends BaseController {
 
@@ -65,6 +69,12 @@ public class LehrveranstaltungController extends BaseController {
 	@Autowired
 	private LehrveranstaltungModel lehrveranstaltungsModel;
 
+	/**
+	 * Initialisiert die View
+	 * 
+	 * @param location
+	 * @param resources
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -118,8 +128,6 @@ public class LehrveranstaltungController extends BaseController {
 			}
 		});
 
-		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
-
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
@@ -151,6 +159,9 @@ public class LehrveranstaltungController extends BaseController {
 
 	}
 
+	/**
+	 * Laed die Lehrveranstaltungen und setzt diese in der View
+	 */
 	private void loadList() {
 		listLehrveranstaltung.setItems(FXCollections.observableList(lehrveranstaltungsModel.getLehrveranstaltung()));
 	}

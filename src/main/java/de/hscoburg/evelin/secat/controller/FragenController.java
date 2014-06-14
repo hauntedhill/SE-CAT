@@ -10,14 +10,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.util.Callback;
 
 import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +25,18 @@ import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.model.FragenModel;
 import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
+import de.hscoburg.evelin.secat.util.javafx.ColumnHelper;
 import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
+import de.hscoburg.evelin.secat.util.javafx.TableCellAction;
 
+/**
+ * Controller zur Anzeige der Fragen
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 public class FragenController extends BaseController {
 
@@ -57,6 +61,9 @@ public class FragenController extends BaseController {
 	@FXML
 	private TextArea textFrage;
 
+	/**
+	 * Initialisiert die View
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 		boxSkala.setItems(FXCollections.observableList(skalenModel.getSkalen()));
@@ -67,32 +74,28 @@ public class FragenController extends BaseController {
 
 		boxSkala.setConverter(ConverterHelper.getConverterForSkala());
 
-		((TableColumn<Frage, String>) tableFragen.getColumns().get(0))
-				.setCellValueFactory(new Callback<CellDataFeatures<Frage, String>, ObservableValue<String>>() {
+		ColumnHelper.setTableColumnCellFactory(tableFragen.getColumns().get(0), new TableCellAction<Frage, String>() {
 
-					public ObservableValue<String> call(CellDataFeatures<Frage, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getName());
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Frage, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getName());
+			}
+		});
 
-					}
-				});
+		ColumnHelper.setTableColumnCellFactory(tableFragen.getColumns().get(1), new TableCellAction<Frage, String>() {
 
-		((TableColumn<Frage, String>) tableFragen.getColumns().get(1))
-				.setCellValueFactory(new Callback<CellDataFeatures<Frage, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Frage, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getSkala().getName());
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(tableFragen.getColumns().get(2), new TableCellAction<Frage, String>() {
 
-					public ObservableValue<String> call(CellDataFeatures<Frage, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getSkala().getName());
-
-					}
-				});
-
-		((TableColumn<Frage, String>) tableFragen.getColumns().get(2))
-				.setCellValueFactory(new Callback<CellDataFeatures<Frage, String>, ObservableValue<String>>() {
-
-					public ObservableValue<String> call(CellDataFeatures<Frage, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getText());
-
-					}
-				});
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Frage, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getText());
+			}
+		});
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
@@ -123,12 +126,13 @@ public class FragenController extends BaseController {
 			}
 		}, buttonAdd);
 
-		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
-
 		loadTable();
 
 	}
 
+	/**
+	 * Laed die Fragen aus der Datenbank und setzt diese in der View
+	 */
 	private void loadTable() {
 		tableFragen.setItems(FXCollections.observableList(fragenModel.getFragen()));
 	}

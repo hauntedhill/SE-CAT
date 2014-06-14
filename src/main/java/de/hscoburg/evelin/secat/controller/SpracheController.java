@@ -15,8 +15,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -30,6 +28,12 @@ import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
+/**
+ * Controller zur Anzeige der Sprachen
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 public class SpracheController extends BaseController {
 
@@ -64,8 +68,6 @@ public class SpracheController extends BaseController {
 		ObservableList<Locale> myObservableList = FXCollections.observableList(items);
 
 		boxSprachen.setVisibleRowCount(10);
-
-		buttonWaehlen.setGraphic(new ImageView(new Image("/image/icons/apply.png", 16, 16, true, true)));
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 

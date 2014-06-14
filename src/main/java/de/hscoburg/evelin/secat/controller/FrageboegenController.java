@@ -18,7 +18,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
@@ -32,12 +31,11 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import org.controlsfx.dialog.Dialogs;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
+import de.hscoburg.evelin.secat.controller.base.LayoutController;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
@@ -50,15 +48,21 @@ import de.hscoburg.evelin.secat.model.LehrveranstaltungModel;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
 import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
+import de.hscoburg.evelin.secat.util.javafx.ColumnHelper;
 import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
+import de.hscoburg.evelin.secat.util.javafx.TableCellAction;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
+/**
+ * Controller zum anzeigen und filtern der Frageboegen
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 public class FrageboegenController extends BaseController {
-
-	private static Logger logger = LoggerFactory.getLogger(FrageboegenController.class);
 
 	@FXML
 	private TitledPane searchPanel;
@@ -107,11 +111,14 @@ public class FrageboegenController extends BaseController {
 	private FragebogenModel fragebogenModel;
 
 	@Autowired
-	private ExportController exportController;
-
-	@Autowired
 	private BewertungModel bewertungsModel;
 
+	/**
+	 * Initlisiert die View mit Standardwerten
+	 * 
+	 * @param location
+	 * @param resources
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 		searchName.requestFocus();
@@ -128,9 +135,6 @@ public class FrageboegenController extends BaseController {
 		searchLehrveransteltung.getItems().add(0, null);
 		searchSkala.setItems(FXCollections.observableArrayList(skalenModel.getSkalen()));
 		searchSkala.getItems().add(0, null);
-
-		search.setGraphic(new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
-		reset.setGraphic(new ImageView(new Image("/image/icons/reload.png", 16, 16, true, true)));
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
@@ -167,80 +171,73 @@ public class FrageboegenController extends BaseController {
 			}
 		}, search);
 
-		((TableColumn<Fragebogen, String>) frageboegen.getColumns().get(0))
-				.setCellValueFactory(new Callback<CellDataFeatures<Fragebogen, String>, ObservableValue<String>>() {
+		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(0), new TableCellAction<Fragebogen, String>() {
 
-					public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getName());
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getName());
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(1), new TableCellAction<Fragebogen, String>() {
 
-					}
-				});
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
+				if (p.getValue().getEigenschaft() != null) {
+					return new ReadOnlyObjectWrapper<String>(p.getValue().getEigenschaft().getName());
+				} else {
+					return new ReadOnlyObjectWrapper<String>("");
+				}
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(2), new TableCellAction<Fragebogen, String>() {
 
-		((TableColumn<Fragebogen, String>) frageboegen.getColumns().get(1))
-				.setCellValueFactory(new Callback<CellDataFeatures<Fragebogen, String>, ObservableValue<String>>() {
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getPerspektive().getName());
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(3), new TableCellAction<Fragebogen, Node>() {
 
-					public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
-						if (p.getValue().getEigenschaft() != null) {
-							return new ReadOnlyObjectWrapper<String>(p.getValue().getEigenschaft().getName());
-						} else {
-							return new ReadOnlyObjectWrapper<String>("");
-						}
+			@Override
+			public ObservableValue<Node> call(CellDataFeatures<Fragebogen, Node> p) {
+				if (p.getValue().getExportiert()) {
+					return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/apply.png", 16, 16, true, true)));
+				} else {
+					return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
+				}
+			}
+		});
 
-					}
-				});
+		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(4), new TableCellAction<Fragebogen, String>() {
 
-		((TableColumn<Fragebogen, String>) frageboegen.getColumns().get(2))
-				.setCellValueFactory(new Callback<CellDataFeatures<Fragebogen, String>, ObservableValue<String>>() {
+			@SuppressWarnings("deprecation")
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
+				Lehrveranstaltung t = p.getValue().getLehrveranstaltung();
 
-					public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getPerspektive().getName());
+				return new ReadOnlyObjectWrapper<String>(t.getFach().getName() + " " + t.getSemester().name() + t.getJahr().getYear() + " " + t.getDozent());
 
-					}
-				});
+			}
+		});
 
-		((TableColumn<Fragebogen, Node>) frageboegen.getColumns().get(3))
-				.setCellValueFactory(new Callback<CellDataFeatures<Fragebogen, Node>, ObservableValue<Node>>() {
+		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(5), new TableCellAction<Fragebogen, String>() {
 
-					public ObservableValue<Node> call(CellDataFeatures<Fragebogen, Node> p) {
-						if (p.getValue().getExportiert()) {
-							return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/apply.png", 16, 16, true, true)));
-						} else {
-							return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
-						}
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
 
-					}
-				});
+				return new ReadOnlyObjectWrapper<String>(SimpleDateFormat.getDateInstance().format(p.getValue().getErstellungsDatum()));
 
-		((TableColumn<Fragebogen, String>) frageboegen.getColumns().get(4))
-				.setCellValueFactory(new Callback<CellDataFeatures<Fragebogen, String>, ObservableValue<String>>() {
+			}
+		});
 
-					public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
+		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(6), new TableCellAction<Fragebogen, String>() {
 
-						Lehrveranstaltung t = p.getValue().getLehrveranstaltung();
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getSkala().getName());
 
-						return new ReadOnlyObjectWrapper<String>(t.getFach().getName() + " " + t.getSemester().name() + t.getJahr().getYear() + " "
-								+ t.getDozent());
-
-					}
-				});
-
-		((TableColumn<Fragebogen, String>) frageboegen.getColumns().get(5))
-				.setCellValueFactory(new Callback<CellDataFeatures<Fragebogen, String>, ObservableValue<String>>() {
-
-					public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
-						return new ReadOnlyObjectWrapper<String>(SimpleDateFormat.getDateInstance().format(p.getValue().getErstellungsDatum()));
-
-					}
-				});
-
-		((TableColumn<Fragebogen, String>) frageboegen.getColumns().get(6))
-				.setCellValueFactory(new Callback<CellDataFeatures<Fragebogen, String>, ObservableValue<String>>() {
-
-					public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getSkala().getName());
-
-					}
-				});
+			}
+		});
 
 		frageboegen.setRowFactory(new Callback<TableView<Fragebogen>, TableRow<Fragebogen>>() {
 
@@ -283,19 +280,13 @@ public class FrageboegenController extends BaseController {
 
 					@Override
 					public void handleAction(ActionEvent t) {
-						// TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
-						// if (treeTableController.getSelectedTreeItem().getValue().isHandlungsfeld()) {
-						//
-
-						//
-
-						//
+						stage = SpringFXMLLoader.getInstance().loadInNewScene(LayoutController.EDIT_FRAGEBOGEN_FXML);
 
 					}
 
 					@Override
 					public void updateUI() {
-						stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/fragebogen/editFragebogen.fxml");
+
 						stage.show();
 					}
 
@@ -373,7 +364,7 @@ public class FrageboegenController extends BaseController {
 					public void handleAction(ActionEvent t) throws Exception {
 
 						if (file != null) {
-							exportController.exportFragebogen(frageboegen.getSelectionModel().getSelectedItem(), file);
+							fragebogenModel.exportFragebogenToQuestorPro(frageboegen.getSelectionModel().getSelectedItem(), file);
 
 						}
 						tableData = getFrageboegen();
@@ -390,30 +381,27 @@ public class FrageboegenController extends BaseController {
 
 					private File file;
 
-					private ObservableList<Fragebogen> tableData;
-
 					@Override
 					public void performBeforeEventsBlocked(ActionEvent event) throws Exception {
-						// FileChooser fileChooser = new FileChooser();
-						//
-						// // Set extension filter
-						// FileChooser.ExtensionFilter extFilter = new
-						// FileChooser.ExtensionFilter(SeCatResourceBundle.getInstance().getString(
-						// "scene.filechooser.xmlname"), "*.xml");
-						// fileChooser.getExtensionFilters().add(extFilter);
-						//
-						// fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
-						//
-						// fileChooser.setInitialFileName(frageboegen.getSelectionModel().getSelectedItem().getName());
-						//
-						// // Show save file dialog
-						// file = fileChooser.showSaveDialog(getCurrentStage());
+						FileChooser fileChooser = new FileChooser();
+
+						// Set extension filter
+						FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter(SeCatResourceBundle.getInstance().getString(
+								"scene.filechooser.xmlname"), "*.xml");
+						fileChooser.getExtensionFilters().add(extFilter);
+
+						fileChooser.setInitialDirectory(new File(System.getProperty("user.home")));
+
+						fileChooser.setInitialFileName(frageboegen.getSelectionModel().getSelectedItem().getName());
+
+						// Show save file dialog
+						file = fileChooser.showSaveDialog(getCurrentStage());
 					}
 
 					@Override
 					public void handleAction(ActionEvent t) throws Exception {
 
-						fragebogenModel.exportQuestionarieToCore(frageboegen.getSelectionModel().getSelectedItem());
+						fragebogenModel.exportQuestionarieToCore(frageboegen.getSelectionModel().getSelectedItem(), file);
 
 						// exportController.exportFragebogen(frageboegen.getSelectionModel().getSelectedItem(), file);
 
@@ -447,12 +435,23 @@ public class FrageboegenController extends BaseController {
 
 	}
 
+	/**
+	 * Gibt alle Frageboegen die den Selektionskriterien entsprechen zuerueck
+	 * 
+	 * @return {@link ObservableList} mit {@link Fragebogen}
+	 */
 	private ObservableList<Fragebogen> getFrageboegen() {
 		return FXCollections.observableArrayList(fragebogenModel.getFragebogenFor(searchEigenschaft.getValue(), searchPerspektive.getValue(),
 				searchLehrveransteltung.getValue(), searchName.getText(), searchFromDate.getValue(), searchToDate.getValue(), searchSkala.getValue()));
 
 	}
 
+	/**
+	 * Setzt alle Frageboegen in der Tabelle neu
+	 * 
+	 * @param boegen
+	 *            {@link ObservableList} mit den zu setzenden {@link Fragebogen}
+	 */
 	private void updateTable(ObservableList<Fragebogen> boegen) {
 
 		if (frageboegen.getItems() != null) {
@@ -461,6 +460,9 @@ public class FrageboegenController extends BaseController {
 		frageboegen.setItems(boegen);
 	}
 
+	/**
+	 * Resettet die FilterKriterien
+	 */
 	private void resetSearchBox() {
 
 		searchName.setText("");
@@ -473,12 +475,21 @@ public class FrageboegenController extends BaseController {
 		searchToDate.setValue(null);
 	}
 
+	/**
+	 * Gibt den Key des Names der Scene zurueck
+	 * 
+	 * @return {@link String}
+	 */
 	@Override
 	public String getKeyForSceneName() {
-		// TODO Auto-generated method stub
 		return "scene.frageboegen.lable.title";
 	}
 
+	/**
+	 * Gibt den aktuell selektierten Fragebogen zurueck.
+	 * 
+	 * @return {@link Fragebogen}
+	 */
 	public Fragebogen getSelectedFragebogen() {
 		return frageboegen.getSelectionModel().getSelectedItem();
 

@@ -12,8 +12,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Callback;
 
 import org.controlsfx.dialog.Dialogs;
@@ -27,6 +25,12 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
+/**
+ * Controller fuer die Anzeige der Eigenschaften
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 public class EigenschaftenController extends BaseController {
 
@@ -48,6 +52,12 @@ public class EigenschaftenController extends BaseController {
 	@Autowired
 	private EigenschaftenModel eigenschaftenModel;
 
+	/**
+	 * Initialisiert die View
+	 * 
+	 * @param location
+	 * @param resources
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -73,8 +83,6 @@ public class EigenschaftenController extends BaseController {
 				return cell;
 			}
 		});
-
-		buttonAdd.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
@@ -108,6 +116,9 @@ public class EigenschaftenController extends BaseController {
 
 	}
 
+	/**
+	 * Laed die Liste mit den Eigenschaften und setzt diese in der View
+	 */
 	private void loadList() {
 		listEigenschaften.setItems(FXCollections.observableList(eigenschaftenModel.getEigenschaften()));
 	}

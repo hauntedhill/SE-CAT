@@ -63,6 +63,8 @@ public class LayoutController implements Initializable {
 
 	public static final String SHOW_BEWERTUNG_FXML = FRAGEBOGEN_PATH + "BewertungAnzeigen.fxml";
 
+	public static final String EDIT_FRAGEBOGEN_FXML = FRAGEBOGEN_PATH + "editFragebogen.fxml";
+
 	@FXML
 	private BorderPane layout;
 

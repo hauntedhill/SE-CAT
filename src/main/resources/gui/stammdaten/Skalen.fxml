@@ -3,6 +3,10 @@
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.text.*?>
 
 <GridPane prefHeight="593.0" prefWidth="665.0"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
@@ -40,17 +44,28 @@
 						<TableView fx:id="tableSkalen" maxHeight="1.7976931348623157E308"
 							maxWidth="1.7976931348623157E308">
 							<columns>
-								<TableColumn prefWidth="75.0" text="%scene.skala.table.column.name" />
-								<TableColumn prefWidth="75.0" text="%scene.skala.table.column.type" />
-								<TableColumn prefWidth="75.0" text="%scene.skala.table.column.zeilen" />
-								<TableColumn prefWidth="75.0" text="%scene.skala.table.column.schritte" />
-								<TableColumn prefWidth="75.0" text="%scene.skala.table.column.schrittweite" />
-								<TableColumn prefWidth="75.0" text="%scene.skala.table.column.minText" />
-								<TableColumn prefWidth="75.0" text="%scene.skala.table.column.maxText" />
-								<TableColumn prefWidth="75.0" text="%scene.skala.table.column.optimum" />
-								<TableColumn prefWidth="125.0" text="%scene.skala.table.column.refuseAnswer" />
-								<TableColumn prefWidth="125.0" text="%scene.skala.table.column.otherAnswer" />
-								<TableColumn prefWidth="150.0" text="%scene.skala.table.column.werte" />
+								<TableColumn prefWidth="75.0"
+									text="%scene.skala.table.column.name" />
+								<TableColumn prefWidth="75.0"
+									text="%scene.skala.table.column.type" />
+								<TableColumn prefWidth="75.0"
+									text="%scene.skala.table.column.zeilen" />
+								<TableColumn prefWidth="75.0"
+									text="%scene.skala.table.column.schritte" />
+								<TableColumn prefWidth="75.0"
+									text="%scene.skala.table.column.schrittweite" />
+								<TableColumn prefWidth="75.0"
+									text="%scene.skala.table.column.minText" />
+								<TableColumn prefWidth="75.0"
+									text="%scene.skala.table.column.maxText" />
+								<TableColumn prefWidth="75.0"
+									text="%scene.skala.table.column.optimum" />
+								<TableColumn prefWidth="125.0"
+									text="%scene.skala.table.column.refuseAnswer" />
+								<TableColumn prefWidth="125.0"
+									text="%scene.skala.table.column.otherAnswer" />
+								<TableColumn prefWidth="150.0"
+									text="%scene.skala.table.column.werte" />
 							</columns>
 						</TableView>
 					</children>
@@ -207,13 +222,57 @@
 								<TextField fx:id="textKey" GridPane.columnIndex="1" />
 								<Label text="%scene.skala.lable.wert" />
 								<Button fx:id="add" mnemonicParsing="false"
-									GridPane.columnIndex="2" GridPane.rowIndex="2" />
+									GridPane.columnIndex="2" GridPane.rowIndex="2">
+									<graphic>
+										<ImageView smooth="true" fitHeight="16" fitWidth="16"
+											preserveRatio="true">
+											<image>
+												<Image url="@/image/icons/edit_add.png" />
+											</image>
+										</ImageView>
+									</graphic>
+
+
+								</Button>
 								<Button fx:id="del" mnemonicParsing="false"
-									GridPane.columnIndex="2" GridPane.rowIndex="3" />
+									GridPane.columnIndex="2" GridPane.rowIndex="3">
+									<graphic>
+										<ImageView smooth="true" fitHeight="16" fitWidth="16"
+											preserveRatio="true">
+											<image>
+												<Image url="@/image/icons/edit_remove.png" />
+											</image>
+										</ImageView>
+									</graphic>
+
+
+								</Button>
 								<Button fx:id="up" mnemonicParsing="false"
-									GridPane.columnIndex="2" GridPane.rowIndex="4" />
+									GridPane.columnIndex="2" GridPane.rowIndex="4">
+									<graphic>
+										<ImageView smooth="true" fitHeight="16" fitWidth="16"
+											preserveRatio="true">
+											<image>
+												<Image url="@/image/icons/1uparrow.png" />
+											</image>
+										</ImageView>
+									</graphic>
+
+
+								</Button>
 								<Button fx:id="down" mnemonicParsing="false"
-									GridPane.columnIndex="2" GridPane.rowIndex="5" />
+									GridPane.columnIndex="2" GridPane.rowIndex="5">
+									<graphic>
+										<ImageView smooth="true" fitHeight="16" fitWidth="16"
+											preserveRatio="true">
+											<image>
+												<Image url="@/image/icons/1downarrow.png" />
+											</image>
+										</ImageView>
+									</graphic>
+
+
+								</Button>
 
 								<TextField fx:id="textSchrittweiteMC"
 									GridPane.columnIndex="4" />
@@ -235,7 +294,18 @@
 						</GridPane>
 						<Button fx:id="buttonAdd" layoutX="436.0" layoutY="241.0"
 							mnemonicParsing="false" text="%scene.all.addbutton"
-							GridPane.columnIndex="1" GridPane.rowIndex="7" />
+							GridPane.columnIndex="1" GridPane.rowIndex="7">
+							<graphic>
+								<ImageView smooth="true" fitHeight="16" fitWidth="16"
+									preserveRatio="true">
+									<image>
+										<Image url="@/image/icons/edit_add.png" />
+									</image>
+								</ImageView>
+							</graphic>
+
+
+						</Button>
 
 					</children>
 				</GridPane>
