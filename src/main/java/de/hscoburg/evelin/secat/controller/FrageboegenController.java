@@ -258,7 +258,8 @@ public class FrageboegenController extends BaseController {
 				MenuItem exportItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.export"), new ImageView(new Image(
 						"/image/icons/run.png", 16, 16, true, true)));
 
-				final MenuItem exportCoreItem = new MenuItem("Export to CORE", new ImageView(new Image("/image/icons/run.png", 16, 16, true, true)));
+				final MenuItem exportCoreItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.exportCore"),
+						new ImageView(new Image("/image/icons/run.png", 16, 16, true, true)));
 
 				row.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 
