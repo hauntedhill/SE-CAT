@@ -2,11 +2,8 @@
 
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
-<?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
+<?import javafx.scene.layout.*?>
 
 <GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
 	prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8"
@@ -26,7 +23,7 @@
 			vgrow="SOMETIMES" />
 	</rowConstraints>
 	<children>
-		<TitledPane fx:id="searchPanel" animated="false" layoutX="22.0"
+		<TitledPane fx:id="searchPanel" animated="false" layoutX="22.0" collapsible="false"
 			layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
 			text="%scene.frageboegen.label.searchCriterias" GridPane.columnSpan="2">
 			<content>
@@ -102,32 +99,32 @@
 							</rowConstraints>
 							<children>
 								<Button fx:id="search" layoutX="566.0" layoutY="150.0"
-									mnemonicParsing="false" text="%scene.all.filterbutton" >
+									mnemonicParsing="false" text="%scene.all.filterbutton">
 									<graphic>
-								<ImageView smooth="true" fitHeight="16" fitWidth="16"
-									preserveRatio="true">
-									<image>
-										<Image url="@/image/icons/viewmag.png" />
-									</image>
-								</ImageView>
-							</graphic>
+										<ImageView fitHeight="16" fitWidth="16"
+											preserveRatio="true" smooth="true">
+											<image>
+												<Image url="@/image/icons/viewmag.png" />
+											</image>
+										</ImageView>
+									</graphic>
 
 
-						</Button>
+								</Button>
 								<Button fx:id="reset" layoutX="436.0" layoutY="150.0"
 									mnemonicParsing="false" text="%scene.all.resetbutton"
-									GridPane.columnIndex="1" >
+									GridPane.columnIndex="1">
 									<graphic>
-								<ImageView smooth="true" fitHeight="16" fitWidth="16"
-									preserveRatio="true">
-									<image>
-										<Image url="@/image/icons/reload.png" />
-									</image>
-								</ImageView>
-							</graphic>
+										<ImageView fitHeight="16" fitWidth="16"
+											preserveRatio="true" smooth="true">
+											<image>
+												<Image url="@/image/icons/reload.png" />
+											</image>
+										</ImageView>
+									</graphic>
 
 
-						</Button>
+								</Button>
 							</children>
 						</GridPane>
 					</children>
@@ -135,7 +132,7 @@
 
 			</content>
 		</TitledPane>
-		<TitledPane fx:id="tablePanel" animated="false" layoutX="22.0"
+		<TitledPane fx:id="tablePanel" animated="false" layoutX="22.0" collapsible="false"
 			layoutY="235.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
 			text="%scene.frageboegen.lable.name" GridPane.columnSpan="2"
 			GridPane.rowIndex="2">
@@ -180,6 +177,56 @@
 								<TableColumn maxWidth="1.7976931348623157E308"
 									minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.skala" />
 							</columns>
+							<contextMenu>
+								<ContextMenu fx:id="ctxMenue" >
+									<items>
+										<MenuItem fx:id="ctxMenueEdit" mnemonicParsing="false"
+											text="%scene.frageboegen.ctxmenue.edit">
+											<graphic>
+												<ImageView fitHeight="16" fitWidth="16"
+													preserveRatio="true" smooth="true">
+													<image>
+														<Image url="@/image/icons/edit.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</MenuItem>
+										<MenuItem fx:id="ctxMenueImport" mnemonicParsing="false"
+											text="%scene.frageboegen.ctxmenue.import">
+											<graphic>
+												<ImageView fitHeight="16" fitWidth="16"
+													preserveRatio="true" smooth="true">
+													<image>
+														<Image url="@/image/icons/up.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</MenuItem>
+										<MenuItem fx:id="ctxMenueExportQuestorPro"
+											mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.export">
+											<graphic>
+												<ImageView fitHeight="16" fitWidth="16"
+													preserveRatio="true" smooth="true">
+													<image>
+														<Image url="@/image/icons/run.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</MenuItem>
+										<MenuItem fx:id="ctxMenueExportCore" mnemonicParsing="false"
+											text="%scene.frageboegen.ctxmenue.exportCore">
+											<graphic>
+												<ImageView fitHeight="16" fitWidth="16"
+													preserveRatio="true" smooth="true">
+													<image>
+														<Image url="@/image/icons/run.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</MenuItem>
+									</items>
+								</ContextMenu>
+							</contextMenu>
 						</TableView>
 					</children>
 				</GridPane>

@@ -97,6 +97,18 @@ public class FrageboegenController extends BaseController {
 	@FXML
 	private DatePicker searchToDate;
 
+	@FXML
+	private ContextMenu ctxMenue;
+
+	@FXML
+	private MenuItem ctxMenueEdit;
+	@FXML
+	private MenuItem ctxMenueImport;
+	@FXML
+	private MenuItem ctxMenueExportQuestorPro;
+	@FXML
+	private MenuItem ctxMenueExportCore;
+
 	@Autowired
 	private EigenschaftenModel eigenschaftenModel;
 
@@ -244,29 +256,33 @@ public class FrageboegenController extends BaseController {
 			public TableRow<Fragebogen> call(TableView<Fragebogen> treeTableView) {
 
 				final TableRow<Fragebogen> row = new TableRow<>();
-				final ContextMenu rowMenu = new ContextMenu();
-
-				final MenuItem editItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.edit"), new ImageView(new Image(
-						"/image/icons/edit.png", 16, 16, true, true)));
-
-				final MenuItem importItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.import"), new ImageView(
-						new Image("/image/icons/up.png", 16, 16, true, true)));
-
-				MenuItem exportItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.export"), new ImageView(new Image(
-						"/image/icons/run.png", 16, 16, true, true)));
-
-				final MenuItem exportCoreItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.exportCore"),
-						new ImageView(new Image("/image/icons/run.png", 16, 16, true, true)));
+				// final ContextMenu rowMenu = new ContextMenu();
+				//
+				// final MenuItem editItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.edit"),
+				// new ImageView(new Image(
+				// "/image/icons/edit.png", 16, 16, true, true)));
+				//
+				// final MenuItem importItem = new
+				// MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.import"), new ImageView(
+				// new Image("/image/icons/up.png", 16, 16, true, true)));
+				//
+				// MenuItem exportItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.export"), new
+				// ImageView(new Image(
+				// "/image/icons/run.png", 16, 16, true, true)));
+				//
+				// final MenuItem exportCoreItem = new
+				// MenuItem(SeCatResourceBundle.getInstance().getString("scene.frageboegen.ctxmenue.exportCore"),
+				// new ImageView(new Image("/image/icons/run.png", 16, 16, true, true)));
 
 				row.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 
 					@Override
 					public void handle(ContextMenuEvent event) {
 						if (frageboegen.getSelectionModel().getSelectedItem() != null) {
-							editItem.setDisable(frageboegen.getSelectionModel().getSelectedItem().getExportiert());
-							importItem.setDisable(!frageboegen.getSelectionModel().getSelectedItem().getExportiert());
+							ctxMenueEdit.setDisable(frageboegen.getSelectionModel().getSelectedItem().getExportiert());
+							ctxMenueExportQuestorPro.setDisable(!frageboegen.getSelectionModel().getSelectedItem().getExportiert());
 
-							exportCoreItem.setDisable(frageboegen.getSelectionModel().getSelectedItem().getBewertungen() == null
+							ctxMenueExportCore.setDisable(frageboegen.getSelectionModel().getSelectedItem().getBewertungen() == null
 									|| frageboegen.getSelectionModel().getSelectedItem().getBewertungen().size() == 0);
 
 						}
@@ -274,7 +290,7 @@ public class FrageboegenController extends BaseController {
 					}
 				});
 
-				editItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+				ctxMenueEdit.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
 					private Stage stage;
 
@@ -292,7 +308,7 @@ public class FrageboegenController extends BaseController {
 
 				});
 
-				importItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+				ctxMenueImport.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
 					private File file;
 
@@ -319,8 +335,9 @@ public class FrageboegenController extends BaseController {
 						// TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
 						// if (treeTableController.getSelectedTreeItem().getValue().isHandlungsfeld()) {
 						//
-
-						anzCVSRows = bewertungsModel.importBewertungen(file);
+						if (file != null) {
+							anzCVSRows = bewertungsModel.importBewertungen(file);
+						}
 						//
 
 						//
@@ -337,7 +354,7 @@ public class FrageboegenController extends BaseController {
 
 				});
 
-				exportItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+				ctxMenueExportQuestorPro.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
 					private File file;
 
@@ -377,7 +394,7 @@ public class FrageboegenController extends BaseController {
 					}
 				});
 
-				exportCoreItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+				ctxMenueExportCore.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
 					private File file;
 
@@ -401,7 +418,9 @@ public class FrageboegenController extends BaseController {
 					@Override
 					public void handleAction(ActionEvent t) throws Exception {
 
-						fragebogenModel.exportQuestionarieToCore(frageboegen.getSelectionModel().getSelectedItem(), file);
+						if (file != null) {
+							fragebogenModel.exportQuestionarieToCore(frageboegen.getSelectionModel().getSelectedItem(), file);
+						}
 
 						// exportController.exportFragebogen(frageboegen.getSelectionModel().getSelectedItem(), file);
 
@@ -415,13 +434,13 @@ public class FrageboegenController extends BaseController {
 					}
 				});
 
-				rowMenu.getItems().add(editItem);
-				rowMenu.getItems().add(exportItem);
-				rowMenu.getItems().add(importItem);
-				rowMenu.getItems().add(exportCoreItem);
+				// ctxMenue.getItems().add(editItem);
+				// rowMenu.getItems().add(exportItem);
+				// rowMenu.getItems().add(importItem);
+				// rowMenu.getItems().add(exportCoreItem);
 
 				row.contextMenuProperty().bind(
-						javafx.beans.binding.Bindings.when(javafx.beans.binding.Bindings.isNotNull(row.itemProperty())).then(rowMenu)
+						javafx.beans.binding.Bindings.when(javafx.beans.binding.Bindings.isNotNull(row.itemProperty())).then(ctxMenue)
 								.otherwise((ContextMenu) null));
 				return row;
 

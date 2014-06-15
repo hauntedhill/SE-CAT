@@ -1,8 +1,8 @@
 package de.hscoburg.evelin.secat.util.javafx;
 
-import java.util.concurrent.Executors;
-
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
+import javafx.concurrent.Service;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -35,9 +35,6 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 	@Override
 	public final void handle(final T event) {
 		final Scene s = ((Stage) org.controlsfx.tools.Utils.getWindow(null)).getScene();
-		/**
-		 * Eventhandler der alle events konsumiert und diese niht weiterleitet.
-		 */
 		final EventHandler<javafx.scene.input.InputEvent> handler = new EventHandler<javafx.scene.input.InputEvent>() {
 			@Override
 			public void handle(javafx.scene.input.InputEvent inputEvent) {
@@ -52,51 +49,58 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 			 */
 			performBeforeEventsBlocked(event);
 
-			s.setCursor(Cursor.WAIT);
+			Service service = new Service() {
+				@Override
+				protected javafx.concurrent.Task createTask() {
+					return new javafx.concurrent.Task() {
+						@Override
+						protected Void call() throws Exception {
+							try {
+								handleAction(event);
 
+								// Thread.sleep(5000);
+								Platform.runLater(new Runnable() {
+									@Override
+									public void run() {
+										updateUI();
+										s.removeEventFilter(javafx.scene.input.InputEvent.ANY, handler);
+
+										// TODO: fix exception handling
+
+									}
+								});
+							} catch (final Exception e) {
+								Platform.runLater(new Runnable() {
+
+									@Override
+									public void run() {
+										s.removeEventFilter(javafx.scene.input.InputEvent.ANY, handler);
+
+										showErrorDialog(e);
+
+									}
+								});
+
+							}
+							return null;
+						}
+					};
+				}
+			};
+
+			// s.getRoot().disableProperty().bind(service.runningProperty());
+
+			// s.getRoot().g
+
+			s.getRoot().cursorProperty().bind(Bindings.when(service.runningProperty()).then(Cursor.WAIT).otherwise(Cursor.DEFAULT));
 			s.addEventFilter(javafx.scene.input.InputEvent.ANY, handler);
 
-			CallbackTask c = new CallbackTask(new Runnable() {
+			service.restart();
 
-				@Override
-				public void run() {
-					try {
-						handleAction(event);
-					} catch (final Exception e) {
-						Platform.runLater(new Runnable() {
-
-							@Override
-							public void run() {
-								showErrorDialog(e);
-								s.removeEventFilter(javafx.scene.input.InputEvent.ANY, handler);
-								s.setCursor(Cursor.DEFAULT);
-							}
-						});
-
-					}
-
-				}
-			}, new Callback() {
-				@Override
-				public void complete() {
-					Platform.runLater(new Runnable() {
-						@Override
-						public void run() {
-							updateUI();
-							s.removeEventFilter(javafx.scene.input.InputEvent.ANY, handler);
-							s.setCursor(Cursor.DEFAULT);
-						}
-					});
-				}
-			});
-
-			Thread t = Executors.defaultThreadFactory().newThread(c);
-			t.start();
 		} catch (Exception e) {
 
 			showErrorDialog(e);
-			s.removeEventFilter(javafx.scene.input.InputEvent.ANY, handler);
-			s.setCursor(Cursor.DEFAULT);
+
 		}
 
 	}
@@ -137,53 +141,6 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 	 * des JavaFX Threads ausgefuehrt.
 	 */
 	public void updateUI() {
-
-	}
-
-	/**
-	 * Innere Klasse fuer den Callback-Listener fuer die Thread beendigung.
-	 * 
-	 * @author zuch1000
-	 * 
-	 */
-	private class Callback {
-		public void complete() {
-
-		}
-	}
-
-	/**
-	 * Innere Klasse um einen {@link Runnable} zu starten und ueber dessen Beendigung informiert zu werden
-	 * 
-	 * @author zuch1000
-	 * 
-	 */
-	private class CallbackTask implements Runnable {
-
-		private final Runnable task;
-
-		private final Callback callback;
-
-		/**
-		 * Konstruktor zum erzeugen des Objektes
-		 * 
-		 * @param task
-		 *            - Das {@link Runnable} das ausgefuehrt werden soll.
-		 * @param callback
-		 *            - Der auszufuehrende Callback nach Beendigung des Threads.
-		 */
-		public CallbackTask(Runnable task, Callback callback) {
-			this.task = task;
-			this.callback = callback;
-		}
-
-		/**
-		 * Run-Methode zum starten des Threads.
-		 */
-		public final void run() {
-			task.run();
-			callback.complete();
-		}
 
 	}
 

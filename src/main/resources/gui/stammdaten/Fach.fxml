@@ -26,7 +26,7 @@
 			minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 	</rowConstraints>
 	<children>
-		<TitledPane fx:id="tablePanel" animated="false" layoutX="31.0"
+		<TitledPane fx:id="tablePanel" animated="false" layoutX="31.0" collapsible="false"
 			layoutY="142.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
 			text="%scene.fach.lable" GridPane.columnSpan="2" GridPane.rowIndex="2">
 			<content>
@@ -48,7 +48,7 @@
 
 			</content>
 		</TitledPane>
-		<TitledPane fx:id="addPanel" animated="false" layoutX="31.0"
+		<TitledPane fx:id="addPanel" animated="false" layoutX="31.0" collapsible="false"
 			layoutY="21.0" maxHeight="200.0" text="%scene.fach.addlable"
 			GridPane.columnSpan="2">
 			<content>
