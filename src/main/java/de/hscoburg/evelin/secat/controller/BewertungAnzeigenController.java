@@ -245,12 +245,20 @@ public class BewertungAnzeigenController extends BaseController {
 		}
 
 		for (EvaluationHelper eh : ehList) {
+			ArrayList<Integer> id = new ArrayList<Integer>();
 			ArrayList<String> frageWertungen = new ArrayList<String>();
 			for (Bewertung bewertung : bewertungOl) {
 				if (eh.getRawId().equals(bewertung.getZeilenid()) && bewertung.getFrage() != null) {
 					for (Frage frage : fragenList) {
+
 						if (bewertung.getFrage().getId() == frage.getId()) {
-							frageWertungen.add(fragenList.indexOf(frage), bewertung.getWert());
+							if (!id.contains(frage.getId())) {
+								id.add(frage.getId());
+								frageWertungen.add(fragenList.indexOf(frage), bewertung.getWert());
+							} else {
+								String s = frageWertungen.get(id.indexOf(frage.getId())) + " " + bewertung.getWert();
+								frageWertungen.set(fragenList.indexOf(frage), s);
+							}
 						}
 					}
 
