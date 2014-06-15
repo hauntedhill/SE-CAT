@@ -111,12 +111,13 @@ public class BewertungModel {
 					if (fragebogen.getSkala().equals(SkalaType.MC)) {
 						countMCQUentsions += fragebogen.getItems().size();
 					}
-
-					if (fragebogen.getItems().size() + fragebogen.getFrageFragebogen().size() + countMCQUentsions != fields.length - 4) {
-						throw new IllegalArgumentException(SeCatResourceBundle.getInstance()
-								.getString("scene.evaluation.import.error.incorrectEvaluationCount")
-								+ (fragebogen.getItems().size() + fragebogen.getFrageFragebogen().size() + countMCQUentsions) + ", " + (fields.length - 4));
-					}
+					// TODO:
+					// if (fragebogen.getItems().size() + fragebogen.getFrageFragebogen().size() + countMCQUentsions != fields.length - 4) {
+					// throw new IllegalArgumentException(SeCatResourceBundle.getInstance()
+					// .getString("scene.evaluation.import.error.incorrectEvaluationCount")
+					// + (fragebogen.getItems().size() + fragebogen.getFrageFragebogen().size() + countMCQUentsions) + ", " + (fields.length
+					// - 4));
+					// }
 
 					if (ids[2].equals("frage")) {
 
