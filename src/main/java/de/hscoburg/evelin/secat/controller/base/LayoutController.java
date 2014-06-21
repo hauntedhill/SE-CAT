@@ -53,6 +53,8 @@ public class LayoutController implements Initializable {
 
 	public static final String SPRACHE_FXML = EINSTELLUNGEN_PATH + "Sprache.fxml";
 
+	public static final String EINSTELLUNGEN_FXML = EINSTELLUNGEN_PATH + "Einstellungen.fxml";
+
 	public static final String FRAGEBOGEN_FXML = FRAGEBOGEN_PATH + "addFragebogen.fxml";
 
 	public static final String SHOW_FRAGEBOGEN_FXML = FRAGEBOGEN_PATH + "Frageboegen.fxml";

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.hscoburg.evelin.secat.dao.EinstellungDAO;
 import de.hscoburg.evelin.secat.dao.FrageDAO;
 import de.hscoburg.evelin.secat.dao.Frage_FragebogenDAO;
 import de.hscoburg.evelin.secat.dao.FragebogenDAO;
@@ -27,6 +28,7 @@ import de.hscoburg.evelin.secat.dao.ItemDAO;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Bewertung;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
+import de.hscoburg.evelin.secat.dao.entity.Einstellung;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Frage;
 import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
@@ -36,6 +38,7 @@ import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
+import de.hscoburg.evelin.secat.dao.entity.base.EinstellungenType;
 import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
 import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 import de.hscoburg.evelin.secat.exchange.dto.AreaType;
@@ -87,9 +90,28 @@ public class FragebogenModel {
 	private ItemDAO itemDAO;
 
 	@Autowired
+	private EinstellungDAO einstellungDAO;
+
+	@Autowired
 	private Frage_FragebogenDAO frageFragebogenDAO;
 
 	private ObjectFactory xmlFactory = new ObjectFactory();
+
+	/**
+	 * Erzeugt eine ID mit dem Standort als Prefix
+	 * 
+	 * @param id
+	 * @return
+	 */
+	private String getIDWithStandort(int id) {
+		Einstellung e = einstellungDAO.findByName(EinstellungenType.STANDORT);
+
+		if (e == null || "".equals(e.getWert())) {
+			throw new IllegalArgumentException();
+		}
+
+		return e.getWert() + "-" + id;
+	}
 
 	/**
 	 * Gibt alle Frageboegen die den Uebergabeparametern entsprechen zurueck, werden bei null ignoriert.
@@ -144,7 +166,7 @@ public class FragebogenModel {
 
 		Questionarie q = xmlFactory.createQuestionarie();
 
-		q.setId(f.getId());
+		q.setId(getIDWithStandort(f.getId()));
 
 		q.setCreationDate(createXMLGregorienDate(f.getErstellungsDatum()));
 		q.setScale(createScaleType(f.getSkala()));
@@ -180,7 +202,7 @@ public class FragebogenModel {
 
 		for (Item i : items) {
 			ItemType it = xmlFactory.createItemType();
-			it.setId(i.getId());
+			it.setId(getIDWithStandort(i.getId()));
 			it.setName(i.getName());
 			it.setQuestion(i.getFrage());
 
@@ -213,7 +235,7 @@ public class FragebogenModel {
 	 */
 	private AreaType createArea(Bereich b) {
 		AreaType a = xmlFactory.createAreaType();
-		a.setId(b.getId());
+		a.setId(getIDWithStandort(b.getId()));
 		a.setName(b.getName());
 		a.setSphereActivity(createSphereActivity(b.getHandlungsfeld()));
 		return a;
@@ -228,7 +250,7 @@ public class FragebogenModel {
 	 */
 	private SphereActivityType createSphereActivity(Handlungsfeld h) {
 		SphereActivityType sphere = xmlFactory.createSphereActivityType();
-		sphere.setId(h.getId());
+		sphere.setId(getIDWithStandort(h.getId()));
 		sphere.setName(h.getName());
 		return sphere;
 	}
@@ -246,7 +268,7 @@ public class FragebogenModel {
 
 		for (Frage_Fragebogen f : fragen) {
 			QuestionType q = xmlFactory.createQuestionType();
-			q.setId(f.getFrage().getId());
+			q.setId(getIDWithStandort(f.getFrage().getId()));
 			q.setName(f.getFrage().getName());
 			q.setText(f.getFrage().getText());
 			q.setScale(createScaleType(f.getFrage().getSkala()));
@@ -279,7 +301,7 @@ public class FragebogenModel {
 
 		for (Bewertung f : bewertungen) {
 			EvaluationType q = xmlFactory.createEvaluationType();
-			q.setId(f.getId());
+			q.setId(getIDWithStandort(f.getId()));
 			q.setRawid(f.getZeilenid());
 			q.setSource(f.getQuelle());
 			q.setValue(f.getWert());
@@ -305,7 +327,7 @@ public class FragebogenModel {
 	@SuppressWarnings("deprecation")
 	private CourseType createCourseType(Lehrveranstaltung l) throws Exception {
 		CourseType st = xmlFactory.createCourseType();
-		st.setId(l.getId());
+		st.setId(getIDWithStandort(l.getId()));
 		st.setInstructor(l.getDozent());
 
 		if (l.getSemester().equals(de.hscoburg.evelin.secat.dao.entity.base.SemesterType.SS)) {
@@ -330,8 +352,9 @@ public class FragebogenModel {
 	 */
 	private SubjectType createSubject(Fach l) throws Exception {
 		SubjectType st = xmlFactory.createSubjectType();
-		st.setId(l.getId());
+		st.setId(getIDWithStandort(l.getId()));
 		st.setName(l.getName());
+		st.setLocation(einstellungDAO.findByName(EinstellungenType.STANDORT).getWert());
 
 		return st;
 	}
@@ -361,7 +384,7 @@ public class FragebogenModel {
 	 */
 	private PerspectiveType createPerspectiveType(Perspektive e) {
 		PerspectiveType st = xmlFactory.createPerspectiveType();
-		st.setId(e.getId());
+		st.setId(getIDWithStandort(e.getId()));
 		st.setName(e.getName());
 
 		return st;
@@ -392,7 +415,7 @@ public class FragebogenModel {
 	 */
 	private PropertyType createPropertieType(Eigenschaft e) {
 		PropertyType st = xmlFactory.createPropertyType();
-		st.setId(e.getId());
+		st.setId(getIDWithStandort(e.getId()));
 		st.setName(e.getName());
 
 		return st;
@@ -407,7 +430,7 @@ public class FragebogenModel {
 	 */
 	private ScaleType createScaleType(Skala s) {
 		ScaleType st = xmlFactory.createScaleType();
-		st.setId(s.getId());
+		st.setId(getIDWithStandort(s.getId()));
 		st.setMaxText(s.getMaxText());
 		st.setMinText(s.getMinText());
 		st.setName(s.getName());
@@ -426,7 +449,7 @@ public class FragebogenModel {
 			int i = 1;
 			for (String value : s.getAuswahl()) {
 				ChoiceType t = xmlFactory.createChoiceType();
-				t.setId(i++);
+				t.setId(getIDWithStandort(i++));
 				t.setName(value);
 				t1.getChoice().add(t);
 			}

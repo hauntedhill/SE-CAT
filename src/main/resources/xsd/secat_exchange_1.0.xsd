@@ -6,7 +6,7 @@
 
 	<xs:complexType name="propertyType">
 		<xs:sequence>
-			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
 
 		</xs:sequence>	
@@ -21,14 +21,14 @@
 
 	<xs:complexType name="sphereActivityType">
 		<xs:sequence>
-			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
 		</xs:sequence>	
 	</xs:complexType>
 
 	<xs:complexType name="choiceType">
 		<xs:sequence>
-			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
 		</xs:sequence>	
 	</xs:complexType>
@@ -52,7 +52,7 @@
 	<xs:complexType name="scaleType">
 
 		<xs:sequence>
-			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
 
 
@@ -72,7 +72,7 @@
 
 	<xs:complexType name="perspectiveType">
 		<xs:sequence>
-			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
 		</xs:sequence>	
 	</xs:complexType>  
@@ -96,7 +96,7 @@
 
 	<xs:complexType name="areaType">
 		<xs:sequence>
-			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="sphereActivity" type="sphereActivityType" minOccurs="1" maxOccurs="1" />
 		</xs:sequence>	
@@ -104,14 +104,15 @@
 
 	<xs:complexType name="subjectType">
 		<xs:sequence>
-			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
+			<xs:element name="location" minOccurs="1" maxOccurs="1" type="xs:string" />
 		</xs:sequence>	
 	</xs:complexType>
 
 	<xs:complexType name="courseType">
 		<xs:sequence>
-			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="instructor" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="semester" type="semesterType" minOccurs="1" maxOccurs="1"  />
 			<xs:element name="year" minOccurs="1" maxOccurs="1" type="xs:int" />
@@ -121,7 +122,7 @@
 
 	<xs:complexType name="evaluationType">
 		<xs:sequence>
-			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="value" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="wave" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="rawid" minOccurs="1" maxOccurs="1" type="xs:string" />
@@ -138,7 +139,7 @@
 
 	<xs:complexType name="questionType">
 		<xs:sequence>
-			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="text" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="scale" type="scaleType" minOccurs="1" maxOccurs="1" />
@@ -148,7 +149,7 @@
 
 	<xs:complexType name="itemType">
 		<xs:sequence>
-			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+			<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="name" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="question" minOccurs="1" maxOccurs="1" type="xs:string" />
 			<xs:element name="area" type="areaType" minOccurs="1" maxOccurs="1" />
@@ -179,7 +180,7 @@
 	<xs:element name="questionarie">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:int" />
+				<xs:element name="id" minOccurs="1" maxOccurs="1" type="xs:string" />
 				<xs:element name="creationDate" minOccurs="1" maxOccurs="1" type="xs:date" />
 				<xs:element name="course" type="courseType" minOccurs="1" maxOccurs="1" />
 				<xs:element name="scale" type="scaleType" minOccurs="1" maxOccurs="1" />

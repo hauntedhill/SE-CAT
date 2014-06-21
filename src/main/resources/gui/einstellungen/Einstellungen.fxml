@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<GridPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.EinstellungController">
+	<columnConstraints>
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+	</columnConstraints>
+	<rowConstraints>
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+	</rowConstraints>
+	<children>
+		<TitledPane animated="false" collapsible="false" layoutX="31.0" layoutY="21.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%scene.sprache.lable.title">
+			<content>
+
+				<GridPane layoutX="245.0" layoutY="12.0">
+					<columnConstraints>
+						<ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="10.0" />
+						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+					</columnConstraints>
+					<rowConstraints>
+						<RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="50.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+					</rowConstraints>
+					<children>
+						<Button fx:id="buttonSetzen" layoutX="170.0" layoutY="108.0" mnemonicParsing="false" text="%scene.einstellungen.button" GridPane.columnIndex="1" GridPane.rowIndex="1">
+							<graphic>
+								<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
+									<image>
+										<Image url="@/image/icons/apply.png" />
+									</image>
+								</ImageView>
+							</graphic>
+
+
+						</Button><TextField GridPane.columnIndex="1" fx:id="textStandort" />
+						<Label layoutX="31.0" layoutY="48.0" prefHeight="17.0" prefWidth="157.0" text="%scene.einstellungen.lable.standort" />
+					</children>
+				</GridPane>
+
+			</content>
+		</TitledPane>
+	</children>
+</GridPane>

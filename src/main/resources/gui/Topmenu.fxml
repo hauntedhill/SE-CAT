@@ -80,6 +80,12 @@
 								<KeyCodeCombination alt="DOWN" code="I" control="UP" meta="UP" shift="UP" shortcut="UP" />
 							</accelerator>
 						</MenuItem>
+						
+						<MenuItem fx:id="einstellungen" mnemonicParsing="true" text="%menu.item.settings.einstellunge.lable">
+							<accelerator>
+								<KeyCodeCombination alt="DOWN" code="G" control="UP" meta="UP" shift="UP" shortcut="UP" />
+							</accelerator>
+						</MenuItem>
 						</items>
 
 				</Menu>

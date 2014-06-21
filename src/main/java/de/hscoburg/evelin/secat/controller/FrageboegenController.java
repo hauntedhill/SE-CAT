@@ -5,6 +5,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -418,10 +419,21 @@ public class FrageboegenController extends BaseController {
 					@Override
 					public void handleAction(ActionEvent t) throws Exception {
 
-						if (file != null) {
-							fragebogenModel.exportQuestionarieToCore(frageboegen.getSelectionModel().getSelectedItem(), file);
-						}
+						try {
+							if (file != null) {
+								fragebogenModel.exportQuestionarieToCore(frageboegen.getSelectionModel().getSelectedItem(), file);
+							}
+						} catch (IllegalArgumentException iae) {
+							Platform.runLater(new Runnable() {
 
+								@Override
+								public void run() {
+									Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.exportCore.error.title"))
+											.masthead(SeCatResourceBundle.getInstance().getString("scene.exportCore.error.text") + " ").showError();
+								}
+							});
+
+						}
 						// exportController.exportFragebogen(frageboegen.getSelectionModel().getSelectedItem(), file);
 
 						// tableData = getFrageboegen();
