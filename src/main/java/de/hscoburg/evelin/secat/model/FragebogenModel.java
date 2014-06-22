@@ -45,10 +45,13 @@ import de.hscoburg.evelin.secat.exchange.dto.AreaType;
 import de.hscoburg.evelin.secat.exchange.dto.ChoiceType;
 import de.hscoburg.evelin.secat.exchange.dto.ChoicesType;
 import de.hscoburg.evelin.secat.exchange.dto.CourseType;
+import de.hscoburg.evelin.secat.exchange.dto.DiscreteQuestionScaleType;
 import de.hscoburg.evelin.secat.exchange.dto.EvaluationType;
 import de.hscoburg.evelin.secat.exchange.dto.EvaluationsType;
+import de.hscoburg.evelin.secat.exchange.dto.FreeQuestionScaleType;
 import de.hscoburg.evelin.secat.exchange.dto.ItemType;
 import de.hscoburg.evelin.secat.exchange.dto.ItemsType;
+import de.hscoburg.evelin.secat.exchange.dto.MCQuestionScaleType;
 import de.hscoburg.evelin.secat.exchange.dto.ObjectFactory;
 import de.hscoburg.evelin.secat.exchange.dto.PerspectiveType;
 import de.hscoburg.evelin.secat.exchange.dto.PerspectivesType;
@@ -429,22 +432,22 @@ public class FragebogenModel {
 	 * @return Das erzeugte {@link ScaleType}-Object.
 	 */
 	private ScaleType createScaleType(Skala s) {
-		ScaleType st = xmlFactory.createScaleType();
-		st.setId(getIDWithStandort(s.getId()));
-		st.setMaxText(s.getMaxText());
-		st.setMinText(s.getMinText());
-		st.setName(s.getName());
-		st.setOptimum(s.getOptimum());
-		st.setOtherAnswer(s.getAndereAntwort());
-		st.setRefuseAnswer(s.getVerweigerungsAntwort());
-		st.setRows(s.getZeilen());
-		st.setSteps(s.getSchritte());
-		st.setWeight(s.getSchrittWeite());
+
+		ScaleType st = null;
 
 		if (s.getType().equals(SkalaType.FREE)) {
-			st.setType(ScaleTypeType.FREE);
+
+			FreeQuestionScaleType st1 = xmlFactory.createFreeQuestionScaleType();
+			st1.setRows(s.getZeilen());
+			st1.setType(ScaleTypeType.FREE);
+			st = st1;
 		} else if (s.getType().equals(SkalaType.MC)) {
-			st.setType(ScaleTypeType.MC);
+			MCQuestionScaleType st1 = xmlFactory.createMCQuestionScaleType();
+			st1.setType(ScaleTypeType.MC);
+			st1.setWeight(s.getSchrittWeite());
+			st1.setOtherAnswer(s.getAndereAntwort());
+			st1.setRefuseAnswer(s.getVerweigerungsAntwort());
+
 			ChoicesType t1 = xmlFactory.createChoicesType();
 			int i = 1;
 			for (String value : s.getAuswahl()) {
@@ -453,11 +456,23 @@ public class FragebogenModel {
 				t.setName(value);
 				t1.getChoice().add(t);
 			}
-			st.setChoices(t1);
+			st1.setChoices(t1);
+			st = st1;
 
 		} else if (s.getType().equals(SkalaType.DISCRET)) {
-			st.setType(ScaleTypeType.DISCRETE);
+			DiscreteQuestionScaleType st1 = xmlFactory.createDiscreteQuestionScaleType();
+			st1.setType(ScaleTypeType.DISCRETE);
+			st1.setMaxText(s.getMaxText());
+			st1.setMinText(s.getMinText());
+			st1.setSteps(s.getSchritte());
+			st1.setOptimum(s.getOptimum());
+
+			st1.setWeight(s.getSchrittWeite());
+			st = st1;
 		}
+
+		st.setId(getIDWithStandort(s.getId()));
+		st.setName(s.getName());
 
 		return st;
 	}
