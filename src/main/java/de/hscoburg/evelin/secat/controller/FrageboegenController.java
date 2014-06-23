@@ -281,7 +281,7 @@ public class FrageboegenController extends BaseController {
 					public void handle(ContextMenuEvent event) {
 						if (frageboegen.getSelectionModel().getSelectedItem() != null) {
 							ctxMenueEdit.setDisable(frageboegen.getSelectionModel().getSelectedItem().getExportiert());
-							ctxMenueExportQuestorPro.setDisable(!frageboegen.getSelectionModel().getSelectedItem().getExportiert());
+							// ctxMenueExportQuestorPro.setDisable(!frageboegen.getSelectionModel().getSelectedItem().getExportiert());
 
 							ctxMenueExportCore.setDisable(frageboegen.getSelectionModel().getSelectedItem().getBewertungen() == null
 									|| frageboegen.getSelectionModel().getSelectedItem().getBewertungen().size() == 0);
