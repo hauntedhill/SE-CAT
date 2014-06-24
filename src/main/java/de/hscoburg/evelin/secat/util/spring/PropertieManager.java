@@ -12,6 +12,8 @@ public class PropertieManager extends Properties {
 
 	public static final String KEY_DB_HOST = "secat.db.host";
 
+	public static final String KEY_DB_PORT = "secat.db.port";
+
 	public static final String KEY_DB_SCHEMA = "secat.db.schema";
 
 	public static final String KEY_DB_USER = "secat.db.user";

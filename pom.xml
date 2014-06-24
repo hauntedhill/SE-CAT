@@ -234,6 +234,7 @@
 			</activation>
 			<properties>
 				<db.host>localhost</db.host>
+				<db.port>3306</db.port>
 				<db.schema>secatENTW</db.schema>
 				<db.user>secat</db.user>
 				<db.password>secat</db.password>
@@ -243,6 +244,7 @@
 			<id>entw</id>
 			<properties>
 				<db.host>ftei-vm-101.hs-coburg.de</db.host>
+				<db.port>3306</db.port>
 				<db.schema>secatENTW</db.schema>
 				<db.user>secat</db.user>
 				<db.password>secat</db.password>
@@ -252,6 +254,7 @@
 			<id>prod</id>
 			<properties>
 				<db.host>ftei-vm-101.hs-coburg.de</db.host>
+				<db.port>3306</db.port>
 				<db.schema>secat</db.schema>
 				<db.user>secat</db.user>
 				<db.password>secat</db.password>

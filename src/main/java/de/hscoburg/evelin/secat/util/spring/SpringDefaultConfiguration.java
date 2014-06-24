@@ -55,7 +55,8 @@ public class SpringDefaultConfiguration {
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
-		ds.setUrl("jdbc:mysql://" + PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_HOST) + "/"
+		ds.setUrl("jdbc:mysql://" + PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_HOST) + ":"
+				+ PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_PORT) + "/"
 				+ PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_SCHEMA));
 
 		ds.setUsername(PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_USER));
