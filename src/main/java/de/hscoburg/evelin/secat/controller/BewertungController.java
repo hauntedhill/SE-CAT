@@ -42,7 +42,7 @@ public class BewertungController extends BaseController {
 	public void initializeController(URL location, ResourceBundle resources) {
 
 		ObservableList<Fragebogen> frageboegenOl = FXCollections.observableArrayList();
-		List<Fragebogen> frageboegen = fragebogenModel.getFragebogenFor(null, null, null, null, null, null, null);
+		List<Fragebogen> frageboegen = fragebogenModel.getFragebogenFor(null, null, null, null, null, null, null, false);
 		for (Fragebogen fragebogen : frageboegen) {
 			if (!fragebogen.getBewertungen().isEmpty()) {
 				frageboegenOl.add(fragebogen);

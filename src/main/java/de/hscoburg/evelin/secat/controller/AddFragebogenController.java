@@ -283,7 +283,7 @@ public class AddFragebogenController extends BaseController {
 		keinFragebogen.setName("Keine Vorlage");
 		keinFragebogen.setId(-1);
 		vorlageOl.add(keinFragebogen);
-		List<Fragebogen> fList = fragebogenModel.getFragebogenFor(null, null, null, null, null, null, null);
+		List<Fragebogen> fList = fragebogenModel.getFragebogenFor(null, null, null, null, null, null, null, false);
 		for (Fragebogen f : fList) {
 			vorlageOl.add(f);
 		}

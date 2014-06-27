@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.hscoburg.evelin.secat.dao.BewertungDAO;
 import de.hscoburg.evelin.secat.dao.EinstellungDAO;
 import de.hscoburg.evelin.secat.dao.FrageDAO;
 import de.hscoburg.evelin.secat.dao.Frage_FragebogenDAO;
@@ -86,8 +87,9 @@ public class FragebogenModel {
 	private FragebogenDAO fragebogenDAO;
 	@Autowired
 	private FrageDAO frageDAO;
+
 	@Autowired
-	private HandlungsfeldModel handlungsfeldModel;
+	private BewertungDAO bewertungsDAO;
 
 	@Autowired
 	private ItemDAO itemDAO;
@@ -135,11 +137,12 @@ public class FragebogenModel {
 	 *            - Die zu suchende {@link Skala}
 	 * @return Eine {@link List} mit allen {@link Fragebogen}
 	 */
-	public List<Fragebogen> getFragebogenFor(Eigenschaft e, Perspektive p, Lehrveranstaltung l, String name, LocalDate von, LocalDate bis, Skala s) {
+	public List<Fragebogen> getFragebogenFor(Eigenschaft e, Perspektive p, Lehrveranstaltung l, String name, LocalDate von, LocalDate bis, Skala s,
+			boolean archiviert) {
 		Date vonDate = von != null ? Date.from(von.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()) : null;
 		Date bisDate = bis != null ? Date.from(bis.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()) : null;
 
-		return fragebogenDAO.getFrageboegenFor(e, p, l, name, vonDate, bisDate, s);
+		return fragebogenDAO.getFrageboegenFor(e, p, l, name, vonDate, bisDate, s, archiviert);
 	}
 
 	/**
@@ -156,6 +159,29 @@ public class FragebogenModel {
 		return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 	}
 
+	public void deleteFragebogen(Fragebogen f) {
+		f = fragebogenDAO.findById(f.getId());
+
+		if (f.getExportiertQuestorPro() != null && f.getExportiertQuestorPro()) {
+			throw new IllegalArgumentException("already exported");
+		}
+
+		for (Item i : f.getItems() != null ? f.getItems() : new ArrayList<Item>()) {
+			i.getFrageboegen().remove(f);
+
+			itemDAO.merge(i);
+		}
+
+		for (Bewertung b : f.getBewertungen() != null ? f.getBewertungen() : new ArrayList<Bewertung>()) {
+			bewertungsDAO.remove(b);
+		}
+		for (Frage_Fragebogen ff : f.getFrageFragebogen() != null ? f.getFrageFragebogen() : new ArrayList<Frage_Fragebogen>()) {
+			frageFragebogenDAO.remove(ff);
+		}
+		fragebogenDAO.remove(f);
+
+	}
+
 	/**
 	 * Erzeugt ein XML des {@link Fragebogen}s fuer den export zu CORE.
 	 * 
@@ -167,6 +193,8 @@ public class FragebogenModel {
 	public String exportQuestionarieToCore(Fragebogen f, File file) throws Exception {
 		f = fragebogenDAO.findById(f.getId());
 
+		f.setExportiertCore(true);
+		fragebogenDAO.merge(f);
 		Questionarie q = xmlFactory.createQuestionarie();
 
 		q.setId(getIDWithStandort(f.getId()));
@@ -549,7 +577,7 @@ public class FragebogenModel {
 
 		// block.addChild(ftf);
 
-		f.setExportiert(true);
+		f.setExportiertQuestorPro(true);
 		fragebogenDAO.merge(f);
 
 		return fXML.generateXML();
@@ -618,7 +646,9 @@ public class FragebogenModel {
 		f.setEigenschaft(e);
 		f.setSkala(s);
 		f.setLehrveranstaltung(l);
-		f.setExportiert(false);
+		f.setExportiertQuestorPro(false);
+		f.setExportiertCore(false);
+		f.setArchiviert(false);
 		f.setErstellungsDatum(new Date());
 
 		fragebogenDAO.merge(f);
@@ -648,7 +678,7 @@ public class FragebogenModel {
 		edit.setEigenschaft(e);
 		edit.setSkala(s);
 		edit.setLehrveranstaltung(l);
-		edit.setExportiert(false);
+		edit.setExportiertQuestorPro(false);
 		edit.setErstellungsDatum(new Date());
 
 		ArrayList<Frage> fragenExist = new ArrayList<Frage>();
@@ -711,6 +741,14 @@ public class FragebogenModel {
 
 		}
 
+	}
+
+	public void toggleArchiviert(Fragebogen f) {
+		f = fragebogenDAO.findById(f.getId());
+		if (f.getArchiviert() == null) {
+			f.setArchiviert(true);
+		}
+		f.setArchiviert(!f.getArchiviert());
 	}
 
 }

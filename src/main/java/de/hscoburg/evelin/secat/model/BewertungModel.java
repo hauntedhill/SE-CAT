@@ -93,7 +93,7 @@ public class BewertungModel {
 					if (fragebogen != null && !tmpFragebogen.equals(fragebogen)) {
 						throw new IllegalArgumentException(SeCatResourceBundle.getInstance().getString("scene.evaluation.import.error.incorrectQuestionaryId")
 								+ fragebogen + ", " + tmpFragebogen);
-					} else if (!tmpFragebogen.getExportiert()) {
+					} else if (!tmpFragebogen.getExportiertQuestorPro()) {
 						throw new IllegalArgumentException(SeCatResourceBundle.getInstance().getString(
 								"scene.evaluation.import.error.incorrectQuestionaryStatus")
 								+ tmpFragebogen);
@@ -174,10 +174,21 @@ public class BewertungModel {
 				}
 
 			}
+			fragebogen.setExportiertCore(false);
+			fragebogenDAO.merge(fragebogen);
 		} finally {
 			br.close();
 		}
 		return anzCVSRows;
+	}
+
+	public void deleteBweertung(Fragebogen f) {
+		f = fragebogenDAO.findById(f.getId());
+
+		for (Bewertung b : f.getBewertungen() != null ? f.getBewertungen() : new ArrayList<Bewertung>()) {
+			bewertungDAO.remove(b);
+		}
+
 	}
 
 }

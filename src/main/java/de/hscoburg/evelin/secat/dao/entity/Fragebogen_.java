@@ -37,6 +37,10 @@ public class Fragebogen_ extends BaseEntity_ {
 
 	public static volatile SingularAttribute<Fragebogen, Date> erstellungsDatum;
 
-	public static volatile SingularAttribute<Fragebogen, Boolean> exportiert;
+	public static volatile SingularAttribute<Fragebogen, Boolean> exportiertQuestorPro;
+
+	public static volatile SingularAttribute<Fragebogen, Boolean> exportiertCore;
+
+	public static volatile SingularAttribute<Fragebogen, Boolean> archiviert;
 
 }
