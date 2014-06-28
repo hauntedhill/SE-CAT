@@ -14,7 +14,7 @@ import org.springframework.stereotype.Controller;
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 
 @Controller
-public class KiviatController extends BaseController {
+public class ProfilChartController extends BaseController {
 
 	@FXML
 	private GridPane contentPane;
@@ -24,7 +24,7 @@ public class KiviatController extends BaseController {
 	public void initializeController(URL location, ResourceBundle resources) {
 
 		final SwingNode chartSwingNode = new SwingNode();
-		chartSwingNode.setContent(new ChartPanel(bewertungAnzeigenController.createMixedRadarChartForBereich(bewertungAnzeigenController.getSelectedItem(),
+		chartSwingNode.setContent(new ChartPanel(bewertungAnzeigenController.createProfilChartForItem(bewertungAnzeigenController.getSelectedItem(),
 				bewertungAnzeigenController.getFragebogen())));
 
 		contentPane.add(chartSwingNode, 1, 1);
@@ -34,6 +34,6 @@ public class KiviatController extends BaseController {
 	@Override
 	public String getKeyForSceneName() {
 
-		return "scene.chart.kiviat.lable.title";
+		return "scene.chart.profilplot.lable.title";
 	}
 }

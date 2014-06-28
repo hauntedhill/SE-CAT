@@ -191,4 +191,27 @@ public class BewertungModel {
 
 	}
 
+	public void setOutlier(ArrayList<Bewertung> bewertungen) {
+		for (Bewertung bewertung : bewertungen) {
+			bewertung.setAusreiser(true);
+			bewertungDAO.merge(bewertung);
+
+		}
+	}
+
+	public void removeOutlier(ArrayList<Bewertung> bewertungen) {
+		for (Bewertung bewertung : bewertungen) {
+			bewertung.setAusreiser(false);
+			bewertungDAO.merge(bewertung);
+
+		}
+	}
+
+	public void setOutlierAutomatic(ArrayList<Bewertung> bewertungen) {
+		for (Bewertung bewertung : bewertungen) {
+			bewertung.setAusreiser(null);
+			bewertungDAO.merge(bewertung);
+		}
+	}
+
 }
