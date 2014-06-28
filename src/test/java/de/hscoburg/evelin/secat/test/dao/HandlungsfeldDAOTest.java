@@ -243,6 +243,11 @@ public class HandlungsfeldDAOTest {
 		Assert.assertTrue(result.contains(handlungsfeld2));
 		Assert.assertTrue(result.size() == 2);
 
+		result = dao.getHandlungsfelderBy(null, null, null, null, null, null, null);
+		Assert.assertTrue(result.contains(handlungsfeld1));
+		Assert.assertTrue(result.contains(handlungsfeld2));
+		Assert.assertTrue(result.size() == 2);
+
 		result = dao.getHandlungsfelderBy(true, true, null, null, "", "", null);
 		Assert.assertTrue(result.contains(handlungsfeld1));
 		Assert.assertTrue(result.contains(handlungsfeld2));

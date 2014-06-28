@@ -41,7 +41,7 @@ public class JPALayerMock {
 		Properties ps = new Properties();
 		ps.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
 		ps.put("hibernate.hbm2ddl.auto", "create");
-		ps.put("hibernate.show_sql", "true");
+		// ps.put("hibernate.show_sql", "true");
 		// ps.put("hibernate.connection.autocommit", "true");
 		// ps.put("showSql", "true");
 		lcemfb.setJpaProperties(ps);

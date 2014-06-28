@@ -155,7 +155,7 @@
 				<configuration>
 
 					<failOnError>false</failOnError>
-
+					<excludePackageNames>de.hscoburg.evelin.secat.exchange.*</excludePackageNames>
 				</configuration>
 			</plugin>
 			<plugin>
