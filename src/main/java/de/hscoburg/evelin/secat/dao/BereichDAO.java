@@ -92,7 +92,7 @@ public class BereichDAO extends BaseDAO<Bereich> {
 		if (itemAktiv != null) {
 			predicates.add(cb.equal(itemRoot.get(Item_.aktiv), itemAktiv));
 		}
-		predicates.add(cb.equal(itemRoot.get(Item_.bereich), h));
+		predicates.add(cb.equal(bereichRoot.get(Bereich_.handlungsfeld), h));
 
 		if (!"".equals(notizItem) && notizItem != null) {
 			predicates.add(cb.like(cb.upper(itemRoot.get(Item_.notiz)), (notizItem + "%").toUpperCase()));

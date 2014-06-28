@@ -231,7 +231,7 @@ public class HandlungsfeldDAOTest {
 		e.setName("test3");
 		dao.persist(e);
 
-		Assert.assertTrue(dao.findById(3).getId() == 3);
+		Assert.assertTrue(dao.findById(e.getId()).getId() == e.getId());
 	}
 
 	@Test
