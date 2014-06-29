@@ -111,12 +111,12 @@
 </GridPane>
 </content></Tab><Tab text="%scene.chart.subcriterionincrease">
 <content>
-<GridPane fx:id="subcriterionincreasePane">
+<GridPane fx:id="subcriterionincreasePane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
 <columnConstraints>
 <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
 <ColumnConstraints hgrow="SOMETIMES" maxWidth="300.0" minWidth="10.0" />
 <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
-<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="600.0" minWidth="10.0" prefWidth="100.0" />
+<ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="1000.0" minWidth="10.0" prefWidth="100.0" />
 </columnConstraints>
 <rowConstraints>
 <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
@@ -338,14 +338,14 @@
 </GridPane>
 </content>
 </TitledPane>
-<TabPane maxWidth="900.0" prefHeight="200.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="3" GridPane.rowIndex="1">
+<TabPane maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="3" GridPane.rowIndex="1">
 <tabs>
 <Tab text="%scene.chart.evaluationcomparision.criterion">
 <content>
 <GridPane fx:id="evaluationComparePaneBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
 <columnConstraints>
 <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
-<ColumnConstraints hgrow="SOMETIMES" maxWidth="900.0" minWidth="10.0" />
+<ColumnConstraints hgrow="SOMETIMES" maxWidth="1000.0" minWidth="10.0" />
 </columnConstraints>
 <rowConstraints>
 <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
