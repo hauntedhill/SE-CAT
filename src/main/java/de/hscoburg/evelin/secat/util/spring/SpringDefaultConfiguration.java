@@ -36,7 +36,7 @@ public class SpringDefaultConfiguration {
 		Properties ps = new Properties();
 		// ps.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
 		ps.put("hibernate.hbm2ddl.auto", "update");
-		ps.put("hibernate.show_sql", "true");
+		// ps.put("hibernate.show_sql", "true");
 		ps.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 
 		// ps.put("hibernate.connection.autocommit", "true");
