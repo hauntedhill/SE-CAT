@@ -236,6 +236,16 @@ public class BewertungAnzeigenController extends BaseController {
 						bewertungModel.setOutlier(bewertungen);
 					}
 
+					@Override
+					public void updateUI() {
+						tableView.getSelectionModel().getSelectedItem().setOutlier(true);
+						EvaluationHelper eh = tableView.getSelectionModel().getSelectedItem();
+						tableView.getItems().clear();
+						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
+						tableView.setItems(allEvaluationHelper);
+
+					}
+
 				});
 
 				outlierRemove.setOnAction(new SeCatEventHandle<ActionEvent>() {
@@ -255,9 +265,19 @@ public class BewertungAnzeigenController extends BaseController {
 						bewertungModel.removeOutlier(bewertungen);
 					}
 
+					@Override
+					public void updateUI() {
+						tableView.getSelectionModel().getSelectedItem().setOutlier(true);
+						EvaluationHelper eh = tableView.getSelectionModel().getSelectedItem();
+						tableView.getItems().clear();
+						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
+						tableView.setItems(allEvaluationHelper);
+
+					}
+
 				});
 
-				outlierRemove.setOnAction(new SeCatEventHandle<ActionEvent>() {
+				outlierAutomatic.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
 					@Override
 					public void handleAction(ActionEvent t) {
@@ -272,6 +292,16 @@ public class BewertungAnzeigenController extends BaseController {
 
 						}
 						bewertungModel.setOutlierAutomatic(bewertungen);
+					}
+
+					@Override
+					public void updateUI() {
+						tableView.getSelectionModel().getSelectedItem().setOutlier(true);
+						EvaluationHelper eh = tableView.getSelectionModel().getSelectedItem();
+						tableView.getItems().clear();
+						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
+						tableView.setItems(allEvaluationHelper);
+
 					}
 
 				});
