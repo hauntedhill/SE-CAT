@@ -1,5 +1,7 @@
 package de.hscoburg.evelin.secat;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.concurrent.Executors;
 
 import javafx.application.Application;
@@ -35,7 +37,7 @@ public class SeCat extends Application {
 	/**
 	 * Name der Applikation
 	 */
-	public static String MAIN_STAGE_TITLE = "SE-CAT";
+	public static String MAIN_STAGE_TITLE = "SE-CAT v. ";
 
 	/**
 	 * Methode fuehrt das initialisieren der Applikation durch und laed die default Seite.
@@ -47,6 +49,8 @@ public class SeCat extends Application {
 		PRIMARY_STAGE = primaryStage;
 
 		try {
+
+			MAIN_STAGE_TITLE = MAIN_STAGE_TITLE + new BufferedReader(new InputStreamReader(SeCat.class.getResourceAsStream("/version.txt"))).readLine();
 
 			FXMLLoader loader = new FXMLLoader();
 
