@@ -9,7 +9,6 @@ import javafx.scene.Cursor;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import org.controlsfx.dialog.Dialogs;
 import org.slf4j.Logger;
 
 /**
@@ -62,7 +61,11 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 								Platform.runLater(new Runnable() {
 									@Override
 									public void run() {
-										updateUI();
+										try {
+											updateUI();
+										} catch (Exception e) {
+											showErrorDialog(e);
+										}
 										s.removeEventFilter(javafx.scene.input.InputEvent.ANY, handler);
 
 										// TODO: fix exception handling
@@ -113,7 +116,7 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 	 */
 	private void showErrorDialog(Exception e) {
 		logger.error("Fehler beim verarbeiten eines Events", e);
-		Dialogs.create().title("Es ist ein Fehler aufgetreten").masthead("Die Aktion konnte aufgrund eines Fehlers nicht ausgeführt werden.").showException(e);
+		DialogHelper.showGeneralErrorDialog(e);
 	}
 
 	/**

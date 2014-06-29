@@ -15,7 +15,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
-import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -27,8 +26,8 @@ import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.ColumnHelper;
 import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
+import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
-import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 import de.hscoburg.evelin.secat.util.javafx.TableCellAction;
 
 /**
@@ -110,8 +109,7 @@ public class FragenController extends BaseController {
 
 						@Override
 						public void run() {
-							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.input.error.title"))
-									.masthead(SeCatResourceBundle.getInstance().getString("scene.input.error.txt")).showError();
+							DialogHelper.showInputErrorDialog();
 
 						}
 					});

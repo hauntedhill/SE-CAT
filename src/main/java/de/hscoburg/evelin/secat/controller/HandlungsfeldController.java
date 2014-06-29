@@ -289,7 +289,7 @@ public class HandlungsfeldController extends BaseController {
 						if (treeTableController.getSelectedTreeItem() != null && treeTableController.getSelectedTreeItem().getValue().isItem()) {
 							Item selected = treeTableController.getSelectedTreeItem().getValue().getItem();
 							for (Fragebogen fragebogen : selected.getFrageboegen()) {
-								if (fragebogen.getExportiert()) {
+								if (fragebogen.getExportiertQuestorPro()) {
 									editItItem.setDisable(true);
 									break;
 								}

@@ -34,6 +34,8 @@ public class Bewertung extends BaseEntity {
 
 	private String zeit;
 
+	private Boolean ausreiser;
+
 	public String getWert() {
 		return wert;
 	}
@@ -108,6 +110,14 @@ public class Bewertung extends BaseEntity {
 
 	public void setZeit(String zeit) {
 		this.zeit = zeit;
+	}
+
+	public Boolean getAusreiser() {
+		return ausreiser;
+	}
+
+	public void setAusreiser(Boolean ausreiser) {
+		this.ausreiser = ausreiser;
 	}
 
 }

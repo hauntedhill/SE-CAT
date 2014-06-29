@@ -231,7 +231,7 @@ public class HandlungsfeldDAOTest {
 		e.setName("test3");
 		dao.persist(e);
 
-		Assert.assertTrue(dao.findById(3).getId() == 3);
+		Assert.assertTrue(dao.findById(e.getId()).getId() == e.getId());
 	}
 
 	@Test
@@ -239,6 +239,11 @@ public class HandlungsfeldDAOTest {
 		List<Handlungsfeld> result = null;
 
 		result = dao.getHandlungsfelderBy(true, true, null, null, null, null, null);
+		Assert.assertTrue(result.contains(handlungsfeld1));
+		Assert.assertTrue(result.contains(handlungsfeld2));
+		Assert.assertTrue(result.size() == 2);
+
+		result = dao.getHandlungsfelderBy(null, null, null, null, null, null, null);
 		Assert.assertTrue(result.contains(handlungsfeld1));
 		Assert.assertTrue(result.contains(handlungsfeld2));
 		Assert.assertTrue(result.size() == 2);

@@ -36,7 +36,7 @@ public class SpringDefaultConfiguration {
 		Properties ps = new Properties();
 		// ps.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
 		ps.put("hibernate.hbm2ddl.auto", "update");
-		ps.put("hibernate.show_sql", "true");
+		// ps.put("hibernate.show_sql", "true");
 		ps.put("hibernate.dialect", "org.hibernate.dialect.MySQLDialect");
 
 		// ps.put("hibernate.connection.autocommit", "true");
@@ -55,7 +55,8 @@ public class SpringDefaultConfiguration {
 		DriverManagerDataSource ds = new DriverManagerDataSource();
 
 		ds.setDriverClassName("com.mysql.jdbc.Driver");
-		ds.setUrl("jdbc:mysql://" + PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_HOST) + "/"
+		ds.setUrl("jdbc:mysql://" + PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_HOST) + ":"
+				+ PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_PORT) + "/"
 				+ PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_SCHEMA));
 
 		ds.setUsername(PropertieManager.getInstance().getProperty(PropertieManager.KEY_DB_USER));

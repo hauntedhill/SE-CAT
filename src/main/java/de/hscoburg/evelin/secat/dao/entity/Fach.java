@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.dao.entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -44,6 +45,14 @@ public class Fach extends StammdatenEntity {
 
 	public void setLehrveranstaltungen(List<Lehrveranstaltung> lehrveranstaltungen) {
 		this.lehrveranstaltungen = lehrveranstaltungen;
+	}
+
+	public void addLehrveranstaltung(Lehrveranstaltung l) {
+		if (lehrveranstaltungen == null) {
+			lehrveranstaltungen = new ArrayList<Lehrveranstaltung>();
+		}
+		lehrveranstaltungen.add(l);
+		l.setFach(this);
 	}
 
 }

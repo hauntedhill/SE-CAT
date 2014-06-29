@@ -13,7 +13,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -22,8 +21,8 @@ import de.hscoburg.evelin.secat.controller.helper.TreeItemWrapper;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
+import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
-import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class AddBereichController extends BaseController {
@@ -69,8 +68,7 @@ public class AddBereichController extends BaseController {
 
 						@Override
 						public void run() {
-							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.input.error.title"))
-									.masthead(SeCatResourceBundle.getInstance().getString("scene.input.error.txt")).showError();
+							DialogHelper.showInputErrorDialog();
 
 						}
 					});
@@ -94,6 +92,7 @@ public class AddBereichController extends BaseController {
 			public void handleAction(ActionEvent event) throws Exception {
 
 			}
+
 			@Override
 			public void updateUI() {
 

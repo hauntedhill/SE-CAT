@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2014.06.11 um 07:39:45 PM CEST 
+// Generiert: 2014.06.24 um 09:24:55 PM CEST 
 //
 
 
@@ -106,6 +106,30 @@ public class ObjectFactory {
      */
     public ItemType createItemType() {
         return new ItemType();
+    }
+
+    /**
+     * Create an instance of {@link DiscreteQuestionScaleType }
+     * 
+     */
+    public DiscreteQuestionScaleType createDiscreteQuestionScaleType() {
+        return new DiscreteQuestionScaleType();
+    }
+
+    /**
+     * Create an instance of {@link MCQuestionScaleType }
+     * 
+     */
+    public MCQuestionScaleType createMCQuestionScaleType() {
+        return new MCQuestionScaleType();
+    }
+
+    /**
+     * Create an instance of {@link FreeQuestionScaleType }
+     * 
+     */
+    public FreeQuestionScaleType createFreeQuestionScaleType() {
+        return new FreeQuestionScaleType();
     }
 
     /**

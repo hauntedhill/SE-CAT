@@ -2,7 +2,7 @@
 // Diese Datei wurde mit der JavaTM Architecture for XML Binding(JAXB) Reference Implementation, v2.2.7 generiert 
 // Siehe <a href="http://java.sun.com/xml/jaxb">http://java.sun.com/xml/jaxb</a> 
 // Änderungen an dieser Datei gehen bei einer Neukompilierung des Quellschemas verloren. 
-// Generiert: 2014.06.11 um 07:39:45 PM CEST 
+// Generiert: 2014.06.24 um 09:24:55 PM CEST 
 //
 
 
@@ -27,7 +27,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}int"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="creationDate" type="{http://www.w3.org/2001/XMLSchema}date"/>
  *         &lt;element name="course" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}courseType"/>
  *         &lt;element name="scale" type="{http://www.hs-coburg.de/evelin/secat/exchange/1.0}scaleType"/>
@@ -57,7 +57,8 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlRootElement(name = "questionarie")
 public class Questionarie {
 
-    protected int id;
+    @XmlElement(required = true)
+    protected String id;
     @XmlElement(required = true)
     @XmlSchemaType(name = "date")
     protected XMLGregorianCalendar creationDate;
@@ -74,16 +75,24 @@ public class Questionarie {
     /**
      * Ruft den Wert der id-Eigenschaft ab.
      * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
      */
-    public int getId() {
+    public String getId() {
         return id;
     }
 
     /**
      * Legt den Wert der id-Eigenschaft fest.
      * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
      */
-    public void setId(int value) {
+    public void setId(String value) {
         this.id = value;
     }
 

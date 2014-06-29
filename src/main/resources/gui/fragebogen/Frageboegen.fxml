@@ -5,104 +5,62 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-	prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.FrageboegenController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.FrageboegenController">
 	<columnConstraints>
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
-			prefWidth="100.0" />
-		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
-			prefWidth="100.0" />
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+		<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 	</columnConstraints>
 	<rowConstraints>
-		<RowConstraints maxHeight="200.0" minHeight="10.0"
-			prefHeight="30.0" vgrow="SOMETIMES" />
-		<RowConstraints maxHeight="30.0" minHeight="10.0"
-			prefHeight="20.0" vgrow="SOMETIMES" />
-		<RowConstraints minHeight="10.0" prefHeight="30.0"
-			vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="200.0" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+		<RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+		<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 	</rowConstraints>
 	<children>
-		<TitledPane fx:id="searchPanel" animated="false" layoutX="22.0" collapsible="false"
-			layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-			text="%scene.frageboegen.label.searchCriterias" GridPane.columnSpan="2">
+		<TitledPane fx:id="searchPanel" animated="false" collapsible="false" layoutX="22.0" layoutY="14.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%scene.frageboegen.label.searchCriterias" GridPane.columnSpan="2">
 			<content>
 				<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
 					<columnConstraints>
 						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-						<ColumnConstraints hgrow="SOMETIMES"
-							maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="150.0" />
-						<ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0"
-							minWidth="5.0" prefWidth="20.0" />
+						<ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="150.0" />
+						<ColumnConstraints hgrow="SOMETIMES" maxWidth="30.0" minWidth="5.0" prefWidth="20.0" />
 						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
-						<ColumnConstraints hgrow="SOMETIMES"
-							maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="150.0" />
+						<ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="150.0" prefWidth="150.0" />
 					</columnConstraints>
 					<rowConstraints>
-						<RowConstraints maxHeight="30.0" minHeight="30.0"
-							prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints maxHeight="30.0" minHeight="30.0"
-							prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints maxHeight="30.0" minHeight="30.0"
-							prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints maxHeight="30.0" minHeight="30.0"
-							prefHeight="30.0" vgrow="SOMETIMES" />
-						<RowConstraints maxHeight="30.0" minHeight="30.0"
-							prefHeight="30.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
+						<RowConstraints maxHeight="30.0" minHeight="30.0" prefHeight="30.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
-						<Label layoutX="30.0" layoutY="22.0"
-							text="%scene.frageboegen.label.name" />
-						<Label layoutX="30.0" layoutY="55.0"
-							text="%scene.frageboegen.label.lehrveranstaltung"
-							GridPane.rowIndex="1" />
-						<Label layoutX="30.0" layoutY="90.0"
-							text="%scene.frageboegen.label.erstellungVon" GridPane.rowIndex="2" />
-						<Label layoutX="30.0" layoutY="123.0"
-							text="%scene.frageboegen.label.erstellungBis" GridPane.rowIndex="3" />
-						<TextField fx:id="searchName" layoutX="175.0" layoutY="18.0"
-							GridPane.columnIndex="1" />
-						<ComboBox fx:id="searchLehrveransteltung" layoutX="175.0"
-							layoutY="51.0" maxWidth="1.7976931348623157E308"
-							GridPane.columnIndex="1" GridPane.rowIndex="1" />
-						<DatePicker fx:id="searchFromDate" layoutX="174.0"
-							layoutY="86.0" maxWidth="1.7976931348623157E308"
-							GridPane.columnIndex="1" GridPane.rowIndex="2" />
-						<DatePicker fx:id="searchToDate" layoutX="175.0"
-							layoutY="119.0" maxWidth="1.7976931348623157E308"
-							GridPane.columnIndex="1" GridPane.rowIndex="3" />
-						<Label layoutX="370.0" layoutY="17.0"
-							text="%scene.frageboegen.label.eigenschaft" GridPane.columnIndex="3" />
-						<Label layoutX="370.0" layoutY="50.0"
-							text="%scene.frageboegen.label.skala" GridPane.columnIndex="3"
-							GridPane.rowIndex="1" />
-						<Label layoutX="370.0" layoutY="85.0"
-							text="%scene.frageboegen.label.perspektive" GridPane.columnIndex="3"
-							GridPane.rowIndex="2" />
-						<ComboBox fx:id="searchEigenschaft" layoutX="491.0"
-							layoutY="13.0" maxWidth="1.7976931348623157E308"
-							GridPane.columnIndex="4" />
-						<ComboBox fx:id="searchSkala" layoutX="491.0" layoutY="46.0"
-							maxWidth="1.7976931348623157E308" GridPane.columnIndex="4"
-							GridPane.rowIndex="1" />
-						<ComboBox fx:id="searchPerspektive" layoutX="491.0"
-							layoutY="81.0" maxWidth="1.7976931348623157E308"
-							GridPane.columnIndex="4" GridPane.rowIndex="2" />
+						<Label layoutX="30.0" layoutY="22.0" text="%scene.frageboegen.label.name" />
+						<Label layoutX="30.0" layoutY="55.0" text="%scene.frageboegen.label.lehrveranstaltung" GridPane.rowIndex="1" />
+						<Label layoutX="30.0" layoutY="90.0" text="%scene.frageboegen.label.erstellungVon" GridPane.rowIndex="2" />
+						<Label layoutX="30.0" layoutY="123.0" text="%scene.frageboegen.label.erstellungBis" GridPane.rowIndex="3" />
+						<TextField fx:id="searchName" layoutX="175.0" layoutY="18.0" GridPane.columnIndex="1" />
+						<ComboBox fx:id="searchLehrveransteltung" layoutX="175.0" layoutY="51.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+						<DatePicker fx:id="searchFromDate" layoutX="174.0" layoutY="86.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+						<DatePicker fx:id="searchToDate" layoutX="175.0" layoutY="119.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+						<Label layoutX="370.0" layoutY="17.0" text="%scene.frageboegen.label.eigenschaft" GridPane.columnIndex="3" />
+						<Label layoutX="370.0" layoutY="50.0" text="%scene.frageboegen.label.skala" GridPane.columnIndex="3" GridPane.rowIndex="1" />
+						<Label layoutX="370.0" layoutY="85.0" text="%scene.frageboegen.label.perspektive" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+						<ComboBox fx:id="searchEigenschaft" layoutX="491.0" layoutY="13.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="4" />
+						<ComboBox fx:id="searchSkala" layoutX="491.0" layoutY="46.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="4" GridPane.rowIndex="1" />
+						<ComboBox fx:id="searchPerspektive" layoutX="491.0" layoutY="81.0" maxWidth="1.7976931348623157E308" GridPane.columnIndex="4" GridPane.rowIndex="2" />
+						<CheckBox fx:id="searchArchiviert" mnemonicParsing="false" text="%scene.frageboegen.label.archiert" GridPane.columnIndex="3" GridPane.rowIndex="3" />
 						<GridPane GridPane.columnSpan="2" GridPane.rowIndex="4">
 							<columnConstraints>
 								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
 								<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
 							</columnConstraints>
 							<rowConstraints>
-								<RowConstraints minHeight="10.0" prefHeight="30.0"
-									vgrow="SOMETIMES" />
+								<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 							</rowConstraints>
 							<children>
-								<Button fx:id="search" layoutX="566.0" layoutY="150.0"
-									mnemonicParsing="false" text="%scene.all.filterbutton">
+								<Button fx:id="search" layoutX="566.0" layoutY="150.0" mnemonicParsing="false" text="%scene.all.filterbutton">
 									<graphic>
-										<ImageView fitHeight="16" fitWidth="16"
-											preserveRatio="true" smooth="true">
+										<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
 											<image>
 												<Image url="@/image/icons/viewmag.png" />
 											</image>
@@ -111,12 +69,9 @@
 
 
 								</Button>
-								<Button fx:id="reset" layoutX="436.0" layoutY="150.0"
-									mnemonicParsing="false" text="%scene.all.resetbutton"
-									GridPane.columnIndex="1">
+								<Button fx:id="reset" layoutX="436.0" layoutY="150.0" mnemonicParsing="false" text="%scene.all.resetbutton" GridPane.columnIndex="1">
 									<graphic>
-										<ImageView fitHeight="16" fitWidth="16"
-											preserveRatio="true" smooth="true">
+										<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
 											<image>
 												<Image url="@/image/icons/reload.png" />
 											</image>
@@ -132,94 +87,92 @@
 
 			</content>
 		</TitledPane>
-		<TitledPane fx:id="tablePanel" animated="false" layoutX="22.0" collapsible="false"
-			layoutY="235.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-			text="%scene.frageboegen.lable.name" GridPane.columnSpan="2"
-			GridPane.rowIndex="2">
+		<TitledPane fx:id="tablePanel" animated="false" collapsible="false" layoutX="22.0" layoutY="235.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%scene.frageboegen.lable.name" GridPane.columnSpan="2" GridPane.rowIndex="2">
 			<content>
 				<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
 					<columnConstraints>
-						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
-							prefWidth="100.0" />
-						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0"
-							prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+						<ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
 					</columnConstraints>
 					<rowConstraints>
-						<RowConstraints minHeight="10.0" prefHeight="30.0"
-							vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0"
-							vgrow="SOMETIMES" />
-						<RowConstraints minHeight="10.0" prefHeight="30.0"
-							vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+						<RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
 					</rowConstraints>
 					<children>
-						<TableView fx:id="frageboegen" layoutX="-1.0" layoutY="161.0"
-							maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308"
-							GridPane.columnSpan="2" GridPane.rowSpan="2">
+						<TableView fx:id="frageboegen" layoutX="-1.0" layoutY="161.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" GridPane.rowSpan="2">
 							<columns>
-								<TableColumn maxWidth="1.7976931348623157E308"
-									minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.name" />
-								<TableColumn maxWidth="1.7976931348623157E308"
-									minWidth="-1.0" prefWidth="100.0"
-									text="%scene.frageboegen.collabel.eigenschaft" />
-								<TableColumn maxWidth="1.7976931348623157E308"
-									minWidth="-1.0" prefWidth="100.0"
-									text="%scene.frageboegen.collabel.perspektive" />
-								<TableColumn maxWidth="1.7976931348623157E308"
-									minWidth="-1.0" prefWidth="100.0"
-									text="%scene.frageboegen.collabel.exportiert" />
-								<TableColumn maxWidth="1.7976931348623157E308"
-									minWidth="-1.0" prefWidth="100.0"
-									text="%scene.frageboegen.collabel.lehrveranstaltung" />
-								<TableColumn maxWidth="1.7976931348623157E308"
-									minWidth="-1.0" prefWidth="100.0"
-									text="%scene.frageboegen.collabel.erstellungsDatum" />
-								<TableColumn maxWidth="1.7976931348623157E308"
-									minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.skala" />
+								<TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.name" />
+								<TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.eigenschaft" />
+								<TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.perspektive" />
+								<TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.exportiert" />
+									<TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.exportiertCore" />
+								<TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.lehrveranstaltung" />
+								<TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.erstellungsDatum" />
+								<TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.skala" />
 							</columns>
 							<contextMenu>
-								<ContextMenu fx:id="ctxMenue" >
+								<ContextMenu fx:id="ctxMenue">
 									<items>
-										<MenuItem fx:id="ctxMenueEdit" mnemonicParsing="false"
-											text="%scene.frageboegen.ctxmenue.edit">
+										<MenuItem fx:id="ctxMenueEdit" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.edit">
 											<graphic>
-												<ImageView fitHeight="16" fitWidth="16"
-													preserveRatio="true" smooth="true">
+												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
 													<image>
 														<Image url="@/image/icons/edit.png" />
 													</image>
 												</ImageView>
 											</graphic>
 										</MenuItem>
-										<MenuItem fx:id="ctxMenueImport" mnemonicParsing="false"
-											text="%scene.frageboegen.ctxmenue.import">
+										<MenuItem fx:id="ctxMenueImport" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.import">
 											<graphic>
-												<ImageView fitHeight="16" fitWidth="16"
-													preserveRatio="true" smooth="true">
+												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
 													<image>
 														<Image url="@/image/icons/up.png" />
 													</image>
 												</ImageView>
 											</graphic>
 										</MenuItem>
-										<MenuItem fx:id="ctxMenueExportQuestorPro"
-											mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.export">
+										<MenuItem fx:id="ctxMenueExportQuestorPro" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.export">
 											<graphic>
-												<ImageView fitHeight="16" fitWidth="16"
-													preserveRatio="true" smooth="true">
+												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
 													<image>
 														<Image url="@/image/icons/run.png" />
 													</image>
 												</ImageView>
 											</graphic>
 										</MenuItem>
-										<MenuItem fx:id="ctxMenueExportCore" mnemonicParsing="false"
-											text="%scene.frageboegen.ctxmenue.exportCore">
+										<MenuItem fx:id="ctxMenueExportCore" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.exportCore">
 											<graphic>
-												<ImageView fitHeight="16" fitWidth="16"
-													preserveRatio="true" smooth="true">
+												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
 													<image>
 														<Image url="@/image/icons/run.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</MenuItem>
+										<MenuItem fx:id="ctxMenueDelete" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.delete">
+											<graphic>
+												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
+													<image>
+														<Image url="@/image/icons/button_cancel.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</MenuItem>
+										<MenuItem fx:id="ctxMenueDeleteBewertung" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.deleteBewertung">
+											<graphic>
+												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
+													<image>
+														<Image url="@/image/icons/button_cancel.png" />
+													</image>
+												</ImageView>
+											</graphic>
+										</MenuItem>
+										<MenuItem fx:id="ctxMenueArchive" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.archive">
+											<graphic>
+												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
+													<image>
+														<Image url="@/image/icons/reload.png" />
 													</image>
 												</ImageView>
 											</graphic>

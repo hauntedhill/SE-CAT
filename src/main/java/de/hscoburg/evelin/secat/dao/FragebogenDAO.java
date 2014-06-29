@@ -53,7 +53,7 @@ public class FragebogenDAO extends BaseDAO<Fragebogen> {
 	 *            - Gesuchte {@link Skala} oder null
 	 * @return {@link List} mit gefundenen {@link Fragebogen}
 	 */
-	public List<Fragebogen> getFrageboegenFor(Eigenschaft e, Perspektive p, Lehrveranstaltung l, String name, Date von, Date bis, Skala s) {
+	public List<Fragebogen> getFrageboegenFor(Eigenschaft e, Perspektive p, Lehrveranstaltung l, String name, Date von, Date bis, Skala s, boolean archiv) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 
@@ -95,6 +95,8 @@ public class FragebogenDAO extends BaseDAO<Fragebogen> {
 		if (!"".equals(name) && name != null) {
 			predicates.add(cb.like(cb.upper(fragebogenRoot.get(Fragebogen_.name)), (name + "%").toUpperCase()));
 		}
+
+		predicates.add(cb.equal(fragebogenRoot.get(Fragebogen_.archiviert), archiv));
 
 		fragebogenCriteria.select(fragebogenRoot).where(predicates.toArray(new Predicate[0]));
 

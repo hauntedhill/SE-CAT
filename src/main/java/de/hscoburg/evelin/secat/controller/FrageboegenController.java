@@ -5,6 +5,7 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
 
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -14,6 +15,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.DatePicker;
@@ -30,7 +32,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -50,6 +51,7 @@ import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.ColumnHelper;
 import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
+import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 import de.hscoburg.evelin.secat.util.javafx.TableCellAction;
@@ -98,6 +100,9 @@ public class FrageboegenController extends BaseController {
 	private DatePicker searchToDate;
 
 	@FXML
+	private CheckBox searchArchiviert;
+
+	@FXML
 	private ContextMenu ctxMenue;
 
 	@FXML
@@ -108,6 +113,15 @@ public class FrageboegenController extends BaseController {
 	private MenuItem ctxMenueExportQuestorPro;
 	@FXML
 	private MenuItem ctxMenueExportCore;
+
+	@FXML
+	private MenuItem ctxMenueDeleteBewertung;
+
+	@FXML
+	private MenuItem ctxMenueDelete;
+
+	@FXML
+	private MenuItem ctxMenueArchive;
 
 	@Autowired
 	private EigenschaftenModel eigenschaftenModel;
@@ -212,7 +226,18 @@ public class FrageboegenController extends BaseController {
 
 			@Override
 			public ObservableValue<Node> call(CellDataFeatures<Fragebogen, Node> p) {
-				if (p.getValue().getExportiert()) {
+				if (p.getValue() != null && p.getValue().getExportiertQuestorPro() != null && p.getValue().getExportiertQuestorPro()) {
+					return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/apply.png", 16, 16, true, true)));
+				} else {
+					return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
+				}
+			}
+		});
+		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(4), new TableCellAction<Fragebogen, Node>() {
+
+			@Override
+			public ObservableValue<Node> call(CellDataFeatures<Fragebogen, Node> p) {
+				if (p.getValue() != null && p.getValue().getExportiertCore() != null && p.getValue().getExportiertCore()) {
 					return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/apply.png", 16, 16, true, true)));
 				} else {
 					return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
@@ -220,7 +245,7 @@ public class FrageboegenController extends BaseController {
 			}
 		});
 
-		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(4), new TableCellAction<Fragebogen, String>() {
+		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(5), new TableCellAction<Fragebogen, String>() {
 
 			@SuppressWarnings("deprecation")
 			@Override
@@ -232,7 +257,7 @@ public class FrageboegenController extends BaseController {
 			}
 		});
 
-		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(5), new TableCellAction<Fragebogen, String>() {
+		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(6), new TableCellAction<Fragebogen, String>() {
 
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
@@ -242,7 +267,7 @@ public class FrageboegenController extends BaseController {
 			}
 		});
 
-		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(6), new TableCellAction<Fragebogen, String>() {
+		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(7), new TableCellAction<Fragebogen, String>() {
 
 			@Override
 			public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
@@ -279,15 +304,75 @@ public class FrageboegenController extends BaseController {
 					@Override
 					public void handle(ContextMenuEvent event) {
 						if (frageboegen.getSelectionModel().getSelectedItem() != null) {
-							ctxMenueEdit.setDisable(frageboegen.getSelectionModel().getSelectedItem().getExportiert());
-							// ctxMenueExportQuestorPro.setDisable(!frageboegen.getSelectionModel().getSelectedItem().getExportiert());
+
+							if (frageboegen.getSelectionModel().getSelectedItem().getExportiertQuestorPro() != null) {
+								ctxMenueEdit.setDisable(frageboegen.getSelectionModel().getSelectedItem().getExportiertQuestorPro());
+								ctxMenueDelete.setDisable(frageboegen.getSelectionModel().getSelectedItem().getExportiertQuestorPro());
+								ctxMenueImport.setDisable(!frageboegen.getSelectionModel().getSelectedItem().getExportiertQuestorPro());
+							}
 
 							ctxMenueExportCore.setDisable(frageboegen.getSelectionModel().getSelectedItem().getBewertungen() == null
+									|| frageboegen.getSelectionModel().getSelectedItem().getBewertungen().size() == 0);
+
+							ctxMenueDeleteBewertung.setDisable(frageboegen.getSelectionModel().getSelectedItem().getBewertungen() == null
 									|| frageboegen.getSelectionModel().getSelectedItem().getBewertungen().size() == 0);
 
 						}
 
 					}
+				});
+
+				ctxMenueArchive.setOnAction(new SeCatEventHandle<ActionEvent>() {
+					private ObservableList<Fragebogen> tableData;
+
+					@Override
+					public void handleAction(ActionEvent t) {
+
+						fragebogenModel.toggleArchiviert(getSelectedFragebogen());
+						tableData = getFrageboegen();
+
+					}
+
+					@Override
+					public void updateUI() {
+						updateTable(tableData);
+					}
+
+				});
+
+				ctxMenueDeleteBewertung.setOnAction(new SeCatEventHandle<ActionEvent>() {
+					private ObservableList<Fragebogen> tableData;
+
+					@Override
+					public void handleAction(ActionEvent t) {
+
+						bewertungsModel.deleteBweertung(getSelectedFragebogen());
+						tableData = getFrageboegen();
+
+					}
+
+					@Override
+					public void updateUI() {
+						updateTable(tableData);
+					}
+
+				});
+
+				ctxMenueDelete.setOnAction(new SeCatEventHandle<ActionEvent>() {
+					private ObservableList<Fragebogen> tableData;
+
+					@Override
+					public void handleAction(ActionEvent t) {
+
+						fragebogenModel.deleteFragebogen(getSelectedFragebogen());
+						tableData = getFrageboegen();
+					}
+
+					@Override
+					public void updateUI() {
+						updateTable(tableData);
+					}
+
 				});
 
 				ctxMenueEdit.setOnAction(new SeCatEventHandle<ActionEvent>() {
@@ -296,20 +381,19 @@ public class FrageboegenController extends BaseController {
 
 					@Override
 					public void handleAction(ActionEvent t) {
-						stage = SpringFXMLLoader.getInstance().loadInNewScene(LayoutController.EDIT_FRAGEBOGEN_FXML);
 
 					}
 
 					@Override
 					public void updateUI() {
-
+						stage = SpringFXMLLoader.getInstance().loadInNewScene(LayoutController.EDIT_FRAGEBOGEN_FXML);
 						stage.show();
 					}
 
 				});
 
 				ctxMenueImport.setOnAction(new SeCatEventHandle<ActionEvent>() {
-
+					private ObservableList<Fragebogen> tableData;
 					private File file;
 
 					private int anzCVSRows = -1;
@@ -338,6 +422,7 @@ public class FrageboegenController extends BaseController {
 						if (file != null) {
 							anzCVSRows = bewertungsModel.importBewertungen(file);
 						}
+						tableData = getFrageboegen();
 						//
 
 						//
@@ -347,9 +432,12 @@ public class FrageboegenController extends BaseController {
 					@Override
 					public void updateUI() {
 						if (anzCVSRows != -1) {
-							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.import.title"))
-									.masthead(SeCatResourceBundle.getInstance().getString("scene.import.text") + " " + anzCVSRows).showInformation();
+
+							DialogHelper.showInformationDialog(SeCatResourceBundle.getInstance().getString("scene.import.title"), SeCatResourceBundle
+									.getInstance().getString("scene.import.text") + " " + anzCVSRows);
+
 						}
+						updateTable(tableData);
 					}
 
 				});
@@ -398,6 +486,8 @@ public class FrageboegenController extends BaseController {
 
 					private File file;
 
+					private ObservableList<Fragebogen> tableData;
+
 					@Override
 					public void performBeforeEventsBlocked(ActionEvent event) throws Exception {
 						FileChooser fileChooser = new FileChooser();
@@ -418,19 +508,31 @@ public class FrageboegenController extends BaseController {
 					@Override
 					public void handleAction(ActionEvent t) throws Exception {
 
-						if (file != null) {
-							fragebogenModel.exportQuestionarieToCore(frageboegen.getSelectionModel().getSelectedItem(), file);
-						}
+						try {
+							if (file != null) {
+								fragebogenModel.exportQuestionarieToCore(frageboegen.getSelectionModel().getSelectedItem(), file);
+							}
+						} catch (IllegalArgumentException iae) {
+							Platform.runLater(new Runnable() {
 
+								@Override
+								public void run() {
+
+									DialogHelper.showErrorDialog("scene.exportCore.error.title", "scene.exportCore.error.text", null);
+
+								}
+							});
+
+						}
 						// exportController.exportFragebogen(frageboegen.getSelectionModel().getSelectedItem(), file);
 
-						// tableData = getFrageboegen();
+						tableData = getFrageboegen();
 
 					}
 
 					@Override
 					public void updateUI() {
-						// updateTable(tableData);
+						updateTable(tableData);
 					}
 				});
 
@@ -461,7 +563,8 @@ public class FrageboegenController extends BaseController {
 	 */
 	private ObservableList<Fragebogen> getFrageboegen() {
 		return FXCollections.observableArrayList(fragebogenModel.getFragebogenFor(searchEigenschaft.getValue(), searchPerspektive.getValue(),
-				searchLehrveransteltung.getValue(), searchName.getText(), searchFromDate.getValue(), searchToDate.getValue(), searchSkala.getValue()));
+				searchLehrveransteltung.getValue(), searchName.getText(), searchFromDate.getValue(), searchToDate.getValue(), searchSkala.getValue(),
+				searchArchiviert.isSelected()));
 
 	}
 

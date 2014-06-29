@@ -47,7 +47,11 @@ public class Fragebogen extends BaseEntity {
 
 	private Date erstellungsDatum;
 
-	private Boolean exportiert;
+	private Boolean exportiertQuestorPro;
+
+	private Boolean exportiertCore;
+
+	private Boolean archiviert;
 
 	@ManyToOne(targetEntity = Skala.class, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SELECT)
@@ -151,12 +155,28 @@ public class Fragebogen extends BaseEntity {
 		this.erstellungsDatum = erstellungsDatum;
 	}
 
-	public Boolean getExportiert() {
-		return exportiert;
+	public Boolean getExportiertQuestorPro() {
+		return exportiertQuestorPro;
 	}
 
-	public void setExportiert(Boolean exportiert) {
-		this.exportiert = exportiert;
+	public void setExportiertQuestorPro(Boolean exportiert) {
+		this.exportiertQuestorPro = exportiert;
+	}
+
+	public Boolean getExportiertCore() {
+		return exportiertCore;
+	}
+
+	public void setExportiertCore(Boolean exportiertCore) {
+		this.exportiertCore = exportiertCore;
+	}
+
+	public Boolean getArchiviert() {
+		return archiviert;
+	}
+
+	public void setArchiviert(Boolean archiviert) {
+		this.archiviert = archiviert;
 	}
 
 }

@@ -20,6 +20,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import de.hscoburg.evelin.secat.dao.BewertungDAO;
+import de.hscoburg.evelin.secat.dao.EinstellungDAO;
 import de.hscoburg.evelin.secat.dao.FrageDAO;
 import de.hscoburg.evelin.secat.dao.Frage_FragebogenDAO;
 import de.hscoburg.evelin.secat.dao.FragebogenDAO;
@@ -27,6 +29,7 @@ import de.hscoburg.evelin.secat.dao.ItemDAO;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Bewertung;
 import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
+import de.hscoburg.evelin.secat.dao.entity.Einstellung;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.dao.entity.Frage;
 import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
@@ -36,16 +39,20 @@ import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
+import de.hscoburg.evelin.secat.dao.entity.base.EinstellungenType;
 import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
 import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 import de.hscoburg.evelin.secat.exchange.dto.AreaType;
 import de.hscoburg.evelin.secat.exchange.dto.ChoiceType;
 import de.hscoburg.evelin.secat.exchange.dto.ChoicesType;
 import de.hscoburg.evelin.secat.exchange.dto.CourseType;
+import de.hscoburg.evelin.secat.exchange.dto.DiscreteQuestionScaleType;
 import de.hscoburg.evelin.secat.exchange.dto.EvaluationType;
 import de.hscoburg.evelin.secat.exchange.dto.EvaluationsType;
+import de.hscoburg.evelin.secat.exchange.dto.FreeQuestionScaleType;
 import de.hscoburg.evelin.secat.exchange.dto.ItemType;
 import de.hscoburg.evelin.secat.exchange.dto.ItemsType;
+import de.hscoburg.evelin.secat.exchange.dto.MCQuestionScaleType;
 import de.hscoburg.evelin.secat.exchange.dto.ObjectFactory;
 import de.hscoburg.evelin.secat.exchange.dto.PerspectiveType;
 import de.hscoburg.evelin.secat.exchange.dto.PerspectivesType;
@@ -80,16 +87,36 @@ public class FragebogenModel {
 	private FragebogenDAO fragebogenDAO;
 	@Autowired
 	private FrageDAO frageDAO;
+
 	@Autowired
-	private HandlungsfeldModel handlungsfeldModel;
+	private BewertungDAO bewertungsDAO;
 
 	@Autowired
 	private ItemDAO itemDAO;
 
 	@Autowired
+	private EinstellungDAO einstellungDAO;
+
+	@Autowired
 	private Frage_FragebogenDAO frageFragebogenDAO;
 
 	private ObjectFactory xmlFactory = new ObjectFactory();
+
+	/**
+	 * Erzeugt eine ID mit dem Standort als Prefix
+	 * 
+	 * @param id
+	 * @return
+	 */
+	private String getIDWithStandort(int id) {
+		Einstellung e = einstellungDAO.findByName(EinstellungenType.STANDORT);
+
+		if (e == null || "".equals(e.getWert())) {
+			throw new IllegalArgumentException();
+		}
+
+		return e.getWert() + "-" + id;
+	}
 
 	/**
 	 * Gibt alle Frageboegen die den Uebergabeparametern entsprechen zurueck, werden bei null ignoriert.
@@ -110,11 +137,12 @@ public class FragebogenModel {
 	 *            - Die zu suchende {@link Skala}
 	 * @return Eine {@link List} mit allen {@link Fragebogen}
 	 */
-	public List<Fragebogen> getFragebogenFor(Eigenschaft e, Perspektive p, Lehrveranstaltung l, String name, LocalDate von, LocalDate bis, Skala s) {
+	public List<Fragebogen> getFragebogenFor(Eigenschaft e, Perspektive p, Lehrveranstaltung l, String name, LocalDate von, LocalDate bis, Skala s,
+			boolean archiviert) {
 		Date vonDate = von != null ? Date.from(von.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()) : null;
 		Date bisDate = bis != null ? Date.from(bis.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant()) : null;
 
-		return fragebogenDAO.getFrageboegenFor(e, p, l, name, vonDate, bisDate, s);
+		return fragebogenDAO.getFrageboegenFor(e, p, l, name, vonDate, bisDate, s, archiviert);
 	}
 
 	/**
@@ -131,6 +159,29 @@ public class FragebogenModel {
 		return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 	}
 
+	public void deleteFragebogen(Fragebogen f) {
+		f = fragebogenDAO.findById(f.getId());
+
+		if (f.getExportiertQuestorPro() != null && f.getExportiertQuestorPro()) {
+			throw new IllegalArgumentException("already exported");
+		}
+
+		for (Item i : f.getItems() != null ? f.getItems() : new ArrayList<Item>()) {
+			i.getFrageboegen().remove(f);
+
+			itemDAO.merge(i);
+		}
+
+		for (Bewertung b : f.getBewertungen() != null ? f.getBewertungen() : new ArrayList<Bewertung>()) {
+			bewertungsDAO.remove(b);
+		}
+		for (Frage_Fragebogen ff : f.getFrageFragebogen() != null ? f.getFrageFragebogen() : new ArrayList<Frage_Fragebogen>()) {
+			frageFragebogenDAO.remove(ff);
+		}
+		fragebogenDAO.remove(f);
+
+	}
+
 	/**
 	 * Erzeugt ein XML des {@link Fragebogen}s fuer den export zu CORE.
 	 * 
@@ -142,9 +193,11 @@ public class FragebogenModel {
 	public String exportQuestionarieToCore(Fragebogen f, File file) throws Exception {
 		f = fragebogenDAO.findById(f.getId());
 
+		f.setExportiertCore(true);
+		fragebogenDAO.merge(f);
 		Questionarie q = xmlFactory.createQuestionarie();
 
-		q.setId(f.getId());
+		q.setId(getIDWithStandort(f.getId()));
 
 		q.setCreationDate(createXMLGregorienDate(f.getErstellungsDatum()));
 		q.setScale(createScaleType(f.getSkala()));
@@ -180,7 +233,7 @@ public class FragebogenModel {
 
 		for (Item i : items) {
 			ItemType it = xmlFactory.createItemType();
-			it.setId(i.getId());
+			it.setId(getIDWithStandort(i.getId()));
 			it.setName(i.getName());
 			it.setQuestion(i.getFrage());
 
@@ -213,7 +266,7 @@ public class FragebogenModel {
 	 */
 	private AreaType createArea(Bereich b) {
 		AreaType a = xmlFactory.createAreaType();
-		a.setId(b.getId());
+		a.setId(getIDWithStandort(b.getId()));
 		a.setName(b.getName());
 		a.setSphereActivity(createSphereActivity(b.getHandlungsfeld()));
 		return a;
@@ -228,7 +281,7 @@ public class FragebogenModel {
 	 */
 	private SphereActivityType createSphereActivity(Handlungsfeld h) {
 		SphereActivityType sphere = xmlFactory.createSphereActivityType();
-		sphere.setId(h.getId());
+		sphere.setId(getIDWithStandort(h.getId()));
 		sphere.setName(h.getName());
 		return sphere;
 	}
@@ -246,7 +299,7 @@ public class FragebogenModel {
 
 		for (Frage_Fragebogen f : fragen) {
 			QuestionType q = xmlFactory.createQuestionType();
-			q.setId(f.getFrage().getId());
+			q.setId(getIDWithStandort(f.getFrage().getId()));
 			q.setName(f.getFrage().getName());
 			q.setText(f.getFrage().getText());
 			q.setScale(createScaleType(f.getFrage().getSkala()));
@@ -279,7 +332,7 @@ public class FragebogenModel {
 
 		for (Bewertung f : bewertungen) {
 			EvaluationType q = xmlFactory.createEvaluationType();
-			q.setId(f.getId());
+			q.setId(getIDWithStandort(f.getId()));
 			q.setRawid(f.getZeilenid());
 			q.setSource(f.getQuelle());
 			q.setValue(f.getWert());
@@ -305,7 +358,7 @@ public class FragebogenModel {
 	@SuppressWarnings("deprecation")
 	private CourseType createCourseType(Lehrveranstaltung l) throws Exception {
 		CourseType st = xmlFactory.createCourseType();
-		st.setId(l.getId());
+		st.setId(getIDWithStandort(l.getId()));
 		st.setInstructor(l.getDozent());
 
 		if (l.getSemester().equals(de.hscoburg.evelin.secat.dao.entity.base.SemesterType.SS)) {
@@ -330,8 +383,9 @@ public class FragebogenModel {
 	 */
 	private SubjectType createSubject(Fach l) throws Exception {
 		SubjectType st = xmlFactory.createSubjectType();
-		st.setId(l.getId());
+		st.setId(getIDWithStandort(l.getId()));
 		st.setName(l.getName());
+		st.setLocation(einstellungDAO.findByName(EinstellungenType.STANDORT).getWert());
 
 		return st;
 	}
@@ -361,7 +415,7 @@ public class FragebogenModel {
 	 */
 	private PerspectiveType createPerspectiveType(Perspektive e) {
 		PerspectiveType st = xmlFactory.createPerspectiveType();
-		st.setId(e.getId());
+		st.setId(getIDWithStandort(e.getId()));
 		st.setName(e.getName());
 
 		return st;
@@ -392,7 +446,7 @@ public class FragebogenModel {
 	 */
 	private PropertyType createPropertieType(Eigenschaft e) {
 		PropertyType st = xmlFactory.createPropertyType();
-		st.setId(e.getId());
+		st.setId(getIDWithStandort(e.getId()));
 		st.setName(e.getName());
 
 		return st;
@@ -406,35 +460,47 @@ public class FragebogenModel {
 	 * @return Das erzeugte {@link ScaleType}-Object.
 	 */
 	private ScaleType createScaleType(Skala s) {
-		ScaleType st = xmlFactory.createScaleType();
-		st.setId(s.getId());
-		st.setMaxText(s.getMaxText());
-		st.setMinText(s.getMinText());
-		st.setName(s.getName());
-		st.setOptimum(s.getOptimum());
-		st.setOtherAnswer(s.getAndereAntwort());
-		st.setRefuseAnswer(s.getVerweigerungsAntwort());
-		st.setRows(s.getZeilen());
-		st.setSteps(s.getSchritte());
-		st.setWeight(s.getSchrittWeite());
+
+		ScaleType st = null;
 
 		if (s.getType().equals(SkalaType.FREE)) {
-			st.setType(ScaleTypeType.FREE);
+
+			FreeQuestionScaleType st1 = xmlFactory.createFreeQuestionScaleType();
+			st1.setRows(s.getZeilen());
+			st1.setType(ScaleTypeType.FREE);
+			st = st1;
 		} else if (s.getType().equals(SkalaType.MC)) {
-			st.setType(ScaleTypeType.MC);
+			MCQuestionScaleType st1 = xmlFactory.createMCQuestionScaleType();
+			st1.setType(ScaleTypeType.MC);
+			st1.setWeight(s.getSchrittWeite());
+			st1.setOtherAnswer(s.getAndereAntwort());
+			st1.setRefuseAnswer(s.getVerweigerungsAntwort());
+
 			ChoicesType t1 = xmlFactory.createChoicesType();
 			int i = 1;
 			for (String value : s.getAuswahl()) {
 				ChoiceType t = xmlFactory.createChoiceType();
-				t.setId(i++);
+				t.setId(getIDWithStandort(i++));
 				t.setName(value);
 				t1.getChoice().add(t);
 			}
-			st.setChoices(t1);
+			st1.setChoices(t1);
+			st = st1;
 
 		} else if (s.getType().equals(SkalaType.DISCRET)) {
-			st.setType(ScaleTypeType.DISCRETE);
+			DiscreteQuestionScaleType st1 = xmlFactory.createDiscreteQuestionScaleType();
+			st1.setType(ScaleTypeType.DISCRETE);
+			st1.setMaxText(s.getMaxText());
+			st1.setMinText(s.getMinText());
+			st1.setSteps(s.getSchritte());
+			st1.setOptimum(s.getOptimum());
+
+			st1.setWeight(s.getSchrittWeite());
+			st = st1;
 		}
+
+		st.setId(getIDWithStandort(s.getId()));
+		st.setName(s.getName());
 
 		return st;
 	}
@@ -511,7 +577,7 @@ public class FragebogenModel {
 
 		// block.addChild(ftf);
 
-		f.setExportiert(true);
+		f.setExportiertQuestorPro(true);
 		fragebogenDAO.merge(f);
 
 		return fXML.generateXML();
@@ -580,7 +646,9 @@ public class FragebogenModel {
 		f.setEigenschaft(e);
 		f.setSkala(s);
 		f.setLehrveranstaltung(l);
-		f.setExportiert(false);
+		f.setExportiertQuestorPro(false);
+		f.setExportiertCore(false);
+		f.setArchiviert(false);
 		f.setErstellungsDatum(new Date());
 
 		fragebogenDAO.merge(f);
@@ -610,7 +678,7 @@ public class FragebogenModel {
 		edit.setEigenschaft(e);
 		edit.setSkala(s);
 		edit.setLehrveranstaltung(l);
-		edit.setExportiert(false);
+		edit.setExportiertQuestorPro(false);
 		edit.setErstellungsDatum(new Date());
 
 		ArrayList<Frage> fragenExist = new ArrayList<Frage>();
@@ -673,6 +741,14 @@ public class FragebogenModel {
 
 		}
 
+	}
+
+	public void toggleArchiviert(Fragebogen f) {
+		f = fragebogenDAO.findById(f.getId());
+		if (f.getArchiviert() == null) {
+			f.setArchiviert(true);
+		}
+		f.setArchiviert(!f.getArchiviert());
 	}
 
 }

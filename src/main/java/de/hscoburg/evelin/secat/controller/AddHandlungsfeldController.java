@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -13,15 +12,14 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
+import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
-import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class AddHandlungsfeldController extends BaseController {
@@ -68,8 +66,7 @@ public class AddHandlungsfeldController extends BaseController {
 
 						@Override
 						public void run() {
-							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.input.error.title"))
-									.masthead(SeCatResourceBundle.getInstance().getString("scene.input.error.txt")).showError();
+							DialogHelper.showInputErrorDialog();
 
 						}
 					});
