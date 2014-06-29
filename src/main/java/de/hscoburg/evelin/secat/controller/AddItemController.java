@@ -22,7 +22,6 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -36,6 +35,7 @@ import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
 import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
+import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
@@ -142,7 +142,6 @@ public class AddItemController extends BaseController {
 			}
 		});
 
-
 		reloadGUI();
 
 		save.setOnAction(new SeCatEventHandle<ActionEvent>() {
@@ -154,7 +153,7 @@ public class AddItemController extends BaseController {
 						throw new IllegalArgumentException();
 					}
 					if (editMode == false) {
-					handlungsfeldModel.persistItem(createItem());
+						handlungsfeldModel.persistItem(createItem());
 					} else {
 
 						editItem.setName(name.getText());
@@ -169,21 +168,19 @@ public class AddItemController extends BaseController {
 							editItem.setEigenschaften(eigenschaftList.getSelectionModel().getSelectedItems());
 						}
 						handlungsfeldModel.mergeItem(editItem);
-						
+
 					}
-				}
-				catch (IllegalArgumentException iae) {
+				} catch (IllegalArgumentException iae) {
 					Platform.runLater(new Runnable() {
 
 						@Override
 						public void run() {
-							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.input.error.title"))
-									.masthead(SeCatResourceBundle.getInstance().getString("scene.input.error.txt")).showError();
+							DialogHelper.showInputErrorDialog();
 
 						}
 					});
 				}
-				
+
 			}
 
 			@Override
@@ -192,7 +189,7 @@ public class AddItemController extends BaseController {
 				treeTableController.updateHandlungsfeld(indexHandlungsfeld, indexBereich);
 
 			}
-			
+
 		});
 
 		chooseTemplate.setOnAction(new SeCatEventHandle<ActionEvent>() {
@@ -243,6 +240,7 @@ public class AddItemController extends BaseController {
 			public void handleAction(ActionEvent event) throws Exception {
 
 			}
+
 			@Override
 			public void updateUI() {
 				Stage stage = (Stage) cancle.getScene().getWindow();
@@ -251,7 +249,6 @@ public class AddItemController extends BaseController {
 
 		});
 	}
-
 
 	private Item createItem() {
 

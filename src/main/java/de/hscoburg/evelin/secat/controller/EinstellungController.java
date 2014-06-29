@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
-import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -18,8 +17,8 @@ import de.hscoburg.evelin.secat.dao.entity.Einstellung;
 import de.hscoburg.evelin.secat.dao.entity.base.EinstellungenType;
 import de.hscoburg.evelin.secat.model.EinstellungModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
+import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
-import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 @Controller
 public class EinstellungController extends BaseController {
@@ -51,8 +50,7 @@ public class EinstellungController extends BaseController {
 
 						@Override
 						public void run() {
-							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.input.error.title"))
-									.masthead(SeCatResourceBundle.getInstance().getString("scene.input.error.txt")).showError();
+							DialogHelper.showInputErrorDialog();
 
 						}
 					});

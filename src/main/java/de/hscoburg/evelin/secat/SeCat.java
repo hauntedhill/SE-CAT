@@ -14,11 +14,8 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-
-import org.controlsfx.dialog.Dialogs;
-
 import de.hscoburg.evelin.secat.controller.base.LayoutController;
-import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
+import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
 /**
@@ -98,9 +95,7 @@ public class SeCat extends Application {
 							} catch (Exception e) {
 								splashStage.hide();
 								splashStage.close();
-								Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.error.title"))
-										.masthead(SeCatResourceBundle.getInstance().getString("scene.error.text")).showException(e);
-
+								DialogHelper.showGeneralErrorDialog(e);
 							}
 
 						}
@@ -109,7 +104,7 @@ public class SeCat extends Application {
 				}
 			}).start();
 		} catch (Exception e) {
-			e.printStackTrace();
+			DialogHelper.showGeneralErrorDialog(e);
 		}
 	}
 

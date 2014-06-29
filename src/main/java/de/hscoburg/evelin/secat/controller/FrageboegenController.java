@@ -32,7 +32,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
-import org.controlsfx.dialog.Dialogs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -52,6 +51,7 @@ import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.ColumnHelper;
 import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
+import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 import de.hscoburg.evelin.secat.util.javafx.TableCellAction;
@@ -432,8 +432,10 @@ public class FrageboegenController extends BaseController {
 					@Override
 					public void updateUI() {
 						if (anzCVSRows != -1) {
-							Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.import.title"))
-									.masthead(SeCatResourceBundle.getInstance().getString("scene.import.text") + " " + anzCVSRows).showInformation();
+
+							DialogHelper.showInformationDialog(SeCatResourceBundle.getInstance().getString("scene.import.title"), SeCatResourceBundle
+									.getInstance().getString("scene.import.text") + " " + anzCVSRows);
+
 						}
 						updateTable(tableData);
 					}
@@ -515,8 +517,9 @@ public class FrageboegenController extends BaseController {
 
 								@Override
 								public void run() {
-									Dialogs.create().title(SeCatResourceBundle.getInstance().getString("scene.exportCore.error.title"))
-											.masthead(SeCatResourceBundle.getInstance().getString("scene.exportCore.error.text") + " ").showError();
+
+									DialogHelper.showErrorDialog("scene.exportCore.error.title", "scene.exportCore.error.text", null);
+
 								}
 							});
 
