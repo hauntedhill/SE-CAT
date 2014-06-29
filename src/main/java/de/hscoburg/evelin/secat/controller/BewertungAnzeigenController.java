@@ -239,7 +239,6 @@ public class BewertungAnzeigenController extends BaseController {
 					@Override
 					public void updateUI() {
 						tableView.getSelectionModel().getSelectedItem().setOutlier(true);
-						EvaluationHelper eh = tableView.getSelectionModel().getSelectedItem();
 						tableView.getItems().clear();
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
 						tableView.setItems(allEvaluationHelper);
@@ -268,7 +267,6 @@ public class BewertungAnzeigenController extends BaseController {
 					@Override
 					public void updateUI() {
 						tableView.getSelectionModel().getSelectedItem().setOutlier(true);
-						EvaluationHelper eh = tableView.getSelectionModel().getSelectedItem();
 						tableView.getItems().clear();
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
 						tableView.setItems(allEvaluationHelper);
@@ -297,7 +295,6 @@ public class BewertungAnzeigenController extends BaseController {
 					@Override
 					public void updateUI() {
 						tableView.getSelectionModel().getSelectedItem().setOutlier(true);
-						EvaluationHelper eh = tableView.getSelectionModel().getSelectedItem();
 						tableView.getItems().clear();
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
 						tableView.setItems(allEvaluationHelper);
@@ -717,10 +714,9 @@ public class BewertungAnzeigenController extends BaseController {
 			}
 
 		});
-
 		ObservableList<Fragebogen> frageboegen = FXCollections.observableArrayList();
 		for (Fragebogen fr : fragebogenModel.getFragebogenFor(null, null, null, null, null, null, null, false)) {
-			if (!fragebogen.equals(fr)) {
+			if (!fragebogen.equals(fr) && !fr.getBewertungen().isEmpty() && fr.getBewertungen() != null) {
 				frageboegen.add(fr);
 			}
 		}
@@ -830,9 +826,11 @@ public class BewertungAnzeigenController extends BaseController {
 
 			ArrayList<Double> values = getAverageDataPerStudent(ehList);
 
-			defaultcategorydataset.addValue(values.get(allEvaluationHelper.indexOf(eh)),
+			defaultcategorydataset.addValue(
+					values.get(allEvaluationHelper.indexOf(eh)),
 					SeCatResourceBundle.getInstance().getString("scene.chart.studentincrease"),
-					eh.getRawId() + " Value: " + doubleFormat.format(values.get(allEvaluationHelper.indexOf(eh))));
+					eh.getRawId() + " " + SeCatResourceBundle.getInstance().getString("scene.chart.all.value.lable") + ": "
+							+ doubleFormat.format(values.get(allEvaluationHelper.indexOf(eh))));
 		}
 
 		RadarChart rc = new RadarChart(defaultcategorydataset, fragebogen.getSkala().getSchritte());
@@ -1027,8 +1025,11 @@ public class BewertungAnzeigenController extends BaseController {
 	public DefaultCategoryDataset getAverageDataSetForBereich() {
 		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
 		for (int i = 0; i < bereiche.size(); i++) {
-			defaultcategorydataset.addValue(avValueBereich[i], SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), bereiche.get(i)
-					.getName() + " Value: " + doubleFormat.format(avValueBereich[i]));
+			defaultcategorydataset.addValue(
+					avValueBereich[i],
+					SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"),
+					bereiche.get(i).getName() + " " + SeCatResourceBundle.getInstance().getString("scene.chart.all.value.lable") + ":"
+							+ doubleFormat.format(avValueBereich[i]));
 		}
 		return defaultcategorydataset;
 	}
@@ -1239,8 +1240,7 @@ public class BewertungAnzeigenController extends BaseController {
 		for (Bereich bereich : bereicheToCompare) {
 			if (hfListToCompare.isEmpty() || !hfListToCompare.contains(bereich.getHandlungsfeld())) {
 				hfListToCompare.add(bereich.getHandlungsfeld());
-				defaultcategorydataset.addValue(values[bereicheToCompare.indexOf(bereich)],
-						SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), bereich.getHandlungsfeld().getName());
+				defaultcategorydataset.addValue(values[bereicheToCompare.indexOf(bereich)], name, bereich.getHandlungsfeld().getName());
 			}
 		}
 
@@ -1289,9 +1289,11 @@ public class BewertungAnzeigenController extends BaseController {
 
 			ArrayList<Double> values = getAverageDataPerStudent(ehList);
 
-			defaultcategorydataset.addValue(values.get(allEvaluationHelper.indexOf(eh)),
+			defaultcategorydataset.addValue(
+					values.get(allEvaluationHelper.indexOf(eh)),
 					SeCatResourceBundle.getInstance().getString("scene.chart.studentincrease"),
-					eh.getRawId() + " Value: " + doubleFormat.format(values.get(allEvaluationHelper.indexOf(eh))));
+					eh.getRawId() + " " + SeCatResourceBundle.getInstance().getString("scene.chart.all.value.lable") + ": "
+							+ doubleFormat.format(values.get(allEvaluationHelper.indexOf(eh))));
 		}
 
 		JFreeChart chart = ChartFactory.createBarChart(fragebogen.getName(), SeCatResourceBundle.getInstance().getString("scene.chart.studentincrease"), "",

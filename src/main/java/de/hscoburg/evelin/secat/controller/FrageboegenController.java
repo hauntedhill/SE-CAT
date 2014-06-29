@@ -380,13 +380,12 @@ public class FrageboegenController extends BaseController {
 
 					@Override
 					public void handleAction(ActionEvent t) {
-						stage = SpringFXMLLoader.getInstance().loadInNewScene(LayoutController.EDIT_FRAGEBOGEN_FXML);
 
 					}
 
 					@Override
 					public void updateUI() {
-
+						stage = SpringFXMLLoader.getInstance().loadInNewScene(LayoutController.EDIT_FRAGEBOGEN_FXML);
 						stage.show();
 					}
 
