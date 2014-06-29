@@ -61,7 +61,11 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 								Platform.runLater(new Runnable() {
 									@Override
 									public void run() {
-										updateUI();
+										try {
+											updateUI();
+										} catch (Exception e) {
+											showErrorDialog(e);
+										}
 										s.removeEventFilter(javafx.scene.input.InputEvent.ANY, handler);
 
 										// TODO: fix exception handling
