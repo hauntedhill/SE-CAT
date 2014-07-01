@@ -6,8 +6,10 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import de.hscoburg.evelin.secat.SeCat;
+import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
 /**
@@ -86,6 +88,17 @@ public abstract class BaseController implements Initializable {
 
 		});
 
+	}
+
+	public void setGlobalKeyAction(SeCatEventHandle<KeyEvent> event) {
+		currentStage.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new SeCatEventHandle<KeyEvent>() {
+
+			@Override
+			public void handleAction(KeyEvent event) throws Exception {
+				// TODO Auto-generated method stub
+
+			}
+		});
 	}
 
 }

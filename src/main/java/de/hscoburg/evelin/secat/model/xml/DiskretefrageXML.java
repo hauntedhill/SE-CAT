@@ -54,7 +54,7 @@ public class DiskretefrageXML extends BaseXML {
 	public void getStartXML(StringBuilder builder) {
 
 		builder.append("<SCALEDQUESTION PLACE=\"" + place + "\" MINTEXT=\"" + XML_ESCAPER.translate(minText) + "\" ZWANG=\"false\" WEIGHT=\"" + weight
-				+ "\" STEPS=\"" + steps + "\" TUTOR=\"false\" MAXTEXT=\"" + XML_ESCAPER.translate(maxText) + "\" OPTIMUM=\"" + optimum + "\" TEXT=\""
+				+ "\" STEPS=\"" + steps + "\" TUTOR=\"false\" MAXTEXT=\"" + XML_ESCAPER.translate(maxText) + "\" OPTIMUM=\"1\" TEXT=\""
 				+ XML_ESCAPER.translate(frage) + "\">\n");
 
 		builder.append("<META KEY=\"METAKEY_MARKING_SIZE\" VALUE=\"0.25\"/>\n");

@@ -110,7 +110,7 @@ public class EigenschaftenController extends BaseController {
 			public void updateUI() {
 				loadList();
 			}
-		}, buttonAdd);
+		}, buttonAdd, true);
 
 	}
 

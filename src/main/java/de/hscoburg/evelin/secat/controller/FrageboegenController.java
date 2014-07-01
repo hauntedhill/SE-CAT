@@ -195,7 +195,7 @@ public class FrageboegenController extends BaseController {
 			public void updateUI() {
 				updateTable(result);
 			}
-		}, search);
+		}, search, true);
 
 		ColumnHelper.setTableColumnCellFactory(frageboegen.getColumns().get(0), new TableCellAction<Fragebogen, String>() {
 

@@ -377,7 +377,7 @@ public class SkalenController extends BaseController {
 			}
 		});
 
-		buttonAdd.setOnAction(new SeCatEventHandle<ActionEvent>() {
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
@@ -403,25 +403,54 @@ public class SkalenController extends BaseController {
 			public void updateUI() {
 				loadList();
 			}
-		});
+		}, buttonAdd, true);
 
-		buttonAdd.setOnKeyPressed(new SeCatEventHandle<Event>() {
-
-			@Override
-			public void handleAction(Event event) {
-				if (((KeyEvent) event).getCode() == KeyCode.ENTER)
-
-				{
-					buttonAdd.fire();
-				}
-
-			}
-
-			@Override
-			public void updateUI() {
-				loadList();
-			}
-		});
+		// buttonAdd.setOnAction(new SeCatEventHandle<ActionEvent>() {
+		//
+		// @Override
+		// public void handleAction(ActionEvent event) throws Exception {
+		//
+		// try {
+		//
+		// skalenModel.saveSkala(freeQuestion.isSelected() ? SkalaType.FREE : discretQuestion.isSelected() ? SkalaType.DISCRET :
+		// SkalaType.MC,
+		// textNameSkalen.getText(), textZeilen.getText(), textSchritte.getText(), textSchrittweite.getText(), textMinimal.getText(),
+		// textMaximal.getText(), textOptimum.getText(), listKeys.getItems(), textSchrittweiteMC.getText(), textStandardAntwort.getText(),
+		// textRefuse.getText());
+		// } catch (NumberFormatException nfe) {
+		// Platform.runLater(new Runnable() {
+		//
+		// @Override
+		// public void run() {
+		// DialogHelper.showInputErrorDialog();
+		// }
+		// });
+		// }
+		// }
+		//
+		// @Override
+		// public void updateUI() {
+		// loadList();
+		// }
+		// });
+		//
+		// buttonAdd.setOnKeyPressed(new SeCatEventHandle<Event>() {
+		//
+		// @Override
+		// public void handleAction(Event event) {
+		// if (((KeyEvent) event).getCode() == KeyCode.ENTER)
+		//
+		// {
+		// buttonAdd.fire();
+		// }
+		//
+		// }
+		//
+		// @Override
+		// public void updateUI() {
+		// loadList();
+		// }
+		// });
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
@@ -432,7 +461,9 @@ public class SkalenController extends BaseController {
 
 			@Override
 			public void updateUI() {
-				listKeys.getItems().add(textKey.getText());
+				if (!"".equals(textKey.getText()) && textKey.getText() != null) {
+					listKeys.getItems().add(textKey.getText());
+				}
 			}
 		}, add);
 

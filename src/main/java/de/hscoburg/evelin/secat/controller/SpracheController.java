@@ -90,7 +90,7 @@ public class SpracheController extends BaseController {
 				layout.setCenterNode(guiNode);
 				layout.setTop(guiMenuNode);
 			}
-		}, buttonWaehlen);
+		}, buttonWaehlen, true);
 
 		boxSprachen.setConverter(ConverterHelper.getConverterForLocale());
 

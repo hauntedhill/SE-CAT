@@ -122,7 +122,7 @@ public class FragenController extends BaseController {
 			public void updateUI() {
 				loadTable();
 			}
-		}, buttonAdd);
+		}, buttonAdd, true);
 
 		loadTable();
 

@@ -59,7 +59,7 @@ public class EinstellungController extends BaseController {
 
 			}
 
-		}, buttonSetzen);
+		}, buttonSetzen, true);
 
 	}
 

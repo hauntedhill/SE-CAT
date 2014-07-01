@@ -153,7 +153,7 @@ public class LehrveranstaltungController extends BaseController {
 			public void updateUI() {
 				loadList();
 			}
-		}, buttonAdd);
+		}, buttonAdd, true);
 
 	}
 
