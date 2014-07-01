@@ -6,12 +6,14 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
+import javafx.scene.input.MouseButton;
 import javafx.util.Callback;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +24,9 @@ import de.hscoburg.evelin.secat.dao.entity.Eigenschaft;
 import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
+import de.hscoburg.evelin.secat.util.javafx.EditableCell;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
+import de.hscoburg.evelin.secat.util.javafx.ValueTypeHandler;
 
 /**
  * Controller fuer die Anzeige der Eigenschaften
@@ -62,26 +66,6 @@ public class EigenschaftenController extends BaseController {
 
 		loadList();
 		textNameEigenschaften.requestFocus();
-		listEigenschaften.setCellFactory(new Callback<ListView<Eigenschaft>, ListCell<Eigenschaft>>() {
-
-			@Override
-			public ListCell<Eigenschaft> call(ListView<Eigenschaft> p) {
-
-				ListCell<Eigenschaft> cell = new ListCell<Eigenschaft>() {
-
-					@Override
-					protected void updateItem(Eigenschaft t, boolean bln) {
-						super.updateItem(t, bln);
-						if (t != null) {
-							setText(t.getName());
-						}
-					}
-
-				};
-
-				return cell;
-			}
-		});
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
@@ -111,6 +95,67 @@ public class EigenschaftenController extends BaseController {
 				loadList();
 			}
 		}, buttonAdd, true);
+
+		listEigenschaften.setCellFactory(new Callback<ListView<Eigenschaft>, ListCell<Eigenschaft>>() {
+
+			@Override
+			public ListCell<Eigenschaft> call(ListView<Eigenschaft> p) {
+
+				return new EditableCell<Eigenschaft>(new ValueTypeHandler<Eigenschaft>() {
+
+					@Override
+					public Eigenschaft merge(Eigenschaft value, String newValue) {
+						value.setName(newValue);
+						return value;
+					}
+
+					@Override
+					public String getText(Eigenschaft value) {
+
+						if (value != null) {
+							return value.getName();
+						} else {
+							return "";
+						}
+					}
+
+					@Override
+					public boolean update(Eigenschaft value) {
+						try {
+
+							eigenschaftenModel.updateEigenschaft(value);
+							return true;
+
+						} catch (IllegalArgumentException iae) {
+
+						}
+						return false;
+					}
+
+					@Override
+					public boolean isLocked(Eigenschaft value) {
+
+						return eigenschaftenModel.isLocked(value);
+					}
+				});
+			}
+		});
+
+		listEigenschaften.setEditable(true);
+
+		listEigenschaften.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+
+			@Override
+			public void handle(javafx.scene.input.MouseEvent event) {
+				if (event.getButton().equals(MouseButton.PRIMARY)) {
+					if (event.getClickCount() == 2) {
+
+						listEigenschaften.edit(listEigenschaften.getSelectionModel().getSelectedIndex());
+					}
+				}
+
+			}
+		});
 
 	}
 
