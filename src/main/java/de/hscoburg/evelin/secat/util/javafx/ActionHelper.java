@@ -4,8 +4,10 @@ import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
+import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseButton;
 
 /**
  * Klasse zum setzen einer Action auf einen entsprechenden ActionListener
@@ -61,6 +63,24 @@ public class ActionHelper {
 				}
 			});
 		}
+	}
+
+	public static void setEditFor(final ListView<?> view) {
+		view.setEditable(true);
+
+		view.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
+
+			@Override
+			public void handle(javafx.scene.input.MouseEvent event) {
+				if (event.getButton().equals(MouseButton.PRIMARY)) {
+					if (event.getClickCount() == 2) {
+
+						view.edit(view.getSelectionModel().getSelectedIndex());
+					}
+				}
+
+			}
+		});
 	}
 
 }

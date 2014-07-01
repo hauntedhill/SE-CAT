@@ -22,7 +22,9 @@ import de.hscoburg.evelin.secat.dao.entity.Fach;
 import de.hscoburg.evelin.secat.model.FachModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
+import de.hscoburg.evelin.secat.util.javafx.EditableCell;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
+import de.hscoburg.evelin.secat.util.javafx.ValueTypeHandler;
 
 /**
  * Controller zur Anzeige der Faecher
@@ -62,26 +64,6 @@ public class FachController extends BaseController {
 
 		loadList();
 		textNameFach.requestFocus();
-		listFach.setCellFactory(new Callback<ListView<Fach>, ListCell<Fach>>() {
-
-			@Override
-			public ListCell<Fach> call(ListView<Fach> p) {
-
-				ListCell<Fach> cell = new ListCell<Fach>() {
-
-					@Override
-					protected void updateItem(Fach t, boolean bln) {
-						super.updateItem(t, bln);
-						if (t != null) {
-							setText(t.getName());
-						}
-					}
-
-				};
-
-				return cell;
-			}
-		});
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
@@ -108,6 +90,53 @@ public class FachController extends BaseController {
 				loadList();
 			}
 		}, buttonAdd, true);
+
+		listFach.setCellFactory(new Callback<ListView<Fach>, ListCell<Fach>>() {
+
+			@Override
+			public ListCell<Fach> call(ListView<Fach> p) {
+
+				return new EditableCell<Fach>(new ValueTypeHandler<Fach>() {
+
+					@Override
+					public Fach merge(Fach value, String newValue) {
+						value.setName(newValue);
+						return value;
+					}
+
+					@Override
+					public String getText(Fach value) {
+
+						if (value != null) {
+							return value.getName();
+						} else {
+							return "";
+						}
+					}
+
+					@Override
+					public boolean update(Fach value) {
+						try {
+
+							fachModel.updateFach(value);
+							return true;
+
+						} catch (IllegalArgumentException iae) {
+
+						}
+						return false;
+					}
+
+					@Override
+					public boolean isLocked(Fach value) {
+
+						return fachModel.isLocked(value);
+					}
+				});
+			}
+		});
+
+		ActionHelper.setEditFor(listFach);
 
 	}
 

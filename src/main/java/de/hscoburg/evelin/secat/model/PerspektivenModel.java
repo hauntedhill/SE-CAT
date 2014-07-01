@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.hscoburg.evelin.secat.dao.PerspektiveDAO;
+import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
+import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 
 /**
@@ -46,6 +49,35 @@ public class PerspektivenModel {
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
+
+	public void updatePerspektive(Perspektive e) throws IllegalArgumentException {
+		if (!"".equals(e.getName()) && !isLocked(e)) {
+
+			perspektivenDAO.merge(e);
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	public boolean isLocked(Perspektive e) {
+		e = perspektivenDAO.findById(e.getId());
+
+		for (Fragebogen f : e.getFrageboegen() != null ? e.getFrageboegen() : new ArrayList<Fragebogen>()) {
+			if (f.getExportiertQuestorPro()) {
+				return true;
+			}
+		}
+
+		for (Item i : e.getItems() != null ? e.getItems() : new ArrayList<Item>()) {
+			for (Fragebogen f : i.getFrageboegen() != null ? i.getFrageboegen() : new ArrayList<Fragebogen>()) {
+				if (f.getExportiertQuestorPro()) {
+					return true;
+				}
+			}
+		}
+
+		return false;
 	}
 
 }

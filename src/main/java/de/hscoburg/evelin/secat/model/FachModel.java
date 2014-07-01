@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.hscoburg.evelin.secat.dao.FachDAO;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
+import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
+import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 
 /**
  * Model zur Verarbeitung von Faechern
@@ -48,4 +51,26 @@ public class FachModel {
 		}
 	}
 
+	public void updateFach(Fach e) throws IllegalArgumentException {
+		if (!"".equals(e.getName()) && !isLocked(e)) {
+
+			fachDAO.merge(e);
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	public boolean isLocked(Fach e) {
+		e = fachDAO.findById(e.getId());
+
+		for (Lehrveranstaltung i : e.getLehrveranstaltungen() != null ? e.getLehrveranstaltungen() : new ArrayList<Lehrveranstaltung>()) {
+			for (Fragebogen f : i.getFrageboegen() != null ? i.getFrageboegen() : new ArrayList<Fragebogen>()) {
+				if (f.getExportiertQuestorPro()) {
+					return true;
+				}
+			}
+		}
+
+		return false;
+	}
 }

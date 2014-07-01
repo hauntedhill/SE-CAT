@@ -22,7 +22,9 @@ import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
+import de.hscoburg.evelin.secat.util.javafx.EditableCell;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
+import de.hscoburg.evelin.secat.util.javafx.ValueTypeHandler;
 
 /**
  * Controller zur Anzeige der Perspektiven
@@ -59,26 +61,6 @@ public class PerspektivenController extends BaseController {
 
 		loadList();
 		textNamePerspektiven.requestFocus();
-		listPerspektiven.setCellFactory(new Callback<ListView<Perspektive>, ListCell<Perspektive>>() {
-
-			@Override
-			public ListCell<Perspektive> call(ListView<Perspektive> p) {
-
-				ListCell<Perspektive> cell = new ListCell<Perspektive>() {
-
-					@Override
-					protected void updateItem(Perspektive t, boolean bln) {
-						super.updateItem(t, bln);
-						if (t != null) {
-							setText(t.getName());
-						}
-					}
-
-				};
-
-				return cell;
-			}
-		});
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
@@ -106,6 +88,53 @@ public class PerspektivenController extends BaseController {
 				loadList();
 			}
 		}, buttonAdd, true);
+
+		listPerspektiven.setCellFactory(new Callback<ListView<Perspektive>, ListCell<Perspektive>>() {
+
+			@Override
+			public ListCell<Perspektive> call(ListView<Perspektive> p) {
+
+				return new EditableCell<Perspektive>(new ValueTypeHandler<Perspektive>() {
+
+					@Override
+					public Perspektive merge(Perspektive value, String newValue) {
+						value.setName(newValue);
+						return value;
+					}
+
+					@Override
+					public String getText(Perspektive value) {
+
+						if (value != null) {
+							return value.getName();
+						} else {
+							return "";
+						}
+					}
+
+					@Override
+					public boolean update(Perspektive value) {
+						try {
+
+							perspektivenModel.updatePerspektive(value);
+							return true;
+
+						} catch (IllegalArgumentException iae) {
+
+						}
+						return false;
+					}
+
+					@Override
+					public boolean isLocked(Perspektive value) {
+
+						return perspektivenModel.isLocked(value);
+					}
+				});
+			}
+		});
+
+		ActionHelper.setEditFor(listPerspektiven);
 
 	}
 

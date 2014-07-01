@@ -6,14 +6,12 @@ import java.util.ResourceBundle;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
-import javafx.scene.input.MouseButton;
 import javafx.util.Callback;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -141,21 +139,7 @@ public class EigenschaftenController extends BaseController {
 			}
 		});
 
-		listEigenschaften.setEditable(true);
-
-		listEigenschaften.setOnMouseClicked(new EventHandler<javafx.scene.input.MouseEvent>() {
-
-			@Override
-			public void handle(javafx.scene.input.MouseEvent event) {
-				if (event.getButton().equals(MouseButton.PRIMARY)) {
-					if (event.getClickCount() == 2) {
-
-						listEigenschaften.edit(listEigenschaften.getSelectionModel().getSelectedIndex());
-					}
-				}
-
-			}
-		});
+		ActionHelper.setEditFor(listEigenschaften);
 
 	}
 
