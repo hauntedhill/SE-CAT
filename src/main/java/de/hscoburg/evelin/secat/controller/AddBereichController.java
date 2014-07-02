@@ -21,6 +21,7 @@ import de.hscoburg.evelin.secat.controller.helper.TreeItemWrapper;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
+import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 
@@ -49,7 +50,7 @@ public class AddBereichController extends BaseController {
 		save.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 		cancel.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
 
-		save.setOnAction(new SeCatEventHandle<ActionEvent>() {
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
@@ -84,7 +85,7 @@ public class AddBereichController extends BaseController {
 				stage.close();
 			}
 
-		});
+		}, save, true);
 
 		cancel.setOnAction(new SeCatEventHandle<ActionEvent>() {
 

@@ -29,6 +29,7 @@ import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
 import de.hscoburg.evelin.secat.model.SkalenModel;
+import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 
 @Controller
@@ -128,7 +129,7 @@ public class FilterAllItemsController extends BaseController {
 
 		eigenschaftList.setItems(eigenschaftOl);
 
-		filter.setOnAction(new SeCatEventHandle<ActionEvent>() {
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
@@ -146,9 +147,9 @@ public class FilterAllItemsController extends BaseController {
 				stage.close();
 			}
 
-		});
+		}, filter, true);
 
-		cancel.setOnAction(new SeCatEventHandle<ActionEvent>() {
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
@@ -160,7 +161,7 @@ public class FilterAllItemsController extends BaseController {
 				stage.close();
 			}
 
-		});
+		}, cancel);
 
 	}
 

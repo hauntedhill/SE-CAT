@@ -34,6 +34,7 @@ import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.model.EigenschaftenModel;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.model.PerspektivenModel;
+import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.ConverterHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
@@ -46,10 +47,6 @@ public class AddItemController extends BaseController {
 	private Button save;
 	@FXML
 	private Button cancle;
-	@FXML
-	private Button chooseTemplate;
-	@FXML
-	private Button undo;
 	@FXML
 	private TextField name;
 	@FXML
@@ -92,8 +89,6 @@ public class AddItemController extends BaseController {
 
 		save.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
-		chooseTemplate.setGraphic(new ImageView(new Image("/image/icons/editcopy.png", 16, 16, true, true)));
-		undo.setGraphic(new ImageView(new Image("/image/icons/editdelete.png", 16, 16, true, true)));
 
 		templateBox.setConverter(ConverterHelper.getConverterForItem());
 		templateBox.promptTextProperty().set(SeCatResourceBundle.getInstance().getString("scene.addItem.templatebox.prompttextproperty"));
@@ -143,8 +138,44 @@ public class AddItemController extends BaseController {
 		});
 
 		reloadGUI();
+		templateBox.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
-		save.setOnAction(new SeCatEventHandle<ActionEvent>() {
+			@Override
+			public void handleAction(ActionEvent event) throws Exception {
+
+			}
+
+			@Override
+			public void updateUI() {
+
+				if (templateBox.getValue().getId() == -1) {
+
+					perspektiveList.getSelectionModel().clearSelection();
+					eigenschaftList.getSelectionModel().clearSelection();
+					notiz.clear();
+					frage.clear();
+
+				} else if (templateBox.getValue() != null) {
+					perspektiveList.getSelectionModel().clearSelection();
+					eigenschaftList.getSelectionModel().clearSelection();
+					notiz.setText(templateBox.getValue().getNotiz());
+					frage.setText(templateBox.getValue().getFrage());
+					List<Perspektive> templatePerspektive = templateBox.getValue().getPerspektiven();
+					List<Eigenschaft> templateEigenschaft = templateBox.getValue().getEigenschaften();
+					for (Perspektive set : templatePerspektive) {
+						perspektiveList.getSelectionModel().select(perspektiveList.getItems().indexOf(set));
+					}
+
+					for (Eigenschaft set : templateEigenschaft) {
+						eigenschaftList.getSelectionModel().select(eigenschaftList.getItems().indexOf(set));
+					}
+				}
+
+			}
+
+		});
+
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
@@ -190,49 +221,7 @@ public class AddItemController extends BaseController {
 
 			}
 
-		});
-
-		chooseTemplate.setOnAction(new SeCatEventHandle<ActionEvent>() {
-
-			@Override
-			public void handleAction(ActionEvent event) throws Exception {
-
-			}
-
-			@Override
-			public void updateUI() {
-				if (templateBox.getValue() != null) {
-					perspektiveList.getSelectionModel().clearSelection();
-					eigenschaftList.getSelectionModel().clearSelection();
-					notiz.setText(templateBox.getValue().getNotiz());
-					frage.setText(templateBox.getValue().getFrage());
-					List<Perspektive> templatePerspektive = templateBox.getValue().getPerspektiven();
-					List<Eigenschaft> templateEigenschaft = templateBox.getValue().getEigenschaften();
-					for (Perspektive set : templatePerspektive) {
-						perspektiveList.getSelectionModel().select(perspektiveList.getItems().indexOf(set));
-					}
-
-					for (Eigenschaft set : templateEigenschaft) {
-						eigenschaftList.getSelectionModel().select(eigenschaftList.getItems().indexOf(set));
-					}
-				}
-			}
-		});
-
-		undo.setOnAction(new SeCatEventHandle<ActionEvent>() {
-
-			@Override
-			public void handleAction(ActionEvent event) throws Exception {
-			}
-
-			@Override
-			public void updateUI() {
-				perspektiveList.getSelectionModel().clearSelection();
-				eigenschaftList.getSelectionModel().clearSelection();
-				notiz.setText("");
-			}
-
-		});
+		}, save, true);
 
 		cancle.setOnAction(new SeCatEventHandle<ActionEvent>() {
 
@@ -278,7 +267,10 @@ public class AddItemController extends BaseController {
 		List<Item> itemList = handlungsfeldModel.getItemBy(bereich, true, null, null, null, null, null);
 		List<Perspektive> persList = perspektivenModel.getPerspektiven();
 		List<Eigenschaft> eigenList = eigenschaftModel.getEigenschaften();
-
+		Item keineVorlage = new Item();
+		keineVorlage.setId(-1);
+		keineVorlage.setName((SeCatResourceBundle.getInstance().getString("scene.all.notemplate")));
+		itemOl.add(keineVorlage);
 		for (Item item : itemList) {
 			itemOl.add(item);
 		}

@@ -576,7 +576,6 @@ public class AddFragebogenController extends BaseController {
 				}
 			}
 		});
-		;
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 

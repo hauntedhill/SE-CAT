@@ -943,8 +943,12 @@ public class BewertungAnzeigenController extends BaseController {
 		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
 
 		for (Item item : eh.getItems()) {
+			if (!eh.getItemWertung().get(eh.getItems().indexOf(item)).isEmpty()) {
+				defaultcategorydataset.addValue(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))), eh.getRawId(), item.getFrage());
+			} else {
+				defaultcategorydataset.addValue(0, eh.getRawId(), item.getFrage());
+			}
 
-			defaultcategorydataset.addValue(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))), eh.getRawId(), item.getFrage());
 		}
 
 		JFreeChart chart = ChartFactory.createLineChart(fragebogen.getName(), // chart title
@@ -1007,7 +1011,9 @@ public class BewertungAnzeigenController extends BaseController {
 			for (Item item : eh.getItems()) {
 
 				if (bereich.equals(item.getBereich())) {
-					avValue[bereiche.indexOf(bereich)] += Double.parseDouble(eh.getItemWertung().get(valCount));
+					if (!eh.getItemWertung().get(valCount).isEmpty()) {
+						avValue[bereiche.indexOf(bereich)] += Double.parseDouble(eh.getItemWertung().get(valCount));
+					}
 					valCount++;
 				}
 
