@@ -100,9 +100,14 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 
 			service.restart();
 
-		} catch (Exception e) {
+		} catch (final Exception e) {
+			Platform.runLater(new Runnable() {
 
-			showErrorDialog(e);
+				@Override
+				public void run() {
+					showErrorDialog(e);
+				}
+			});
 
 		}
 

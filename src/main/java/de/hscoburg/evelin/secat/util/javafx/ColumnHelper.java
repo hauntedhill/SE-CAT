@@ -16,6 +16,7 @@ public class ColumnHelper {
 				return action.call(p);
 
 			}
+
 		});
 	}
 

@@ -11,6 +11,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -28,6 +29,8 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -161,6 +164,20 @@ public class FrageboegenController extends BaseController {
 		searchLehrveransteltung.getItems().add(0, null);
 		searchSkala.setItems(FXCollections.observableArrayList(skalenModel.getSkalen()));
 		searchSkala.getItems().add(0, null);
+
+		searchArchiviert.setOnKeyReleased(new EventHandler<Event>() {
+
+			@Override
+			public void handle(Event event) {
+				if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+					searchArchiviert.setSelected(!searchArchiviert.isSelected());
+					event.consume();
+
+				}
+
+			}
+
+		});
 
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
@@ -595,6 +612,7 @@ public class FrageboegenController extends BaseController {
 
 		searchFromDate.setValue(null);
 		searchToDate.setValue(null);
+		searchArchiviert.setSelected(false);
 	}
 
 	/**

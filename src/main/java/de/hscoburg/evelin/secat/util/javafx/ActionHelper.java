@@ -40,10 +40,10 @@ public class ActionHelper {
 	public static void setActionToButton(EventHandler<ActionEvent> handler, final Button button, boolean useGlobalEnter) {
 		button.setOnAction(handler);
 
-		button.setOnKeyPressed(new SeCatEventHandle<Event>() {
+		button.setOnKeyPressed(new EventHandler<Event>() {
 
 			@Override
-			public void handleAction(Event event) {
+			public void handle(Event event) {
 				if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
 					button.fire();
 				}
@@ -56,7 +56,7 @@ public class ActionHelper {
 
 				@Override
 				public void handleAction(KeyEvent event) throws Exception {
-					if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+					if (((KeyEvent) event).getCode() == KeyCode.ENTER && !event.isConsumed()) {
 						button.fire();
 					}
 
