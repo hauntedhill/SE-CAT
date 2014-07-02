@@ -694,18 +694,24 @@ public class BewertungAnzeigenController extends BaseController {
 			public void updateUI() {
 				ObservableList<Item> items = itemTable.getSelectionModel().getSelectedItems();
 				XYSeriesCollection data_series = new XYSeriesCollection();
+				XYSeries xy_data = new XYSeries("leer");
 
-				for (Item item : items) {
-
-					XYSeries xy_data = new XYSeries(item.getName());
+				if (items.size() > 1) {
+					xy_data.setDescription(items.get(0).getName() + " / " + items.get(1).getName());
 					for (EvaluationHelper eh : allEvaluationHelper) {
-						eh.getItemWertung().get(eh.getItems().indexOf(item));
-						// xy_data.add(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))),
-						// Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))));
+						if (eh.getItemWertung().get(eh.getItems().indexOf(items.get(0))).isEmpty()) {
+							xy_data.add(0, Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(items.get(1)))));
+						} else if (eh.getItemWertung().get(eh.getItems().indexOf(items.get(1))).isEmpty()) {
+							xy_data.add(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(items.get(0)))), 0);
+						} else {
+							xy_data.add(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(items.get(0)))),
+									Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(items.get(1)))));
+						}
+
 					}
 					data_series.addSeries(xy_data);
-				}
 
+				}
 				JFreeChart chart = ChartFactory.createScatterPlot(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.itemcomparison"), "", "",
 						data_series, PlotOrientation.VERTICAL, true, false, false);
 
