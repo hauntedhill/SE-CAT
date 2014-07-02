@@ -81,6 +81,19 @@ public class ActionHelper {
 
 			}
 		});
+
+		view.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
+
+			@Override
+			public void handle(KeyEvent event) {
+				System.out.println("view action");
+				if (((KeyEvent) event).getCode() == KeyCode.ENTER && !event.isConsumed()) {
+					view.edit(view.getSelectionModel().getSelectedIndex());
+
+				}
+
+			}
+		});
 	}
 
 }

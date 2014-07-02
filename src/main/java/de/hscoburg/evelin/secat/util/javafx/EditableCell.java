@@ -13,6 +13,8 @@ public class EditableCell<T> extends ListCell<T> {
 
 	private ValueTypeHandler<T> updateHandler;
 
+	private boolean firstEnter = true;
+
 	public EditableCell(ValueTypeHandler<T> handler) {
 
 		setEditable(true);
@@ -25,7 +27,7 @@ public class EditableCell<T> extends ListCell<T> {
 		if (updateHandler.isLocked(getItem())) {
 			return;
 		}
-
+		firstEnter = true;
 		super.startEdit();
 
 		if (textField == null) {
@@ -43,6 +45,7 @@ public class EditableCell<T> extends ListCell<T> {
 
 		super.cancelEdit();
 		setContentDisplay(ContentDisplay.TEXT_ONLY);
+		textField = null;
 	}
 
 	@Override
@@ -60,6 +63,7 @@ public class EditableCell<T> extends ListCell<T> {
 	}
 
 	private void createTextField() {
+		System.out.println("create textfiled");
 		textField = new TextField();
 		textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
 		textField.setOnKeyReleased(new SeCatEventHandle<KeyEvent>() {
@@ -67,8 +71,14 @@ public class EditableCell<T> extends ListCell<T> {
 			@Override
 			public void handleAction(KeyEvent t) throws Exception {
 
-				if (t.getCode() == KeyCode.ENTER) {
+				System.out.println("textfield action");
 
+				System.out.println("key_code: " + t.getCode());
+
+				System.out.println(t.isConsumed());
+
+				if (t.getCode() == KeyCode.ENTER && !firstEnter) {
+					System.out.println("commit");
 					final T val = updateHandler.merge(getItem(), textField.getText());
 
 					boolean success = updateHandler.update(val);
@@ -84,7 +94,8 @@ public class EditableCell<T> extends ListCell<T> {
 
 					}
 
-				} else if (t.getCode() == KeyCode.ESCAPE) {
+				} else if (t.getCode() == KeyCode.ESCAPE && !firstEnter) {
+					System.out.println("cancel");
 					Platform.runLater(new Runnable() {
 
 						@Override
@@ -95,6 +106,7 @@ public class EditableCell<T> extends ListCell<T> {
 					});
 
 				}
+				firstEnter = false;
 
 			}
 		});
