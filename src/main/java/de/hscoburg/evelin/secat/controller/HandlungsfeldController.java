@@ -1,7 +1,6 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import javafx.beans.InvalidationListener;
@@ -54,8 +53,6 @@ public class HandlungsfeldController extends BaseController {
 
 	@Autowired
 	private TreeTableController treeTableController;
-
-	private ArrayList<Item> exportedItems;
 
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -133,17 +130,17 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
-						if (exportedItems.contains(treeTableController.getSelectedTreeItem().getValue().getItem())) {
-							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/editItem.fxml");
-							stage.show();
-							stage.setOnHidden(new EventHandler<WindowEvent>() {
-								public void handle(WindowEvent we) {
-									logger.debug("Closing dialog stage.");
 
-								}
-							});
-						}
+						Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/editItem.fxml");
+						stage.show();
+						stage.setOnHidden(new EventHandler<WindowEvent>() {
+							public void handle(WindowEvent we) {
+								logger.debug("Closing dialog stage.");
+
+							}
+						});
 					}
+
 				});
 
 				deactivateHfItem.setOnAction(new EventHandler<ActionEvent>() {

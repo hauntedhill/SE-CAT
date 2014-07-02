@@ -479,6 +479,10 @@ public class BewertungAnzeigenController extends BaseController {
 		for (Bereich bereich : bereiche) {
 
 			final TableColumn col = new TableColumn();
+			col.setMinWidth(300);
+			col.setPrefWidth(300);
+			col.setMaxWidth(Double.MAX_VALUE);
+
 			Text t = new Text(bereich.getName());
 			t.setTextAlignment(TextAlignment.CENTER);
 
@@ -515,8 +519,8 @@ public class BewertungAnzeigenController extends BaseController {
 					Text itemName = new Text(item.getFrage());
 					itemName.setWrappingWidth(125);
 					itemCol.setGraphic(itemName);
-					itemCol.setMinWidth(125);
-					itemCol.setMaxWidth(125);
+					itemCol.setMinWidth(225);
+					// itemCol.setMaxWidth(125);
 					col.getColumns().add(itemCol);
 
 					((TableColumn<EvaluationHelper, String>) col.getColumns().get(count))
@@ -1222,8 +1226,6 @@ public class BewertungAnzeigenController extends BaseController {
 	public JFreeChart createBarChartForCriterion() {
 		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
 		double[] values = getAverageDataForCriterion(null, null);
-		System.out.println("values" + values.length);
-		System.out.println(bereiche.size());
 		ArrayList<Handlungsfeld> hfList = new ArrayList<Handlungsfeld>();
 		for (Bereich bereich : bereiche) {
 			if (hfList.isEmpty() || !hfList.contains(bereich.getHandlungsfeld())) {
