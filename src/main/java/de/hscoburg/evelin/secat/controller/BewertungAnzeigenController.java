@@ -1222,16 +1222,18 @@ public class BewertungAnzeigenController extends BaseController {
 	public JFreeChart createBarChartForCriterion() {
 		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
 		double[] values = getAverageDataForCriterion(null, null);
+		System.out.println("values" + values.length);
+		System.out.println(bereiche.size());
 		ArrayList<Handlungsfeld> hfList = new ArrayList<Handlungsfeld>();
 		for (Bereich bereich : bereiche) {
 			if (hfList.isEmpty() || !hfList.contains(bereich.getHandlungsfeld())) {
 				hfList.add(bereich.getHandlungsfeld());
-
-				// defaultcategorydataset.addValue(values[bereiche.indexOf(bereich)],
-				// SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), bereich.getHandlungsfeld().getName());
 			}
 		}
-
+		for (Handlungsfeld hf : hfList) {
+			defaultcategorydataset.addValue(values[hfList.indexOf(hf)], SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"),
+					hf.getName());
+		}
 		return createBarChart(defaultcategorydataset, fragebogen.getName(), SeCatResourceBundle.getInstance().getString("scene.chart.criterionincrease"));
 
 	}
