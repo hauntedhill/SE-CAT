@@ -651,6 +651,7 @@ public class BewertungAnzeigenController extends BaseController {
 							wertungCount = 0;
 						}
 						Text t = new Text(p.getValue().getFrageWertung().get(wertungCount++));
+						// Text t = new Text("kacke");
 						t.setWrappingWidth(125);
 						return new ReadOnlyObjectWrapper<Text>(t);
 					}
@@ -693,13 +694,14 @@ public class BewertungAnzeigenController extends BaseController {
 			public void updateUI() {
 				ObservableList<Item> items = itemTable.getSelectionModel().getSelectedItems();
 				XYSeriesCollection data_series = new XYSeriesCollection();
+
 				for (Item item : items) {
 
 					XYSeries xy_data = new XYSeries(item.getName());
 					for (EvaluationHelper eh : allEvaluationHelper) {
 						eh.getItemWertung().get(eh.getItems().indexOf(item));
-						xy_data.add(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))),
-								Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))));
+						// xy_data.add(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))),
+						// Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))));
 					}
 					data_series.addSeries(xy_data);
 				}
@@ -1099,7 +1101,9 @@ public class BewertungAnzeigenController extends BaseController {
 
 				for (Item item : allEvaluationHelper.get(k).getItems()) {
 					if (bereiche.get(j).equals(item.getBereich())) {
-						avValue += Double.parseDouble(allEvaluationHelper.get(k).getItemWertung().get(valCount));
+						if (!allEvaluationHelper.get(k).getItemWertung().get(valCount).isEmpty()) {
+							avValue += Double.parseDouble(allEvaluationHelper.get(k).getItemWertung().get(valCount));
+						}
 						valCount++;
 					}
 
@@ -1216,8 +1220,9 @@ public class BewertungAnzeigenController extends BaseController {
 		for (Bereich bereich : bereiche) {
 			if (hfList.isEmpty() || !hfList.contains(bereich.getHandlungsfeld())) {
 				hfList.add(bereich.getHandlungsfeld());
-				defaultcategorydataset.addValue(values[bereiche.indexOf(bereich)],
-						SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), bereich.getHandlungsfeld().getName());
+
+				// defaultcategorydataset.addValue(values[bereiche.indexOf(bereich)],
+				// SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), bereich.getHandlungsfeld().getName());
 			}
 		}
 
@@ -1376,7 +1381,9 @@ public class BewertungAnzeigenController extends BaseController {
 		for (EvaluationHelper eh : ehList) {
 			double value = 0;
 			for (String wert : eh.getItemWertung()) {
-				value += Double.parseDouble(wert);
+				if (!wert.isEmpty()) {
+					value += Double.parseDouble(wert);
+				}
 			}
 			value /= eh.getItemWertung().size();
 
@@ -1433,7 +1440,8 @@ public class BewertungAnzeigenController extends BaseController {
 			for (Bewertung bewertung : bewertungen) {
 				if (bewertung.getItem() != null) {
 					if (bereich.equals(bewertung.getItem().getBereich())) {
-						values[bereiche.indexOf(bereich)] += Double.parseDouble(bewertung.getWert());
+						if (!bewertung.getWert().isEmpty())
+							values[bereiche.indexOf(bereich)] += Double.parseDouble(bewertung.getWert());
 						valCount++;
 					}
 				}
