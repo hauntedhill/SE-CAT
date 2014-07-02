@@ -407,7 +407,7 @@ public class AddFragebogenController extends BaseController {
 			}
 		});
 
-		saveFragebogen.setOnAction(new SeCatEventHandle<ActionEvent>() {
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			private List<Item> currentItems = new ArrayList<>();
 
@@ -528,7 +528,7 @@ public class AddFragebogenController extends BaseController {
 
 			}
 
-		});
+		}, saveFragebogen, true);
 
 		vorlage.setOnAction(new SeCatEventHandle<ActionEvent>() {
 

@@ -50,7 +50,7 @@ public class AddItemController extends BaseController {
 	@FXML
 	private TextField name;
 	@FXML
-	private TextField frage;
+	private TextArea frage;
 	@FXML
 	private TextField rolle;
 	@FXML
@@ -82,6 +82,7 @@ public class AddItemController extends BaseController {
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
+		frage.wrapTextProperty().set(true);
 		selected = treeTableController.getSelectedTreeItem();
 		bereich = selected.getValue().getBereich();
 		indexBereich = selected.getParent().getChildren().indexOf(selected);

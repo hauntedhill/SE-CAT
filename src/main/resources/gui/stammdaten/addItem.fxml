@@ -33,7 +33,7 @@
 					<RowConstraints maxHeight="43.0" minHeight="1.0" prefHeight="9.0" vgrow="SOMETIMES" />
 					<RowConstraints maxHeight="87.0" minHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
 					<RowConstraints maxHeight="104.0" minHeight="10.0" prefHeight="34.0" vgrow="SOMETIMES" />
-					<RowConstraints maxHeight="126.0" minHeight="9.0" prefHeight="34.0" vgrow="SOMETIMES" />
+					<RowConstraints maxHeight="130.0" minHeight="9.0" prefHeight="80.0" vgrow="SOMETIMES" />
 					<RowConstraints maxHeight="152.0" minHeight="0.0" prefHeight="26.0" vgrow="SOMETIMES" />
     				<RowConstraints maxHeight="236.0" minHeight="10.0" prefHeight="192.0" vgrow="SOMETIMES" />
     				<RowConstraints maxHeight="195.0" minHeight="10.0" prefHeight="12.0" vgrow="SOMETIMES" />
@@ -49,7 +49,7 @@
 					<TextField fx:id="name" layoutX="115.0" layoutY="45.0" prefHeight="25.0" prefWidth="250.0" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="2" />
 		
 					<Label layoutX="10.0" layoutY="75.0" text="%scene.all.question" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-					<TextField fx:id="frage" layoutX="115.0" layoutY="75.0" prefHeight="25.0" prefWidth="515.0" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="3" />
+					<TextArea fx:id="frage" layoutX="115.0" layoutY="75.0" prefHeight="25.0" prefWidth="515.0" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="3" />
 		
 					<Label layoutX="115" layoutY="110.0" text="%scene.all.perspective" GridPane.columnIndex="5" GridPane.rowIndex="4" />
 					<ListView fx:id="perspektiveList" layoutX="115.0" layoutY="130.0" prefHeight="200.0" prefWidth="250.0" GridPane.columnIndex="5" GridPane.columnSpan="2" GridPane.rowIndex="5" />
