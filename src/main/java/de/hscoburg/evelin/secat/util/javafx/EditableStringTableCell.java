@@ -2,20 +2,19 @@ package de.hscoburg.evelin.secat.util.javafx;
 
 import javafx.application.Platform;
 import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.ListCell;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class EditableCell<T> extends ListCell<T> {
-
+public class EditableStringTableCell<S, T> extends TableCell<S, T> {
 	private TextField textField;
 
-	private ValueListTypeHandler<T> updateHandler;
+	private ValueListTypeHandler<S> updateHandler;
 
 	private boolean firstEnter = true;
 
-	public EditableCell(ValueListTypeHandler<T> handler) {
+	public EditableStringTableCell(ValueListTypeHandler<S> handler) {
 
 		setEditable(true);
 		updateHandler = handler;
@@ -24,10 +23,10 @@ public class EditableCell<T> extends ListCell<T> {
 	@Override
 	public void startEdit() {
 
-		if (updateHandler.isLocked(getItem())) {
+		if (updateHandler.isLocked(getTableView().getSelectionModel().getSelectedItem())) {
 			return;
 		}
-		firstEnter = true;
+		firstEnter = false;
 		super.startEdit();
 
 		if (textField == null) {
@@ -36,7 +35,9 @@ public class EditableCell<T> extends ListCell<T> {
 		textField.clear();
 		setGraphic(textField);
 		setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-		textField.setText(updateHandler.getText(getItem()));
+		if (getItem() != null) {
+			textField.setText(getItem().toString());
+		}
 		textField.requestFocus();
 	}
 
@@ -50,21 +51,24 @@ public class EditableCell<T> extends ListCell<T> {
 
 	@Override
 	public void commitEdit(T s) {
+
 		super.commitEdit(s);
 	}
 
 	@Override
 	public void updateItem(final T item, boolean empty) {
+
 		super.updateItem(item, empty);
 
 		if (item != null) {
-			setText(updateHandler.getText(item));
+			setText(item.toString());
 		}
 	}
 
 	private void createTextField() {
 
 		textField = new TextField();
+
 		textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
 		textField.setOnKeyReleased(new SeCatEventHandle<KeyEvent>() {
 
@@ -72,32 +76,35 @@ public class EditableCell<T> extends ListCell<T> {
 			public void handleAction(KeyEvent t) throws Exception {
 
 				if (t.getCode() == KeyCode.ENTER && !firstEnter) {
+					if (getTableView().getSelectionModel().getSelectedItem() != null) {
+						final S val = updateHandler.merge(getTableView().getSelectionModel().getSelectedItem(), textField.getText());
 
-					final T val = updateHandler.merge(getItem(), textField.getText());
+						boolean success = updateHandler.update(val);
+						if (success) {
+							Platform.runLater(new Runnable() {
 
-					boolean success = updateHandler.update(val);
-					if (success) {
+								@Override
+								public void run() {
+									commitEdit((T) textField.getText());
+									cancelEdit();
+
+								}
+							});
+
+						}
+
+					} else if (t.getCode() == KeyCode.ESCAPE) {
+
 						Platform.runLater(new Runnable() {
 
 							@Override
 							public void run() {
-								commitEdit(val);
+								cancelEdit();
 
 							}
 						});
 
 					}
-
-				} else if (t.getCode() == KeyCode.ESCAPE && !firstEnter) {
-
-					Platform.runLater(new Runnable() {
-
-						@Override
-						public void run() {
-							cancelEdit();
-
-						}
-					});
 
 				}
 				firstEnter = false;

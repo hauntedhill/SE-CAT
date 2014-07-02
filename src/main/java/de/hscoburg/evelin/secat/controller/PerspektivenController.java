@@ -24,7 +24,7 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.EditableCell;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
-import de.hscoburg.evelin.secat.util.javafx.ValueTypeHandler;
+import de.hscoburg.evelin.secat.util.javafx.ValueListTypeHandler;
 
 /**
  * Controller zur Anzeige der Perspektiven
@@ -94,7 +94,7 @@ public class PerspektivenController extends BaseController {
 			@Override
 			public ListCell<Perspektive> call(ListView<Perspektive> p) {
 
-				return new EditableCell<Perspektive>(new ValueTypeHandler<Perspektive>() {
+				return new EditableCell<Perspektive>(new ValueListTypeHandler<Perspektive>() {
 
 					@Override
 					public Perspektive merge(Perspektive value, String newValue) {

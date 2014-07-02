@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import de.hscoburg.evelin.secat.dao.LehrveranstaltungDAO;
 import de.hscoburg.evelin.secat.dao.entity.Fach;
+import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.dao.entity.base.SemesterType;
 
@@ -67,5 +69,24 @@ public class LehrveranstaltungModel {
 		} else {
 			throw new IllegalArgumentException();
 		}
+	}
+
+	public void updateLehrveranstaltung(Lehrveranstaltung l) {
+		if (l.getJahr() != null && l.getSemester() != null && l.getFach() != null && !"".equals(l.getDozent())) {
+
+			lehrveranstaltungsDAO.merge(l);
+		} else {
+			throw new IllegalArgumentException();
+		}
+	}
+
+	public boolean isLocked(Lehrveranstaltung l) {
+		l = lehrveranstaltungsDAO.findById(l.getId());
+		for (Fragebogen f : l.getFrageboegen() != null ? l.getFrageboegen() : new ArrayList<Fragebogen>()) {
+			if (f.getExportiertQuestorPro()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

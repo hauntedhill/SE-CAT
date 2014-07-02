@@ -82,7 +82,7 @@ public abstract class BaseDAO<T extends BaseEntity> {
 		criteria.select(root);
 
 		TypedQuery<T> q = em.createQuery(criteria);
-		System.out.println("");
+
 		return q.getResultList();
 
 	}

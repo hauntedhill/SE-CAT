@@ -86,7 +86,7 @@ public class ActionHelper {
 
 			@Override
 			public void handle(KeyEvent event) {
-				System.out.println("view action");
+
 				if (((KeyEvent) event).getCode() == KeyCode.ENTER && !event.isConsumed()) {
 					view.edit(view.getSelectionModel().getSelectedIndex());
 

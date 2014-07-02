@@ -24,7 +24,7 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.EditableCell;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
-import de.hscoburg.evelin.secat.util.javafx.ValueTypeHandler;
+import de.hscoburg.evelin.secat.util.javafx.ValueListTypeHandler;
 
 /**
  * Controller fuer die Anzeige der Eigenschaften
@@ -99,7 +99,7 @@ public class EigenschaftenController extends BaseController {
 			@Override
 			public ListCell<Eigenschaft> call(ListView<Eigenschaft> p) {
 
-				return new EditableCell<Eigenschaft>(new ValueTypeHandler<Eigenschaft>() {
+				return new EditableCell<Eigenschaft>(new ValueListTypeHandler<Eigenschaft>() {
 
 					@Override
 					public Eigenschaft merge(Eigenschaft value, String newValue) {

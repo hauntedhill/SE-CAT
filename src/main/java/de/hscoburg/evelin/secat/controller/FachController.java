@@ -24,7 +24,7 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.EditableCell;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
-import de.hscoburg.evelin.secat.util.javafx.ValueTypeHandler;
+import de.hscoburg.evelin.secat.util.javafx.ValueListTypeHandler;
 
 /**
  * Controller zur Anzeige der Faecher
@@ -96,7 +96,7 @@ public class FachController extends BaseController {
 			@Override
 			public ListCell<Fach> call(ListView<Fach> p) {
 
-				return new EditableCell<Fach>(new ValueTypeHandler<Fach>() {
+				return new EditableCell<Fach>(new ValueListTypeHandler<Fach>() {
 
 					@Override
 					public Fach merge(Fach value, String newValue) {

@@ -1,7 +1,7 @@
 package de.hscoburg.evelin.secat.util.javafx;
 
 
-public interface ValueTypeHandler<T> {
+public interface ValueListTypeHandler<T> {
 
 	public abstract T merge(T value, String newValue);
 
