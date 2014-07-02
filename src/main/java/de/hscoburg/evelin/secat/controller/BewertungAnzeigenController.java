@@ -479,6 +479,10 @@ public class BewertungAnzeigenController extends BaseController {
 		for (Bereich bereich : bereiche) {
 
 			final TableColumn col = new TableColumn();
+			col.setMinWidth(300);
+			col.setPrefWidth(300);
+			col.setMaxWidth(Double.MAX_VALUE);
+
 			Text t = new Text(bereich.getName());
 			t.setTextAlignment(TextAlignment.CENTER);
 
@@ -515,8 +519,8 @@ public class BewertungAnzeigenController extends BaseController {
 					Text itemName = new Text(item.getFrage());
 					itemName.setWrappingWidth(125);
 					itemCol.setGraphic(itemName);
-					itemCol.setMinWidth(125);
-					itemCol.setMaxWidth(125);
+					itemCol.setMinWidth(225);
+					// itemCol.setMaxWidth(125);
 					col.getColumns().add(itemCol);
 
 					((TableColumn<EvaluationHelper, String>) col.getColumns().get(count))
@@ -651,6 +655,7 @@ public class BewertungAnzeigenController extends BaseController {
 							wertungCount = 0;
 						}
 						Text t = new Text(p.getValue().getFrageWertung().get(wertungCount++));
+						// Text t = new Text("kacke");
 						t.setWrappingWidth(125);
 						return new ReadOnlyObjectWrapper<Text>(t);
 					}
@@ -693,17 +698,24 @@ public class BewertungAnzeigenController extends BaseController {
 			public void updateUI() {
 				ObservableList<Item> items = itemTable.getSelectionModel().getSelectedItems();
 				XYSeriesCollection data_series = new XYSeriesCollection();
-				for (Item item : items) {
+				XYSeries xy_data = new XYSeries("leer");
 
-					XYSeries xy_data = new XYSeries(item.getName());
+				if (items.size() > 1) {
+					xy_data.setDescription(items.get(0).getName() + " / " + items.get(1).getName());
 					for (EvaluationHelper eh : allEvaluationHelper) {
-						eh.getItemWertung().get(eh.getItems().indexOf(item));
-						xy_data.add(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))),
-								Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))));
+						if (eh.getItemWertung().get(eh.getItems().indexOf(items.get(0))).isEmpty()) {
+							xy_data.add(0, Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(items.get(1)))));
+						} else if (eh.getItemWertung().get(eh.getItems().indexOf(items.get(1))).isEmpty()) {
+							xy_data.add(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(items.get(0)))), 0);
+						} else {
+							xy_data.add(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(items.get(0)))),
+									Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(items.get(1)))));
+						}
+
 					}
 					data_series.addSeries(xy_data);
-				}
 
+				}
 				JFreeChart chart = ChartFactory.createScatterPlot(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.itemcomparison"), "", "",
 						data_series, PlotOrientation.VERTICAL, true, false, false);
 
@@ -931,8 +943,12 @@ public class BewertungAnzeigenController extends BaseController {
 		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
 
 		for (Item item : eh.getItems()) {
+			if (!eh.getItemWertung().get(eh.getItems().indexOf(item)).isEmpty()) {
+				defaultcategorydataset.addValue(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))), eh.getRawId(), item.getFrage());
+			} else {
+				defaultcategorydataset.addValue(0, eh.getRawId(), item.getFrage());
+			}
 
-			defaultcategorydataset.addValue(Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item))), eh.getRawId(), item.getFrage());
 		}
 
 		JFreeChart chart = ChartFactory.createLineChart(fragebogen.getName(), // chart title
@@ -995,7 +1011,9 @@ public class BewertungAnzeigenController extends BaseController {
 			for (Item item : eh.getItems()) {
 
 				if (bereich.equals(item.getBereich())) {
-					avValue[bereiche.indexOf(bereich)] += Double.parseDouble(eh.getItemWertung().get(valCount));
+					if (!eh.getItemWertung().get(valCount).isEmpty()) {
+						avValue[bereiche.indexOf(bereich)] += Double.parseDouble(eh.getItemWertung().get(valCount));
+					}
 					valCount++;
 				}
 
@@ -1099,7 +1117,9 @@ public class BewertungAnzeigenController extends BaseController {
 
 				for (Item item : allEvaluationHelper.get(k).getItems()) {
 					if (bereiche.get(j).equals(item.getBereich())) {
-						avValue += Double.parseDouble(allEvaluationHelper.get(k).getItemWertung().get(valCount));
+						if (!allEvaluationHelper.get(k).getItemWertung().get(valCount).isEmpty()) {
+							avValue += Double.parseDouble(allEvaluationHelper.get(k).getItemWertung().get(valCount));
+						}
 						valCount++;
 					}
 
@@ -1216,11 +1236,12 @@ public class BewertungAnzeigenController extends BaseController {
 		for (Bereich bereich : bereiche) {
 			if (hfList.isEmpty() || !hfList.contains(bereich.getHandlungsfeld())) {
 				hfList.add(bereich.getHandlungsfeld());
-				defaultcategorydataset.addValue(values[bereiche.indexOf(bereich)],
-						SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), bereich.getHandlungsfeld().getName());
 			}
 		}
-
+		for (Handlungsfeld hf : hfList) {
+			defaultcategorydataset.addValue(values[hfList.indexOf(hf)], SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"),
+					hf.getName());
+		}
 		return createBarChart(defaultcategorydataset, fragebogen.getName(), SeCatResourceBundle.getInstance().getString("scene.chart.criterionincrease"));
 
 	}
@@ -1376,7 +1397,9 @@ public class BewertungAnzeigenController extends BaseController {
 		for (EvaluationHelper eh : ehList) {
 			double value = 0;
 			for (String wert : eh.getItemWertung()) {
-				value += Double.parseDouble(wert);
+				if (!wert.isEmpty()) {
+					value += Double.parseDouble(wert);
+				}
 			}
 			value /= eh.getItemWertung().size();
 
@@ -1433,7 +1456,8 @@ public class BewertungAnzeigenController extends BaseController {
 			for (Bewertung bewertung : bewertungen) {
 				if (bewertung.getItem() != null) {
 					if (bereich.equals(bewertung.getItem().getBereich())) {
-						values[bereiche.indexOf(bereich)] += Double.parseDouble(bewertung.getWert());
+						if (!bewertung.getWert().isEmpty())
+							values[bereiche.indexOf(bereich)] += Double.parseDouble(bewertung.getWert());
 						valCount++;
 					}
 				}

@@ -25,6 +25,7 @@ import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Lehrveranstaltung;
 import de.hscoburg.evelin.secat.model.FragebogenModel;
+import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
@@ -109,7 +110,7 @@ public class BewertungController extends BaseController {
 					}
 				});
 
-		show.setOnAction(new SeCatEventHandle<ActionEvent>() {
+		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			private Stage stage;
 
@@ -126,7 +127,7 @@ public class BewertungController extends BaseController {
 				}
 			}
 
-		});
+		}, show, true);
 	}
 
 	public Fragebogen getSelectedFragebogen() {

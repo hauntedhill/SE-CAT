@@ -11,11 +11,11 @@
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="251.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="134.0" vgrow="SOMETIMES" />
   </rowConstraints>
 <children>
-<TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="290.0" prefWidth="585.0" text="%scene.evaluation.lable.overview" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
+<TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="585.0" text="%scene.evaluation.lable.overview" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
 <content>
 <GridPane fx:id="gridPane" layoutX="10.0" layoutY="50.0" maxHeight="500.0" maxWidth="1.7976931348623157E308" prefHeight="284.0" prefWidth="573.0" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
   <columnConstraints>
@@ -23,10 +23,10 @@
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="300.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="206.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
   </rowConstraints>
 <children>
-	<TableView fx:id="tableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="2" />
+	<TableView fx:id="tableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" GridPane.columnSpan="2" />
 </children>
 </GridPane>
 

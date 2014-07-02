@@ -145,21 +145,24 @@ public class EvaluationHelper {
 		}
 		if (fragen != null) {
 			ArrayList<Frage> fragenList = new ArrayList<Frage>();
+			ArrayList<String> frageWertungen = new ArrayList<String>();
 			for (Frage_Fragebogen frage : fragen) {
 				fragenList.add(frage.getFrage());
+				frageWertungen.add("");
 			}
 
 			for (EvaluationHelper eh : ehList) {
 				ArrayList<Integer> id = new ArrayList<Integer>();
-				ArrayList<String> frageWertungen = new ArrayList<String>();
+
 				for (Bewertung bewertung : bewertungen) {
 					if (eh.getRawId().equals(bewertung.getZeilenid()) && bewertung.getFrage() != null) {
 						for (Frage frage : fragenList) {
-
+							System.out.println(frageWertungen.size());
 							if (bewertung.getFrage().getId() == frage.getId()) {
 								if (!id.contains(frage.getId())) {
 									id.add(frage.getId());
-									frageWertungen.add(fragenList.indexOf(frage), bewertung.getWert());
+									frageWertungen.set(fragenList.indexOf(frage), bewertung.getWert());
+
 								} else {
 									String s = frageWertungen.get(id.indexOf(frage.getId())) + " " + bewertung.getWert();
 									frageWertungen.set(fragenList.indexOf(frage), s);
