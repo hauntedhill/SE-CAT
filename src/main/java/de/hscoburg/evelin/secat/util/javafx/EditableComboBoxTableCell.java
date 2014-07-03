@@ -6,6 +6,8 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.TableCell;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
 
@@ -96,10 +98,14 @@ public class EditableComboBoxTableCell<S, T, E> extends TableCell<S, T> {
 
 		comboBox.setOnKeyReleased(new SeCatEventHandle<KeyEvent>() {
 
+			private final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER);
+
+			private final KeyCombination kb2 = new KeyCodeCombination(KeyCode.ESCAPE);
+
 			@Override
 			public void handleAction(KeyEvent t) throws Exception {
 
-				if (t.getCode() == KeyCode.ENTER && !firstEnter) {
+				if (kb.match(t) && !firstEnter) {
 					if (getTableView().getSelectionModel().getSelectedItem() != null) {
 						final S val = updateHandler.merge(getTableView().getSelectionModel().getSelectedItem(), comboBox.getValue());
 
@@ -116,7 +122,7 @@ public class EditableComboBoxTableCell<S, T, E> extends TableCell<S, T> {
 
 						}
 
-					} else if (t.getCode() == KeyCode.ESCAPE) {
+					} else if (kb2.match(t)) {
 
 						Platform.runLater(new Runnable() {
 

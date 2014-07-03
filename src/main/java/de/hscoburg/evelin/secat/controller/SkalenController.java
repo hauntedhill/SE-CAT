@@ -8,7 +8,6 @@ import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,6 +21,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
@@ -154,13 +155,15 @@ public class SkalenController extends BaseController {
 			}
 		});
 
-		multipleQuestion.setOnKeyPressed(new SeCatEventHandle<Event>() {
+		multipleQuestion.setOnKeyPressed(new SeCatEventHandle<KeyEvent>() {
 
 			private boolean newSelection = false;
 
+			private final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER);
+
 			@Override
-			public void handleAction(Event event) {
-				if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+			public void handleAction(KeyEvent event) {
+				if (kb.match(event)) {
 					newSelection = true;
 				} else {
 					newSelection = false;
@@ -191,13 +194,15 @@ public class SkalenController extends BaseController {
 			}
 		});
 
-		discretQuestion.setOnKeyPressed(new SeCatEventHandle<Event>() {
+		discretQuestion.setOnKeyPressed(new SeCatEventHandle<KeyEvent>() {
 
 			private boolean newSelection = false;
 
+			private final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER);
+
 			@Override
-			public void handleAction(Event event) {
-				if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+			public void handleAction(KeyEvent event) {
+				if (kb.match(event)) {
 					newSelection = true;
 				} else {
 					newSelection = false;
@@ -228,13 +233,15 @@ public class SkalenController extends BaseController {
 			}
 		});
 
-		freeQuestion.setOnKeyPressed(new SeCatEventHandle<Event>() {
+		freeQuestion.setOnKeyPressed(new SeCatEventHandle<KeyEvent>() {
 
 			private boolean newSelection = false;
 
+			private final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER);
+
 			@Override
-			public void handleAction(Event event) {
-				if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+			public void handleAction(KeyEvent event) {
+				if (kb.match(event)) {
 					newSelection = true;
 				} else {
 					newSelection = false;

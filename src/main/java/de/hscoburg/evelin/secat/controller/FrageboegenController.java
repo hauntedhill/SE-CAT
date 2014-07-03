@@ -11,7 +11,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -30,6 +29,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -165,11 +166,13 @@ public class FrageboegenController extends BaseController {
 		searchSkala.setItems(FXCollections.observableArrayList(skalenModel.getSkalen()));
 		searchSkala.getItems().add(0, null);
 
-		searchArchiviert.setOnKeyReleased(new EventHandler<Event>() {
+		searchArchiviert.setOnKeyReleased(new EventHandler<KeyEvent>() {
+
+			private final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER);
 
 			@Override
-			public void handle(Event event) {
-				if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+			public void handle(KeyEvent event) {
+				if (kb.match(event)) {
 					searchArchiviert.setSelected(!searchArchiviert.isSelected());
 					event.consume();
 

@@ -1,11 +1,12 @@
 package de.hscoburg.evelin.secat.util.javafx;
 
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 
@@ -40,11 +41,12 @@ public class ActionHelper {
 	public static void setActionToButton(EventHandler<ActionEvent> handler, final Button button, boolean useGlobalEnter) {
 		button.setOnAction(handler);
 
-		button.setOnKeyPressed(new EventHandler<Event>() {
+		button.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			private final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER);
 
 			@Override
-			public void handle(Event event) {
-				if (((KeyEvent) event).getCode() == KeyCode.ENTER) {
+			public void handle(KeyEvent event) {
+				if (kb.match(event)) {
 					button.fire();
 				}
 
@@ -53,10 +55,11 @@ public class ActionHelper {
 		});
 		if (useGlobalEnter) {
 			button.getParent().addEventHandler(KeyEvent.KEY_RELEASED, new SeCatEventHandle<KeyEvent>() {
+				private final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER);
 
 				@Override
 				public void handleAction(KeyEvent event) throws Exception {
-					if (((KeyEvent) event).getCode() == KeyCode.ENTER && !event.isConsumed()) {
+					if (kb.match(event)) {
 						button.fire();
 					}
 
@@ -84,10 +87,12 @@ public class ActionHelper {
 
 		view.addEventHandler(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
 
+			private final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER);
+
 			@Override
 			public void handle(KeyEvent event) {
 
-				if (((KeyEvent) event).getCode() == KeyCode.ENTER && !event.isConsumed()) {
+				if (kb.match(event)) {
 					view.edit(view.getSelectionModel().getSelectedIndex());
 
 				}

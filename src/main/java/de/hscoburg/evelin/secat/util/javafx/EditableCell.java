@@ -5,6 +5,8 @@ import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
 public class EditableCell<T> extends ListCell<T> {
@@ -68,10 +70,14 @@ public class EditableCell<T> extends ListCell<T> {
 		textField.setMinWidth(this.getWidth() - this.getGraphicTextGap() * 2);
 		textField.setOnKeyReleased(new SeCatEventHandle<KeyEvent>() {
 
+			private final KeyCombination kb = new KeyCodeCombination(KeyCode.ENTER);
+
+			private final KeyCombination kb2 = new KeyCodeCombination(KeyCode.ESCAPE);
+
 			@Override
 			public void handleAction(KeyEvent t) throws Exception {
 
-				if (t.getCode() == KeyCode.ENTER && !firstEnter) {
+				if (kb.match(t) && !firstEnter) {
 
 					final T val = updateHandler.merge(getItem(), textField.getText());
 
@@ -88,7 +94,7 @@ public class EditableCell<T> extends ListCell<T> {
 
 					}
 
-				} else if (t.getCode() == KeyCode.ESCAPE && !firstEnter) {
+				} else if (kb2.match(t)) {
 
 					Platform.runLater(new Runnable() {
 
