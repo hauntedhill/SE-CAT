@@ -77,20 +77,25 @@ public class EditableStringTableCell<S, T> extends TableCell<S, T> {
 
 				if (t.getCode() == KeyCode.ENTER && !firstEnter) {
 					if (getTableView().getSelectionModel().getSelectedItem() != null) {
-						final S val = updateHandler.merge(getTableView().getSelectionModel().getSelectedItem(), textField.getText());
 
-						boolean success = updateHandler.update(val);
-						if (success) {
-							Platform.runLater(new Runnable() {
+						try {
+							final S val = updateHandler.merge(getTableView().getSelectionModel().getSelectedItem(), textField.getText());
 
-								@Override
-								public void run() {
-									commitEdit((T) textField.getText());
-									cancelEdit();
+							boolean success = updateHandler.update(val);
+							if (success) {
+								Platform.runLater(new Runnable() {
 
-								}
-							});
+									@Override
+									public void run() {
+										commitEdit((T) textField.getText());
+										cancelEdit();
 
+									}
+								});
+
+							}
+						} catch (IllegalArgumentException iae) {
+							// Nothing
 						}
 
 					} else if (t.getCode() == KeyCode.ESCAPE) {

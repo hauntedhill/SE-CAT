@@ -14,6 +14,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.ListView;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -22,6 +24,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.GridPane;
+import javafx.util.Callback;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,8 +36,10 @@ import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.ColumnHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
+import de.hscoburg.evelin.secat.util.javafx.EditableStringTableCell;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.TableCellAction;
+import de.hscoburg.evelin.secat.util.javafx.ValueListTypeHandler;
 
 /**
  * Controller zur Anzeige der Skalen
@@ -250,6 +255,8 @@ public class SkalenController extends BaseController {
 
 		});
 
+		tableSkalen.setEditable(true);
+
 		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(0), new TableCellAction<Skala, String>() {
 
 			@Override
@@ -261,6 +268,49 @@ public class SkalenController extends BaseController {
 				}
 			}
 		});
+
+		((TableColumn<Skala, String>) tableSkalen.getColumns().get(0)).setCellFactory(new Callback<TableColumn<Skala, String>, TableCell<Skala, String>>() {
+
+			@Override
+			public TableCell<Skala, String> call(TableColumn<Skala, String> param) {
+				// TODO Auto-generated method stub^
+
+				return new EditableStringTableCell<Skala, String>(new ValueListTypeHandler<Skala>() {
+
+					@Override
+					public Skala merge(Skala value, String newValue) {
+						value.setName(newValue);
+						return value;
+					}
+
+					@Override
+					public String getText(Skala value) {
+
+						return value.getName();
+					}
+
+					@Override
+					public boolean update(Skala value) {
+						try {
+							skalenModel.updateSkala(value);
+
+							return true;
+						} catch (IllegalArgumentException iae) {
+							return false;
+						}
+					}
+
+					@Override
+					public boolean isLocked(Skala value) {
+						// TODO Auto-generated method stub
+						return skalenModel.isLocked(value);
+					}
+
+				});
+			}
+
+		});
+
 		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(1), new TableCellAction<Skala, String>() {
 
 			@Override
@@ -283,6 +333,53 @@ public class SkalenController extends BaseController {
 				}
 			}
 		});
+
+		((TableColumn<Skala, String>) tableSkalen.getColumns().get(2)).setCellFactory(new Callback<TableColumn<Skala, String>, TableCell<Skala, String>>() {
+
+			@Override
+			public TableCell<Skala, String> call(TableColumn<Skala, String> param) {
+				// TODO Auto-generated method stub^
+
+				return new EditableStringTableCell<Skala, String>(new ValueListTypeHandler<Skala>() {
+
+					@Override
+					public Skala merge(Skala value, String newValue) {
+						value.setZeilen(Integer.parseInt(newValue));
+						return value;
+					}
+
+					@Override
+					public String getText(Skala value) {
+
+						if (value.getZeilen() != null) {
+							return String.valueOf(value.getZeilen());
+						} else {
+							return "";
+						}
+					}
+
+					@Override
+					public boolean update(Skala value) {
+						try {
+							skalenModel.updateSkala(value);
+
+							return true;
+						} catch (IllegalArgumentException iae) {
+							return false;
+						}
+					}
+
+					@Override
+					public boolean isLocked(Skala value) {
+						// TODO Auto-generated method stub
+						return value.getType() != SkalaType.FREE || skalenModel.isLocked(value);
+					}
+
+				});
+			}
+
+		});
+
 		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(3), new TableCellAction<Skala, String>() {
 
 			@Override
@@ -294,6 +391,53 @@ public class SkalenController extends BaseController {
 				}
 			}
 		});
+
+		((TableColumn<Skala, String>) tableSkalen.getColumns().get(3)).setCellFactory(new Callback<TableColumn<Skala, String>, TableCell<Skala, String>>() {
+
+			@Override
+			public TableCell<Skala, String> call(TableColumn<Skala, String> param) {
+				// TODO Auto-generated method stub^
+
+				return new EditableStringTableCell<Skala, String>(new ValueListTypeHandler<Skala>() {
+
+					@Override
+					public Skala merge(Skala value, String newValue) {
+						value.setSchritte(Integer.parseInt(newValue));
+						return value;
+					}
+
+					@Override
+					public String getText(Skala value) {
+
+						if (value.getSchritte() != null) {
+							return String.valueOf(value.getSchritte());
+						} else {
+							return "";
+						}
+					}
+
+					@Override
+					public boolean update(Skala value) {
+						try {
+							skalenModel.updateSkala(value);
+
+							return true;
+						} catch (IllegalArgumentException iae) {
+							return false;
+						}
+					}
+
+					@Override
+					public boolean isLocked(Skala value) {
+						// TODO Auto-generated method stub
+						return value.getType() != SkalaType.DISCRET || skalenModel.isLocked(value);
+					}
+
+				});
+			}
+
+		});
+
 		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(4), new TableCellAction<Skala, String>() {
 
 			@Override
@@ -305,6 +449,53 @@ public class SkalenController extends BaseController {
 				}
 			}
 		});
+
+		((TableColumn<Skala, String>) tableSkalen.getColumns().get(4)).setCellFactory(new Callback<TableColumn<Skala, String>, TableCell<Skala, String>>() {
+
+			@Override
+			public TableCell<Skala, String> call(TableColumn<Skala, String> param) {
+				// TODO Auto-generated method stub^
+
+				return new EditableStringTableCell<Skala, String>(new ValueListTypeHandler<Skala>() {
+
+					@Override
+					public Skala merge(Skala value, String newValue) {
+						value.setSchrittWeite(Integer.parseInt(newValue));
+						return value;
+					}
+
+					@Override
+					public String getText(Skala value) {
+
+						if (value.getSchrittWeite() != null) {
+							return String.valueOf(value.getSchrittWeite());
+						} else {
+							return "";
+						}
+					}
+
+					@Override
+					public boolean update(Skala value) {
+						try {
+							skalenModel.updateSkala(value);
+
+							return true;
+						} catch (IllegalArgumentException iae) {
+							return false;
+						}
+					}
+
+					@Override
+					public boolean isLocked(Skala value) {
+						// TODO Auto-generated method stub
+						return !(value.getType() == SkalaType.DISCRET || value.getType() == SkalaType.MC) || skalenModel.isLocked(value);
+					}
+
+				});
+			}
+
+		});
+
 		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(5), new TableCellAction<Skala, String>() {
 
 			@Override
@@ -316,6 +507,53 @@ public class SkalenController extends BaseController {
 				}
 			}
 		});
+
+		((TableColumn<Skala, String>) tableSkalen.getColumns().get(5)).setCellFactory(new Callback<TableColumn<Skala, String>, TableCell<Skala, String>>() {
+
+			@Override
+			public TableCell<Skala, String> call(TableColumn<Skala, String> param) {
+				// TODO Auto-generated method stub^
+
+				return new EditableStringTableCell<Skala, String>(new ValueListTypeHandler<Skala>() {
+
+					@Override
+					public Skala merge(Skala value, String newValue) {
+						value.setMinText(newValue);
+						return value;
+					}
+
+					@Override
+					public String getText(Skala value) {
+
+						if (value.getMinText() != null) {
+							return String.valueOf(value.getMinText());
+						} else {
+							return "";
+						}
+					}
+
+					@Override
+					public boolean update(Skala value) {
+						try {
+							skalenModel.updateSkala(value);
+
+							return true;
+						} catch (IllegalArgumentException iae) {
+							return false;
+						}
+					}
+
+					@Override
+					public boolean isLocked(Skala value) {
+						// TODO Auto-generated method stub
+						return value.getType() != SkalaType.DISCRET || skalenModel.isLocked(value);
+					}
+
+				});
+			}
+
+		});
+
 		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(6), new TableCellAction<Skala, String>() {
 
 			@Override
@@ -327,6 +565,53 @@ public class SkalenController extends BaseController {
 				}
 			}
 		});
+
+		((TableColumn<Skala, String>) tableSkalen.getColumns().get(6)).setCellFactory(new Callback<TableColumn<Skala, String>, TableCell<Skala, String>>() {
+
+			@Override
+			public TableCell<Skala, String> call(TableColumn<Skala, String> param) {
+				// TODO Auto-generated method stub^
+
+				return new EditableStringTableCell<Skala, String>(new ValueListTypeHandler<Skala>() {
+
+					@Override
+					public Skala merge(Skala value, String newValue) {
+						value.setMaxText(newValue);
+						return value;
+					}
+
+					@Override
+					public String getText(Skala value) {
+
+						if (value.getMaxText() != null) {
+							return String.valueOf(value.getMaxText());
+						} else {
+							return "";
+						}
+					}
+
+					@Override
+					public boolean update(Skala value) {
+						try {
+							skalenModel.updateSkala(value);
+
+							return true;
+						} catch (IllegalArgumentException iae) {
+							return false;
+						}
+					}
+
+					@Override
+					public boolean isLocked(Skala value) {
+						// TODO Auto-generated method stub
+						return value.getType() != SkalaType.DISCRET || skalenModel.isLocked(value);
+					}
+
+				});
+			}
+
+		});
+
 		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(7), new TableCellAction<Skala, String>() {
 
 			@Override
@@ -337,6 +622,52 @@ public class SkalenController extends BaseController {
 					return new ReadOnlyObjectWrapper<String>("");
 				}
 			}
+		});
+
+		((TableColumn<Skala, String>) tableSkalen.getColumns().get(7)).setCellFactory(new Callback<TableColumn<Skala, String>, TableCell<Skala, String>>() {
+
+			@Override
+			public TableCell<Skala, String> call(TableColumn<Skala, String> param) {
+				// TODO Auto-generated method stub^
+
+				return new EditableStringTableCell<Skala, String>(new ValueListTypeHandler<Skala>() {
+
+					@Override
+					public Skala merge(Skala value, String newValue) {
+						value.setOptimum(Integer.parseInt(newValue));
+						return value;
+					}
+
+					@Override
+					public String getText(Skala value) {
+
+						if (value.getOptimum() != null) {
+							return String.valueOf(value.getOptimum());
+						} else {
+							return "";
+						}
+					}
+
+					@Override
+					public boolean update(Skala value) {
+						try {
+							skalenModel.updateSkala(value);
+
+							return true;
+						} catch (IllegalArgumentException iae) {
+							return false;
+						}
+					}
+
+					@Override
+					public boolean isLocked(Skala value) {
+						// TODO Auto-generated method stub
+						return value.getType() != SkalaType.DISCRET || skalenModel.isLocked(value);
+					}
+
+				});
+			}
+
 		});
 
 		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(8), new TableCellAction<Skala, String>() {
@@ -351,6 +682,52 @@ public class SkalenController extends BaseController {
 			}
 		});
 
+		((TableColumn<Skala, String>) tableSkalen.getColumns().get(8)).setCellFactory(new Callback<TableColumn<Skala, String>, TableCell<Skala, String>>() {
+
+			@Override
+			public TableCell<Skala, String> call(TableColumn<Skala, String> param) {
+				// TODO Auto-generated method stub^
+
+				return new EditableStringTableCell<Skala, String>(new ValueListTypeHandler<Skala>() {
+
+					@Override
+					public Skala merge(Skala value, String newValue) {
+						value.setVerweigerungsAntwort(newValue);
+						return value;
+					}
+
+					@Override
+					public String getText(Skala value) {
+
+						if (value.getVerweigerungsAntwort() != null) {
+							return String.valueOf(value.getVerweigerungsAntwort());
+						} else {
+							return "";
+						}
+					}
+
+					@Override
+					public boolean update(Skala value) {
+						try {
+							skalenModel.updateSkala(value);
+
+							return true;
+						} catch (IllegalArgumentException iae) {
+							return false;
+						}
+					}
+
+					@Override
+					public boolean isLocked(Skala value) {
+						// TODO Auto-generated method stub
+						return value.getType() != SkalaType.MC || skalenModel.isLocked(value);
+					}
+
+				});
+			}
+
+		});
+
 		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(9), new TableCellAction<Skala, String>() {
 
 			@Override
@@ -362,6 +739,52 @@ public class SkalenController extends BaseController {
 					return new ReadOnlyObjectWrapper<String>("");
 				}
 			}
+		});
+
+		((TableColumn<Skala, String>) tableSkalen.getColumns().get(9)).setCellFactory(new Callback<TableColumn<Skala, String>, TableCell<Skala, String>>() {
+
+			@Override
+			public TableCell<Skala, String> call(TableColumn<Skala, String> param) {
+				// TODO Auto-generated method stub^
+
+				return new EditableStringTableCell<Skala, String>(new ValueListTypeHandler<Skala>() {
+
+					@Override
+					public Skala merge(Skala value, String newValue) {
+						value.setAndereAntwort(newValue);
+						return value;
+					}
+
+					@Override
+					public String getText(Skala value) {
+
+						if (value.getAndereAntwort() != null) {
+							return String.valueOf(value.getAndereAntwort());
+						} else {
+							return "";
+						}
+					}
+
+					@Override
+					public boolean update(Skala value) {
+						try {
+							skalenModel.updateSkala(value);
+
+							return true;
+						} catch (IllegalArgumentException iae) {
+							return false;
+						}
+					}
+
+					@Override
+					public boolean isLocked(Skala value) {
+						// TODO Auto-generated method stub
+						return value.getType() != SkalaType.MC || skalenModel.isLocked(value);
+					}
+
+				});
+			}
+
 		});
 
 		ColumnHelper.setTableColumnCellFactory(tableSkalen.getColumns().get(10), new TableCellAction<Skala, String>() {

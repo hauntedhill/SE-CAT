@@ -1,5 +1,6 @@
 package de.hscoburg.evelin.secat.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import de.hscoburg.evelin.secat.dao.SkalaDAO;
+import de.hscoburg.evelin.secat.dao.entity.Frage;
+import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
+import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 
@@ -92,6 +96,47 @@ public class SkalenModel {
 		}
 		skalaDAO.persist(s);
 
+	}
+
+	public void updateSkala(Skala s) throws IllegalArgumentException {
+		if (s.getType().equals(SkalaType.FREE) && (s.getZeilen() == null || s.getName() == null || "".equals(s.getName()))) {
+			throw new IllegalArgumentException();
+		}
+
+		if (s.getType().equals(SkalaType.MC)
+				&& (s.getAuswahl() == null || s.getAuswahl().size() == 0 || s.getSchrittWeite() == null || s.getName() == null || "".equals(s.getName()))) {
+			throw new IllegalArgumentException();
+		}
+
+		if (s.getType().equals(SkalaType.DISCRET)
+				&& (s.getOptimum() == null || s.getSchrittWeite() == null || s.getSchritte() == null || s.getMaxText() == null || s.getMinText() == null
+						|| "".equals(s.getMaxText()) || "".equals(s.getMinText()) || s.getName() == null || "".equals(s.getName()))) {
+			throw new IllegalArgumentException();
+		}
+
+		skalaDAO.merge(s);
+	}
+
+	public boolean isLocked(Skala s) {
+		s = skalaDAO.findById(s.getId());
+
+		for (Fragebogen f : s.getFrageboegen() != null ? s.getFrageboegen() : new ArrayList<Fragebogen>()) {
+			if (f.getExportiertQuestorPro()) {
+				return true;
+			}
+		}
+
+		for (Frage f : s.getFragen() != null ? s.getFragen() : new ArrayList<Frage>()) {
+			for (Frage_Fragebogen ff : f.getFrageFragebogen() != null ? f.getFrageFragebogen() : new ArrayList<Frage_Fragebogen>()) {
+
+				if (ff.getFragebogen().getExportiertQuestorPro()) {
+					return true;
+				}
+			}
+
+		}
+
+		return false;
 	}
 
 }
