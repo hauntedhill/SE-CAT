@@ -77,11 +77,20 @@ public abstract class BaseController implements Initializable {
 	 */
 	public void setTitle() {
 
+		setTitle("");
+
+	}
+
+	/**
+	 * Setzt den Titles sowie das Icon der Scene in die Titlebar
+	 */
+	public void setTitle(final String additionalTitle) {
+
 		Platform.runLater(new Runnable() {
 
 			@Override
 			public void run() {
-				getCurrentStage().setTitle(SeCat.MAIN_STAGE_TITLE + " - " + getSceneName());
+				getCurrentStage().setTitle(SeCat.MAIN_STAGE_TITLE + " - " + getSceneName() + (additionalTitle != null ? additionalTitle : ""));
 				getCurrentStage().getIcons().add(new Image("/image/icons/dvi.png"));
 
 			}
