@@ -90,7 +90,7 @@ public abstract class BaseController implements Initializable {
 
 			@Override
 			public void run() {
-				getCurrentStage().setTitle(SeCat.MAIN_STAGE_TITLE + " - " + getSceneName() + (additionalTitle != null ? additionalTitle : ""));
+				getCurrentStage().setTitle(SeCat.MAIN_STAGE_TITLE + " - " + getSceneName() + (additionalTitle != null ? " " + additionalTitle : ""));
 				getCurrentStage().getIcons().add(new Image("/image/icons/dvi.png"));
 
 			}
