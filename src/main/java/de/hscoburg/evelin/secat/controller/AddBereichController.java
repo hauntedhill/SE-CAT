@@ -109,4 +109,10 @@ public class AddBereichController extends BaseController {
 		return "scene.addbereich.lable.title";
 	}
 
+	@Override
+	public void setTitle() {
+
+		setTitle("( " + treeTableController.getSelectedTreeItem().getValue().getName() + " )");
+	}
+
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 
-
 @Controller
 public class EditItemController extends BaseController {
 
@@ -24,12 +23,18 @@ public class EditItemController extends BaseController {
 		Item edit = treeTableController.getSelectedTreeItem().getValue().getItem();
 		addItemController.setItemToEdit(edit);
 
-
 	}
 
 	@Override
 	public String getKeyForSceneName() {
 
 		return "scene.editItem.lable.title";
+	}
+
+	@Override
+	public void setTitle() {
+
+		setTitle("( " + treeTableController.getSelectedTreeItem().getValue().getItem().getBereich().getHandlungsfeld().getName() + " - "
+				+ treeTableController.getSelectedTreeItem().getValue().getItem().getBereich().getName() + " )");
 	}
 }

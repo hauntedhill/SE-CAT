@@ -320,4 +320,10 @@ public class AddItemController extends BaseController {
 
 		return "scene.addItem.lable.title";
 	}
+
+	@Override
+	public void setTitle() {
+
+		setTitle("( " + selected.getValue().getBereich().getHandlungsfeld().getName() + " - " + selected.getValue().getBereich().getName() + " )");
+	}
 }

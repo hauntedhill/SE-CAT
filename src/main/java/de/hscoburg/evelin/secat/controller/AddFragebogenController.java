@@ -74,7 +74,9 @@ public class AddFragebogenController extends BaseController {
 	@FXML
 	private ListView<Item> itemList;
 	@FXML
-	private ListView<Frage> fragenList;
+	private ListView<Frage> fragenListTop;
+	@FXML
+	private ListView<Frage> fragenListBottom;
 	@FXML
 	private ComboBox<Fragebogen> vorlage;
 	@FXML
@@ -218,7 +220,32 @@ public class AddFragebogenController extends BaseController {
 			}
 		});
 
-		fragenList.setCellFactory(new Callback<ListView<Frage>, ListCell<Frage>>() {
+		fragenListTop.setCellFactory(new Callback<ListView<Frage>, ListCell<Frage>>() {
+
+			@Override
+			public ListCell<Frage> call(ListView<Frage> f) {
+
+				ListCell<Frage> cell = new ListCell<Frage>() {
+
+					@Override
+					protected void updateItem(Frage f, boolean bln) {
+						super.updateItem(f, bln);
+						if (f != null) {
+							setText(f.getName());
+						}
+						if (f == null) {
+							setText("");
+						}
+
+					}
+
+				};
+
+				return cell;
+			}
+		});
+
+		fragenListBottom.setCellFactory(new Callback<ListView<Frage>, ListCell<Frage>>() {
 
 			@Override
 			public ListCell<Frage> call(ListView<Frage> f) {
@@ -411,7 +438,9 @@ public class AddFragebogenController extends BaseController {
 
 			private List<Item> currentItems = new ArrayList<>();
 
-			private List<Frage> currentFragen = new ArrayList<>();
+			private List<Frage> currentFragenTop = new ArrayList<>();
+
+			private List<Frage> currentFragenBottom = new ArrayList<>();
 
 			@Override
 			public void performBeforeEventsBlocked(ActionEvent event) throws Exception {
@@ -420,11 +449,13 @@ public class AddFragebogenController extends BaseController {
 				 * Hinzugefuegt da Exception bei Zugriff aus einem No FX Thread, ich frage mich blos warum ....
 				 */
 				currentItems.addAll(itemList.getItems());
-				currentFragen.addAll(fragenList.getItems());
+				currentFragenTop.addAll(fragenListTop.getItems());
+				currentFragenBottom.addAll(fragenListBottom.getItems());
+
 			}
 
 			@Override
-			public void handleAction(ActionEvent event) throws Exception {
+			public void handleAction(ActionEvent event) throws IllegalArgumentException {
 
 				try {
 					if (name.getText().equals("") || selectedPerspektive == null || skala.getValue() == null || lehrveranstaltung.getValue() == null
@@ -438,68 +469,15 @@ public class AddFragebogenController extends BaseController {
 
 					if (editMode == false) {
 
-						// Fragebogen f = new Fragebogen();
-						// fragebogenModel.persistFragebogen(f);
-
 						fragebogenModel.addFragebogen(name.getText(), currentItems, perspektive.getValue(), eigenschaft.getValue(), skala.getValue(),
-								lehrveranstaltung.getValue(), currentFragen, positionFrage.getValue());
+								lehrveranstaltung.getValue(), currentFragenTop, currentFragenBottom);
 
-						/*
-						 * for (Frage frage : fragenList.getItems()) {
-						 * 
-						 * Frage_Fragebogen frageFragebogen = new Frage_Fragebogen(); frageFragebogen.setPosition(positionFrage.getValue());
-						 * frageFragebogen.setFrage(frage); f.addFrage_Fragebogen(frageFragebogen); fragenModel.persist(frageFragebogen); }
-						 * fragebogenModel.mergeFragebogen(f);
-						 * 
-						 * for (Item item : itemList.getItems()) { item.addFragebogen(f); handlungsfeldModel.mergeItem(item); }
-						 */
 					} else {
 
 						fragebogenModel.editFragebogen(editFragebogen, name.getText(), currentItems, perspektive.getValue(), eigenschaft.getValue(),
-								skala.getValue(), lehrveranstaltung.getValue(), currentFragen, fragenToRemove, itemsToRemove, positionFrage.getValue());
+								skala.getValue(), lehrveranstaltung.getValue(), currentFragenTop, currentFragenBottom, fragenToRemove, itemsToRemove);
 					}
-				}
-				/*
-				 * editFragebogen.setName(name.getText()); editFragebogen.setItems(itemList.getItems());
-				 * editFragebogen.setPerspektive(perspektive.getValue()); editFragebogen.setEigenschaft(eigenschaft.getValue());
-				 * editFragebogen.setSkala(skala.getValue()); editFragebogen.setLehrveranstaltung(lehrveranstaltung.getValue());
-				 * editFragebogen.setExportiert(false); editFragebogen.setErstellungsDatum(new Date());
-				 * 
-				 * ArrayList<Frage> fragenExist = new ArrayList<Frage>(); for (Frage_Fragebogen frage_fragebogen :
-				 * editFragebogen.getCustomFragen()) { fragenExist.add(frage_fragebogen.getFrage()); }
-				 * 
-				 * for (Frage frage : fragenToRemove) { for (Frage_Fragebogen frage_fragebogen : editFragebogen.getCustomFragen()) { if
-				 * (frage_fragebogen.getFrage().equals(frage)) { fragenExist.remove(frage); frage_fragebogen.setFragebogen(null);
-				 * fragenModel.merge(frage_fragebogen); } } }
-				 * 
-				 * for (Frage frage : fragenList.getItems()) {
-				 * 
-				 * if (!fragenExist.contains(frage) || fragenExist.isEmpty()) { Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
-				 * frageFragebogen.setPosition(positionFrage.getValue()); frageFragebogen.setFrage(frage);
-				 * editFragebogen.addFrage_Fragebogen(frageFragebogen); fragenModel.persist(frageFragebogen);
-				 * fragebogenModel.mergeFragebogen(editFragebogen); } else { for (Frage_Fragebogen frageFragebogen :
-				 * editFragebogen.getCustomFragen()) { if (frageFragebogen.getFrage().equals(frage)) {
-				 * frageFragebogen.setPosition(positionFrage.getValue()); fragenModel.merge(frageFragebogen); }
-				 * 
-				 * }
-				 * 
-				 * }
-				 * 
-				 * } ArrayList<Fragebogen> itemFb = new ArrayList<Fragebogen>(); itemFb.add(editFragebogen);
-				 * 
-				 * for (Item item : itemList.getItems()) { if (!itemsToRemove.contains(item)) { item.setFrageboegen(itemFb);
-				 * handlungsfeldModel.mergeItem(item); } }
-				 * 
-				 * for (Item item : itemsToRemove) { ArrayList<Fragebogen> fbs = new ArrayList<Fragebogen>(); for (Fragebogen f :
-				 * item.getFrageboegen()) { if (!editFragebogen.equals(f)) { fbs.add(f); } item.setFrageboegen(fbs);
-				 * handlungsfeldModel.mergeItem(item); }
-				 * 
-				 * }
-				 * 
-				 * }
-				 * 
-				 * }
-				 */catch (IllegalArgumentException iae) {
+				} catch (IllegalArgumentException iae) {
 					Platform.runLater(new Runnable() {
 
 						@Override
@@ -516,9 +494,9 @@ public class AddFragebogenController extends BaseController {
 			public void updateUI() {
 				ObservableList<Item> items = FXCollections.observableArrayList();
 				ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
-				// itemList.setItems(items);
-				// frageList.setItems(fragenOl);
-				// frageText.clear();
+				itemList.getItems().clear();
+				fragenListTop.getItems().clear();
+				fragenListBottom.getItems().clear();
 				fach.getSelectionModel().clearSelection();
 				perspektive.getSelectionModel().clearSelection();
 				eigenschaft.getSelectionModel().clearSelection();
@@ -539,33 +517,41 @@ public class AddFragebogenController extends BaseController {
 
 			@Override
 			public void updateUI() {
-				Fragebogen x = vorlage.getSelectionModel().getSelectedItem();
-				ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
+				Fragebogen vorlageFragebogen = vorlage.getSelectionModel().getSelectedItem();
+				ObservableList<Frage> fragenOlTop = FXCollections.observableArrayList();
+				ObservableList<Frage> fragenOlBottom = FXCollections.observableArrayList();
 				ObservableList<Item> items = FXCollections.observableArrayList();
 
-				if (x.getId() != -1) {
+				if (vorlageFragebogen.getId() != -1) {
 
-					fragenOl.clear();
+					fragenOlTop.clear();
+					fragenOlBottom.clear();
 
-					for (Item item : x.getItems()) {
+					for (Item item : vorlageFragebogen.getItems()) {
 						items.add(item);
 					}
 
-					for (Frage_Fragebogen frage : x.getFrageFragebogen()) {
-						fragenOl.add(frage.getFrage());
-						positionFrage.setValue(frage.getPosition());
+					for (Frage_Fragebogen frage : vorlageFragebogen.getFrageFragebogen()) {
+						if (frage.getPosition().equals(FragePosition.TOP)) {
+							fragenOlTop.add(frage.getFrage());
+						} else {
+							fragenOlBottom.add(frage.getFrage());
+						}
+
 					}
 
-					perspektive.getSelectionModel().select(x.getPerspektive());
-					eigenschaft.getSelectionModel().select(x.getEigenschaft());
-					skala.getSelectionModel().select(x.getSkala());
-					lehrveranstaltung.getSelectionModel().select(x.getLehrveranstaltung());
-					name.setText(x.getName());
+					perspektive.getSelectionModel().select(vorlageFragebogen.getPerspektive());
+					eigenschaft.getSelectionModel().select(vorlageFragebogen.getEigenschaft());
+					skala.getSelectionModel().select(vorlageFragebogen.getSkala());
+					lehrveranstaltung.getSelectionModel().select(vorlageFragebogen.getLehrveranstaltung());
+					name.setText(vorlageFragebogen.getName());
 					itemList.setItems(items);
-					fragenList.setItems(fragenOl);
+					fragenListTop.setItems(fragenOlTop);
+					fragenListBottom.setItems(fragenOlBottom);
 				} else {
 					itemList.setItems(items);
-					fragenList.setItems(fragenOl);
+					fragenListTop.setItems(fragenOlTop);
+					fragenListBottom.setItems(fragenOlBottom);
 					fach.getSelectionModel().clearSelection();
 					perspektive.getSelectionModel().clearSelection();
 					eigenschaft.getSelectionModel().clearSelection();
@@ -586,18 +572,23 @@ public class AddFragebogenController extends BaseController {
 
 			@Override
 			public void updateUI() {
-				ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
-				fragenOl = fragenList.getItems();
+				ObservableList<Frage> fragenOlTop = FXCollections.observableArrayList();
+				ObservableList<Frage> fragenOlBottom = FXCollections.observableArrayList();
+				fragenOlTop = fragenListTop.getItems();
+				fragenOlBottom = fragenListBottom.getItems();
 				for (Frage frage : tableViewFragen.getSelectionModel().getSelectedItems()) {
-					if (!fragenOl.contains(frage)) {
-						fragenOl.add(frage);
+					if (!fragenOlTop.contains(frage) && !fragenOlBottom.contains(frage)) {
+						if (positionFrage.getValue().equals(FragePosition.TOP)) {
+							fragenOlTop.add(frage);
+						} else {
+							fragenOlBottom.add(frage);
+						}
 					}
-					if (fragenToRemove.contains(frage)) {
-						fragenToRemove.remove(frage);
-					}
+
 				}
 
-				fragenList.setItems(fragenOl);
+				fragenListTop.setItems(fragenOlTop);
+				fragenListBottom.setItems(fragenOlBottom);
 
 			}
 		}, addFrage);
@@ -611,12 +602,23 @@ public class AddFragebogenController extends BaseController {
 
 			@Override
 			public void updateUI() {
-				ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
-				fragenOl = fragenList.getItems();
-				fragenToRemove.add(fragenList.getSelectionModel().getSelectedItem());
-				fragenOl.remove(fragenList.getSelectionModel().getSelectedItem());
+				ObservableList<Frage> fragenOlTop = FXCollections.observableArrayList();
+				ObservableList<Frage> fragenOlBottom = FXCollections.observableArrayList();
+				fragenOlTop = fragenListTop.getItems();
+				fragenOlBottom = fragenListBottom.getItems();
 
-				fragenList.setItems(fragenOl);
+				if (fragenListTop.getSelectionModel().getSelectedItem() != null) {
+					fragenOlTop.remove(fragenListTop.getSelectionModel().getSelectedItem());
+					fragenToRemove.add(fragenListTop.getSelectionModel().getSelectedItem());
+					fragenListTop.getSelectionModel().clearSelection();
+				} else if (fragenListBottom.getSelectionModel().getSelectedItem() != null) {
+					fragenOlBottom.remove(fragenListBottom.getSelectionModel().getSelectedItem());
+					fragenToRemove.add(fragenListBottom.getSelectionModel().getSelectedItem());
+					fragenListBottom.getSelectionModel().clearSelection();
+				}
+
+				fragenListTop.setItems(fragenOlTop);
+				fragenListBottom.setItems(fragenOlBottom);
 
 			}
 		}, removeFrage);
@@ -637,7 +639,8 @@ public class AddFragebogenController extends BaseController {
 
 	public void setFragebogenToEdit(Fragebogen f) {
 		ObservableList<Item> items = FXCollections.observableArrayList();
-		ObservableList<Frage> fragenOl = FXCollections.observableArrayList();
+		ObservableList<Frage> fragenOlTop = FXCollections.observableArrayList();
+		ObservableList<Frage> fragenOlBottom = FXCollections.observableArrayList();
 		editMode = true;
 		editFragebogen = f;
 		for (Item item : f.getItems()) {
@@ -645,11 +648,15 @@ public class AddFragebogenController extends BaseController {
 		}
 
 		for (Frage_Fragebogen frage : f.getFrageFragebogen()) {
-			fragenOl.add(frage.getFrage());
-			positionFrage.setValue(frage.getPosition());
+			if (frage.getPosition().equals(FragePosition.TOP)) {
+				fragenOlTop.add(frage.getFrage());
+			} else {
+				fragenOlBottom.add(frage.getFrage());
+			}
 
 		}
-		fragenList.setItems(fragenOl);
+		fragenListTop.setItems(fragenOlTop);
+		fragenListBottom.setItems(fragenOlBottom);
 		perspektive.getSelectionModel().select(f.getPerspektive());
 		eigenschaft.getSelectionModel().select(f.getEigenschaft());
 		skala.getSelectionModel().select(f.getSkala());

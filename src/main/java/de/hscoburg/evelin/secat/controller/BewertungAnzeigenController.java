@@ -1494,4 +1494,10 @@ public class BewertungAnzeigenController extends BaseController {
 
 		return "scene.evaluation.lable.title";
 	}
+
+	@Override
+	public void setTitle() {
+
+		setTitle(" " + fragebogen.getName());
+	}
 }

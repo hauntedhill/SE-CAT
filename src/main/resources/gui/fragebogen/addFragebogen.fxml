@@ -118,16 +118,15 @@
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="100.0" prefWidth="160.0" />
 <ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="100.0" prefWidth="160.0" />
-<ColumnConstraints hgrow="SOMETIMES" maxWidth="160.0" minWidth="160.0" prefWidth="160.0" />
-<ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="15.0" />
+<ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
+<ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="15.0" prefWidth="246.0" />
 <ColumnConstraints hgrow="NEVER" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
   </columnConstraints>
   <rowConstraints>
 <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
 <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="30.0" vgrow="SOMETIMES" />
 <RowConstraints maxHeight="1.7976931348623157E308" minHeight="100.0" vgrow="SOMETIMES" />
-<RowConstraints maxHeight="30.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
-<RowConstraints maxHeight="15.0" minHeight="5.0" prefHeight="10.0" vgrow="SOMETIMES" />
+<RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
 <RowConstraints maxHeight="35.0" minHeight="30.0" prefHeight="35.0" vgrow="SOMETIMES" />
 <RowConstraints maxHeight="15.0" minHeight="5.0" prefHeight="10.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="30.0" minHeight="20.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -138,19 +137,21 @@
 
 
 
-<TableView fx:id="tableViewFragen" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="132.0" prefWidth="280.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.rowIndex="8">
+<TableView fx:id="tableViewFragen" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="132.0" prefWidth="280.0" GridPane.columnIndex="1" GridPane.columnSpan="4" GridPane.halignment="LEFT" GridPane.rowIndex="7">
   <columns>
     <TableColumn maxWidth="1.7976931348623157E308" prefWidth="145.0" text="%scene.question.table.name" />
     <TableColumn maxWidth="1.7976931348623157E308" prefWidth="168.0" text="%scene.question.table.skala" />
     <TableColumn maxWidth="1.7976931348623157E308" prefWidth="235.0" text="%scene.question.table.text" />
   </columns>
 </TableView>
-			<Button fx:id="addFrage" mnemonicParsing="false" text="%scene.all.addbutton" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-			<Button fx:id="removeFrage" mnemonicParsing="false" text="%scene.all.removebutton" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-			<ListView fx:id="fragenList" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" GridPane.rowSpan="2" />
-			<Label text="%scene.addFragebogen.lable.questiontoadd" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-			<Label text="%scene.addFragebogen.lable.availiblequestion" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="7" />
-			<ComboBox fx:id="positionFrage" layoutX="110.0" layoutY="43.0" prefHeight="25.0" prefWidth="100.0" promptText="%scene.frageboegen.frage.label.position" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+			<Button fx:id="addFrage" mnemonicParsing="false" text="%scene.all.addbutton" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+			<Button fx:id="removeFrage" mnemonicParsing="false" text="%scene.all.removebutton" GridPane.columnIndex="2" GridPane.rowIndex="4" />
+			<ListView fx:id="fragenListTop" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+			<ListView fx:id="fragenListBottom" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="4" GridPane.rowIndex="2" /><Label text="Bottom" GridPane.columnIndex="4" GridPane.rowIndex="1" /><Label text="Top" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+			<Label text="%scene.addFragebogen.lable.questiontoadd" GridPane.columnIndex="1" GridPane.columnSpan="2" />
+			<Label text="%scene.addFragebogen.lable.availiblequestion" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
+			<ComboBox fx:id="positionFrage" layoutX="110.0" layoutY="43.0" prefHeight="25.0" prefWidth="100.0" promptText="%scene.frageboegen.frage.label.position" GridPane.columnIndex="4" GridPane.rowIndex="4" />
+			
 
 </children>
 </GridPane>

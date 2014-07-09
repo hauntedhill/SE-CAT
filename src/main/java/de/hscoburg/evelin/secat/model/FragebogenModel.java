@@ -636,8 +636,8 @@ public class FragebogenModel {
 		}
 	}
 
-	public void addFragebogen(String name, List<Item> itemList, Perspektive p, Eigenschaft e, Skala s, Lehrveranstaltung l, List<Frage> fragenList,
-			FragePosition positionFrage) {
+	public void addFragebogen(String name, List<Item> itemList, Perspektive p, Eigenschaft e, Skala s, Lehrveranstaltung l, List<Frage> fragenListTop,
+			List<Frage> fragenListBottom) {
 		Fragebogen f = new Fragebogen();
 		fragebogenDAO.persist(f);
 		f.setName(name);
@@ -652,10 +652,19 @@ public class FragebogenModel {
 		f.setErstellungsDatum(new Date());
 
 		fragebogenDAO.merge(f);
-		for (Frage frage : fragenList) {
+		for (Frage frage : fragenListTop) {
 
 			Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
-			frageFragebogen.setPosition(positionFrage);
+			frageFragebogen.setPosition(FragePosition.TOP);
+			frageFragebogen.setFrage(frage);
+			f.addFrageFragebogen(frageFragebogen);
+			frageFragebogenDAO.persist(frageFragebogen);
+		}
+
+		for (Frage frage : fragenListBottom) {
+
+			Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
+			frageFragebogen.setPosition(FragePosition.BOTTOM);
 			frageFragebogen.setFrage(frage);
 			f.addFrageFragebogen(frageFragebogen);
 			frageFragebogenDAO.persist(frageFragebogen);
@@ -670,7 +679,7 @@ public class FragebogenModel {
 	}
 
 	public void editFragebogen(Fragebogen edit, String name, List<Item> itemList, Perspektive p, Eigenschaft e, Skala s, Lehrveranstaltung l,
-			List<Frage> fragenList, List<Frage> fragenToRemove, List<Item> itemsToRemove, FragePosition positionFrage) {
+			List<Frage> fragenListTop, List<Frage> fragenListBottom, List<Frage> fragenToRemove, List<Item> itemsToRemove) {
 
 		edit.setName(name);
 		edit.setItems(itemList);
@@ -698,11 +707,11 @@ public class FragebogenModel {
 			}
 		}
 
-		for (Frage frage : fragenList) {
+		for (Frage frage : fragenListTop) {
 
 			if (!fragenExist.contains(frage) || fragenExist.isEmpty()) {
 				Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
-				frageFragebogen.setPosition(positionFrage);
+				frageFragebogen.setPosition(FragePosition.TOP);
 				frageFragebogen.setFrage(frage);
 				edit.addFrageFragebogen(frageFragebogen);
 				frageFragebogenDAO.persist(frageFragebogen);
@@ -710,7 +719,29 @@ public class FragebogenModel {
 			} else {
 				for (Frage_Fragebogen frageFragebogen : edit.getFrageFragebogen()) {
 					if (frageFragebogen.getFrage().equals(frage)) {
-						frageFragebogen.setPosition(positionFrage);
+						frageFragebogen.setPosition(FragePosition.TOP);
+						frageFragebogenDAO.merge(frageFragebogen);
+					}
+
+				}
+
+			}
+
+		}
+
+		for (Frage frage : fragenListBottom) {
+
+			if (!fragenExist.contains(frage) || fragenExist.isEmpty()) {
+				Frage_Fragebogen frageFragebogen = new Frage_Fragebogen();
+				frageFragebogen.setPosition(FragePosition.BOTTOM);
+				frageFragebogen.setFrage(frage);
+				edit.addFrageFragebogen(frageFragebogen);
+				frageFragebogenDAO.persist(frageFragebogen);
+				fragebogenDAO.merge(edit);
+			} else {
+				for (Frage_Fragebogen frageFragebogen : edit.getFrageFragebogen()) {
+					if (frageFragebogen.getFrage().equals(frage)) {
+						frageFragebogen.setPosition(FragePosition.BOTTOM);
 						frageFragebogenDAO.merge(frageFragebogen);
 					}
 
