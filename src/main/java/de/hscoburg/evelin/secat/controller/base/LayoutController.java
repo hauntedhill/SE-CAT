@@ -67,6 +67,8 @@ public class LayoutController implements Initializable {
 
 	public static final String EDIT_FRAGEBOGEN_FXML = FRAGEBOGEN_PATH + "editFragebogen.fxml";
 
+	public static final String EDIT_HANDLUNGSFELDBEREICH_FXML = STAMMDATEN_PATH + "editHandlungsfeldBereich.fxml";
+
 	@FXML
 	private BorderPane layout;
 

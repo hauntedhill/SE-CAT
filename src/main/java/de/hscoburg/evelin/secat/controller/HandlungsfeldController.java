@@ -28,12 +28,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
+import de.hscoburg.evelin.secat.controller.base.LayoutController;
 import de.hscoburg.evelin.secat.controller.helper.TreeItemWrapper;
 import de.hscoburg.evelin.secat.dao.HandlungsfeldDAO;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
+import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
@@ -68,6 +70,8 @@ public class HandlungsfeldController extends BaseController {
 						new Image("/image/icons/add_hand.png", 16, 16, true, true)));
 				MenuItem addBereichItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.addBereichItem"),
 						new ImageView(new Image("/image/icons/add_hand.png", 16, 16, true, true)));
+				MenuItem renameItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.rename"), new ImageView(new Image(
+						"/image/icons/edit.png", 16, 16, true, true)));
 				MenuItem activateHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.activateHfItem"),
 						new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
 				MenuItem activateItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.activateItItem"),
@@ -267,12 +271,30 @@ public class HandlungsfeldController extends BaseController {
 
 				});
 
+				renameItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+					private Stage stage;
+
+					@Override
+					public void handleAction(ActionEvent t) {
+
+					}
+
+					@Override
+					public void updateUI() {
+						stage = SpringFXMLLoader.getInstance().loadInNewScene(LayoutController.EDIT_HANDLUNGSFELDBEREICH_FXML);
+						stage.show();
+					}
+
+				});
+
 				rowMenu.getItems().add(activateItItem);
 				rowMenu.getItems().add(deactivateItItem);
 				rowMenu.getItems().add(editItItem);
 
 				rowMenuHf.getItems().add(addHfItem);
 				rowMenuHf.getItems().add(activateHfItem);
+				rowMenuHf.getItems().add(renameItem);
 				rowMenuHf.getItems().add(deactivateHfItem);
 				rowMenuHf.getItems().add(addBereichItem);
 				rowMenuHf.getItems().add(addItItem);
