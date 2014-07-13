@@ -25,7 +25,7 @@ public class FragenblockXML extends BaseXML {
 	 */
 	@Override
 	public void getStartXML(StringBuilder builder) {
-		builder.append("<QUESTIONBLOCK PLACE=\"" + number + "\" TARGETLAYER=\"0\" RANDOMIZED=\"false\" NAME=\"" + XML_ESCAPER.translate(name) + "\">\n");
+		builder.append("<QUESTIONBLOCK PLACE=\"" + number + "\" TARGETLAYER=\"0\" RANDOMIZED=\"false\" NAME=\"" + escapeString(name) + "\">\n");
 	}
 
 	/**

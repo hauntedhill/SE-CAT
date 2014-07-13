@@ -196,12 +196,12 @@ public class TopMenuController implements Initializable {
 
 			@Override
 			public void handleAction(ActionEvent event) {
-
+				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.SHOW_FRAGEBOGEN_FXML);
 			}
 
 			@Override
 			public void updateUI() {
-				guiNode = (Node) SpringFXMLLoader.getInstance().load(LayoutController.SHOW_FRAGEBOGEN_FXML);
+
 				layout.setCenterNode(guiNode);
 			}
 		});

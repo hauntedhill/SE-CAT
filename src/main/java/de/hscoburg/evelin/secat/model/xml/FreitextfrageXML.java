@@ -44,7 +44,7 @@ public class FreitextfrageXML extends BaseXML {
 	@Override
 	public void getStartXML(StringBuilder builder) {
 
-		builder.append("<FREEQUESTION ROWS=\"" + rows + "\" PLACE=\"" + place + "\" TEXT=\"" + XML_ESCAPER.translate(text)
+		builder.append("<FREEQUESTION ROWS=\"" + rows + "\" PLACE=\"" + place + "\" TEXT=\"" + escapeString(text)
 				+ "\" ZWANG=\"false\" PUBLIC=\"false\" TUTOR=\"false\">\n");
 		builder.append("<META KEY=\"METAKEY_BARCODE_WIDTH\" VALUE=\"2.0\"/>\n");
 		builder.append("<META KEY=\"METAKEY_BARCODE_VALIDATION\" VALUE=\"\"/>\n");

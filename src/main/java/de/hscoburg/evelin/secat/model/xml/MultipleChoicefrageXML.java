@@ -51,13 +51,13 @@ public class MultipleChoicefrageXML extends BaseXML {
 	 */
 	@Override
 	public void getStartXML(StringBuilder builder) {
-		builder.append("<MCQUESTION PLACE=\"" + place + "\" TEXT=\"" + XML_ESCAPER.translate(text) + "\" ZWANG=\"false\" WEIGHT=\"" + weight + "\" ");
+		builder.append("<MCQUESTION PLACE=\"" + place + "\" TEXT=\"" + escapeString(text) + "\" ZWANG=\"false\" WEIGHT=\"" + weight + "\" ");
 
 		if (defaultAnswer != null && !"".equals(defaultAnswer)) {
-			builder.append(" OTHERANSWER=\"" + XML_ESCAPER.translate(defaultAnswer) + "\" ");
+			builder.append(" OTHERANSWER=\"" + escapeString(defaultAnswer) + "\" ");
 		}
 		if (refuseAnswer != null && !"".equals(refuseAnswer)) {
-			builder.append(" REFUSEANSWER=\"" + XML_ESCAPER.translate(refuseAnswer) + "\" ");
+			builder.append(" REFUSEANSWER=\"" + escapeString(refuseAnswer) + "\" ");
 		}
 		builder.append(" TUTOR=\"false\">\n");
 		builder.append("<META KEY=\"METAKEY_MC_WEB_LAYOUT\" VALUE=\"one_col\"/>\n");
@@ -67,7 +67,7 @@ public class MultipleChoicefrageXML extends BaseXML {
 		builder.append("<META KEY=\"METAKEY_CODEPLAN_VALUE\" VALUE=\"" + id + "\"/>\n");
 
 		for (int i = 0; i < choices.size(); i++) {
-			builder.append("<ANSWER PLACE=\"" + (i + 1) + "\" TEXT=\"" + XML_ESCAPER.translate(choices.get(i)) + "\" WEIGHT=\"0\"/>\n");
+			builder.append("<ANSWER PLACE=\"" + (i + 1) + "\" TEXT=\"" + escapeString(choices.get(i)) + "\" WEIGHT=\"0\"/>\n");
 		}
 
 	}

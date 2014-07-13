@@ -84,7 +84,7 @@ public class FragebogenXML extends BaseXML {
 
 		builder.append(START_XML);
 
-		builder.append("<QUESTIONNAIRE DESCRIPTION=\"\" ABOUT=\"\" VERSION=\"13\" NAME=\"" + XML_ESCAPER.translate(fragebogenName) + "\">\n");
+		builder.append("<QUESTIONNAIRE DESCRIPTION=\"\" ABOUT=\"\" VERSION=\"13\" NAME=\"" + escapeString(fragebogenName) + "\">\n");
 
 	}
 

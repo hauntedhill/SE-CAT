@@ -106,75 +106,7 @@
 								<TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.erstellungsDatum" />
 								<TableColumn maxWidth="1.7976931348623157E308" minWidth="-1.0" prefWidth="100.0" text="%scene.frageboegen.collabel.skala" />
 							</columns>
-							<contextMenu>
-								<ContextMenu fx:id="ctxMenue">
-									<items>
-										<MenuItem fx:id="ctxMenueEdit" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.edit">
-											<graphic>
-												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
-													<image>
-														<Image url="@/image/icons/edit.png" />
-													</image>
-												</ImageView>
-											</graphic>
-										</MenuItem>
-										<MenuItem fx:id="ctxMenueImport" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.import">
-											<graphic>
-												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
-													<image>
-														<Image url="@/image/icons/up.png" />
-													</image>
-												</ImageView>
-											</graphic>
-										</MenuItem>
-										<MenuItem fx:id="ctxMenueExportQuestorPro" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.export">
-											<graphic>
-												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
-													<image>
-														<Image url="@/image/icons/run.png" />
-													</image>
-												</ImageView>
-											</graphic>
-										</MenuItem>
-										<MenuItem fx:id="ctxMenueExportCore" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.exportCore">
-											<graphic>
-												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
-													<image>
-														<Image url="@/image/icons/run.png" />
-													</image>
-												</ImageView>
-											</graphic>
-										</MenuItem>
-										<MenuItem fx:id="ctxMenueDelete" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.delete">
-											<graphic>
-												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
-													<image>
-														<Image url="@/image/icons/button_cancel.png" />
-													</image>
-												</ImageView>
-											</graphic>
-										</MenuItem>
-										<MenuItem fx:id="ctxMenueDeleteBewertung" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.deleteBewertung">
-											<graphic>
-												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
-													<image>
-														<Image url="@/image/icons/button_cancel.png" />
-													</image>
-												</ImageView>
-											</graphic>
-										</MenuItem>
-										<MenuItem fx:id="ctxMenueArchive" mnemonicParsing="false" text="%scene.frageboegen.ctxmenue.archive">
-											<graphic>
-												<ImageView fitHeight="16" fitWidth="16" preserveRatio="true" smooth="true">
-													<image>
-														<Image url="@/image/icons/reload.png" />
-													</image>
-												</ImageView>
-											</graphic>
-										</MenuItem>
-									</items>
-								</ContextMenu>
-							</contextMenu>
+						
 						</TableView>
 					</children>
 				</GridPane>

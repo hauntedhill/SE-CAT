@@ -22,13 +22,26 @@ public abstract class BaseXML {
 	/**
 	 * Globale Instanze des XML_Escapers
 	 */
-	protected static CharSequenceTranslator XML_ESCAPER = StringEscapeUtils.ESCAPE_XML11.with(NumericEntityEscaper.between(0x0a, 0x0a).with(
-			NumericEntityEscaper.between(0x80, 0xff)));
+	private static CharSequenceTranslator XML_ESCAPER = StringEscapeUtils.ESCAPE_XML11.with(NumericEntityEscaper.between(0x0a, 0x0a)
+			.with(NumericEntityEscaper.between(0x80, 0x84)).with(NumericEntityEscaper.between(0x86, 0xff)));
 
 	/**
 	 * Liste mit allen Kind-Elementen
 	 */
 	private List<BaseXML> childs;
+
+	/**
+	 * Methode zum escapen der Texte fuer den export ins QuestorPro Format
+	 * 
+	 * @param s
+	 * @return Der Escapte {@link String}
+	 */
+	protected String escapeString(String s) {
+		s = XML_ESCAPER.translate(s);
+		s = s.replace("…", "&#x2026;");
+		return s;
+
+	}
 
 	/**
 	 * Generiert eine eindeutige ID fuer ein Item
