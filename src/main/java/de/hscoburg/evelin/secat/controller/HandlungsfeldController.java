@@ -56,6 +56,8 @@ public class HandlungsfeldController extends BaseController {
 	@Autowired
 	private TreeTableController treeTableController;
 
+	private TreeItem<TreeItemWrapper> itemToMove = null;
+
 	public void initializeController(URL location, ResourceBundle resources) {
 
 		treeTableController.setRowFactory(new Callback<TreeTableView<TreeItemWrapper>, TreeTableRow<TreeItemWrapper>>() {
@@ -66,28 +68,32 @@ public class HandlungsfeldController extends BaseController {
 				final ContextMenu rowMenu = new ContextMenu();
 				final ContextMenu rowMenuHf = new ContextMenu();
 
-				MenuItem addHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.addHfItem"), new ImageView(
+				final MenuItem addHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.addHfItem"), new ImageView(
 						new Image("/image/icons/add_hand.png", 16, 16, true, true)));
-				MenuItem addBereichItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.addBereichItem"),
+				final MenuItem addBereichItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.addBereichItem"),
 						new ImageView(new Image("/image/icons/add_hand.png", 16, 16, true, true)));
-				MenuItem renameItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.rename"), new ImageView(new Image(
-						"/image/icons/edit.png", 16, 16, true, true)));
-				MenuItem activateHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.activateHfItem"),
+				final MenuItem renameItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.rename"), new ImageView(
+						new Image("/image/icons/edit.png", 16, 16, true, true)));
+				final MenuItem activateHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.activateHfItem"),
 						new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
-				MenuItem activateItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.activateItItem"),
+				final MenuItem activateItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.activateItItem"),
 						new ImageView(new Image("/image/icons/bookmark.png", 16, 16, true, true)));
 				final MenuItem editItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.editItItem"), new ImageView(
 						new Image("/image/icons/edit.png", 16, 16, true, true)));
-				MenuItem deactivateHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.deactivateHfItem"),
+				final MenuItem deactivateHfItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.deactivateHfItem"),
 						new ImageView(new Image("/image/icons/bookmark_Silver.png", 16, 16, true, true)));
-				MenuItem deactivateItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.deactivateItItem"),
+				final MenuItem deactivateItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.deactivateItItem"),
 						new ImageView(new Image("/image/icons/bookmark_Silver.png", 16, 16, true, true)));
-				MenuItem addItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.addItItem"), new ImageView(
+				final MenuItem addItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.addItItem"), new ImageView(
 						new Image("/image/icons/add_item.png", 16, 16, true, true)));
-				MenuItem moveItems = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.moveItems"), new ImageView(
-						new Image("/image/icons/up.png", 16, 16, true, true)));
-				MenuItem filterItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.filterItItem"), new ImageView(
-						new Image("/image/icons/viewmag.png", 16, 16, true, true)));
+				final MenuItem moveHandlungsfeld = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.moveHandlungsfeld"),
+						new ImageView(new Image("/image/icons/up.png", 16, 16, true, true)));
+				final MenuItem moveItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.moveItem"), new ImageView(
+						new Image("/image/icons/editcut.png", 16, 16, true, true)));
+				final MenuItem insertItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.insetItItem"),
+						new ImageView(new Image("/image/icons/add_item.png", 16, 16, true, true)));
+				final MenuItem filterItItem = new MenuItem(SeCatResourceBundle.getInstance().getString("scene.handlungsfeld.ctxmenue.filterItItem"),
+						new ImageView(new Image("/image/icons/viewmag.png", 16, 16, true, true)));
 
 				addHfItem.setOnAction(new EventHandler<ActionEvent>() {
 
@@ -249,7 +255,7 @@ public class HandlungsfeldController extends BaseController {
 					}
 				});
 
-				moveItems.setOnAction(new EventHandler<ActionEvent>() {
+				moveHandlungsfeld.setOnAction(new EventHandler<ActionEvent>() {
 
 					@Override
 					public void handle(ActionEvent t) {
@@ -288,33 +294,112 @@ public class HandlungsfeldController extends BaseController {
 
 				});
 
+				moveItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+					@Override
+					public void handleAction(ActionEvent t) {
+						if (treeTableController.getSelectedTreeItem() != null && treeTableController.getSelectedTreeItem().getValue().isItem()) {
+							itemToMove = treeTableController.getSelectedTreeItem();
+						}
+					}
+
+				});
+
+				insertItem.setOnAction(new SeCatEventHandle<ActionEvent>() {
+
+					@Override
+					public void handleAction(ActionEvent t) {
+						if (treeTableController.getSelectedTreeItem() != null && treeTableController.getSelectedTreeItem().getValue().isBereich()) {
+							Item itemToInsert = itemToMove.getValue().getItem();
+							itemToInsert.setBereich(treeTableController.getSelectedTreeItem().getValue().getBereich());
+							handlungsfeldModel.mergeItem(itemToInsert);
+							itemToMove = null;
+						}
+					}
+
+					@Override
+					public void updateUI() {
+						TreeItem selected = treeTableController.getSelectedTreeItem();
+						treeTableController.updateHandlungsfeld(selected.getParent().getParent().getChildren().indexOf(selected.getParent()), selected
+								.getParent().getChildren().indexOf(selected));
+					}
+
+				});
+
 				rowMenu.getItems().add(activateItItem);
 				rowMenu.getItems().add(deactivateItItem);
 				rowMenu.getItems().add(editItItem);
+				rowMenu.getItems().add(moveItem);
 
 				rowMenuHf.getItems().add(addHfItem);
 				rowMenuHf.getItems().add(activateHfItem);
-				rowMenuHf.getItems().add(renameItem);
 				rowMenuHf.getItems().add(deactivateHfItem);
+				rowMenuHf.getItems().add(renameItem);
 				rowMenuHf.getItems().add(addBereichItem);
 				rowMenuHf.getItems().add(addItItem);
-				rowMenuHf.getItems().add(moveItems);
+				rowMenuHf.getItems().add(moveHandlungsfeld);
+				rowMenuHf.getItems().add(insertItem);
 
 				row.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
 
 					@Override
 					public void handle(ContextMenuEvent event) {
 
+						if (treeTableController.getSelectedTreeItem() != null
+								&& treeTableController.getSelectedTreeItem().equals(treeTableController.getTreeTable().getRoot())) {
+							addHfItem.setDisable(false);
+							activateHfItem.setDisable(true);
+							deactivateHfItem.setDisable(true);
+							renameItem.setDisable(true);
+							addBereichItem.setDisable(true);
+							addItItem.setDisable(true);
+							moveHandlungsfeld.setDisable(true);
+
+						}
+
+						else if (treeTableController.getSelectedTreeItem() != null && treeTableController.getSelectedTreeItem().getValue().isHandlungsfeld()) {
+							addHfItem.setDisable(false);
+							activateHfItem.setDisable(false);
+							deactivateHfItem.setDisable(false);
+							renameItem.setDisable(false);
+							addBereichItem.setDisable(false);
+							addItItem.setDisable(true);
+							moveHandlungsfeld.setDisable(false);
+
+						}
+
+						else if (treeTableController.getSelectedTreeItem() != null && treeTableController.getSelectedTreeItem().getValue().isBereich()) {
+							addHfItem.setDisable(true);
+							activateHfItem.setDisable(true);
+							deactivateHfItem.setDisable(true);
+							renameItem.setDisable(false);
+							addBereichItem.setDisable(true);
+							addItItem.setDisable(false);
+							moveHandlungsfeld.setDisable(true);
+
+						}
+
 						if (treeTableController.getSelectedTreeItem() != null && treeTableController.getSelectedTreeItem().getValue().isItem()) {
 							Item selected = treeTableController.getSelectedTreeItem().getValue().getItem();
 							for (Fragebogen fragebogen : selected.getFrageboegen()) {
 								if (fragebogen.getExportiertQuestorPro()) {
 									editItItem.setDisable(true);
+									moveItem.setDisable(true);
 									break;
 								}
 
 							}
 
+						}
+
+						if (treeTableController.getSelectedTreeItem() != null && treeTableController.getSelectedTreeItem().getValue().isBereich()) {
+							if (itemToMove == null) {
+								insertItem.setDisable(true);
+							} else {
+								insertItem.setDisable(false);
+							}
+						} else {
+							insertItem.setDisable(true);
 						}
 
 					}
