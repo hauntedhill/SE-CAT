@@ -20,6 +20,12 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 
+/**
+ * Controller fuer die Anzeige der Einstellungen
+ * 
+ * @author zuch1000
+ * 
+ */
 @Controller
 public class EinstellungController extends BaseController {
 
@@ -32,6 +38,12 @@ public class EinstellungController extends BaseController {
 	@Autowired
 	private EinstellungModel einstellungModel;
 
+	/**
+	 * Initialisiert die View
+	 * 
+	 * @param location
+	 * @param resources
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 

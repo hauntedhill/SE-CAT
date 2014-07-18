@@ -372,7 +372,7 @@ public class FrageboegenController extends BaseController {
 					@Override
 					public void handleAction(ActionEvent t) {
 
-						bewertungsModel.deleteBweertung(getSelectedFragebogen());
+						bewertungsModel.deleteBewertung(getSelectedFragebogen());
 						tableData = getFrageboegen();
 
 					}

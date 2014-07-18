@@ -8,7 +8,7 @@ import javax.persistence.ManyToMany;
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
 /**
- * Entitie repraesentiert einen Studenten in der Datenbank
+ * Entity repraesentiert einen Studenten in der Datenbank
  * 
  * @author zuch1000
  * 

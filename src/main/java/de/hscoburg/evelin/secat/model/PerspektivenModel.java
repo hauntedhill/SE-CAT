@@ -51,6 +51,12 @@ public class PerspektivenModel {
 		}
 	}
 
+	/**
+	 * Aktualisiert die uebergebene Perspektive
+	 * 
+	 * @param e
+	 * @throws IllegalArgumentException
+	 */
 	public void updatePerspektive(Perspektive e) throws IllegalArgumentException {
 		if (!"".equals(e.getName()) && !isLocked(e)) {
 
@@ -60,6 +66,13 @@ public class PerspektivenModel {
 		}
 	}
 
+	/**
+	 * Prueft ob eine Perspektive editiert werden darf.
+	 * 
+	 * @param e
+	 *            {@link Perspektive}
+	 * @return true/false
+	 */
 	public boolean isLocked(Perspektive e) {
 		e = perspektivenDAO.findById(e.getId());
 

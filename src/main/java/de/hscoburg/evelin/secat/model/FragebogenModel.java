@@ -1,6 +1,8 @@
 package de.hscoburg.evelin.secat.model;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -159,6 +161,12 @@ public class FragebogenModel {
 		return DatatypeFactory.newInstance().newXMLGregorianCalendar(c);
 	}
 
+	/**
+	 * Loescht einen Fragebogen
+	 * 
+	 * @param f
+	 *            - {@link Fragebogen}
+	 */
 	public void deleteFragebogen(Fragebogen f) {
 		f = fragebogenDAO.findById(f.getId());
 
@@ -183,14 +191,36 @@ public class FragebogenModel {
 	}
 
 	/**
+	 * Exportiert eine Fragebogen zu Core und speichert diesen im File
+	 * 
+	 * @param f
+	 *            - {@link Fragebogen}
+	 * @param file
+	 *            - File zum speichern
+	 * @throws Exception
+	 */
+	public void exportQuestionarieToCore(Fragebogen f, File file) throws Exception {
+
+		FileOutputStream writer = null;
+		try {
+			writer = new FileOutputStream(file);
+			writer.write(exportQuestionarieToCore(f).toByteArray());
+		} finally {
+			if (writer != null) {
+				writer.close();
+			}
+		}
+
+	}
+
+	/**
 	 * Erzeugt ein XML des {@link Fragebogen}s fuer den export zu CORE.
 	 * 
 	 * @param f
 	 *            - Der zu exportierende {@link Fragebogen}
-	 * @return Das XML als {@link String}
 	 * @throws Exception
 	 */
-	public String exportQuestionarieToCore(Fragebogen f, File file) throws Exception {
+	public ByteArrayOutputStream exportQuestionarieToCore(Fragebogen f) throws Exception {
 		f = fragebogenDAO.findById(f.getId());
 
 		f.setExportiertCore(true);
@@ -213,10 +243,12 @@ public class FragebogenModel {
 		// output pretty printed
 		jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-		// jaxbMarshaller.marshal(customer, file);
-		jaxbMarshaller.marshal(q, file);
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
 
-		return null;
+		// jaxbMarshaller.marshal(customer, file);
+		jaxbMarshaller.marshal(q, out);
+		return out;
+
 	}
 
 	/**
@@ -774,6 +806,12 @@ public class FragebogenModel {
 
 	}
 
+	/**
+	 * Ativiert oder Deaktiviert das ArchivFlag
+	 * 
+	 * @param f
+	 *            - {@link Fragebogen}
+	 */
 	public void toggleArchiviert(Fragebogen f) {
 		f = fragebogenDAO.findById(f.getId());
 		if (f.getArchiviert() == null) {

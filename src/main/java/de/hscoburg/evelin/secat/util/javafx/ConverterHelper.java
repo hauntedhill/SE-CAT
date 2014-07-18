@@ -13,7 +13,7 @@ import de.hscoburg.evelin.secat.dao.entity.Skala;
 import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
 
 /**
- * Klasse fuer allgemein benutzbarer Converter fuer die entsprechende Entities.
+ * Klasse fuer allgemein benutzbare Converter fuer die entsprechende Entities.
  * 
  * @author zuch1000
  * 

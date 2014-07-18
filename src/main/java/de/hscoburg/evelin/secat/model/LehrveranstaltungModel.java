@@ -71,6 +71,12 @@ public class LehrveranstaltungModel {
 		}
 	}
 
+	/**
+	 * Aktualisiert die Lehrveranstaltung
+	 * 
+	 * @param l
+	 *            - {@link Lehrveranstaltung}
+	 */
 	public void updateLehrveranstaltung(Lehrveranstaltung l) {
 		if (l.getJahr() != null && l.getSemester() != null && l.getFach() != null && !"".equals(l.getDozent())) {
 
@@ -80,6 +86,13 @@ public class LehrveranstaltungModel {
 		}
 	}
 
+	/**
+	 * Prueft ob eine Lehrveranstaltung editiert werden darf.
+	 * 
+	 * @param e
+	 *            {@link Lehrveranstaltung}
+	 * @return true/false
+	 */
 	public boolean isLocked(Lehrveranstaltung l) {
 		l = lehrveranstaltungsDAO.findById(l.getId());
 		for (Fragebogen f : l.getFrageboegen() != null ? l.getFrageboegen() : new ArrayList<Fragebogen>()) {

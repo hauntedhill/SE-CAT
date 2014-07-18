@@ -9,7 +9,7 @@ import javax.persistence.OneToMany;
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
 /**
- * Entitie repraesentiert eine Eigenschaft in der Datenbank
+ * Entity repraesentiert eine Eigenschaft in der Datenbank
  * 
  * @author zuch1000
  * 

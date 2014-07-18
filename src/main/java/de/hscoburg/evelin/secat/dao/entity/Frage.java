@@ -10,7 +10,7 @@ import javax.persistence.OneToMany;
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
 /**
- * Entitie repraesentiert einen Frage in der Datenbank
+ * Entity repraesentiert einen Frage in der Datenbank
  * 
  * @author zuch1000
  * 

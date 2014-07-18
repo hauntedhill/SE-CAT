@@ -10,7 +10,7 @@ import de.hscoburg.evelin.secat.dao.entity.base.SemesterType;
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity_;
 
 /**
- * Staticmetamodel fuer die {@link Lehrveranstaltung}-Entitie
+ * Staticmetamodel fuer die {@link Lehrveranstaltung}-Entity
  * 
  * @author zuch1000
  * 

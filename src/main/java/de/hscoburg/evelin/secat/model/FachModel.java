@@ -51,6 +51,13 @@ public class FachModel {
 		}
 	}
 
+	/**
+	 * Aktualisiert ein Fach
+	 * 
+	 * @param e
+	 *            - {@link Fach}
+	 * @throws IllegalArgumentException
+	 */
 	public void updateFach(Fach e) throws IllegalArgumentException {
 		if (!"".equals(e.getName()) && !isLocked(e)) {
 
@@ -60,6 +67,13 @@ public class FachModel {
 		}
 	}
 
+	/**
+	 * Prueft ob ein Fach editiert werden darf.
+	 * 
+	 * @param e
+	 *            {@link Fach}
+	 * @return true/false
+	 */
 	public boolean isLocked(Fach e) {
 		e = fachDAO.findById(e.getId());
 

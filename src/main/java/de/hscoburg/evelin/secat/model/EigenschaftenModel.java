@@ -52,6 +52,13 @@ public class EigenschaftenModel {
 		}
 	}
 
+	/**
+	 * Aktualisiert eine Eigenschaft
+	 * 
+	 * @param e
+	 *            Neue Daten
+	 * @throws IllegalArgumentException
+	 */
 	public void updateEigenschaft(Eigenschaft e) throws IllegalArgumentException {
 		if (!"".equals(e.getName()) && !isLocked(e)) {
 
@@ -61,6 +68,13 @@ public class EigenschaftenModel {
 		}
 	}
 
+	/**
+	 * Prueft ob eine Eigenschaft editiert werden darf.
+	 * 
+	 * @param e
+	 *            {@link Eigenschaft}
+	 * @return true/false
+	 */
 	public boolean isLocked(Eigenschaft e) {
 		e = eigenschaftenDAO.findById(e.getId());
 

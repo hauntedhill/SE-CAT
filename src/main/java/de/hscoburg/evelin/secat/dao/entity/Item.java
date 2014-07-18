@@ -16,7 +16,7 @@ import org.hibernate.annotations.FetchMode;
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
 
 /**
- * Entitie repraesentiert einen Item in der Datenbank
+ * Entity repraesentiert einen Item in der Datenbank
  * 
  * @author zuch1000
  * 

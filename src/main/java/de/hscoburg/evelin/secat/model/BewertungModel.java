@@ -182,7 +182,13 @@ public class BewertungModel {
 		return anzCVSRows;
 	}
 
-	public void deleteBweertung(Fragebogen f) {
+	/**
+	 * Loescht alle Bewertungen fuer einen Fragebogen
+	 * 
+	 * @param f
+	 *            {@link Fragebogen}
+	 */
+	public void deleteBewertung(Fragebogen f) {
 		f = fragebogenDAO.findById(f.getId());
 
 		for (Bewertung b : f.getBewertungen() != null ? f.getBewertungen() : new ArrayList<Bewertung>()) {

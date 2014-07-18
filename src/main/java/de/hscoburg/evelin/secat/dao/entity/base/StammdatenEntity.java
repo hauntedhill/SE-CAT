@@ -3,7 +3,7 @@ package de.hscoburg.evelin.secat.dao.entity.base;
 import javax.persistence.MappedSuperclass;
 
 /**
- * ABstracte Klasse zur grundlegenden Beschreibung von Datensaetzen die als Stammdaten klassifiziert sind.
+ * Abstracte Klasse zur grundlegenden Beschreibung von Datensaetzen die als Stammdaten klassifiziert sind.
  * 
  * @author zuch1000
  * 

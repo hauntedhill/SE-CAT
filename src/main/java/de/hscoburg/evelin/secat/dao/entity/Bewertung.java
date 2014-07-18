@@ -6,7 +6,7 @@ import javax.persistence.ManyToOne;
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
 /**
- * Entitie repraesentiert einen Bewertung in der Datenbank
+ * Entity repraesentiert einen Bewertung in der Datenbank
  * 
  * @author zuch1000
  * 

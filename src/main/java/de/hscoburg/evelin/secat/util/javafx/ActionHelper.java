@@ -68,6 +68,12 @@ public class ActionHelper {
 		}
 	}
 
+	/**
+	 * Setzt die Flags und ActionListener fuer eine Editierbare Listview
+	 * 
+	 * @param view
+	 *            - {@link ListView}
+	 */
 	public static void setEditFor(final ListView<?> view) {
 		view.setEditable(true);
 

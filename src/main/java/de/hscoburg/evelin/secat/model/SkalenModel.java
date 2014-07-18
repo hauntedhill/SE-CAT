@@ -98,7 +98,17 @@ public class SkalenModel {
 
 	}
 
+	/**
+	 * Aktualisisert die uebergebene Skala
+	 * 
+	 * @param s
+	 *            - {@link Skala}
+	 * @throws IllegalArgumentException
+	 */
 	public void updateSkala(Skala s) throws IllegalArgumentException {
+		if (isLocked(s)) {
+			throw new IllegalArgumentException();
+		}
 		if (s.getType().equals(SkalaType.FREE) && (s.getZeilen() == null || s.getName() == null || "".equals(s.getName()))) {
 			throw new IllegalArgumentException();
 		}
@@ -117,6 +127,13 @@ public class SkalenModel {
 		skalaDAO.merge(s);
 	}
 
+	/**
+	 * Prueft ob eine Skala editiert werden darf.
+	 * 
+	 * @param e
+	 *            {@link Skala}
+	 * @return true/false
+	 */
 	public boolean isLocked(Skala s) {
 		s = skalaDAO.findById(s.getId());
 

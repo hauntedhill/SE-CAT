@@ -19,6 +19,12 @@ public class EinstellungDAO extends BaseDAO<Einstellung> {
 		// TODO Auto-generated constructor stub
 	}
 
+	/**
+	 * Sucht eine Einstellung anhand dessen eindeutigen Namen
+	 * 
+	 * @param name
+	 * @return Die gefundene {@link Einstellung} oder null
+	 */
 	public Einstellung findByName(de.hscoburg.evelin.secat.dao.entity.base.EinstellungenType name) {
 
 		CriteriaBuilder cb = em.getCriteriaBuilder();

@@ -15,12 +15,25 @@ public class EinstellungModel {
 	@Autowired
 	private EinstellungDAO einstellungDAO;
 
+	/**
+	 * Gibt die Einstellung fuer den Standort zurueck.
+	 * 
+	 * @return {@link Einstellung}
+	 */
 	public Einstellung getWertForStandort() {
 
 		return einstellungDAO.findByName(EinstellungenType.STANDORT);
 
 	}
 
+	/**
+	 * Speichert oder aktualisiert eine Einstellung
+	 * 
+	 * @param type
+	 *            - {@link EinstellungenType}
+	 * @param wert
+	 *            - Neuer Wert
+	 */
 	public void saveEinstellung(EinstellungenType type, String wert) {
 		Einstellung e = einstellungDAO.findByName(type);
 		if (e != null) {

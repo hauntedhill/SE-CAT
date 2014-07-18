@@ -15,7 +15,7 @@ import org.hibernate.annotations.FetchMode;
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 
 /**
- * Entitie repraesentiert einen Bereich in der Datenbank
+ * Entity repraesentiert einen Bereich in der Datenbank
  * 
  * @author zuch1000
  * 

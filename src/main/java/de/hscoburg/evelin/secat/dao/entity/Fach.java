@@ -13,7 +13,7 @@ import org.hibernate.annotations.FetchMode;
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
 
 /**
- * Entitie repraesentiert eine Fach in der Datenbank
+ * Entity repraesentiert eine Fach in der Datenbank
  * 
  * @author zuch1000
  * 

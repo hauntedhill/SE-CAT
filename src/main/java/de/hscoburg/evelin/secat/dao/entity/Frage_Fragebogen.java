@@ -8,7 +8,7 @@ import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 import de.hscoburg.evelin.secat.dao.entity.base.FragePosition;
 
 /**
- * Entitie repraesentiert einen Frage_Fragebogen (N:M Verknuepfung mit Attributen) in der Datenbank
+ * Entity repraesentiert einen Frage_Fragebogen (N:M Verknuepfung mit Attributen) in der Datenbank
  * 
  * @author zuch1000
  * 

@@ -14,7 +14,7 @@ import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
 import de.hscoburg.evelin.secat.dao.entity.base.SkalaType;
 
 /**
- * Entitie repraesentiert eine Skala in der Datenbank
+ * Entity repraesentiert eine Skala in der Datenbank
  * 
  * @author zuch1000
  * 

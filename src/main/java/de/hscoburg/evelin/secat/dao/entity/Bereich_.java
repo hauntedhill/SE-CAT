@@ -7,7 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity_;
 
 /**
- * Staticmetamodel fuer die {@link Bereich}-Entitie
+ * Staticmetamodel fuer die {@link Bereich}-Entity
  * 
  * @author zuch1000
  * 

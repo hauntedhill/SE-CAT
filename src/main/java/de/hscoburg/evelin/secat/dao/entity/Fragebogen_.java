@@ -9,7 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity_;
 
 /**
- * Staticmetamodel fuer die {@link Fragebogen}-Entitie
+ * Staticmetamodel fuer die {@link Fragebogen}-Entity
  * 
  * @author zuch1000
  * 

@@ -14,7 +14,7 @@ import de.hscoburg.evelin.secat.dao.entity.base.SemesterType;
 import de.hscoburg.evelin.secat.dao.entity.base.StammdatenEntity;
 
 /**
- * Entitie repraesentiert einen Lehrveranstaltung in der Datenbank
+ * Entity repraesentiert einen Lehrveranstaltung in der Datenbank
  * 
  * @author zuch1000
  * 

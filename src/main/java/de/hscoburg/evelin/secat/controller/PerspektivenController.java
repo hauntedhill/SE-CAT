@@ -55,6 +55,9 @@ public class PerspektivenController extends BaseController {
 
 	/**
 	 * Initialisiert die View
+	 * 
+	 * @param location
+	 * @param resources
 	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {

@@ -45,6 +45,12 @@ public class SpracheController extends BaseController {
 	@Autowired
 	private LayoutController layout;
 
+	/**
+	 * Initialisiert die View
+	 * 
+	 * @param location
+	 * @param resources
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
