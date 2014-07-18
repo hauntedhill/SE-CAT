@@ -9,6 +9,12 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * Klasse fuer die Steuerung editierbarer TableCells
+ * 
+ * @author zuch1000
+ * 
+ */
 public class EditableStringTableCell<S, T> extends TableCell<S, T> {
 	private TextField textField;
 
@@ -67,6 +73,9 @@ public class EditableStringTableCell<S, T> extends TableCell<S, T> {
 		}
 	}
 
+	/**
+	 * Erzeugt ein Textfeld um die Daten editierbar zu machen
+	 */
 	private void createTextField() {
 
 		textField = new TextField();

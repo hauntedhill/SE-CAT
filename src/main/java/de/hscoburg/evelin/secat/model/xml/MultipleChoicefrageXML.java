@@ -47,7 +47,7 @@ public class MultipleChoicefrageXML extends BaseXML {
 	 * Gibt den Starttag zurueck.
 	 * 
 	 * @param builder
-	 *            - {@link StringBuilder} zum speichern des Tags.
+	 *            {@link StringBuilder} zum speichern des Tags.
 	 */
 	@Override
 	public void getStartXML(StringBuilder builder) {
@@ -76,7 +76,7 @@ public class MultipleChoicefrageXML extends BaseXML {
 	 * Gibt den Endtag zurueck.
 	 * 
 	 * @param builder
-	 *            - {@link StringBuilder} zum speichern des Tags.
+	 *            {@link StringBuilder} zum speichern des Tags.
 	 */
 	@Override
 	public void getEndXML(StringBuilder builder) {

@@ -18,6 +18,7 @@ import org.slf4j.Logger;
  * @author zuch1000
  * 
  * @param <T>
+ *            Type des Events
  */
 public abstract class SeCatEventHandle<T extends Event> implements EventHandler<T> {
 
@@ -30,6 +31,7 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 	 * Entgegennehmen des eigentlichen Events
 	 * 
 	 * @param event
+	 *            Das original Event
 	 */
 	@Override
 	public final void handle(final T event) {
@@ -130,6 +132,7 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 	 * @param event
 	 *            T Das ausloesende Event
 	 * @throws Exception
+	 *             Bei einem Fehler
 	 */
 	public abstract void handleAction(T event) throws Exception;
 
@@ -139,6 +142,7 @@ public abstract class SeCatEventHandle<T extends Event> implements EventHandler<
 	 * @param event
 	 *            T Das ausloesende Event
 	 * @throws Exception
+	 *             Bei einem Fehler
 	 */
 	public void performBeforeEventsBlocked(T event) throws Exception {
 

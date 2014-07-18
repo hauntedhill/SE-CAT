@@ -38,19 +38,21 @@ public class FragebogenDAO extends BaseDAO<Fragebogen> {
 	 * Gibt alle Frageboegen fuer die uebergebenen Parameter zurueck. (null wird ignoriert)
 	 * 
 	 * @param e
-	 *            - {@link Eigenschaft} oder null
+	 *            {@link Eigenschaft} oder null
 	 * @param p
-	 *            - {@link Perspektive} oder null
+	 *            {@link Perspektive} oder null
 	 * @param l
-	 *            - {@link Lehrveranstaltung} oder null
+	 *            {@link Lehrveranstaltung} oder null
 	 * @param name
-	 *            - Name des Fragebogens
+	 *            Name des Fragebogens
 	 * @param von
-	 *            - Von {@link Date}
+	 *            Von {@link Date}
 	 * @param bis
-	 *            - Bis {@link Date}
+	 *            Bis {@link Date}
 	 * @param s
-	 *            - Gesuchte {@link Skala} oder null
+	 *            Gesuchte {@link Skala} oder null
+	 * @param archiv
+	 *            Gibt an ob im Archiv gesucht werden soll
 	 * @return {@link List} mit gefundenen {@link Fragebogen}
 	 */
 	public List<Fragebogen> getFrageboegenFor(Eigenschaft e, Perspektive p, Lehrveranstaltung l, String name, Date von, Date bis, Skala s, boolean archiv) {

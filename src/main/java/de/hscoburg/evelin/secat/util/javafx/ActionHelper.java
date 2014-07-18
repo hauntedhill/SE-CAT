@@ -37,6 +37,8 @@ public class ActionHelper {
 	 *            {@link EventHandler} - Das auszuführende Action-Event
 	 * @param button
 	 *            {@link Button} - Den Button auf den die Events registriert werden sollen
+	 * @param useGlobalEnter
+	 *            Gibt an ob die Aktion des Buttons als default Aktion fuer die gesamte Maske verwendet werden soll
 	 */
 	public static void setActionToButton(EventHandler<ActionEvent> handler, final Button button, boolean useGlobalEnter) {
 		button.setOnAction(handler);

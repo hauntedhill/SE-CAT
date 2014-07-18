@@ -17,6 +17,7 @@ import de.hscoburg.evelin.secat.dao.entity.base.BaseEntity;
  * @author zuch1000
  * 
  * @param <T>
+ *            Type der zu verwaltenden Entity
  */
 public abstract class BaseDAO<T extends BaseEntity> {
 
@@ -33,6 +34,7 @@ public abstract class BaseDAO<T extends BaseEntity> {
 	 * Speichert das Objekt in der DB und setzt ID
 	 * 
 	 * @param o
+	 *            Das zu speichernde Objekt
 	 */
 	public void persist(T o) {
 		em.persist(o);
@@ -43,6 +45,7 @@ public abstract class BaseDAO<T extends BaseEntity> {
 	 * Aktualisiert das Objekt bzw. attached es mit der DB
 	 * 
 	 * @param o
+	 *            Das zu aktualisierende Objekt
 	 */
 	public void merge(T o) {
 		em.merge(o);
@@ -52,6 +55,7 @@ public abstract class BaseDAO<T extends BaseEntity> {
 	 * Loescht ein Objekt aus der DB
 	 * 
 	 * @param o
+	 *            Das zu loeschende Objekt
 	 */
 	public void remove(T o) {
 		em.remove(o);
@@ -61,7 +65,8 @@ public abstract class BaseDAO<T extends BaseEntity> {
 	 * Holt die Entitie mit der entsprechenden ID
 	 * 
 	 * @param id
-	 * @return T
+	 *            ID des Objektes
+	 * @return T Das gefundene Objekt
 	 */
 	public T findById(Integer id) {
 		return em.find(type, id);

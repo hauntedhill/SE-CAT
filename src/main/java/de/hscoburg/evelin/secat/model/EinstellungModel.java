@@ -30,9 +30,9 @@ public class EinstellungModel {
 	 * Speichert oder aktualisiert eine Einstellung
 	 * 
 	 * @param type
-	 *            - {@link EinstellungenType}
+	 *            {@link EinstellungenType}
 	 * @param wert
-	 *            - Neuer Wert
+	 *            Neuer Wert
 	 */
 	public void saveEinstellung(EinstellungenType type, String wert) {
 		Einstellung e = einstellungDAO.findByName(type);

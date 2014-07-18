@@ -124,19 +124,21 @@ public class FragebogenModel {
 	 * Gibt alle Frageboegen die den Uebergabeparametern entsprechen zurueck, werden bei null ignoriert.
 	 * 
 	 * @param e
-	 *            - Die zu suchende {@link Eigenschaft} oder null
+	 *            Die zu suchende {@link Eigenschaft} oder null
 	 * @param p
-	 *            - Die zu suchende {@link Perspektive} oder null
+	 *            Die zu suchende {@link Perspektive} oder null
 	 * @param l
-	 *            - Die zu suchende {@link Lehrveranstaltung} der null
+	 *            Die zu suchende {@link Lehrveranstaltung} der null
 	 * @param name
-	 *            - Den zu suchenden Namen
+	 *            Den zu suchenden Namen
 	 * @param von
-	 *            - Von {@link LocalDate}
+	 *            Von {@link LocalDate}
 	 * @param bis
-	 *            - Bis {@link LocalDate}
+	 *            Bis {@link LocalDate}
 	 * @param s
-	 *            - Die zu suchende {@link Skala}
+	 *            Die zu suchende {@link Skala}
+	 * @param archiviert
+	 *            Gibt an ob im Archiv gesucht werden soll
 	 * @return Eine {@link List} mit allen {@link Fragebogen}
 	 */
 	public List<Fragebogen> getFragebogenFor(Eigenschaft e, Perspektive p, Lehrveranstaltung l, String name, LocalDate von, LocalDate bis, Skala s,
@@ -151,7 +153,7 @@ public class FragebogenModel {
 	 * Erzeugt ein {@link XMLGregorianCalendar} aus einem {@link Date}
 	 * 
 	 * @param d
-	 *            - Das zu verwendende {@link Date}
+	 *            Das zu verwendende {@link Date}
 	 * @return Das {@link XMLGregorianCalendar}-Object.
 	 * @throws Exception
 	 */
@@ -165,7 +167,7 @@ public class FragebogenModel {
 	 * Loescht einen Fragebogen
 	 * 
 	 * @param f
-	 *            - {@link Fragebogen}
+	 *            {@link Fragebogen}
 	 */
 	public void deleteFragebogen(Fragebogen f) {
 		f = fragebogenDAO.findById(f.getId());
@@ -194,10 +196,11 @@ public class FragebogenModel {
 	 * Exportiert eine Fragebogen zu Core und speichert diesen im File
 	 * 
 	 * @param f
-	 *            - {@link Fragebogen}
+	 *            {@link Fragebogen}
 	 * @param file
-	 *            - File zum speichern
+	 *            File zum speichern
 	 * @throws Exception
+	 *             Bei einem aufgetretenden Fehler
 	 */
 	public void exportQuestionarieToCore(Fragebogen f, File file) throws Exception {
 
@@ -217,8 +220,11 @@ public class FragebogenModel {
 	 * Erzeugt ein XML des {@link Fragebogen}s fuer den export zu CORE.
 	 * 
 	 * @param f
-	 *            - Der zu exportierende {@link Fragebogen}
+	 *            Der zu exportierende {@link Fragebogen}
+	 * 
+	 * @return {@link ByteArrayOutputStream} mit dem XML
 	 * @throws Exception
+	 *             Bei einem aufgetretenden Fehler
 	 */
 	public ByteArrayOutputStream exportQuestionarieToCore(Fragebogen f) throws Exception {
 		f = fragebogenDAO.findById(f.getId());
@@ -255,9 +261,9 @@ public class FragebogenModel {
 	 * Erzeugt ein {@link ItemType} aus einem {@link Item}
 	 * 
 	 * @param items
-	 *            - {@link List} mit {@link Item}s
+	 *            {@link List} mit {@link Item}s
 	 * @param fb
-	 *            - {@link Fragebogen} der Items.
+	 *            {@link Fragebogen} der Items.
 	 * @return Der erzeugte {@link ItemsType}
 	 */
 	private ItemsType createItems(List<Item> items, Fragebogen fb) {
@@ -293,7 +299,7 @@ public class FragebogenModel {
 	 * Erzeugt einen {@link AreaType} aus einem {@link Bereich}
 	 * 
 	 * @param b
-	 *            - Der zu verwendende {@link Bereich}
+	 *            Der zu verwendende {@link Bereich}
 	 * @return Der erzeugte {@link AreaType}
 	 */
 	private AreaType createArea(Bereich b) {
@@ -308,7 +314,7 @@ public class FragebogenModel {
 	 * Erzeugt eine {@link SphereActivityType} aus einem {@link Handlungsfeld}
 	 * 
 	 * @param h
-	 *            - Das zu verwendende {@link Handlungsfeld}
+	 *            Das zu verwendende {@link Handlungsfeld}
 	 * @return Das erzeugte {@link SphereActivityType}-Object.
 	 */
 	private SphereActivityType createSphereActivity(Handlungsfeld h) {
@@ -322,7 +328,7 @@ public class FragebogenModel {
 	 * Erzeugt eine {@link QuestionsType} aus den uebergebenen {@link Frage_Fragebogen}
 	 * 
 	 * @param fragen
-	 *            - Die zu verwendenden {@link Frage_Fragebogen}
+	 *            Die zu verwendenden {@link Frage_Fragebogen}
 	 * @return Das erzeugte {@link QuestionsType}-Object.
 	 */
 	private QuestionsType createQuestions(List<Frage_Fragebogen> fragen) {
@@ -356,7 +362,7 @@ public class FragebogenModel {
 	 * Erzeugt einen {@link EvaluationsType} aus den uebergebenen {@link Bewertung}en
 	 * 
 	 * @param bewertungen
-	 *            - Die zu verwendenden {@link Bewertung}
+	 *            Die zu verwendenden {@link Bewertung}
 	 * @return Das erzeugte {@link EvaluationsType}-Object.
 	 */
 	private EvaluationsType createEvaluation(List<Bewertung> bewertungen) {
@@ -383,7 +389,7 @@ public class FragebogenModel {
 	 * Erzeugt einen {@link CourseType} aus der uebergebenen {@link Lehrveranstaltung}
 	 * 
 	 * @param l
-	 *            - DIe zu verwendende {@link Lehrveranstaltung}
+	 *            Die zu verwendende {@link Lehrveranstaltung}
 	 * @return Das erzeugte {@link CourseType}-Object.
 	 * @throws Exception
 	 */
@@ -409,7 +415,7 @@ public class FragebogenModel {
 	 * Erzeugt ein {@link SubjectType} aus einem {@link Fach}
 	 * 
 	 * @param l
-	 *            - Das zu verwendende {@link Fach}
+	 *            Das zu verwendende {@link Fach}
 	 * @return Das erzeugte {@link SubjectType}-Object.
 	 * @throws Exception
 	 */
@@ -426,7 +432,7 @@ public class FragebogenModel {
 	 * Erzeugt ein {@link PerspectivesType} aus den uebergebenen {@link Perspektive}n
 	 * 
 	 * @param e
-	 *            - Die zu verwendenden {@link Perspektive}n
+	 *            Die zu verwendenden {@link Perspektive}n
 	 * @return Das erzeugte {@link PerspectivesType}-Object.
 	 */
 	private PerspectivesType createPerspectiveType(List<Perspektive> e) {
@@ -442,7 +448,7 @@ public class FragebogenModel {
 	 * Erzeugt ein {@link PerspectiveType} aus der {@link Perspektive}
 	 * 
 	 * @param e
-	 *            - Die zu verwendende {@link Perspektive}
+	 *            Die zu verwendende {@link Perspektive}
 	 * @return Das erzeugte {@link PerspectiveType}-Object.
 	 */
 	private PerspectiveType createPerspectiveType(Perspektive e) {
@@ -457,7 +463,7 @@ public class FragebogenModel {
 	 * Erzeugt ein {@link PropertiesType} aus den {@link Eigenschaft}en
 	 * 
 	 * @param e
-	 *            - Die zu verwendenden {@link Eigenschaft}en
+	 *            Die zu verwendenden {@link Eigenschaft}en
 	 * @return Das erzeugte {@link PropertiesType}-Object.
 	 */
 	private PropertiesType createPropertieType(List<Eigenschaft> e) {
@@ -473,7 +479,7 @@ public class FragebogenModel {
 	 * Erzeugt ein {@link PropertyType} aus der uebergebenen {@link Eigenschaft}
 	 * 
 	 * @param e
-	 *            - Die zu verwendende {@link Eigenschaft}
+	 *            Die zu verwendende {@link Eigenschaft}
 	 * @return Das erzeugte {@link PropertyType}-Object.
 	 */
 	private PropertyType createPropertieType(Eigenschaft e) {
@@ -488,7 +494,7 @@ public class FragebogenModel {
 	 * Erzeugt einen {@link ScaleType} aus der uebergebenen {@link Skala}
 	 * 
 	 * @param s
-	 *            - Die zu verwendende {@link Skala}
+	 *            Die zu verwendende {@link Skala}
 	 * @return Das erzeugte {@link ScaleType}-Object.
 	 */
 	private ScaleType createScaleType(Skala s) {
@@ -541,10 +547,11 @@ public class FragebogenModel {
 	 * Speichert im uebergebenen File einen Fragbogen der in QuestorPro importiert werden kann.
 	 * 
 	 * @param fb
-	 *            - {@link Fragebogen}
+	 *            {@link Fragebogen}
 	 * @param f
-	 *            - {@link File}
+	 *            {@link File}
 	 * @throws Exception
+	 *             Bei auftretenden Fehlern
 	 */
 	public void exportFragebogenToQuestorPro(Fragebogen fb, File f) throws Exception {
 
@@ -558,7 +565,7 @@ public class FragebogenModel {
 	 * Erzeugt ein XML fuer den export zu CORE fuer einen Fragebogen
 	 * 
 	 * @param f
-	 *            - Den zu exportierenden {@link Fragebogen}
+	 *            Den zu exportierenden {@link Fragebogen}
 	 * @return Das erzeugte XML
 	 */
 	public String generateXMLtoQuestorPro(Fragebogen f) {
@@ -619,13 +626,13 @@ public class FragebogenModel {
 	 * Fuegt einem {@link BaseXML} Fragen als Kind-Elemente hinzu.
 	 * 
 	 * @param useBlockCount
-	 *            - Aktueller Blockcount
+	 *            Aktueller Blockcount
 	 * @param node
-	 *            - Element an den die Fragen angehaengt werden sollen
+	 *            Element an den die Fragen angehaengt werden sollen
 	 * @param position
-	 *            - Bestimmt ob TOP oder BOTTOM Fragen beruecksichtig werden
+	 *            Bestimmt ob TOP oder BOTTOM Fragen beruecksichtig werden
 	 * @param fragen
-	 *            - Die Fragen die hinzugefuegt werden sollen
+	 *            Die Fragen die hinzugefuegt werden sollen
 	 */
 	private void addFfragen(int useBlockCount, BaseXML node, FragePosition position, List<Frage_Fragebogen> fragen) {
 
@@ -810,7 +817,7 @@ public class FragebogenModel {
 	 * Ativiert oder Deaktiviert das ArchivFlag
 	 * 
 	 * @param f
-	 *            - {@link Fragebogen}
+	 *            {@link Fragebogen}
 	 */
 	public void toggleArchiviert(Fragebogen f) {
 		f = fragebogenDAO.findById(f.getId());

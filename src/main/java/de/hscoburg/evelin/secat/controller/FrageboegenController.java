@@ -147,7 +147,9 @@ public class FrageboegenController extends BaseController {
 	 * Initlisiert die View mit Standardwerten
 	 * 
 	 * @param location
+	 *            Der Pfad zur View
 	 * @param resources
+	 *            Das verwendete ResourcebUndle
 	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {

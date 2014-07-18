@@ -38,7 +38,7 @@ public class EigenschaftenModel {
 	 * Speichert eine neue {@link Eigenschaft} im System
 	 * 
 	 * @param name
-	 *            - {@link String} mit dem Namen
+	 *            {@link String} mit dem Namen
 	 * @throws IllegalArgumentException
 	 *             Wenn der Name ungueltig ist
 	 */
@@ -58,6 +58,7 @@ public class EigenschaftenModel {
 	 * @param e
 	 *            Neue Daten
 	 * @throws IllegalArgumentException
+	 *             Bei fehlerhaften Eingabewerten oder gesperrter Entity
 	 */
 	public void updateEigenschaft(Eigenschaft e) throws IllegalArgumentException {
 		if (!"".equals(e.getName()) && !isLocked(e)) {

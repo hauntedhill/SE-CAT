@@ -36,7 +36,9 @@ public abstract class BaseController implements Initializable {
 	 * Methode zum initialisieren des Controllers
 	 * 
 	 * @param location
+	 *            Der Pfad zur View
 	 * @param resources
+	 *            Das verwendete ResourcebUndle
 	 */
 	public abstract void initializeController(URL location, ResourceBundle resources);
 
@@ -61,7 +63,9 @@ public abstract class BaseController implements Initializable {
 	 * Methode die von JavaFX aufgerufen wird.
 	 * 
 	 * @param location
+	 *            Der Pfad zur View
 	 * @param resources
+	 *            Das verwendete ResourcebUndle
 	 */
 	@Override
 	public final void initialize(URL location, ResourceBundle resources) {
@@ -81,6 +85,10 @@ public abstract class BaseController implements Initializable {
 
 	/**
 	 * Setzt den Titles sowie das Icon der Scene in die Titlebar
+	 * 
+	 * @param additionalTitle
+	 *            Setzt eine Customtitle zur Scene
+	 * 
 	 */
 	public void setTitle(final String additionalTitle) {
 

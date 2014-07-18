@@ -64,7 +64,9 @@ public class FragenController extends BaseController {
 	 * Initialisiert die View
 	 * 
 	 * @param location
+	 *            Der Pfad zur View
 	 * @param resources
+	 *            Das verwendete ResourcebUndle
 	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {

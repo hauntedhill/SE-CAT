@@ -40,30 +40,31 @@ public class SkalenModel {
 	 * Speichert eine Skala im System
 	 * 
 	 * @param type
-	 *            - {@link SkalaType} der Skala
+	 *            {@link SkalaType} der Skala
 	 * @param name
-	 *            - {@link String} mit dem Namen der Skala
+	 *            {@link String} mit dem Namen der Skala
 	 * @param zeilen
-	 *            - Zeilen der Skala bei Freitext
+	 *            Zeilen der Skala bei Freitext
 	 * @param schritte
-	 *            - Schritte der Skala bei Diskret
+	 *            Schritte der Skala bei Diskret
 	 * @param schrittWeite
-	 *            - SchrittWeite bei Diskret
+	 *            SchrittWeite bei Diskret
 	 * @param minText
-	 *            - MinText als {@link String} bei Diskret
+	 *            MinText als {@link String} bei Diskret
 	 * @param maxText
-	 *            - MaxText als {@link String} bei Diskret
+	 *            MaxText als {@link String} bei Diskret
 	 * @param optimum
-	 *            - Definiert das Optimum bei Diskret
+	 *            Definiert das Optimum bei Diskret
 	 * @param keys
-	 *            - Definiert die Auswahl,oeglichkeiten bei MC
+	 *            Definiert die Auswahl,oeglichkeiten bei MC
 	 * @param schrittWeiteMC
-	 *            - SchrittWeite bei MC
+	 *            SchrittWeite bei MC
 	 * @param defaultAnswer
-	 *            - definiert die default ANtwort bei MC
+	 *            definiert die default ANtwort bei MC
 	 * @param refuseAnswer
-	 *            - definiert die refuse Antowrt bei MC
+	 *            definiert die refuse Antowrt bei MC
 	 * @throws NumberFormatException
+	 *             Bei fehlerhaften Eingabewerten oder gesperrter Entity
 	 */
 	public void saveSkala(SkalaType type, String name, String zeilen, String schritte, String schrittWeite, String minText, String maxText, String optimum,
 			List<String> keys, String schrittWeiteMC, String defaultAnswer, String refuseAnswer) throws NumberFormatException {
@@ -102,8 +103,9 @@ public class SkalenModel {
 	 * Aktualisisert die uebergebene Skala
 	 * 
 	 * @param s
-	 *            - {@link Skala}
+	 *            {@link Skala}
 	 * @throws IllegalArgumentException
+	 *             Bei fehlerhaften Eingabewerten oder gesperrter Entity
 	 */
 	public void updateSkala(Skala s) throws IllegalArgumentException {
 		if (isLocked(s)) {
@@ -130,7 +132,7 @@ public class SkalenModel {
 	/**
 	 * Prueft ob eine Skala editiert werden darf.
 	 * 
-	 * @param e
+	 * @param s
 	 *            {@link Skala}
 	 * @return true/false
 	 */

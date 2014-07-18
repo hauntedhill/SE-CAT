@@ -18,9 +18,14 @@ public class ColumnHelper {
 	 * Setzt fuer die column die Action
 	 * 
 	 * @param column
+	 *            {@link TableColumn}
 	 * @param action
+	 *            {@link TableCellAction}
+	 * @param <E>
+	 *            Source Type
+	 * @param <T>
+	 *            Target Type
 	 */
-	@SuppressWarnings("unchecked")
 	public static <E, T> void setTableColumnCellFactory(TableColumn<T, ?> column, final TableCellAction<T, E> action) {
 		((TableColumn<T, E>) column).setCellValueFactory(new Callback<CellDataFeatures<T, E>, ObservableValue<E>>() {
 
@@ -36,7 +41,13 @@ public class ColumnHelper {
 	 * Setzt fuer die column die Action
 	 * 
 	 * @param column
+	 *            {@link TreeTableColumn}
 	 * @param action
+	 *            {@link TreeTableCellAction}
+	 * @param <E>
+	 *            Source Type
+	 * @param <T>
+	 *            Target Type
 	 */
 	@SuppressWarnings("unchecked")
 	public static <E, T> void setTreeTableColumnCellFactory(TreeTableColumn<T, ?> column, final TreeTableCellAction<T, E> action) {

@@ -11,6 +11,12 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.util.StringConverter;
 
+/**
+ * Klasse fuer die Steuerung editierbarer TableCells
+ * 
+ * @author zuch1000
+ * 
+ */
 public class EditableComboBoxTableCell<S, T, E> extends TableCell<S, T> {
 	private ComboBox<E> comboBox;
 
@@ -87,6 +93,9 @@ public class EditableComboBoxTableCell<S, T, E> extends TableCell<S, T> {
 		}
 	}
 
+	/**
+	 * Erzeugt eine Combobox um die Daten editierbar zu machen.
+	 */
 	private void createComboBox() {
 
 		comboBox = new ComboBox<>();

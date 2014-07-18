@@ -34,6 +34,7 @@ public abstract class BaseXML {
 	 * Methode zum escapen der Texte fuer den export ins QuestorPro Format
 	 * 
 	 * @param s
+	 *            Der zu escapende String
 	 * @return Der Escapte {@link String}
 	 */
 	protected String escapeString(String s) {
@@ -47,9 +48,9 @@ public abstract class BaseXML {
 	 * Generiert eine eindeutige ID fuer ein Item
 	 * 
 	 * @param fb
-	 *            - Das {@link Fragebogen}-Object des Items
+	 *            Das {@link Fragebogen}-Object des Items
 	 * @param item
-	 *            - Das {@link Item} dessen ID generiert werden soll
+	 *            Das {@link Item} dessen ID generiert werden soll
 	 * @return Ein {@link String} mit der ID
 	 */
 	public static String generateUniqueId(Fragebogen fb, Item item) {
@@ -60,9 +61,9 @@ public abstract class BaseXML {
 	 * Generiert eine eindeutige ID fuer ein Item
 	 * 
 	 * @param fb
-	 *            - Das {@link Fragebogen}-Object des Items
+	 *            Das {@link Fragebogen}-Object des Items
 	 * @param item
-	 *            - Das {@link Frage} dessen ID generiert werden soll
+	 *            Das {@link Frage} dessen ID generiert werden soll
 	 * @return Ein {@link String} mit der ID
 	 */
 	public static String generateUniqueId(Fragebogen fb, Frage item) {
@@ -81,7 +82,7 @@ public abstract class BaseXML {
 	 * Fuegt ein Kind dem XML-Baum hinzu.
 	 * 
 	 * @param xml
-	 *            - {@link BaseXML}-Object.
+	 *            {@link BaseXML}-Object.
 	 */
 	public final void addChild(BaseXML xml) {
 		childs.add(xml);
@@ -100,7 +101,7 @@ public abstract class BaseXML {
 	 * Generiert das XML ab diesem Element und speichert dies im uebergebenen {@link StringBuilder}
 	 * 
 	 * @param xml
-	 *            - {@link StringBuilder} zum speichern des XMLs
+	 *            {@link StringBuilder} zum speichern des XMLs
 	 */
 	public final void generateXML(StringBuilder xml) {
 
@@ -130,7 +131,7 @@ public abstract class BaseXML {
 	 * Gibt den StartTag des XMLs zurueck.
 	 * 
 	 * @param builder
-	 *            - {@link StringBuilder} zum speichern des Tages
+	 *            {@link StringBuilder} zum speichern des Tages
 	 */
 	public abstract void getStartXML(StringBuilder builder);
 
@@ -138,7 +139,7 @@ public abstract class BaseXML {
 	 * Gibt den EndTag des XMLs zurueck.
 	 * 
 	 * @param builder
-	 *            - {@link StringBuilder} zum speichern des Tages
+	 *            {@link StringBuilder} zum speichern des Tages
 	 */
 	public abstract void getEndXML(StringBuilder builder);
 

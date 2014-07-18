@@ -49,7 +49,7 @@ public class BewertungModel {
 	 * Liest aus dem uebergebenen {@link File} alle Bewertungen von QUestorProaus und speichert diese in der Datenbank.
 	 * 
 	 * @param f
-	 *            - Das {@link File}
+	 *            Das {@link File}
 	 * @return {@link Integer} mit dem Wert der eingelesenen Bewertungen
 	 * @throws Exception
 	 *             Sollte die importierten Bewertungen nicht dem Fragebogen entsprechen.

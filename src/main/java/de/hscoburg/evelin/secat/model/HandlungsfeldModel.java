@@ -52,19 +52,19 @@ public class HandlungsfeldModel {
 	 * Gibt alle Items fuer einen Bereich zurueck, null values werden ignoriert.
 	 * 
 	 * @param h
-	 *            - Der {@link Bereich}
+	 *            Der {@link Bereich}
 	 * @param itemAktiv
-	 *            - {@link Boolean} ob itemAKtiv ist oder nicht
+	 *            {@link Boolean} ob itemAKtiv ist oder nicht
 	 * @param p
-	 *            - {@link Perspektive} des Items
+	 *            {@link Perspektive} des Items
 	 * @param e
-	 *            - {@link Eigenschaft} des Items
+	 *            {@link Eigenschaft} des Items
 	 * @param notizHandlungsfeld
-	 *            - Notiz des Handlungsfeldes
+	 *            Notiz des Handlungsfeldes
 	 * @param notizItem
-	 *            - Notiz des Items
+	 *            Notiz des Items
 	 * @param f
-	 *            - {@link Fach} des Items
+	 *            {@link Fach} des Items
 	 * @return {@link List} mit {@link Item}s
 	 */
 	public List<Item> getItemBy(Bereich h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
@@ -75,19 +75,19 @@ public class HandlungsfeldModel {
 	 * Gibt alle Bereiche fuer einen Handlungsfeld zurueck, null values werden ignoriert.
 	 * 
 	 * @param h
-	 *            - Das {@link Handlungsfeld}
+	 *            Das {@link Handlungsfeld}
 	 * @param itemAktiv
-	 *            - {@link Boolean} ob itemAKtiv ist oder nicht
+	 *            {@link Boolean} ob itemAKtiv ist oder nicht
 	 * @param p
-	 *            - {@link Perspektive} des Items
+	 *            {@link Perspektive} des Items
 	 * @param e
-	 *            - {@link Eigenschaft} des Items
+	 *            {@link Eigenschaft} des Items
 	 * @param notizHandlungsfeld
 	 *            - Notiz des Handlungsfeldes
 	 * @param notizItem
-	 *            - Notiz des Items
+	 *            Notiz des Items
 	 * @param f
-	 *            - {@link Fach} des Items
+	 *            {@link Fach} des Items
 	 * @return {@link List} mit {@link Bereich}en
 	 */
 	public List<Bereich> getBereichBy(Handlungsfeld h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {
@@ -98,7 +98,9 @@ public class HandlungsfeldModel {
 	 * Gibt Handlungsfelder anhand der aktiv KZs zurueck.
 	 * 
 	 * @param handlungsfeldAktiv
+	 *            {@link Handlungsfeld} Aktiv
 	 * @param itemAktiv
+	 *            {@link Item} Aktiv
 	 * @return {@link List} mit {@link Handlungsfeld}ern
 	 */
 	public List<Handlungsfeld> getHandlungsfelderBy(Boolean handlungsfeldAktiv, Boolean itemAktiv) {
@@ -108,20 +110,21 @@ public class HandlungsfeldModel {
 	/**
 	 * Gibt alleHandlungsfelder zurueck, null values werden ignoriert.
 	 * 
-	 * 
+	 * @param handlungsfeldAktiv
+	 *            Gibt an ob {@link Handlungsfeld} Aktiv sein soll
 	 * @param itemAktiv
-	 *            - {@link Boolean} ob itemAKtiv ist oder nicht
+	 *            {@link Boolean} ob itemAKtiv ist oder nicht
 	 * @param p
-	 *            - {@link Perspektive} des Items
+	 *            {@link Perspektive} des Items
 	 * @param e
-	 *            - {@link Eigenschaft} des Items
+	 *            {@link Eigenschaft} des Items
 	 * @param notizHandlungsfeld
-	 *            - Notiz des Handlungsfeldes
+	 *            Notiz des Handlungsfeldes
 	 * @param notizItem
-	 *            - Notiz des Items
+	 *            Notiz des Items
 	 * @param f
-	 *            - {@link Fach} des Items
-	 * @return
+	 *            {@link Fach} des Items
+	 * @return {@link List} mit {@link Handlungsfeld}ern
 	 */
 	public List<Handlungsfeld> getHandlungsfelderBy(Boolean handlungsfeldAktiv, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld,
 			String notizItem, Fach f) {
@@ -163,7 +166,7 @@ public class HandlungsfeldModel {
 	 * Sucht ein Handlungsfeld anhand dessen eindeutiger ID
 	 * 
 	 * @param id
-	 *            - {@link Integer} mit der ID
+	 *            {@link Integer} mit der ID
 	 * @return Das gefundene {@link Handlungsfeld} oder null
 	 */
 	public Handlungsfeld findHandlungsfeldById(int id) {

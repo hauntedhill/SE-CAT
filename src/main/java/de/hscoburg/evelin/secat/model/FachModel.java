@@ -37,7 +37,7 @@ public class FachModel {
 	 * Speichert ein {@link Fach} im System
 	 * 
 	 * @param name
-	 *            - {@link String} mit dem Namen des Faches
+	 *            {@link String} mit dem Namen des Faches
 	 * @throws IllegalArgumentException
 	 *             Bei einem Ungueltigen Namen
 	 */
@@ -55,8 +55,9 @@ public class FachModel {
 	 * Aktualisiert ein Fach
 	 * 
 	 * @param e
-	 *            - {@link Fach}
+	 *            {@link Fach}
 	 * @throws IllegalArgumentException
+	 *             Bei fehlerhaften Eingabewerten oder gesperrter Entity
 	 */
 	public void updateFach(Fach e) throws IllegalArgumentException {
 		if (!"".equals(e.getName()) && !isLocked(e)) {

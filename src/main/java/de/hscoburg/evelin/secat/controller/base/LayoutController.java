@@ -74,6 +74,11 @@ public class LayoutController implements Initializable {
 
 	/**
 	 * Methode zum initialisieren des Layoutes
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -87,6 +92,7 @@ public class LayoutController implements Initializable {
 	 * Setzt die Center Node
 	 * 
 	 * @param url
+	 *            Zu setzende Node
 	 */
 	public void setCenterNode(Node url) {
 		layout.setCenter(url);
@@ -96,6 +102,7 @@ public class LayoutController implements Initializable {
 	 * Setzt die Top Node
 	 * 
 	 * @param url
+	 *            Zu setzende Node
 	 */
 	public void setTop(Node url) {
 		layout.setTop(url);

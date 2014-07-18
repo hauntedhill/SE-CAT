@@ -9,6 +9,12 @@ import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 
+/**
+ * Klasse fuer die Steuerung editierbarer ListCells
+ * 
+ * @author zuch1000
+ * 
+ */
 public class EditableCell<T> extends ListCell<T> {
 
 	private TextField textField;
@@ -64,6 +70,9 @@ public class EditableCell<T> extends ListCell<T> {
 		}
 	}
 
+	/**
+	 * Erzeugt das textfeld und setzt die entsprechenden Listener um den "Commit" zu verarbeiten.
+	 */
 	private void createTextField() {
 
 		textField = new TextField();

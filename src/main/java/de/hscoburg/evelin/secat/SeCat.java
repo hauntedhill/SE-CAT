@@ -39,8 +39,8 @@ public class SeCat extends Application {
 	/**
 	 * Methode fuehrt das initialisieren der Applikation durch und laed die default Seite.
 	 * 
-	 * @param primarStage
-	 *            - PrimaryStage
+	 * @param primaryStage
+	 *            PrimaryStage
 	 */
 	public void start(final Stage primaryStage) {
 		PRIMARY_STAGE = primaryStage;
@@ -112,6 +112,7 @@ public class SeCat extends Application {
 	 * Einstiegspunkt der Applikation
 	 * 
 	 * @param args
+	 *            Argumente die an die VM uebergeben wurden
 	 */
 	public static void main(String[] args) {
 		launch(args);

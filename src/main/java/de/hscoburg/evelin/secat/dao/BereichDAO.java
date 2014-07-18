@@ -48,19 +48,19 @@ public class BereichDAO extends BaseDAO<Bereich> {
 	 * Gibt eine Liste mit allen Bereichen zurueck, die den Kriterien entsprechen
 	 * 
 	 * @param h
-	 *            - Das {@link Handlungsfeld} des Bereich
+	 *            Das {@link Handlungsfeld} des Bereich
 	 * @param itemAktiv
-	 *            - ItemAktiv {@link Boolean} der Items des Bereiches
+	 *            ItemAktiv {@link Boolean} der Items des Bereiches
 	 * @param p
-	 *            - {@link Perspektive} der Items
+	 *            {@link Perspektive} der Items
 	 * @param e
-	 *            - {@link Eigenschaft} der Items
+	 *            {@link Eigenschaft} der Items
 	 * @param notizHandlungsfeld
-	 *            - notiz des Handlungsfeldes
+	 *            notiz des Handlungsfeldes
 	 * @param notizItem
-	 *            - notiz des Items
+	 *            notiz des Items
 	 * @param f
-	 *            - {@link Fach} des Items des Bereiches
+	 *            {@link Fach} des Items des Bereiches
 	 * @return {@link List} mit gefundenen {@link Bereich}
 	 */
 	public List<Bereich> getBereicheBy(Handlungsfeld h, Boolean itemAktiv, Perspektive p, Eigenschaft e, String notizHandlungsfeld, String notizItem, Fach f) {

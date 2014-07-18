@@ -38,8 +38,9 @@ public class PerspektivenModel {
 	 * Speichert eine Perspektive innerhalb des Systems
 	 * 
 	 * @param name
-	 *            - {@link String} mit dem Namen der Perspektive
+	 *            {@link String} mit dem Namen der Perspektive
 	 * @throws IllegalArgumentException
+	 *             Bei fehlerhaften Eingabewerten oder gesperrter Entity
 	 */
 	public void savePerspektive(String name) throws IllegalArgumentException {
 		if (!"".equals(name)) {
@@ -55,7 +56,9 @@ public class PerspektivenModel {
 	 * Aktualisiert die uebergebene Perspektive
 	 * 
 	 * @param e
+	 *            {@link Perspektive}
 	 * @throws IllegalArgumentException
+	 *             Bei fehlerhaften Daten oder wenn Entity gesperrt ist.
 	 */
 	public void updatePerspektive(Perspektive e) throws IllegalArgumentException {
 		if (!"".equals(e.getName()) && !isLocked(e)) {

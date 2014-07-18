@@ -69,6 +69,11 @@ public class TopMenuController implements Initializable {
 
 	/**
 	 * Initialisiert die Actions der MenuItems
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
 	 */
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import de.hscoburg.evelin.secat.dao.base.BaseDAO;
 import de.hscoburg.evelin.secat.dao.entity.Einstellung;
 import de.hscoburg.evelin.secat.dao.entity.Einstellung_;
+import de.hscoburg.evelin.secat.dao.entity.base.EinstellungenType;
 
 @Repository
 public class EinstellungDAO extends BaseDAO<Einstellung> {
@@ -23,6 +24,7 @@ public class EinstellungDAO extends BaseDAO<Einstellung> {
 	 * Sucht eine Einstellung anhand dessen eindeutigen Namen
 	 * 
 	 * @param name
+	 *            {@link EinstellungenType}
 	 * @return Die gefundene {@link Einstellung} oder null
 	 */
 	public Einstellung findByName(de.hscoburg.evelin.secat.dao.entity.base.EinstellungenType name) {

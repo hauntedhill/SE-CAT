@@ -39,14 +39,15 @@ public class LehrveranstaltungModel {
 	 * Speichert eine Lehrveranstaltung innerhalb des Systems
 	 * 
 	 * @param dozent
-	 *            - {@link String} mit dem Namen des Dozenten
+	 *            {@link String} mit dem Namen des Dozenten
 	 * @param fach
-	 *            - Das {@link Fach}
+	 *            Das {@link Fach}
 	 * @param jahr
-	 *            - Das Jahr als {@link Integer}
+	 *            Das Jahr als {@link Integer}
 	 * @param semester
-	 *            - Den SemesterType
+	 *            Den SemesterType
 	 * @throws IllegalArgumentException
+	 *             Bei fehlerhaften Eingabewerten oder gesperrter Entity
 	 */
 	@SuppressWarnings("deprecation")
 	public void saveLehrveranstaltung(String dozent, Fach fach, Integer jahr, SemesterType semester) throws IllegalArgumentException {
@@ -75,7 +76,7 @@ public class LehrveranstaltungModel {
 	 * Aktualisiert die Lehrveranstaltung
 	 * 
 	 * @param l
-	 *            - {@link Lehrveranstaltung}
+	 *            {@link Lehrveranstaltung}
 	 */
 	public void updateLehrveranstaltung(Lehrveranstaltung l) {
 		if (l.getJahr() != null && l.getSemester() != null && l.getFach() != null && !"".equals(l.getDozent())) {
@@ -89,7 +90,7 @@ public class LehrveranstaltungModel {
 	/**
 	 * Prueft ob eine Lehrveranstaltung editiert werden darf.
 	 * 
-	 * @param e
+	 * @param l
 	 *            {@link Lehrveranstaltung}
 	 * @return true/false
 	 */

@@ -40,12 +40,13 @@ public class FragenModel {
 	 * Speichert eine Frage im System
 	 * 
 	 * @param name
-	 *            - {@link String} als Namen des Systems
+	 *            {@link String} als Namen des Systems
 	 * @param text
-	 *            - {@link String} fuer den Text einer Frage
+	 *            {@link String} fuer den Text einer Frage
 	 * @param skala
-	 *            - {@link Skala} als Wertebereich einer Frage
+	 *            {@link Skala} als Wertebereich einer Frage
 	 * @throws IllegalArgumentException
+	 *             Bei fehlerhaften Eingabewerten oder gesperrter Entity
 	 */
 	public void saveFrage(String name, String text, Skala skala) throws IllegalArgumentException {
 		if (name == null || text == null || "".equals(name) || "".equals(text) || skala == null) {
