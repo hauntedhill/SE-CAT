@@ -42,7 +42,7 @@ public class FachModel {
 	 *             Bei einem Ungueltigen Namen
 	 */
 	public void saveFach(String name) throws IllegalArgumentException {
-		if (!"".equals(name)) {
+		if (!"".equals(name.trim())) {
 			Fach e = new Fach();
 			e.setName(name);
 			fachDAO.persist(e);
@@ -60,7 +60,7 @@ public class FachModel {
 	 *             Bei fehlerhaften Eingabewerten oder gesperrter Entity
 	 */
 	public void updateFach(Fach e) throws IllegalArgumentException {
-		if (!"".equals(e.getName()) && !isLocked(e)) {
+		if (!"".equals(e.getName().trim()) && !isLocked(e)) {
 
 			fachDAO.merge(e);
 		} else {

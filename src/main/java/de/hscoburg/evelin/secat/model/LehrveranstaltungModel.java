@@ -51,7 +51,7 @@ public class LehrveranstaltungModel {
 	 */
 	@SuppressWarnings("deprecation")
 	public void saveLehrveranstaltung(String dozent, Fach fach, Integer jahr, SemesterType semester) throws IllegalArgumentException {
-		if (jahr != null && semester != null && fach != null && !"".equals(dozent)) {
+		if (jahr != null && semester != null && fach != null && !"".equals(dozent.trim())) {
 			Lehrveranstaltung e = new Lehrveranstaltung();
 
 			e.setAktiv(true);
@@ -79,7 +79,7 @@ public class LehrveranstaltungModel {
 	 *            {@link Lehrveranstaltung}
 	 */
 	public void updateLehrveranstaltung(Lehrveranstaltung l) {
-		if (l.getJahr() != null && l.getSemester() != null && l.getFach() != null && !"".equals(l.getDozent())) {
+		if (l.getJahr() != null && l.getSemester() != null && l.getFach() != null && !"".equals(l.getDozent().trim()) && !isLocked(l)) {
 
 			lehrveranstaltungsDAO.merge(l);
 		} else {

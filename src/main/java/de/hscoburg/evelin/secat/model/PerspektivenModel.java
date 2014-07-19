@@ -43,7 +43,7 @@ public class PerspektivenModel {
 	 *             Bei fehlerhaften Eingabewerten oder gesperrter Entity
 	 */
 	public void savePerspektive(String name) throws IllegalArgumentException {
-		if (!"".equals(name)) {
+		if (!"".equals(name.trim())) {
 			Perspektive e = new Perspektive();
 			e.setName(name);
 			perspektivenDAO.persist(e);
