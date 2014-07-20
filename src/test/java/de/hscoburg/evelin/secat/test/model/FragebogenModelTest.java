@@ -2,11 +2,13 @@ package de.hscoburg.evelin.secat.test.model;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
+import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -125,6 +127,75 @@ public class FragebogenModelTest extends BaseModelTest {
 
 	}
 
+	@Test
+	public void testArchivToggle() {
+		Fragebogen fb = new Fragebogen();
+
+		fb.setId(30);
+		Mockito.when(fragebogenDAO.findById(fb.getId())).thenReturn(fb);
+
+		model.toggleArchiviert(fb);
+
+		Assert.assertTrue(!fb.getArchiviert());
+
+		model.toggleArchiviert(fb);
+
+		Assert.assertTrue(fb.getArchiviert());
+
+		model.toggleArchiviert(fb);
+
+		Assert.assertTrue(!fb.getArchiviert());
+
+	}
+
+	@Test
+	public void testGetFRagebogen() {
+		model.getFragebogenFor(null, null, null, null, null, null, null, false);
+
+		model.getFragebogenFor(null, null, null, null, LocalDate.now(), LocalDate.now(), null, false);
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void deleteFragebogenExported() {
+
+		Fragebogen gb = new Fragebogen();
+		gb.setId(80);
+		Mockito.when(fragebogenDAO.findById(gb.getId())).thenReturn(gb);
+		gb.setExportiertQuestorPro(true);
+
+		model.deleteFragebogen(gb);
+	}
+
+	@Test
+	public void deleteFragebogen() {
+
+		Fragebogen gb = new Fragebogen();
+		gb.setId(81);
+		Mockito.when(fragebogenDAO.findById(gb.getId())).thenReturn(gb);
+		gb.setExportiertQuestorPro(null);
+
+		model.deleteFragebogen(gb);
+
+		gb.setExportiertQuestorPro(false);
+
+		Bewertung b = new Bewertung();
+		gb.setBewertungen(Arrays.asList(new Bewertung[] { b }));
+
+		Item i = new Item();
+
+		List<Fragebogen> fList = new ArrayList<>();
+		fList.add(gb);
+
+		i.setFrageboegen(fList);
+		gb.setItems(Arrays.asList(new Item[] { i }));
+
+		Frage_Fragebogen ff = new Frage_Fragebogen();
+		gb.setFrageFragebogen(Arrays.asList(new Frage_Fragebogen[] { ff }));
+
+		model.deleteFragebogen(gb);
+
+	}
+
 	private static FragebogenDAO fragebogenDAO;
 
 	private static FrageDAO frageDAO;
@@ -177,6 +248,7 @@ public class FragebogenModelTest extends BaseModelTest {
 		l.setId(1);
 		l.setDozent("testDozent");
 		l.setJahr(new Date());
+		f.addLehrveranstaltung(l);
 		f.addLehrveranstaltung(l);
 		l.setSemester(SemesterType.SS);
 

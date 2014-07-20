@@ -825,6 +825,7 @@ public class FragebogenModel {
 			f.setArchiviert(true);
 		}
 		f.setArchiviert(!f.getArchiviert());
+
 	}
 
 }
