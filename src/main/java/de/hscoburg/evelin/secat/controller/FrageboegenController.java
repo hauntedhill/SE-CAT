@@ -1,6 +1,7 @@
 package de.hscoburg.evelin.secat.controller;
 
 import java.io.File;
+import java.io.FileReader;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ResourceBundle;
@@ -448,7 +449,7 @@ public class FrageboegenController extends BaseController {
 						// if (treeTableController.getSelectedTreeItem().getValue().isHandlungsfeld()) {
 						//
 						if (file != null) {
-							anzCVSRows = bewertungsModel.importBewertungen(file);
+							anzCVSRows = bewertungsModel.importBewertungen(new FileReader(file));
 						}
 						tableData = getFrageboegen();
 						//
