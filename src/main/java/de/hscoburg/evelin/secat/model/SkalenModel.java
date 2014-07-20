@@ -64,7 +64,7 @@ public class SkalenModel {
 	 * @param refuseAnswer
 	 *            definiert die refuse Antowrt bei MC
 	 * @throws NumberFormatException
-	 *             Bei fehlerhaften Eingabewerten oder gesperrter Entity
+	 *             Bei fehlerhaften Eingabewerten
 	 */
 	public void saveSkala(SkalaType type, String name, String zeilen, String schritte, String schrittWeite, String minText, String maxText, String optimum,
 			List<String> keys, String schrittWeiteMC, String defaultAnswer, String refuseAnswer) throws NumberFormatException {
