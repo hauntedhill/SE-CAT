@@ -107,7 +107,13 @@ public class BewertungAnzeigenController extends BaseController {
 	@FXML
 	GridPane evaluationComparePaneKiviat;
 	@FXML
-	TableView<EvaluationHelper> tableView;
+	TableView<EvaluationHelper> tableViewAll;
+	@FXML
+	TableView<EvaluationHelper> tableViewLeast;
+	@FXML
+	TableView<EvaluationHelper> tableViewItems;
+	@FXML
+	TableView<EvaluationHelper> tableViewQuestions;
 	@FXML
 	TableView<Item> itemTable;
 	@FXML
@@ -130,7 +136,6 @@ public class BewertungAnzeigenController extends BaseController {
 	TextField criterionincreaseMedian;
 	@FXML
 	TextField criterionincreaseDeviation;
-
 	@Autowired
 	BewertungModel bewertungModel;
 	@Autowired
@@ -146,7 +151,7 @@ public class BewertungAnzeigenController extends BaseController {
 	private static ArrayList<String> data = new ArrayList();
 	private int rows = 0;
 	private int frageColCount;
-	private int wertungCount;
+	private int wertungCount = 0;
 	private int constColumns;
 	private int actualColumn;
 	private ArrayList<Bereich> bereiche = new ArrayList<Bereich>();
@@ -159,7 +164,7 @@ public class BewertungAnzeigenController extends BaseController {
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
-		tableView.setRowFactory(new Callback<TableView<EvaluationHelper>, TableRow<EvaluationHelper>>() {
+		tableViewAll.setRowFactory(new Callback<TableView<EvaluationHelper>, TableRow<EvaluationHelper>>() {
 
 			public TableRow<EvaluationHelper> call(TableView<EvaluationHelper> treeTableView) {
 
@@ -223,7 +228,7 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void handleAction(ActionEvent t) {
-						EvaluationHelper eh = tableView.getSelectionModel().getSelectedItem();
+						EvaluationHelper eh = tableViewAll.getSelectionModel().getSelectedItem();
 						ArrayList<Bewertung> bewertungen = new ArrayList<Bewertung>();
 						for (Bewertung b : fragebogen.getBewertungen()) {
 
@@ -238,10 +243,10 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void updateUI() {
-						tableView.getSelectionModel().getSelectedItem().setOutlier(true);
-						tableView.getItems().clear();
+						tableViewAll.getSelectionModel().getSelectedItem().setOutlier(true);
+						tableViewAll.getItems().clear();
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
-						tableView.setItems(allEvaluationHelper);
+						tableViewAll.setItems(allEvaluationHelper);
 
 					}
 
@@ -251,7 +256,7 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void handleAction(ActionEvent t) {
-						EvaluationHelper eh = tableView.getSelectionModel().getSelectedItem();
+						EvaluationHelper eh = tableViewAll.getSelectionModel().getSelectedItem();
 						ArrayList<Bewertung> bewertungen = new ArrayList<Bewertung>();
 						for (Bewertung b : fragebogen.getBewertungen()) {
 
@@ -266,10 +271,10 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void updateUI() {
-						tableView.getSelectionModel().getSelectedItem().setOutlier(true);
-						tableView.getItems().clear();
+						tableViewAll.getSelectionModel().getSelectedItem().setOutlier(true);
+						tableViewAll.getItems().clear();
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
-						tableView.setItems(allEvaluationHelper);
+						tableViewAll.setItems(allEvaluationHelper);
 
 					}
 
@@ -279,7 +284,7 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void handleAction(ActionEvent t) {
-						EvaluationHelper eh = tableView.getSelectionModel().getSelectedItem();
+						EvaluationHelper eh = tableViewAll.getSelectionModel().getSelectedItem();
 						ArrayList<Bewertung> bewertungen = new ArrayList<Bewertung>();
 						for (Bewertung b : fragebogen.getBewertungen()) {
 
@@ -294,10 +299,10 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void updateUI() {
-						tableView.getSelectionModel().getSelectedItem().setOutlier(true);
-						tableView.getItems().clear();
+						tableViewAll.getSelectionModel().getSelectedItem().setOutlier(true);
+						tableViewAll.getItems().clear();
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
-						tableView.setItems(allEvaluationHelper);
+						tableViewAll.setItems(allEvaluationHelper);
 
 					}
 
@@ -319,49 +324,8 @@ public class BewertungAnzeigenController extends BaseController {
 
 		ObservableList<EvaluationHelper> ehList = FXCollections.observableArrayList();
 
-		TableColumn colHeadData = new TableColumn();
-		final TableColumn col0 = new TableColumn();
-		final TableColumn col1 = new TableColumn();
-		final TableColumn col2 = new TableColumn();
-		final TableColumn col3 = new TableColumn();
-		final TableColumn col4 = new TableColumn();
-		col0.setVisible(true);
-		col2.setVisible(true);
-		col3.setVisible(true);
-		col4.setVisible(true);
-
-		col0.setMinWidth(100);
-		col1.setMinWidth(100);
-		col2.setMinWidth(100);
-		col3.setMinWidth(100);
-		col4.setMinWidth(100);
-		Text colHeaderTextHead = new Text("Kopfdaten");
-		colHeadData.setGraphic(colHeaderTextHead);
-		col0.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.welle")));
-		col1.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.rawid")));
-		col2.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.source")));
-		col3.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.zeit")));
-		col4.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.outlier")));
-
-		colHeadData.getColumns().addAll(col0, col1, col2, col3, col4);
-
-		tableView.getColumns().add(colHeadData);
-
-		colHeaderTextHead.setOnMouseClicked(new SeCatEventHandle<MouseEvent>() {
-
-			@Override
-			public void handleAction(MouseEvent t) {
-			}
-
-			@Override
-			public void updateUI() {
-				col0.setVisible(!col0.visibleProperty().get());
-				col2.setVisible(!col2.visibleProperty().get());
-				col3.setVisible(!col3.visibleProperty().get());
-				col4.setVisible(!col3.visibleProperty().get());
-			}
-
-		});
+		tableViewAll.getColumns().add(createHead(true));
+		tableViewLeast.getColumns().add(createHead(false));
 
 		Fragebogen f = bewertungController.getSelectedFragebogen();
 		fragebogen = f;
@@ -382,252 +346,54 @@ public class BewertungAnzeigenController extends BaseController {
 		}
 		avValueBereich = getAvValueforBereiche(bewertungOl, bereiche);
 
-		/*
-		 * ArrayList<String> erste = new ArrayList<String>();
-		 * 
-		 * if (!bewertungOl.isEmpty()) {
-		 * 
-		 * for (Bewertung bewertung : bewertungOl) { if (!erste.contains(bewertung.getZeilenid())) { erste.add(bewertung.getZeilenid());
-		 * EvaluationHelper eh = new EvaluationHelper(); if (bewertung.getAusreiser() != null && bewertung.getAusreiser() == true) {
-		 * eh.setOutlier(true); } if (bewertung.getAusreiser() != null && bewertung.getAusreiser() == false) { eh.setOutlier(false); }
-		 * eh.setWelle(bewertung.getWelle()); eh.setRawId(bewertung.getZeilenid()); eh.setSource(bewertung.getQuelle());
-		 * eh.setZeit(bewertung.getZeit()); List<Bewertung> temp = bewertungOl; for (Bewertung b : temp) {
-		 * 
-		 * if (b.getZeilenid().equals(eh.getRawId())) { if (b.getItem() != null) {
-		 * 
-		 * eh.addItemWertung(b.getWert()); eh.addItem(b.getItem()); }
-		 * 
-		 * }
-		 * 
-		 * }
-		 * 
-		 * ehList.add(eh); } } }
-		 * 
-		 * for (EvaluationHelper eh : ehList) { ArrayList<Integer> id = new ArrayList<Integer>(); ArrayList<String> frageWertungen = new
-		 * ArrayList<String>(); for (Bewertung bewertung : bewertungOl) { if (eh.getRawId().equals(bewertung.getZeilenid()) &&
-		 * bewertung.getFrage() != null) { for (Frage frage : fragenList) {
-		 * 
-		 * if (bewertung.getFrage().getId() == frage.getId()) { if (!id.contains(frage.getId())) { id.add(frage.getId());
-		 * frageWertungen.add(fragenList.indexOf(frage), bewertung.getWert()); } else { String s =
-		 * frageWertungen.get(id.indexOf(frage.getId())) + " " + bewertung.getWert(); frageWertungen.set(fragenList.indexOf(frage), s); } }
-		 * }
-		 * 
-		 * } }
-		 * 
-		 * eh.setFrageWertung(frageWertungen); }
-		 */
 		ehList = EvaluationHelper.createEvaluationHelperList(bewertungOl, fragen);
+
+		/*
+		 * for (String s : ehList.get(0).getFrageWertung()) {
+		 * 
+		 * System.out.println(s); } System.out.println("---------------"); for (String s : ehList.get(ehList.size() - 1).getFrageWertung())
+		 * {
+		 * 
+		 * System.out.println(s); }
+		 */
+
 		allEvaluationHelper = setOutliers(ehList);
 		rows = allEvaluationHelper.size();
 
-		allEvaluationHelper = ehList;
+		// allEvaluationHelper = ehList;
 
-		tableView.setItems(allEvaluationHelper);
-		col0.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
+		tableViewAll.setItems(allEvaluationHelper);
+		tableViewLeast.setItems(allEvaluationHelper);
+		tableViewItems.setItems(allEvaluationHelper);
+		tableViewQuestions.setItems(allEvaluationHelper);
 
-			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-				return new ReadOnlyObjectWrapper<String>(p.getValue().getWelle());
-
-			}
-		});
-
-		col1.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
-
-			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-				return new ReadOnlyObjectWrapper<String>(p.getValue().getRawId());
-
-			}
-		});
-		col2.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
-
-			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-				return new ReadOnlyObjectWrapper<String>(p.getValue().getSource());
-
-			}
-		});
-		col3.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
-
-			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-
-				return new ReadOnlyObjectWrapper<String>(p.getValue().getZeit());
-
-			}
-		});
-		col3.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
-
-			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-
-				return new ReadOnlyObjectWrapper<String>(p.getValue().getZeit());
-
-			}
-		});
-
-		col4.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, Node>, ObservableValue<Node>>() {
-
-			public ObservableValue<Node> call(CellDataFeatures<EvaluationHelper, Node> p) {
-				if (p.getValue().isOutlier()) {
-					return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/flag.png", 16, 16, true, true)));
-				} else {
-					return new ReadOnlyObjectWrapper<Node>(null);
-				}
-			}
-		});
-
-		constColumns = 1;
-		itemCount = 0;
-		actualColumn = 0;
-		for (Bereich bereich : bereiche) {
-
-			final TableColumn col = new TableColumn();
-			col.setMinWidth(300);
-			col.setPrefWidth(300);
-			col.setMaxWidth(Double.MAX_VALUE);
-
-			Text t = new Text(bereich.getName());
-			t.setTextAlignment(TextAlignment.CENTER);
-
-			if (bereich.getName().length() > 15) {
-				t.setWrappingWidth(200);
-			}
-			col.setGraphic(t);
-
-			t.setOnMouseClicked(new SeCatEventHandle<MouseEvent>() {
-
-				@Override
-				public void handleAction(MouseEvent t) {
-				}
-
-				@Override
-				public void updateUI() {
-					ObservableList<TableColumn> temp = col.getColumns();
-					constColumns = 1;
-					itemCount = 0;
-					actualColumn = 0;
-
-					for (int i = 0; i < temp.size() - 1; i++) {
-						temp.get(i).setVisible(!temp.get(i).isVisible());
-					}
-
-				}
-			});
-
-			int count = 0;
-
-			for (Item item : fragebogen.getItems()) {
-				if (item.getBereich().equals(bereich)) {
-					TableColumn itemCol = new TableColumn();
-					Text itemName = new Text(item.getFrage());
-					itemName.setWrappingWidth(125);
-					itemCol.setGraphic(itemName);
-					itemCol.setMinWidth(225);
-					// itemCol.setMaxWidth(125);
-					col.getColumns().add(itemCol);
-
-					((TableColumn<EvaluationHelper, String>) col.getColumns().get(count))
-							.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
-
-								public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-									if (actualColumn == tableView.getColumns().get(constColumns).getColumns().size()) {
-										constColumns = +1;
-										actualColumn = 1;
-									}
-
-									if (itemCount == p.getValue().getItemWertung().size()) {
-										itemCount = 0;
-
-									}
-									actualColumn++;
-									return new ReadOnlyObjectWrapper<String>(p.getValue().getItemWertung().get(itemCount++));
-
-								}
-							});
-
-					count++;
-				}
-			}
-
-			TableColumn itemAverageCol = new TableColumn();
-			Text itemAvText = new Text("Av EN_Prop");
-
-			itemAvText.setWrappingWidth(125);
-			itemAverageCol.setGraphic(itemAvText);
-			itemAverageCol.setMinWidth(125);
-			itemAverageCol.setPrefWidth(200);
-
-			// col.getColumns().add(itemAverageCol);
-
-			tableView.getColumns().add(col);
-
-			/*
-			 * for (int i = 0; i < col.getColumns().size(); i++) ((TableColumn<EvaluationHelper, String>) col.getColumns().get(i))
-			 * .setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
-			 * 
-			 * public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-			 * 
-			 * if (actualColumn == tableView.getColumns().get(constColumns).getColumns().size()) { itemCountNext++; actualColumn = 0; }
-			 * 
-			 * if (itemCount == tableView.getColumns().get(constColumns).getColumns().size()) { itemCount = itemCountGes;
-			 * 
-			 * }
-			 * 
-			 * if (itemCountNext == rows) { System.out.println("save ges"); itemCountGes +=
-			 * tableView.getColumns().get(constColumns).getColumns().size() - 1; itemCountNext = 0; } System.out.println(actualColumn);
-			 * System.out.println(); actualColumn++;
-			 * 
-			 * return new ReadOnlyObjectWrapper<String>(p.getValue().getItemWertung().get(itemCount++)); } });
-			 * 
-			 * 
-			 * // for(int i = 0; i < ) ((TableColumn<EvaluationHelper, String>) tableView.getColumns().get(bereiche.indexOf(bereich) +
-			 * 1).getColumns().get(0)) .setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>,
-			 * ObservableValue<String>>() {
-			 * 
-			 * public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-			 * 
-			 * return new ReadOnlyObjectWrapper<String>(p.getValue().getItemWertung().get(0)); } });
-			 * 
-			 * itemAverageCol.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
-			 * 
-			 * public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-			 * 
-			 * return new ReadOnlyObjectWrapper<String>("tst");
-			 * 
-			 * } });
-			 */
-
-		}
+		tableViewAll.getColumns().addAll(createItemColumns());
 
 		final TableColumn colFragenHead = new TableColumn();
 		Text tf = new Text(SeCatResourceBundle.getInstance().getString("scene.frageboegen.frage.label"));
 		tf.setTextAlignment(TextAlignment.CENTER);
 		colFragenHead.setGraphic(tf);
 
-		tf.setOnMouseClicked(new SeCatEventHandle<MouseEvent>() {
+		/*
+		 * tf.setOnMouseClicked(new SeCatEventHandle<MouseEvent>() {
+		 * 
+		 * @Override public void handleAction(MouseEvent t) { }
+		 * 
+		 * @Override public void updateUI() { ObservableList<TableColumn> temp = colFragenHead.getColumns(); wertungCount = 0; for (int i =
+		 * 0; i < temp.size(); i++) {
+		 * 
+		 * temp.get(i).setVisible(!temp.get(i).isVisible());
+		 * 
+		 * } } });
+		 */
 
-			@Override
-			public void handleAction(MouseEvent t) {
-			}
-
-			@Override
-			public void updateUI() {
-				ObservableList<TableColumn> temp = colFragenHead.getColumns();
-				wertungCount = 0;
-				for (int i = 0; i < temp.size(); i++) {
-
-					temp.get(i).setVisible(!temp.get(i).isVisible());
-
-				}
-			}
-		});
-
-		final TableColumn colPlaceHolder = new TableColumn();
-		Text tp = new Text("Kopfzeile anklicken");
-		tp.setTextAlignment(TextAlignment.CENTER);
-		colPlaceHolder.setGraphic(tp);
-		colPlaceHolder.setVisible(false);
-		colFragenHead.getColumns().add(colPlaceHolder);
-
+		// final TableColumn colPlaceHolder = new TableColumn();
+		// Text tp = new Text("Kopfzeile anklicken");
+		// tp.setTextAlignment(TextAlignment.CENTER);
+		// colPlaceHolder.setGraphic(tp);
+		// colPlaceHolder.setVisible(false);
+		// colFragenHead.getColumns().add(colPlaceHolder);
 		wertungCount = 0;
-
 		if (!fragenList.isEmpty()) {
 
 			for (Frage frage : fragenList) {
@@ -652,11 +418,12 @@ public class BewertungAnzeigenController extends BaseController {
 
 					public ObservableValue<Text> call(CellDataFeatures<EvaluationHelper, String> p) {
 						if (wertungCount == p.getValue().getFrageWertung().size()) {
+							System.out.println(p.getValue().getFrageWertung().size());
 							wertungCount = 0;
 						}
 						Text t = new Text(p.getValue().getFrageWertung().get(wertungCount++));
-						// Text t = new Text("kacke");
 						t.setWrappingWidth(125);
+						System.out.println(wertungCount);
 						return new ReadOnlyObjectWrapper<Text>(t);
 					}
 				});
@@ -664,7 +431,7 @@ public class BewertungAnzeigenController extends BaseController {
 			}
 		}
 
-		tableView.getColumns().add(colFragenHead);
+		tableViewAll.getColumns().add(colFragenHead);
 
 		if (allEvaluationHelper != null && !allEvaluationHelper.isEmpty()) {
 			ObservableList itemList = FXCollections.observableArrayList(allEvaluationHelper.get(0).getItems());
@@ -1470,7 +1237,7 @@ public class BewertungAnzeigenController extends BaseController {
 	}
 
 	public EvaluationHelper getSelectedItem() {
-		return tableView.getSelectionModel().getSelectedItem();
+		return tableViewAll.getSelectionModel().getSelectedItem();
 	}
 
 	public ObservableList<EvaluationHelper> setOutliers(ObservableList<EvaluationHelper> ehList) {
@@ -1487,6 +1254,182 @@ public class BewertungAnzeigenController extends BaseController {
 
 		}
 		return ehList;
+	}
+
+	private TableColumn createHead(boolean all) {
+
+		final TableColumn colHeadData = new TableColumn();
+		final TableColumn<EvaluationHelper, String> col0 = new TableColumn<EvaluationHelper, String>();
+		final TableColumn<EvaluationHelper, String> col1 = new TableColumn<EvaluationHelper, String>();
+		final TableColumn<EvaluationHelper, String> col2 = new TableColumn<EvaluationHelper, String>();
+		final TableColumn<EvaluationHelper, String> col3 = new TableColumn<EvaluationHelper, String>();
+		final TableColumn<EvaluationHelper, Node> col4 = new TableColumn<EvaluationHelper, Node>();
+		col0.setVisible(true);
+		col2.setVisible(true);
+		col3.setVisible(true);
+		col4.setVisible(true);
+
+		col0.setMinWidth(100);
+		col1.setMinWidth(100);
+		col2.setMinWidth(100);
+		col3.setMinWidth(100);
+		col4.setMinWidth(100);
+		Text colHeaderTextHead = new Text("Kopfdaten");
+		colHeadData.setGraphic(colHeaderTextHead);
+		col0.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.welle")));
+		col1.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.rawid")));
+		col2.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.source")));
+		col3.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.zeit")));
+		col4.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.outlier")));
+
+		col0.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
+
+			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getWelle());
+
+			}
+		});
+
+		col1.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
+
+			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getRawId());
+
+			}
+		});
+		col2.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
+
+			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getSource());
+
+			}
+		});
+		col3.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
+
+			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
+
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getZeit());
+
+			}
+		});
+		col3.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
+
+			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
+
+				return new ReadOnlyObjectWrapper<String>(p.getValue().getZeit());
+
+			}
+		});
+
+		col4.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, Node>, ObservableValue<Node>>() {
+
+			public ObservableValue<Node> call(CellDataFeatures<EvaluationHelper, Node> p) {
+				if (p.getValue().isOutlier()) {
+					return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/flag.png", 16, 16, true, true)));
+				} else {
+					return new ReadOnlyObjectWrapper<Node>(null);
+				}
+			}
+		});
+		if (all == true) {
+			colHeadData.getColumns().addAll(col0, col1, col2, col3, col4);
+			return colHeadData;
+		} else {
+
+			colHeadData.getColumns().addAll(col1, col4);
+			return colHeadData;
+		}
+	}
+
+	private ObservableList<TableColumn<EvaluationHelper, String>> createItemColumns() {
+		ObservableList<TableColumn<EvaluationHelper, String>> colList = FXCollections.observableArrayList();
+		constColumns = 1;
+		itemCount = 0;
+		actualColumn = 0;
+		for (Bereich bereich : bereiche) {
+
+			final TableColumn col = new TableColumn();
+			col.setMinWidth(300);
+			col.setPrefWidth(300);
+			col.setMaxWidth(Double.MAX_VALUE);
+
+			Text t = new Text(bereich.getName());
+			t.setTextAlignment(TextAlignment.CENTER);
+
+			if (bereich.getName().length() > 15) {
+				t.setWrappingWidth(200);
+			}
+			col.setGraphic(t);
+
+			t.setOnMouseClicked(new SeCatEventHandle<MouseEvent>() {
+
+				@Override
+				public void handleAction(MouseEvent t) {
+				}
+
+				@Override
+				public void updateUI() {
+					ObservableList<TableColumn> temp = col.getColumns();
+					constColumns = 1;
+					itemCount = 0;
+					actualColumn = 0;
+
+					for (int i = 0; i < temp.size() - 1; i++) {
+						temp.get(i).setVisible(!temp.get(i).isVisible());
+					}
+
+				}
+			});
+
+			int count = 0;
+
+			for (Item item : fragebogen.getItems()) {
+				if (item.getBereich().equals(bereich)) {
+					TableColumn itemCol = new TableColumn();
+					Text itemName = new Text(item.getFrage());
+					itemName.setWrappingWidth(125);
+					itemCol.setGraphic(itemName);
+					itemCol.setMinWidth(225);
+					// itemCol.setMaxWidth(125);
+					col.getColumns().add(itemCol);
+
+					((TableColumn<EvaluationHelper, String>) col.getColumns().get(count))
+							.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
+
+								public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
+									if (actualColumn == tableViewAll.getColumns().get(constColumns).getColumns().size()) {
+										constColumns = +1;
+										actualColumn = 1;
+									}
+
+									if (itemCount == p.getValue().getItemWertung().size()) {
+										itemCount = 0;
+
+									}
+									actualColumn++;
+									return new ReadOnlyObjectWrapper<String>(p.getValue().getItemWertung().get(itemCount++));
+
+								}
+							});
+
+					count++;
+				}
+			}
+
+			TableColumn itemAverageCol = new TableColumn();
+			Text itemAvText = new Text("Av EN_Prop");
+
+			itemAvText.setWrappingWidth(125);
+			itemAverageCol.setGraphic(itemAvText);
+			itemAverageCol.setMinWidth(125);
+			itemAverageCol.setPrefWidth(200);
+
+			// col.getColumns().add(itemAverageCol);
+
+			colList.add(col);
+
+		}
+		return colList;
 	}
 
 	@Override

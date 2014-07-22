@@ -20,13 +20,33 @@
 <GridPane fx:id="gridPane" layoutX="10.0" layoutY="50.0" maxHeight="500.0" maxWidth="1.7976931348623157E308" prefHeight="284.0" prefWidth="573.0" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="273.0" />
-    <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="0.0" prefWidth="300.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" vgrow="SOMETIMES" />
   </rowConstraints>
-<children>
-	<TableView fx:id="tableView" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" GridPane.columnSpan="2" />
+<children><TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="339.0" prefWidth="518.0" tabClosingPolicy="UNAVAILABLE">
+  <tabs>
+    <Tab text="%scene.evaluation.lable.showleast">
+<content>
+	<TableView fx:id="tableViewLeast" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" GridPane.columnSpan="2" />
+</content></Tab>
+<Tab text="%scene.evaluation.lable.showall">
+<content>
+<TableView fx:id="tableViewAll" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" GridPane.columnSpan="2" />
+</content>
+</Tab>
+<Tab text="%scene.evaluation.lable.showitems">
+<content>
+<TableView fx:id="tableViewItems" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" GridPane.columnSpan="2" />
+</content>
+</Tab>
+<Tab text="%scene.evaluation.lable.showquestions">
+<content>
+<TableView fx:id="tableViewQuestions" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="200.0" GridPane.columnSpan="2" />
+</content>
+</Tab>
+  </tabs>
+</TabPane>
 </children>
 </GridPane>
 
