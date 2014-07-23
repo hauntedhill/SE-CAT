@@ -159,7 +159,7 @@ public class BewertungAnzeigenController extends BaseController {
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
-		tableViewAll.setRowFactory(new Callback<TableView<EvaluationHelper>, TableRow<EvaluationHelper>>() {
+		setRowFactory(new Callback<TableView<EvaluationHelper>, TableRow<EvaluationHelper>>() {
 
 			public TableRow<EvaluationHelper> call(TableView<EvaluationHelper> treeTableView) {
 
@@ -223,7 +223,16 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void handleAction(ActionEvent t) {
-						EvaluationHelper eh = tableViewAll.getSelectionModel().getSelectedItem();
+						EvaluationHelper eh;
+						if (tableViewAll.isFocused()) {
+							eh = tableViewAll.getSelectionModel().getSelectedItem();
+						} else if (tableViewLeast.isFocused()) {
+							eh = tableViewLeast.getSelectionModel().getSelectedItem();
+						} else if (tableViewItems.isFocused()) {
+							eh = tableViewItems.getSelectionModel().getSelectedItem();
+						} else {
+							eh = tableViewQuestions.getSelectionModel().getSelectedItem();
+						}
 						ArrayList<Bewertung> bewertungen = new ArrayList<Bewertung>();
 						for (Bewertung b : fragebogen.getBewertungen()) {
 
@@ -238,10 +247,14 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void updateUI() {
-						tableViewAll.getSelectionModel().getSelectedItem().setOutlier(true);
-						tableViewAll.getItems().clear();
+						System.out.println(tableViewAll.isFocused());
+						// tableViewAll.getSelectionModel().getSelectedItem().setOutlier(true);
+						// tableViewAll.getItems().clear();
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
 						tableViewAll.setItems(allEvaluationHelper);
+						tableViewLeast.setItems(allEvaluationHelper);
+						tableViewItems.setItems(allEvaluationHelper);
+						tableViewQuestions.setItems(allEvaluationHelper);
 
 					}
 
@@ -251,7 +264,16 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void handleAction(ActionEvent t) {
-						EvaluationHelper eh = tableViewAll.getSelectionModel().getSelectedItem();
+						EvaluationHelper eh;
+						if (tableViewAll.isFocused()) {
+							eh = tableViewAll.getSelectionModel().getSelectedItem();
+						} else if (tableViewLeast.isFocused()) {
+							eh = tableViewLeast.getSelectionModel().getSelectedItem();
+						} else if (tableViewItems.isFocused()) {
+							eh = tableViewItems.getSelectionModel().getSelectedItem();
+						} else {
+							eh = tableViewQuestions.getSelectionModel().getSelectedItem();
+						}
 						ArrayList<Bewertung> bewertungen = new ArrayList<Bewertung>();
 						for (Bewertung b : fragebogen.getBewertungen()) {
 
@@ -266,10 +288,13 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void updateUI() {
-						tableViewAll.getSelectionModel().getSelectedItem().setOutlier(true);
-						tableViewAll.getItems().clear();
+						// tableViewAll.getSelectionModel().getSelectedItem().setOutlier(true);
+						// tableViewAll.getItems().clear();
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
 						tableViewAll.setItems(allEvaluationHelper);
+						tableViewLeast.setItems(allEvaluationHelper);
+						tableViewItems.setItems(allEvaluationHelper);
+						tableViewQuestions.setItems(allEvaluationHelper);
 
 					}
 
@@ -279,7 +304,16 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void handleAction(ActionEvent t) {
-						EvaluationHelper eh = tableViewAll.getSelectionModel().getSelectedItem();
+						EvaluationHelper eh;
+						if (tableViewAll.isFocused()) {
+							eh = tableViewAll.getSelectionModel().getSelectedItem();
+						} else if (tableViewLeast.isFocused()) {
+							eh = tableViewLeast.getSelectionModel().getSelectedItem();
+						} else if (tableViewItems.isFocused()) {
+							eh = tableViewItems.getSelectionModel().getSelectedItem();
+						} else {
+							eh = tableViewQuestions.getSelectionModel().getSelectedItem();
+						}
 						ArrayList<Bewertung> bewertungen = new ArrayList<Bewertung>();
 						for (Bewertung b : fragebogen.getBewertungen()) {
 
@@ -294,10 +328,14 @@ public class BewertungAnzeigenController extends BaseController {
 
 					@Override
 					public void updateUI() {
-						tableViewAll.getSelectionModel().getSelectedItem().setOutlier(true);
-						tableViewAll.getItems().clear();
+
+						// tableViewAll.getSelectionModel().getSelectedItem().setOutlier(true);
+						// tableViewAll.getItems().clear();
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
 						tableViewAll.setItems(allEvaluationHelper);
+						tableViewLeast.setItems(allEvaluationHelper);
+						tableViewItems.setItems(allEvaluationHelper);
+						tableViewQuestions.setItems(allEvaluationHelper);
 
 					}
 
@@ -335,12 +373,6 @@ public class BewertungAnzeigenController extends BaseController {
 		ObservableList<Bewertung> bewertungOl = FXCollections.observableArrayList(f.getBewertungen());
 		bereiche = EvaluationHelper.getBereicheFromEvaluationHelper(bewertungOl);
 
-		// bereichVisible = new int[bereiche.size()];
-		// for (int i = 0; i < bereiche.size(); i++) {
-
-		// bereichVisible[i] = 0;
-		// }
-
 		avValueBereich = getAvValueforBereiche(bewertungOl, bereiche);
 
 		ehList = EvaluationHelper.createEvaluationHelperList(bewertungOl, fragen);
@@ -359,45 +391,6 @@ public class BewertungAnzeigenController extends BaseController {
 
 		tableViewAll.getColumns().add(createQuestions(true));
 		tableViewQuestions.getColumns().add(createQuestions(true));
-
-		/*
-		 * final TableColumn colFragenHead = new TableColumn(); Text tf = new
-		 * Text(SeCatResourceBundle.getInstance().getString("scene.frageboegen.frage.label")); tf.setTextAlignment(TextAlignment.CENTER);
-		 * colFragenHead.setGraphic(tf);
-		 * 
-		 * 
-		 * tf.setOnMouseClicked(new SeCatEventHandle<MouseEvent>() {
-		 * 
-		 * @Override public void handleAction(MouseEvent t) { }
-		 * 
-		 * @Override public void updateUI() { ObservableList<TableColumn> temp = colFragenHead.getColumns(); wertungCount = 0; for (int i =
-		 * 0; i < temp.size(); i++) {
-		 * 
-		 * temp.get(i).setVisible(!temp.get(i).isVisible());
-		 * 
-		 * } } });
-		 * 
-		 * 
-		 * // final TableColumn colPlaceHolder = new TableColumn(); // Text tp = new Text("Kopfzeile anklicken"); //
-		 * tp.setTextAlignment(TextAlignment.CENTER); // colPlaceHolder.setGraphic(tp); // colPlaceHolder.setVisible(false); //
-		 * colFragenHead.getColumns().add(colPlaceHolder); wertungCount = 0; if (!fragenList.isEmpty()) {
-		 * 
-		 * for (Frage frage : fragenList) {
-		 * 
-		 * TableColumn colFrage = new TableColumn(); colFrage.setMinWidth(125); colFrage.setMaxWidth(125); Text frageText; if
-		 * (frage.getText().length() > 170) { frageText = new Text(frage.getText().substring(0, 170) + "..."); } else { frageText = new
-		 * Text(frage.getText()); } if (frage.getText().length() > 15) { frageText.setWrappingWidth(125); } colFrage.setGraphic(frageText);
-		 * colFrage.setVisible(true); colFragenHead.getColumns().add(colFrage);
-		 * 
-		 * colFrage.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<Text>>() {
-		 * 
-		 * public ObservableValue<Text> call(CellDataFeatures<EvaluationHelper, String> p) { if (wertungCount ==
-		 * p.getValue().getFrageWertung().size()) { System.out.println(p.getValue().getFrageWertung().size()); wertungCount = 0; } Text t =
-		 * new Text(p.getValue().getFrageWertung().get(wertungCount++)); t.setWrappingWidth(125); System.out.println(wertungCount); return
-		 * new ReadOnlyObjectWrapper<Text>(t); } });
-		 * 
-		 * } }
-		 */
 
 		if (allEvaluationHelper != null && !allEvaluationHelper.isEmpty()) {
 			ObservableList itemList = FXCollections.observableArrayList(allEvaluationHelper.get(0).getItems());
@@ -1448,6 +1441,15 @@ public class BewertungAnzeigenController extends BaseController {
 
 		}
 		return colList;
+	}
+
+	public void setRowFactory(Callback<TableView<EvaluationHelper>, TableRow<EvaluationHelper>> arg0) {
+
+		tableViewAll.setRowFactory(arg0);
+		tableViewLeast.setRowFactory(arg0);
+		tableViewItems.setRowFactory(arg0);
+		tableViewQuestions.setRowFactory(arg0);
+
 	}
 
 	@Override
