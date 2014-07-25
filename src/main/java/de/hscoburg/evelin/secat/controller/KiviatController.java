@@ -24,8 +24,8 @@ public class KiviatController extends BaseController {
 	public void initializeController(URL location, ResourceBundle resources) {
 
 		final SwingNode chartSwingNode = new SwingNode();
-		chartSwingNode.setContent(new ChartPanel(bewertungAnzeigenController.createMixedRadarChartForBereich(bewertungAnzeigenController.getSelectedItem(),
-				bewertungAnzeigenController.getFragebogen())));
+		chartSwingNode.setContent(new ChartPanel(bewertungAnzeigenController.createDatasetForStudentBereichContext(bewertungAnzeigenController
+				.getSelectedItem())));
 
 		contentPane.add(chartSwingNode, 1, 1);
 
