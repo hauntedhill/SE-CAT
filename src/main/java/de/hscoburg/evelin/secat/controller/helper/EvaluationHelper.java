@@ -11,6 +11,12 @@ import de.hscoburg.evelin.secat.dao.entity.Frage;
 import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 
+/**
+ * Hilfsklasse zur Anzeige der Bewertungen
+ * 
+ * @author moro1000
+ * 
+ */
 public class EvaluationHelper {
 
 	private ArrayList<Item> items;

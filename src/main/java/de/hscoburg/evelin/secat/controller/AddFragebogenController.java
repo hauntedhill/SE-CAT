@@ -56,6 +56,12 @@ import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
+/**
+ * Controller zur Erstellung von Fragebögen
+ * 
+ * @author moro1000
+ * 
+ */
 @Controller
 public class AddFragebogenController extends BaseController {
 
@@ -122,6 +128,14 @@ public class AddFragebogenController extends BaseController {
 	private static ArrayList<Item> itemsToRemove = new ArrayList<Item>();
 	private static ArrayList<Frage> fragenToRemove = new ArrayList<Frage>();
 
+	/**
+	 * Initialisiert die View
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -631,12 +645,21 @@ public class AddFragebogenController extends BaseController {
 		return "scene.addFragebogen.lable.title";
 	}
 
+	/**
+	 * Filtert die Daten in der Treetableview
+	 */
 	public void filterTreeTable() {
 
 		treeTableController.buildFilteredTreeTable(handlungsfeldModel.getHandlungsfelderBy(true, true), true, true, selectedPerspektive, selectedEigenschaft,
 				null, null, null);
 	}
 
+	/**
+	 * Methode setzt den Fragebogen der editiert werden soll und initialisiert die Listen.
+	 * 
+	 * @param f
+	 *            {@link Fragebogen} - der zu editierende Fragebogen
+	 */
 	public void setFragebogenToEdit(Fragebogen f) {
 		ObservableList<Item> items = FXCollections.observableArrayList();
 		ObservableList<Frage> fragenOlTop = FXCollections.observableArrayList();

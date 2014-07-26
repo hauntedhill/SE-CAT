@@ -32,12 +32,17 @@ import de.hscoburg.evelin.secat.model.SkalenModel;
 import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 
+/**
+ * Controller um Items zu filtern
+ * 
+ * @author moro1000
+ * 
+ */
 @Controller
 public class FilterAllItemsController extends BaseController {
 
 	@FXML
 	private Button filter;
-
 	@FXML
 	private Button cancel;
 	@FXML
@@ -61,6 +66,14 @@ public class FilterAllItemsController extends BaseController {
 	@Autowired
 	private TreeTableController treeTableController;
 
+	/**
+	 * Initialisierierung
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 

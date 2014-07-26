@@ -15,6 +15,12 @@ import java.text.NumberFormat;
 import org.jfree.chart.plot.SpiderWebPlot;
 import org.jfree.data.category.DefaultCategoryDataset;
 
+/**
+ * Erweiterung des jFreechart Spidercharts zu einem Kiviatchart
+ * 
+ * @author moro1000
+ * 
+ */
 public class RadarChart extends SpiderWebPlot {
 
 	final SpiderWebPlot plot;

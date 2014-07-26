@@ -13,6 +13,12 @@ import org.springframework.stereotype.Controller;
 
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 
+/**
+ * Controller um Profilchart einer Bewretung anzuzeigen
+ * 
+ * @author moro1000
+ * 
+ */
 @Controller
 public class ProfilChartController extends BaseController {
 
@@ -21,6 +27,14 @@ public class ProfilChartController extends BaseController {
 	@Autowired
 	private BewertungAnzeigenController bewertungAnzeigenController;
 
+	/**
+	 * Initialisierierung
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
+	 */
 	public void initializeController(URL location, ResourceBundle resources) {
 
 		final SwingNode chartSwingNode = new SwingNode();

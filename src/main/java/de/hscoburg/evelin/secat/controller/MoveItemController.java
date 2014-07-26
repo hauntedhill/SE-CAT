@@ -31,6 +31,12 @@ import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
+/**
+ * Controller zum verschieben von Items
+ * 
+ * @author moro1000
+ * 
+ */
 @Controller
 public class MoveItemController extends BaseController {
 
@@ -55,6 +61,14 @@ public class MoveItemController extends BaseController {
 	@Autowired
 	private TreeTableController treeTableController;
 
+	/**
+	 * Initialisierierung
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 

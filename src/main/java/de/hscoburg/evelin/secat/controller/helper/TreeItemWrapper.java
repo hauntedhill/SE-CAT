@@ -9,6 +9,12 @@ import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 
+/**
+ * Hilfklasse zur Anzeige der Stammdaten
+ * 
+ * @author moro1000
+ * 
+ */
 public class TreeItemWrapper {
 
 	private Handlungsfeld h;

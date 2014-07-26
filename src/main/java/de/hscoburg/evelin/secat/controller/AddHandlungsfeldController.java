@@ -23,6 +23,12 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 
+/**
+ * Controller zur Erstellung eines Handlungsfeldes
+ * 
+ * @author moro1000
+ * 
+ */
 @Controller
 public class AddHandlungsfeldController extends BaseController {
 
@@ -45,6 +51,14 @@ public class AddHandlungsfeldController extends BaseController {
 	@Autowired
 	private TreeTableController treeTableController;
 
+	/**
+	 * Initialisierierung
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 

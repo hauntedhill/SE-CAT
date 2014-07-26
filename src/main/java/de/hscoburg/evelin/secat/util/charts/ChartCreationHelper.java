@@ -17,6 +17,12 @@ import org.jfree.ui.RectangleEdge;
 
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 
+/**
+ * Auslagerung der Charterzeugung
+ * 
+ * @author moro1000
+ * 
+ */
 public class ChartCreationHelper {
 
 	static public JFreeChart createKiviatChart(DefaultCategoryDataset defaultcategorydataset, Fragebogen fragebogen) {

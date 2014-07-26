@@ -27,6 +27,12 @@ import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
+/**
+ * Controller zur Änderung der Stammdaten Handlungsfeld und Bereich
+ * 
+ * @author moro1000
+ * 
+ */
 @Controller
 public class EditHandlungsfeldBereichController extends BaseController {
 
@@ -51,6 +57,14 @@ public class EditHandlungsfeldBereichController extends BaseController {
 
 	private TreeItem<TreeItemWrapper> selected;
 
+	/**
+	 * Initialisierierung
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 

@@ -25,6 +25,13 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 
+/**
+ * Controller zur Erstellung eines Bereichs
+ * 
+ * @author moro1000
+ * 
+ */
+
 @Controller
 public class AddBereichController extends BaseController {
 
@@ -44,6 +51,14 @@ public class AddBereichController extends BaseController {
 	@Autowired
 	private HandlungsfeldModel handlungsfeldModel;
 
+	/**
+	 * Initialisierierung
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 

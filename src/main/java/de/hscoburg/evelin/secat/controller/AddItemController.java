@@ -40,6 +40,12 @@ import de.hscoburg.evelin.secat.util.javafx.DialogHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.javafx.SeCatResourceBundle;
 
+/**
+ * Controller zur Erstellung von Items
+ * 
+ * @author moro1000
+ * 
+ */
 @Controller
 public class AddItemController extends BaseController {
 
@@ -79,6 +85,14 @@ public class AddItemController extends BaseController {
 	private static Item editItem;
 	private static boolean editMode = false;
 
+	/**
+	 * Initialisierierung
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -260,6 +274,9 @@ public class AddItemController extends BaseController {
 		return i;
 	}
 
+	/**
+	 * Methode lädt die Maske nach der Erstellung neu
+	 */
 	private void reloadGUI() {
 		ObservableList<Item> itemOl = FXCollections.observableArrayList();
 		ObservableList<Perspektive> perspektivenOl = FXCollections.observableArrayList();
@@ -293,6 +310,12 @@ public class AddItemController extends BaseController {
 		notiz.clear();
 	}
 
+	/**
+	 * Methode setzt das Items das editiert werden soll und initialisiert die Listen.
+	 * 
+	 * @param i
+	 *            {@link Item} - das zu editierende Item
+	 */
 	public void setItemToEdit(Item i) {
 
 		indexBereich = selected.getParent().getParent().getChildren().indexOf(selected.getParent());

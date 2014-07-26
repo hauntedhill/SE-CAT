@@ -29,6 +29,12 @@ import de.hscoburg.evelin.secat.util.javafx.ActionHelper;
 import de.hscoburg.evelin.secat.util.javafx.SeCatEventHandle;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
+/**
+ * Controller zur Auswahl einer Bewertung
+ * 
+ * @author moro1000
+ * 
+ */
 @Controller
 public class BewertungController extends BaseController {
 
@@ -39,6 +45,14 @@ public class BewertungController extends BaseController {
 	@FXML
 	private Button show;
 
+	/**
+	 * Initialisierierung
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -130,6 +144,11 @@ public class BewertungController extends BaseController {
 		}, show, true);
 	}
 
+	/**
+	 * Gibt den aktuell selektierten Fragebogen zurueck.
+	 * 
+	 * @return {@link Fragebogen}
+	 */
 	public Fragebogen getSelectedFragebogen() {
 		return tableView.getSelectionModel().getSelectedItem();
 

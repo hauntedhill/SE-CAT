@@ -8,7 +8,14 @@ import javafx.collections.ObservableList;
 import de.hscoburg.evelin.secat.controller.helper.EvaluationHelper;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
 import de.hscoburg.evelin.secat.dao.entity.Bewertung;
+import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 
+/**
+ * Hilfsklasse zur Berechnung der kumulierten werte
+ * 
+ * @author moro1000
+ * 
+ */
 public class CalculationHelper {
 
 	static public double getAverageDataForSubCriterion(ArrayList<Bereich> bereiche, double[] avValueBereich) {
@@ -126,5 +133,78 @@ public class CalculationHelper {
 		}
 		return values;
 	}
+
+	static public double[] getAverageDataForCriterion(double[] avValueBereich, ArrayList<Bereich> bereiche) {
+
+		ArrayList<Handlungsfeld> hfList = new ArrayList<Handlungsfeld>();
+		for (Bereich bereich : bereiche) {
+			if (hfList.isEmpty() || !hfList.contains(bereich.getHandlungsfeld())) {
+				hfList.add(bereich.getHandlungsfeld());
+			}
+		}
+		double[] values = new double[hfList.size()];
+
+		int valCount = 0;
+		for (Handlungsfeld hf : hfList) {
+			valCount = 0;
+			for (Bereich bereich : bereiche) {
+				if (bereich.getHandlungsfeld().equals(hf)) {
+					values[hfList.indexOf(hf)] += avValueBereich[bereiche.indexOf(bereich)];
+					valCount++;
+				}
+			}
+			values[hfList.indexOf(hf)] /= valCount;
+
+		}
+		return values;
+	}
+
+	static public double getAverageDataForAllCriterions(double[] avValueBereich, ArrayList<Bereich> bereiche) {
+		double ret = 0;
+		double[] values = getAverageDataForCriterion(avValueBereich, bereiche);
+		for (double d : values) {
+			ret += d;
+		}
+		return ret / values.length;
+	}
+
+	static public double getStandarddeviationForAllCriterions(double[] avValueBereich, ArrayList<Bereich> bereiche) {
+
+		double av = getAverageDataForAllCriterions(avValueBereich, bereiche);
+		double temp = 0;
+		for (double d : getAverageDataForCriterion(avValueBereich, bereiche)) {
+			temp += (d - av) * (d - av);
+		}
+		temp /= (avValueBereich.length) - 1;
+		return Math.sqrt(temp);
+
+	}
+
+	static public double getMedianForAllCriterions(double[] avValueBereich, ArrayList<Bereich> bereiche) {
+		double[] values = getAverageDataForCriterion(avValueBereich, bereiche);
+
+		Arrays.sort(values);
+
+		if (values.length == 1) {
+			return values[0];
+		}
+
+		if (values.length % 2 == 0) {
+
+			return (values[values.length / 2] + values[values.length / 2 - 1]) / 2;
+
+		} else {
+			return values[values.length / 2];
+		}
+
+	}
+
+	/*
+	 * static public ArrayList<Double> getAverageDataPerCriterion(ObservableList<EvaluationHelper> allEvaluationHelper) { ArrayList<Double>
+	 * ret = new ArrayList<Double>(); for (EvaluationHelper eh : allEvaluationHelper) { double value = 0; for (String wert :
+	 * eh.getItemWertung()) { value += Double.parseDouble(wert); } value /= eh.getItemWertung().size();
+	 * 
+	 * ret.add(value); } return ret; }
+	 */
 
 }

@@ -43,6 +43,12 @@ import de.hscoburg.evelin.secat.dao.entity.Perspektive;
 import de.hscoburg.evelin.secat.model.HandlungsfeldModel;
 import de.hscoburg.evelin.secat.util.spring.SpringFXMLLoader;
 
+/**
+ * Controller zur Anzeige des Treetableviews
+ * 
+ * @author moro1000
+ * 
+ */
 @Controller
 public class TreeTableController extends BaseController {
 
@@ -68,6 +74,14 @@ public class TreeTableController extends BaseController {
 
 	private static boolean inaktiv = false;
 
+	/**
+	 * Initialisierierung
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 
@@ -201,6 +215,12 @@ public class TreeTableController extends BaseController {
 
 	}
 
+	/**
+	 * Methode fügt neues Handlungsfeld hinzu.
+	 * 
+	 * @param h
+	 *            {@link Handlungsfeld} - das einzufügende Handlungsfeld
+	 */
 	public void addHandlungsfeldToCurrentSelection(Handlungsfeld h) {
 
 		if (getSelectedTreeItem().getValue().equals(treeTable.getRoot().getValue())) {
@@ -210,6 +230,10 @@ public class TreeTableController extends BaseController {
 
 	}
 
+	/**
+	 * Methode erstellt und initialiert die Treetableview
+	 * 
+	 */
 	public void buildTreeTable() {
 		Handlungsfeld h = new Handlungsfeld();
 		h.setId(-1);
@@ -234,10 +258,52 @@ public class TreeTableController extends BaseController {
 
 	}
 
+	/**
+	 * Methode initialisiert und erzeugt die Treetableview
+	 * 
+	 * 
+	 * @param hfList
+	 *            {@link List} mit {@link Handlungsfeld}er
+	 * @param handlungsfeldAktiv
+	 *            {@link boolean}
+	 * @param itemAktiv
+	 *            {@link boolean}
+	 * @param p
+	 *            {@link Perspektive}
+	 * @param e
+	 *            {@link Eigenschaft}
+	 * @param notizHandlungsfeld
+	 *            {@link String}
+	 * @param notizItem
+	 *            {@link String}
+	 * @param f
+	 *            {@link Fach}
+	 */
 	public void buildFilteredTreeTable(List<Handlungsfeld> hfList, boolean handlungsfeldAktiv, boolean itemAktiv) {
 		buildFilteredTreeTable(hfList, handlungsfeldAktiv, itemAktiv, null, null, null, null, null);
 	}
 
+	/**
+	 * Methode initialisiert und erzeugt die gefilterte Treetableview
+	 * 
+	 * 
+	 * @param hfList
+	 *            {@link List} mit {@link Handlungsfeld}er
+	 * @param handlungsfeldAktiv
+	 *            {@link boolean}
+	 * @param itemAktiv
+	 *            {@link boolean}
+	 * @param p
+	 *            {@link Perspektive}
+	 * @param e
+	 *            {@link Eigenschaft}
+	 * @param notizHandlungsfeld
+	 *            {@link String}
+	 * @param notizItem
+	 *            {@link String}
+	 * @param f
+	 *            {@link Fach}
+	 */
 	public void buildFilteredTreeTable(List<Handlungsfeld> hfList, boolean handlungsfeldAktiv, boolean itemAktiv, Perspektive p, Eigenschaft e,
 
 	String notizHandlungsfeld, String notizItem, Fach f) {
@@ -263,19 +329,43 @@ public class TreeTableController extends BaseController {
 
 	}
 
+	/**
+	 * Methode gibt die TreeTableView zurück.
+	 * 
+	 * @return {@link TreeTableView}
+	 */
 	public TreeTableView<TreeItemWrapper> getTreeTable() {
 		return treeTable;
 	}
 
+	/**
+	 * Methode setzt die Treetableview.
+	 * 
+	 * @param treeTable
+	 *            {@link TreeTableView}
+	 */
 	public void setTreeTable(TreeTableView<TreeItemWrapper> treeTable) {
 		this.treeTable = treeTable;
 	}
 
+	/**
+	 * Methode gibt das ausgewählte TreeItem zurück.
+	 * 
+	 * @return {@link TreeItem}
+	 */
 	public TreeItem<TreeItemWrapper> getSelectedTreeItem() {
 
 		return treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex());
 	}
 
+	/**
+	 * Methode erzeugt ein TreeItem der Treetableview.
+	 * 
+	 * @param t
+	 *            {@link TreeItemWrapper}
+	 * 
+	 * @return {@link TreeItem}
+	 */
 	public TreeItem<TreeItemWrapper> createNode(final TreeItemWrapper t) {
 
 		if (t.isItem()) {
@@ -313,6 +403,15 @@ public class TreeTableController extends BaseController {
 				return isLeaf;
 			}
 
+			/**
+			 * Methode erzeugt Kinder des TreeItems, wenn vorhanden.
+			 * 
+			 * @param TreeItem
+			 *            {@link TreeItem}
+			 * 
+			 * 
+			 * @return {@link ObservableList} mit {@link TreeItem}s
+			 */
 			private ObservableList<TreeItem<TreeItemWrapper>> buildChildren(TreeItem<TreeItemWrapper> TreeItem) {
 
 				TreeItemWrapper t = TreeItem.getValue();
@@ -367,21 +466,46 @@ public class TreeTableController extends BaseController {
 		return "scene.addFragebogen.lable.title";
 	}
 
+	/**
+	 * Methode gibts ausgewähöte TreeItems der Treetableview zurück
+	 * 
+	 * @return {@link ObservableList} mit {@link TreeItem}s
+	 */
 	public ObservableList<TreeItem<TreeItemWrapper>> getSelectedTreeItemList() {
 
 		return treeTable.getSelectionModel().getSelectedItems();
 	}
 
+	/**
+	 * Methode setzt den SelectionMode der Treetableview
+	 * 
+	 * @param arg0
+	 *            {@link SelectionMode}
+	 */
 	public void setSelectionMode(SelectionMode arg0) {
 
 		treeTable.getSelectionModel().setSelectionMode(arg0);
 	}
 
+	/**
+	 * Methode setzt Rowfactory der Treetableview
+	 * 
+	 * @param arg0
+	 *            {@link Callback<TreeTableView<TreeItemWrapper>, TreeTableRow<TreeItemWrapper>>}
+	 */
 	public void setRowFactory(Callback<TreeTableView<TreeItemWrapper>, TreeTableRow<TreeItemWrapper>> arg0) {
 
 		treeTable.setRowFactory(arg0);
 	}
 
+	/**
+	 * Methode setzt den SelectionMode der Treetableview
+	 * 
+	 * @param hf
+	 *            {@link int} Index der Handlungsfeld
+	 * @param b
+	 *            {@link int} Index der Bereich
+	 */
 	public void updateHandlungsfeld(int hf, int b) {
 		buildTreeTable();
 		treeTable.getRoot().getChildren().get(hf).setExpanded(true);

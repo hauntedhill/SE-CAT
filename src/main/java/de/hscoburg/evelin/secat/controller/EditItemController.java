@@ -9,6 +9,12 @@ import org.springframework.stereotype.Controller;
 import de.hscoburg.evelin.secat.controller.base.BaseController;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 
+/**
+ * Controller zur Änderung eines Items
+ * 
+ * @author moro1000
+ * 
+ */
 @Controller
 public class EditItemController extends BaseController {
 
@@ -17,6 +23,14 @@ public class EditItemController extends BaseController {
 	@Autowired
 	private AddItemController addItemController;
 
+	/**
+	 * Initialisierierung
+	 * 
+	 * @param location
+	 *            Der Pfad zur View
+	 * @param resources
+	 *            Das verwendete ResourcebUndle
+	 */
 	@Override
 	public void initializeController(URL location, ResourceBundle resources) {
 

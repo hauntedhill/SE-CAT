@@ -12,9 +12,9 @@
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="1.7976931348623157E308" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="1.7976931348623157E308"  vgrow="SOMETIMES" />
 <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-<RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" percentHeight="45.0" prefHeight="134.0" vgrow="SOMETIMES" />
+<RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0"  prefHeight="134.0" vgrow="SOMETIMES" />
   </rowConstraints>
 <children>
 <TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%scene.evaluation.lable.overview" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
