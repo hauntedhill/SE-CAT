@@ -5,19 +5,19 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="1094.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.BewertungAnzeigenController">
+<GridPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.hscoburg.evelin.secat.controller.BewertungAnzeigenController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="550.0" />
   </columnConstraints>
   <rowConstraints>
     <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-    <RowConstraints maxHeight="1.7976931348623157E308"  vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="1.7976931348623157E308" minHeight="340.0" prefHeight="340.0" vgrow="SOMETIMES" />
 <RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-<RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0"  prefHeight="134.0" vgrow="SOMETIMES" />
+<RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="356.0" vgrow="SOMETIMES" />
   </rowConstraints>
 <children>
-<TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%scene.evaluation.lable.overview" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
+<TitledPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="379.0" prefWidth="985.0" text="%scene.evaluation.lable.overview" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
 <content>
 <GridPane fx:id="gridPane" layoutX="10.0" layoutY="50.0" maxHeight="500.0" maxWidth="1.7976931348623157E308" prefHeight="284.0" prefWidth="573.0" GridPane.columnIndex="1" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="1" GridPane.vgrow="SOMETIMES">
   <columnConstraints>
@@ -26,11 +26,11 @@
   <rowConstraints>
     <RowConstraints maxHeight="1.7976931348623157E308" minHeight="-Infinity" vgrow="SOMETIMES" />
   </rowConstraints>
-<children><TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" tabClosingPolicy="UNAVAILABLE">
+<children><TabPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="303.0" prefWidth="963.0" tabClosingPolicy="UNAVAILABLE">
   <tabs>
     <Tab text="%scene.evaluation.lable.showleast">
 <content>
-	<TableView fx:id="tableViewLeast" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" GridPane.columnSpan="2" />
+            	<TableView fx:id="tableViewLeast" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="252.0" prefWidth="963.0" GridPane.columnSpan="2" />
 </content></Tab>
 <Tab text="%scene.evaluation.lable.showall">
 <content>
@@ -60,7 +60,7 @@
 
 
 
-<TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" text="%scene.evaluation.lable.average" GridPane.columnIndex="1" GridPane.rowIndex="3">
+<TitledPane animated="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="171.0" prefWidth="1079.0" text="%scene.evaluation.lable.average" GridPane.columnIndex="1" GridPane.rowIndex="3">
 <content><GridPane fx:id="visuals" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="108.0" prefWidth="187.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="263.0" />

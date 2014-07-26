@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.net.URL;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -43,13 +42,10 @@ import org.jfree.chart.axis.CategoryAnchor;
 import org.jfree.chart.axis.CategoryAxis;
 import org.jfree.chart.axis.NumberAxis;
 import org.jfree.chart.axis.NumberTickUnit;
-import org.jfree.chart.labels.BoxAndWhiskerToolTipGenerator;
 import org.jfree.chart.plot.CategoryPlot;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BoxAndWhiskerRenderer;
 import org.jfree.chart.renderer.category.LineAndShapeRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
-import org.jfree.data.statistics.DefaultBoxAndWhiskerCategoryDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 import org.jfree.ui.TextAnchor;
@@ -63,7 +59,6 @@ import de.hscoburg.evelin.secat.dao.entity.Bewertung;
 import de.hscoburg.evelin.secat.dao.entity.Frage;
 import de.hscoburg.evelin.secat.dao.entity.Frage_Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
-import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
 import de.hscoburg.evelin.secat.model.BewertungModel;
 import de.hscoburg.evelin.secat.model.FragebogenModel;
@@ -479,14 +474,17 @@ public class BewertungAnzeigenController extends BaseController {
 					ArrayList<Bereich> bereicheToCompare = EvaluationHelper.getBereicheFromEvaluationHelper(fragebogenToCompare.getBewertungen());
 					double[] avToCompare = CalculationHelper.getAvValueforBereiche(fragebogenToCompare.getBewertungen(), bereicheToCompare);
 
-					JFreeChart barchart = createBarChartForCriterionEvaluationCompare(bereicheToCompare, avToCompare, fragebogenToCompare.getName());
+					DefaultCategoryDataset dataset = DatasetCreationHelper.createDatasetForCriterionEvaluationCompareBarChart(bereiche, avValueBereich,
+							fragebogen, bereicheToCompare, avToCompare, fragebogenToCompare.getName());
+
+					JFreeChart barchart = ChartCreationHelper.createBarChart(dataset, fragebogen.getName(), fragebogenToCompare.getName(), fragebogen);
 
 					SwingNode evaluationCompareBarSwingNode = new SwingNode();
 					evaluationCompareBarSwingNode.setContent(new ChartPanel(barchart));
 					evaluationComparePaneBar.add(evaluationCompareBarSwingNode, 1, 1);
 
 					JFreeChart kiviatchart = ChartCreationHelper.createKiviatChart(
-							DatasetCreationHelper.createAverageRadarChartForBereich(
+							DatasetCreationHelper.createAverageRadarDatasetForBereich(
 									DatasetCreationHelper.getAverageDataSetForBereichCompare(ehToCompare, bereicheToCompare, avToCompare,
 											fragebogenToCompare.getName(), fragebogen, bereiche, avValueBereich), bereiche, avValueBereich),
 							fragebogenToCompare);
@@ -525,9 +523,9 @@ public class BewertungAnzeigenController extends BaseController {
 				});
 
 		SwingNode criterionincreaseSwingNode = new SwingNode();
-		criterionincreaseSwingNode.setContent(new ChartPanel(createBarChartForCriterion(avValueBereich, bereiche)));
+		criterionincreaseSwingNode.setContent(new ChartPanel(ChartCreationHelper.createBarChart(DatasetCreationHelper.getDatasetForCriterionBarChart(
+				avValueBereich, bereiche), fragebogen.getName(), SeCatResourceBundle.getInstance().getString("scene.chart.criterionincrease"), fragebogen)));
 		criterionincreasePaneBarchart.add(criterionincreaseSwingNode, 1, 1);
-
 		SwingNode studentincreaseSwingNodeKiviat = new SwingNode();
 		studentincreaseSwingNodeKiviat.setContent(new ChartPanel(ChartCreationHelper.createKiviatChart(
 				DatasetCreationHelper.createDatasetForStudentRadarChart(allEvaluationHelper), fragebogen)));
@@ -536,11 +534,12 @@ public class BewertungAnzeigenController extends BaseController {
 		SwingNode chartSwingNode = new SwingNode();
 
 		chartSwingNode.setContent(new ChartPanel(ChartCreationHelper.createKiviatChart(
-				DatasetCreationHelper.createAverageRadarChartForBereich(null, bereiche, avValueBereich), fragebogen)));
+				DatasetCreationHelper.createAverageRadarDatasetForBereich(null, bereiche, avValueBereich), fragebogen)));
 		subcriterionincreasePaneKiviat.add(chartSwingNode, 1, 1);
 
 		SwingNode boxPlotChartSwingNode = new SwingNode();
-		boxPlotChartSwingNode.setContent(new ChartPanel(createBoxPlot()));
+		boxPlotChartSwingNode.setContent(new ChartPanel(ChartCreationHelper.createBoxPlot(
+				DatasetCreationHelper.getDatasetForBoxAndWhiskers(allEvaluationHelper, bereiche), fragebogen.getName())));
 		subcriterionincreasePaneBoxplot.add(boxPlotChartSwingNode, 1, 1);
 
 		SwingNode studentincreaseSwingNodeBarchart = new SwingNode();
@@ -630,134 +629,6 @@ public class BewertungAnzeigenController extends BaseController {
 		return chart;
 
 	}
-
-	/*
-	 * public DefaultCategoryDataset getAverageDataSetForItem() { DefaultCategoryDataset defaultcategorydataset = new
-	 * DefaultCategoryDataset();
-	 * 
-	 * if (!allEvaluationHelper.isEmpty()) {
-	 * 
-	 * int anzItems = allEvaluationHelper.get(0).getItems().size(); double[] werte = new double[anzItems];
-	 * 
-	 * for (EvaluationHelper evalHelper : allEvaluationHelper) { int iWerte = 0; for (Item item : evalHelper.getItems()) { if (item != null)
-	 * {
-	 * 
-	 * werte[iWerte] += ((Double.parseDouble(evalHelper.getItemWertung().get(iWerte++)))); } }
-	 * 
-	 * for (int j = 0; j < anzItems; j++) defaultcategorydataset.addValue((werte[j] / allEvaluationHelper.size()),
-	 * SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), j + ": " +
-	 * allEvaluationHelper.get(0).getItems().get(j).getName());
-	 * 
-	 * }
-	 * 
-	 * }
-	 * 
-	 * return defaultcategorydataset; }
-	 */
-
-	public JFreeChart createBoxPlot() {
-		int categoryCount = bereiche.size();
-		int entityCount = allEvaluationHelper.size();
-
-		final DefaultBoxAndWhiskerCategoryDataset dataset = new DefaultBoxAndWhiskerCategoryDataset();
-
-		for (int j = 0; j < categoryCount; j++) {
-			final List list = new ArrayList();
-			for (int k = 0; k < entityCount; k++) {
-
-				int valCount = 0;
-				double avValue = 0;
-
-				for (Item item : allEvaluationHelper.get(k).getItems()) {
-					if (bereiche.get(j).equals(item.getBereich())) {
-						if (!allEvaluationHelper.get(k).getItemWertung().get(valCount).isEmpty()) {
-							avValue += Double.parseDouble(allEvaluationHelper.get(k).getItemWertung().get(valCount));
-						}
-						valCount++;
-					}
-
-				}
-				if (valCount != 0) {
-					avValue /= valCount;
-				}
-
-				list.add(new Double(avValue));
-			}
-			dataset.add(list, SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), bereiche.get(j).getName());
-		}
-
-		final CategoryAxis xAxis = new CategoryAxis("Type");
-		final NumberAxis yAxis = new NumberAxis("Value");
-		yAxis.setAutoRangeIncludesZero(false);
-		final BoxAndWhiskerRenderer renderer = new BoxAndWhiskerRenderer();
-		renderer.setFillBox(false);
-		renderer.setToolTipGenerator(new BoxAndWhiskerToolTipGenerator());
-		renderer.setMaximumBarWidth(.03);
-		final CategoryPlot plot = new CategoryPlot(dataset, xAxis, yAxis, renderer);
-
-		CategoryAxis categoryAxis = (CategoryAxis) plot.getDomainAxis();
-		categoryAxis.setMaximumCategoryLabelLines(5);
-
-		final JFreeChart chart = new JFreeChart(fragebogen.getName(), new Font("SansSerif", Font.BOLD, 14), plot, true);
-
-		return chart;
-
-	}
-
-	public JFreeChart createBarChartForCriterion(double[] avValueBereich, ArrayList<Bereich> bereiche) {
-		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
-		double[] values = CalculationHelper.getAverageDataForCriterion(avValueBereich, bereiche);
-		ArrayList<Handlungsfeld> hfList = new ArrayList<Handlungsfeld>();
-		for (Bereich bereich : bereiche) {
-			if (hfList.isEmpty() || !hfList.contains(bereich.getHandlungsfeld())) {
-				hfList.add(bereich.getHandlungsfeld());
-			}
-		}
-		for (Handlungsfeld hf : hfList) {
-			defaultcategorydataset.addValue(values[hfList.indexOf(hf)], SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"),
-					hf.getName());
-		}
-
-		return ChartCreationHelper.createBarChart(defaultcategorydataset, fragebogen.getName(),
-				SeCatResourceBundle.getInstance().getString("scene.chart.criterionincrease"), fragebogen);
-
-	}
-
-	public JFreeChart createBarChartForCriterionEvaluationCompare(ArrayList<Bereich> bereicheToCompare, double[] avValuesToCompare, String name) {
-		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
-		double[] values = CalculationHelper.getAverageDataForCriterion(avValueBereich, bereiche);
-		ArrayList<Handlungsfeld> hfList = new ArrayList<Handlungsfeld>();
-		for (Bereich bereich : bereiche) {
-			if (hfList.isEmpty() || !hfList.contains(bereich.getHandlungsfeld())) {
-				hfList.add(bereich.getHandlungsfeld());
-				defaultcategorydataset.addValue(values[bereiche.indexOf(bereich)], fragebogen.getName(), bereich.getHandlungsfeld().getName());
-			}
-		}
-
-		ArrayList<Handlungsfeld> hfListToCompare = new ArrayList<Handlungsfeld>();
-		for (Bereich bereich : bereicheToCompare) {
-			if (hfListToCompare.isEmpty() || !hfListToCompare.contains(bereich.getHandlungsfeld())) {
-				hfListToCompare.add(bereich.getHandlungsfeld());
-				defaultcategorydataset.addValue(values[bereicheToCompare.indexOf(bereich)], name, bereich.getHandlungsfeld().getName());
-			}
-		}
-
-		return ChartCreationHelper.createBarChart(defaultcategorydataset, fragebogen.getName(), name, fragebogen);
-
-	}
-
-	/*
-	 * public DefaultCategoryDataset createDataSetForCriterion() {
-	 * 
-	 * DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
-	 * 
-	 * ArrayList<Handlungsfeld> hfList = new ArrayList<Handlungsfeld>(); for (Bereich bereich : bereiche) { if (hfList.isEmpty() ||
-	 * !hfList.contains(bereich.getHandlungsfeld())) { hfList.add(bereich.getHandlungsfeld()); } }
-	 * 
-	 * return defaultcategorydataset;
-	 * 
-	 * }
-	 */
 
 	public Fragebogen getFragebogen() {
 		return fragebogen;
