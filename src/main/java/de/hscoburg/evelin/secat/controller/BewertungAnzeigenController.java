@@ -15,9 +15,11 @@ import javafx.embed.swing.SwingNode;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
@@ -29,6 +31,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
@@ -681,13 +684,21 @@ public class BewertungAnzeigenController extends BaseController {
 		col2.setMinWidth(100);
 		col3.setMinWidth(100);
 		col4.setMinWidth(100);
-		Text colHeaderTextHead = new Text("Kopfdaten");
-		colHeadData.setGraphic(colHeaderTextHead);
-		col0.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.welle")));
-		col1.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.rawid")));
-		col2.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.source")));
-		col3.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.zeit")));
-		col4.setGraphic(new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.outlier")));
+		// Text colHeaderTextHead = new Text("Kopfdaten");
+		// colHeadData.setGraphic(colHeaderTextHead);
+		colHeadData.setText("Kopfdaten");
+		col0.setText(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.welle"));
+		col1.setText(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.rawid"));
+		col2.setText(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.source"));
+		col3.setText(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.zeit"));
+		col4.setText(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.outlier"));
+
+		makeHeaderWrappable(colHeadData);
+		makeHeaderWrappable(col0);
+		makeHeaderWrappable(col1);
+		makeHeaderWrappable(col2);
+		makeHeaderWrappable(col3);
+		makeHeaderWrappable(col4);
 
 		col0.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
 
@@ -751,10 +762,10 @@ public class BewertungAnzeigenController extends BaseController {
 	private TableColumn createQuestions(boolean all) {
 
 		final TableColumn colFragenHead = new TableColumn();
-		Text tf = new Text(SeCatResourceBundle.getInstance().getString("scene.frageboegen.frage.label"));
-		tf.setTextAlignment(TextAlignment.CENTER);
-		colFragenHead.setGraphic(tf);
-
+		// Text tf = new Text(SeCatResourceBundle.getInstance().getString("scene.frageboegen.frage.label"));
+		// tf.setTextAlignment(TextAlignment.CENTER);
+		// colFragenHead.setGraphic(tf);
+		colFragenHead.setText(SeCatResourceBundle.getInstance().getString("scene.frageboegen.frage.label"));
 		wertungCount = 0;
 		if (!fragenList.isEmpty()) {
 
@@ -806,14 +817,15 @@ public class BewertungAnzeigenController extends BaseController {
 			col.setMaxWidth(Double.MAX_VALUE);
 			String name = bereich.getName();
 
-			Text t = new Text(name);
-			t.setTextAlignment(TextAlignment.CENTER);
+			// Text t = new Text(name);
+			// t.setTextAlignment(TextAlignment.CENTER);
 
-			if (bereich.getName().length() > 15) {
-				t.setWrappingWidth(200);
-			}
+			// if (bereich.getName().length() > 15) {
+			// t.setWrappingWidth(200);
+			// }
 
-			col.setGraphic(t);
+			col.setText(name);
+			makeHeaderWrappable(col);
 
 			if (all == true) {
 				int count = 0;
@@ -821,10 +833,13 @@ public class BewertungAnzeigenController extends BaseController {
 				for (Item item : fragebogen.getItems()) {
 					if (item.getBereich().equals(bereich)) {
 						TableColumn itemCol = new TableColumn();
-						Text itemName = new Text(item.getFrage());
-						itemName.setWrappingWidth(125);
-						itemCol.setGraphic(itemName);
+						// Text itemName = new Text(item.getFrage());
+						// itemName.setWrappingWidth(125);
+						// itemCol.setGraphic(itemName);
+
+						itemCol.setText(item.getName());
 						itemCol.setMinWidth(225);
+						makeHeaderWrappable(itemCol);
 						// itemCol.setMaxWidth(125);
 						col.getColumns().add(itemCol);
 
@@ -852,11 +867,13 @@ public class BewertungAnzeigenController extends BaseController {
 				}
 			} else {
 				final TableColumn itemAverageCol = new TableColumn();
-				Text itemAvText = new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.average"));
-				itemAvText.setWrappingWidth(125);
-				itemAverageCol.setGraphic(itemAvText);
+				// Text itemAvText = new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.average"));
+				// itemAvText.setWrappingWidth(125);
+				// itemAverageCol.setGraphic(itemAvText);
+				itemAverageCol.setText(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.average"));
 				itemAverageCol.setMinWidth(125);
 				itemAverageCol.setPrefWidth(200);
+				makeHeaderWrappable(itemAverageCol);
 
 				col.getColumns().add(itemAverageCol);
 
@@ -908,6 +925,20 @@ public class BewertungAnzeigenController extends BaseController {
 	public void setTitle() {
 
 		setTitle(" " + fragebogen.getName());
+	}
+
+	private void makeHeaderWrappable(TableColumn col) {
+		Label label = new Label(col.getText());
+		label.setStyle("-fx-padding: 8px;");
+		label.setWrapText(true);
+		label.setAlignment(Pos.CENTER);
+		label.setTextAlignment(TextAlignment.CENTER);
+
+		StackPane stack = new StackPane();
+		stack.getChildren().add(label);
+		stack.prefWidthProperty().bind(col.widthProperty().subtract(5));
+		label.prefWidthProperty().bind(stack.prefWidthProperty());
+		col.setGraphic(stack);
 	}
 
 	public ObservableList<EvaluationHelper> getAllEvaluationHelper() {

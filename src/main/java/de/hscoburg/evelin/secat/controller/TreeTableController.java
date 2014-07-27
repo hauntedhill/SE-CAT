@@ -268,16 +268,6 @@ public class TreeTableController extends BaseController {
 	 *            {@link boolean}
 	 * @param itemAktiv
 	 *            {@link boolean}
-	 * @param p
-	 *            {@link Perspektive}
-	 * @param e
-	 *            {@link Eigenschaft}
-	 * @param notizHandlungsfeld
-	 *            {@link String}
-	 * @param notizItem
-	 *            {@link String}
-	 * @param f
-	 *            {@link Fach}
 	 */
 	public void buildFilteredTreeTable(List<Handlungsfeld> hfList, boolean handlungsfeldAktiv, boolean itemAktiv) {
 		buildFilteredTreeTable(hfList, handlungsfeldAktiv, itemAktiv, null, null, null, null, null);
@@ -491,7 +481,7 @@ public class TreeTableController extends BaseController {
 	 * Methode setzt Rowfactory der Treetableview
 	 * 
 	 * @param arg0
-	 *            {@link Callback<TreeTableView<TreeItemWrapper>, TreeTableRow<TreeItemWrapper>>}
+	 *            Callback {@link TreeTableView},{@link TreeItemWrapper}, {@link TreeTableRow},{@link TreeItemWrapper}
 	 */
 	public void setRowFactory(Callback<TreeTableView<TreeItemWrapper>, TreeTableRow<TreeItemWrapper>> arg0) {
 
