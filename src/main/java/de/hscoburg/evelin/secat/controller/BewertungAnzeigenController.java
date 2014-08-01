@@ -388,8 +388,8 @@ public class BewertungAnzeigenController extends BaseController {
 		tableViewItems.getColumns().addAll(createItemColumns(true));
 		tableViewQuestions.getColumns().addAll(createItemColumns(false));
 
-		tableViewAll.getColumns().add(createQuestions(true));
-		tableViewQuestions.getColumns().add(createQuestions(true));
+		tableViewAll.getColumns().add(createQuestions());
+		tableViewQuestions.getColumns().add(createQuestions());
 
 		if (allEvaluationHelper != null && !allEvaluationHelper.isEmpty()) {
 			ObservableList itemList = FXCollections.observableArrayList(allEvaluationHelper.get(0).getItems());
@@ -633,10 +633,20 @@ public class BewertungAnzeigenController extends BaseController {
 
 	}
 
+	/**
+	 * Methode gibt den angezeigten Fragebogen zurück
+	 * 
+	 * @return {@link Fragebogen}
+	 */
 	public Fragebogen getFragebogen() {
 		return fragebogen;
 	}
 
+	/**
+	 * Methode gibt die aktuelle Zeile der Tabellenansicht zurück
+	 * 
+	 * @return {@link EvaluationHelper}
+	 */
 	public EvaluationHelper getSelectedItem() {
 		if (tableViewAll.isFocused()) {
 			return tableViewAll.getSelectionModel().getSelectedItem();
@@ -650,6 +660,14 @@ public class BewertungAnzeigenController extends BaseController {
 
 	}
 
+	/**
+	 * Methode setzt die Ausreißer der Bewertung
+	 * 
+	 * @param ehList
+	 *            Die zu bearbeitende Bewertung {@link ObservableList} {@link EvaluationHelper}
+	 * 
+	 * @return {@link ObservableList} {@link EvaluationHelper}
+	 */
 	public ObservableList<EvaluationHelper> setOutliers(ObservableList<EvaluationHelper> ehList) {
 		double deviation = CalculationHelper.getStandarddeviationForAllStudents(ehList);
 		double average = CalculationHelper.getAverageForAllStudents(ehList);
@@ -666,6 +684,13 @@ public class BewertungAnzeigenController extends BaseController {
 		return ehList;
 	}
 
+	/**
+	 * Methode erzeugt die Tabellenspalte für den Kopf
+	 * 
+	 * @param {@link boolean} Parameter ob alle Spalten angezeigt werden, oder nur RawId und Ausreißer
+	 * 
+	 * @return {@link TableColumn}
+	 */
 	private TableColumn createHead(boolean all) {
 
 		final TableColumn colHeadData = new TableColumn();
@@ -759,7 +784,13 @@ public class BewertungAnzeigenController extends BaseController {
 		}
 	}
 
-	private TableColumn createQuestions(boolean all) {
+	/**
+	 * Methode erzeugt die Tabellenspalte für die Fragen
+	 * 
+	 * 
+	 * @return {@link TableColumn}
+	 */
+	private TableColumn createQuestions() {
 
 		final TableColumn colFragenHead = new TableColumn();
 		// Text tf = new Text(SeCatResourceBundle.getInstance().getString("scene.frageboegen.frage.label"));
@@ -804,6 +835,13 @@ public class BewertungAnzeigenController extends BaseController {
 		return colFragenHead;
 	}
 
+	/**
+	 * Methode erzeugt die Tabellenspalte für Items
+	 * 
+	 * @param {@link boolean} Parameter ob alle Spalten angezeigt werden, oder nur der Durchschnitt
+	 * 
+	 * @return {@link TableColumn}
+	 */
 	private ObservableList<TableColumn<EvaluationHelper, String>> createItemColumns(boolean all) {
 		ObservableList<TableColumn<EvaluationHelper, String>> colList = FXCollections.observableArrayList();
 		constColumns = 1;
@@ -906,6 +944,14 @@ public class BewertungAnzeigenController extends BaseController {
 		return colList;
 	}
 
+	/**
+	 * Methode erzeugt setzt das Contextmenü für alle Tabellen()Tabs
+	 * 
+	 * @param arg0
+	 *            link Callback {@link TableView} {@link EvaluationHelper}, {@link TableRow} {@link EvaluationHelper}
+	 * 
+	 * 
+	 */
 	public void setRowFactory(Callback<TableView<EvaluationHelper>, TableRow<EvaluationHelper>> arg0) {
 
 		tableViewAll.setRowFactory(arg0);
@@ -927,6 +973,14 @@ public class BewertungAnzeigenController extends BaseController {
 		setTitle(" " + fragebogen.getName());
 	}
 
+	/**
+	 * Methode erzeugt setzt Attribute der Spaltenköpfe um die Titel zur formatieren
+	 * 
+	 * @param col
+	 *            {@link TableColumn}
+	 * 
+	 * 
+	 */
 	private void makeHeaderWrappable(TableColumn col) {
 		Label label = new Label(col.getText());
 		label.setStyle("-fx-padding: 8px;");
@@ -941,14 +995,32 @@ public class BewertungAnzeigenController extends BaseController {
 		col.setGraphic(stack);
 	}
 
+	/**
+	 * Methode gibt den Datensatz der Bewertung zurück
+	 * 
+	 * 
+	 * @return {@link ObservableList} {@link EvaluationHelper}
+	 */
 	public ObservableList<EvaluationHelper> getAllEvaluationHelper() {
 		return allEvaluationHelper;
 	}
 
+	/**
+	 * Methode gibt die Bereiche der Bewertung zurück
+	 * 
+	 * 
+	 * @return {@link ArrayList} {@link Bereich}
+	 */
 	public ArrayList<Bereich> getBereiche() {
 		return bereiche;
 	}
 
+	/**
+	 * Methode gibt die Durchschnittswerte der Bereiche der Bewertung zurück
+	 * 
+	 * 
+	 * @return {@link double[]}
+	 */
 	public double[] getAvValueBereich() {
 		return avValueBereich;
 	}
