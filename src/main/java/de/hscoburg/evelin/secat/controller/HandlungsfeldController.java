@@ -99,21 +99,22 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
-						if (treeTableController.getSelectedTreeItem().getValue().isHandlungsfeld()) {
+						if (treeTableController.getSelectedTreeItem() != null) {
+							if (treeTableController.getSelectedTreeItem().getValue().isHandlungsfeld()) {
 
-							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addHandlungsfeld.fxml");
+								Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addHandlungsfeld.fxml");
 
-							stage.show();
+								stage.show();
 
-							stage.setOnHidden(new EventHandler<WindowEvent>() {
-								public void handle(WindowEvent we) {
-									logger.debug("Closing dialog stage.");
+								stage.setOnHidden(new EventHandler<WindowEvent>() {
+									public void handle(WindowEvent we) {
+										logger.debug("Closing dialog stage.");
 
-								}
-							});
+									}
+								});
+							}
 						}
 					}
-
 				});
 
 				addItItem.setOnAction(new EventHandler<ActionEvent>() {
@@ -121,17 +122,19 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public void handle(ActionEvent t) {
 						TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
-						if (selectedTreeItem.getValue().isBereich()) {
-							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addItem.fxml");
+						if (selectedTreeItem != null) {
+							if (selectedTreeItem.getValue().isBereich()) {
+								Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addItem.fxml");
 
-							stage.show();
+								stage.show();
 
-							stage.setOnHidden(new EventHandler<WindowEvent>() {
-								public void handle(WindowEvent we) {
-									logger.debug("Closing dialog stage.");
+								stage.setOnHidden(new EventHandler<WindowEvent>() {
+									public void handle(WindowEvent we) {
+										logger.debug("Closing dialog stage.");
 
-								}
-							});
+									}
+								});
+							}
 						}
 					}
 				});
@@ -158,13 +161,15 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public void handle(ActionEvent t) {
 						TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
-						if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
-							Handlungsfeld h = selectedTreeItem.getValue().getHandlungsfeld();
-							h.setAktiv(false);
-							handlungsfeldModel.mergeHandlugsfeld(h);
-							int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
-							selectedTreeItem.getParent().getChildren().set(index, treeTableController.createNode(new TreeItemWrapper(h)));
+						if (selectedTreeItem != null) {
+							if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
+								Handlungsfeld h = selectedTreeItem.getValue().getHandlungsfeld();
+								h.setAktiv(false);
+								handlungsfeldModel.mergeHandlugsfeld(h);
+								int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
+								selectedTreeItem.getParent().getChildren().set(index, treeTableController.createNode(new TreeItemWrapper(h)));
 
+							}
 						}
 					}
 				});
@@ -174,12 +179,14 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public void handle(ActionEvent t) {
 						TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
-						if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
-							Handlungsfeld h = selectedTreeItem.getValue().getHandlungsfeld();
-							h.setAktiv(true);
-							handlungsfeldModel.mergeHandlugsfeld(h);
-							int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
-							selectedTreeItem.getParent().getChildren().set(index, treeTableController.createNode(new TreeItemWrapper(h)));
+						if (selectedTreeItem != null) {
+							if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
+								Handlungsfeld h = selectedTreeItem.getValue().getHandlungsfeld();
+								h.setAktiv(true);
+								handlungsfeldModel.mergeHandlugsfeld(h);
+								int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
+								selectedTreeItem.getParent().getChildren().set(index, treeTableController.createNode(new TreeItemWrapper(h)));
+							}
 						}
 					}
 				});
@@ -189,11 +196,13 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public void handle(ActionEvent t) {
 						TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
-						Item i = selectedTreeItem.getValue().getItem();
-						i.setAktiv(false);
-						handlungsfeldModel.mergeItem(i);
-						int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
-						selectedTreeItem.getParent().getChildren().set(index, treeTableController.createNode(new TreeItemWrapper(i)));
+						if (selectedTreeItem != null) {
+							Item i = selectedTreeItem.getValue().getItem();
+							i.setAktiv(false);
+							handlungsfeldModel.mergeItem(i);
+							int index = selectedTreeItem.getParent().getChildren().indexOf(selectedTreeItem);
+							selectedTreeItem.getParent().getChildren().set(index, treeTableController.createNode(new TreeItemWrapper(i)));
+						}
 					}
 
 				});
@@ -216,6 +225,7 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
+
 						if (!treeTableController.getTreeTable().getSelectionModel().getSelectedItem().getValue().getName().equals("Handlungsfelder")) {
 
 							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/filterItem.fxml");
@@ -238,19 +248,21 @@ public class HandlungsfeldController extends BaseController {
 					@Override
 					public void handle(ActionEvent t) {
 						TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
-						if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
+						if (selectedTreeItem != null) {
+							if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
 
-							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addBereich.fxml");
+								Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/addBereich.fxml");
 
-							stage.show();
+								stage.show();
 
-							stage.setOnHidden(new EventHandler<WindowEvent>() {
-								public void handle(WindowEvent we) {
-									logger.debug("Closing dialog stage.");
+								stage.setOnHidden(new EventHandler<WindowEvent>() {
+									public void handle(WindowEvent we) {
+										logger.debug("Closing dialog stage.");
 
-								}
-							});
+									}
+								});
 
+							}
 						}
 					}
 				});
@@ -259,19 +271,21 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handle(ActionEvent t) {
-						TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
-						if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
+						if (treeTableController.getSelectedTreeItem() != null) {
+							TreeItem<TreeItemWrapper> selectedTreeItem = treeTableController.getSelectedTreeItem();
+							if (selectedTreeItem.getValue().isHandlungsfeld() && selectedTreeItem.getValue().getHandlungsfeld().getId() != -1) {
 
-							Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/moveItems.fxml");
+								Stage stage = SpringFXMLLoader.getInstance().loadInNewScene("/gui/stammdaten/moveItems.fxml");
 
-							stage.show();
+								stage.show();
 
-							stage.setOnHidden(new EventHandler<WindowEvent>() {
-								public void handle(WindowEvent we) {
-									logger.debug("Closing dialog stage.");
+								stage.setOnHidden(new EventHandler<WindowEvent>() {
+									public void handle(WindowEvent we) {
+										logger.debug("Closing dialog stage.");
 
-								}
-							});
+									}
+								});
+							}
 						}
 					}
 
@@ -288,8 +302,10 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void updateUI() {
-						stage = SpringFXMLLoader.getInstance().loadInNewScene(LayoutController.EDIT_HANDLUNGSFELDBEREICH_FXML);
-						stage.show();
+						if (treeTableController.getSelectedTreeItem() != null) {
+							stage = SpringFXMLLoader.getInstance().loadInNewScene(LayoutController.EDIT_HANDLUNGSFELDBEREICH_FXML);
+							stage.show();
+						}
 					}
 
 				});
@@ -298,11 +314,12 @@ public class HandlungsfeldController extends BaseController {
 
 					@Override
 					public void handleAction(ActionEvent t) {
-						if (treeTableController.getSelectedTreeItem() != null && treeTableController.getSelectedTreeItem().getValue().isItem()) {
-							itemToMove = treeTableController.getSelectedTreeItem();
+						if (treeTableController.getSelectedTreeItem() != null) {
+							if (treeTableController.getSelectedTreeItem() != null && treeTableController.getSelectedTreeItem().getValue().isItem()) {
+								itemToMove = treeTableController.getSelectedTreeItem();
+							}
 						}
 					}
-
 				});
 
 				insertItem.setOnAction(new SeCatEventHandle<ActionEvent>() {

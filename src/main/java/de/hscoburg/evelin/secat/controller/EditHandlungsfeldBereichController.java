@@ -71,16 +71,17 @@ public class EditHandlungsfeldBereichController extends BaseController {
 		save.setGraphic(new ImageView(new Image("/image/icons/edit_add.png", 16, 16, true, true)));
 		cancle.setGraphic(new ImageView(new Image("/image/icons/button_cancel.png", 16, 16, true, true)));
 		selected = treeTableController.getSelectedTreeItem();
-		name.setText(selected.getValue().getName());
+		if (selected != null) {
+			name.setText(selected.getValue().getName());
 
-		if (selected.getValue().isHandlungsfeld()) {
-			titledPane.setText(SeCatResourceBundle.getInstance().getString("scene.edithandlungsfeldBereich.lable.title") + " "
-					+ SeCatResourceBundle.getInstance().getString("scene.all.handlungsfeld"));
-		} else {
-			titledPane.setText(SeCatResourceBundle.getInstance().getString("scene.edithandlungsfeldBereich.lable.title") + " "
-					+ SeCatResourceBundle.getInstance().getString("scene.all.subcriterion"));
+			if (selected.getValue().isHandlungsfeld()) {
+				titledPane.setText(SeCatResourceBundle.getInstance().getString("scene.edithandlungsfeldBereich.lable.title") + " "
+						+ SeCatResourceBundle.getInstance().getString("scene.all.handlungsfeld"));
+			} else {
+				titledPane.setText(SeCatResourceBundle.getInstance().getString("scene.edithandlungsfeldBereich.lable.title") + " "
+						+ SeCatResourceBundle.getInstance().getString("scene.all.subcriterion"));
+			}
 		}
-
 		ActionHelper.setActionToButton(new SeCatEventHandle<ActionEvent>() {
 
 			@Override
@@ -149,13 +150,13 @@ public class EditHandlungsfeldBereichController extends BaseController {
 
 	@Override
 	public void setTitle() {
-
+		if (selected != null) {
 		if (selected.getValue().isBereich()) {
 			setTitle(" " + SeCatResourceBundle.getInstance().getString("scene.all.subcriterion") + " " + selected.getValue().getName());
 		} else {
 			setTitle(" " + SeCatResourceBundle.getInstance().getString("scene.all.handlungsfeld") + " " + selected.getValue().getName());
 		}
-
+		}
 	}
 
 	@Override
