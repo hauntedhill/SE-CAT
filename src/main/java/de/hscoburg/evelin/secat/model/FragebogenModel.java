@@ -237,7 +237,9 @@ public class FragebogenModel {
 
 		q.setCreationDate(createXMLGregorienDate(f.getErstellungsDatum()));
 		q.setScale(createScaleType(f.getSkala()));
+
 		q.setProperty(createPropertieType(f.getEigenschaft()));
+
 		q.setPerspective(createPerspectiveType(f.getPerspektive()));
 		q.setCourse(createCourseType(f.getLehrveranstaltung()));
 		q.setQuestions(createQuestions(f.getFrageFragebogen()));
@@ -483,10 +485,12 @@ public class FragebogenModel {
 	 * @return Das erzeugte {@link PropertyType}-Object.
 	 */
 	private PropertyType createPropertieType(Eigenschaft e) {
-		PropertyType st = xmlFactory.createPropertyType();
-		st.setId(getIDWithStandort(e.getId()));
-		st.setName(e.getName());
-
+		PropertyType st = null;
+		if (e != null) {
+			st = xmlFactory.createPropertyType();
+			st.setId(getIDWithStandort(e.getId()));
+			st.setName(e.getName());
+		}
 		return st;
 	}
 
