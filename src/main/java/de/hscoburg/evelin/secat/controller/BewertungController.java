@@ -79,8 +79,12 @@ public class BewertungController extends BaseController {
 				.setCellValueFactory(new Callback<CellDataFeatures<Fragebogen, String>, ObservableValue<String>>() {
 
 					public ObservableValue<String> call(CellDataFeatures<Fragebogen, String> p) {
-						return new ReadOnlyObjectWrapper<String>(p.getValue().getEigenschaft().getName());
+						if (p.getValue().getEigenschaft() != null) {
+							return new ReadOnlyObjectWrapper<String>(p.getValue().getEigenschaft().getName());
+						} else {
+							return new ReadOnlyObjectWrapper<String>("");
 
+						}
 					}
 				});
 
