@@ -958,7 +958,6 @@ public class BewertungAnzeigenController extends BaseController {
 						}
 
 						ret = p.getValue().getAvValueBereich()[bereichCount++];
-						System.out.println(bereiche.get(itemAverageCol.getParentColumn().getColumns().indexOf(itemAverageCol)).getName());
 						return new ReadOnlyObjectWrapper<String>(String.valueOf(doubleFormat.format(ret)));
 
 					}
