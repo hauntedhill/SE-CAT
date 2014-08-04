@@ -342,13 +342,15 @@ public class AddFragebogenController extends BaseController {
 			@Override
 			public void handleAction(ActionEvent event) throws Exception {
 				try {
-					ObservableList<TreeItem<TreeItemWrapper>> treeItems = treeTableController.getSelectedTreeItemList();
-					for (TreeItem<TreeItemWrapper> child : treeItems) {
-						if (!child.getValue().getPerspektiven().contains(selectedPerspektive)) {
-							addItemConflict = true;
-							throw new IllegalArgumentException();
-						}
 
+					ObservableList<TreeItem<TreeItemWrapper>> treeItems = treeTableController.getSelectedTreeItemList();
+					if (treeItems != null && !treeItems.isEmpty()) {
+						for (TreeItem<TreeItemWrapper> child : treeItems) {
+							if (!child.getValue().getPerspektiven().contains(selectedPerspektive)) {
+								addItemConflict = true;
+								throw new IllegalArgumentException();
+							}
+						}
 					}
 				} catch (IllegalArgumentException iae) {
 					Platform.runLater(new Runnable() {
