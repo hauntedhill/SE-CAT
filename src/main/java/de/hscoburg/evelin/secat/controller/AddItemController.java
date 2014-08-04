@@ -162,30 +162,31 @@ public class AddItemController extends BaseController {
 
 			@Override
 			public void updateUI() {
+				if (templateBox.getValue() != null) {
+					if (templateBox.getValue().getId() == -1) {
 
-				if (templateBox.getValue().getId() == -1) {
+						perspektiveList.getSelectionModel().clearSelection();
+						eigenschaftList.getSelectionModel().clearSelection();
+						notiz.clear();
+						frage.clear();
 
-					perspektiveList.getSelectionModel().clearSelection();
-					eigenschaftList.getSelectionModel().clearSelection();
-					notiz.clear();
-					frage.clear();
+					} else if (templateBox.getValue() != null) {
+						perspektiveList.getSelectionModel().clearSelection();
+						eigenschaftList.getSelectionModel().clearSelection();
+						notiz.setText(templateBox.getValue().getNotiz());
+						frage.setText(templateBox.getValue().getFrage());
+						List<Perspektive> templatePerspektive = templateBox.getValue().getPerspektiven();
+						List<Eigenschaft> templateEigenschaft = templateBox.getValue().getEigenschaften();
+						for (Perspektive set : templatePerspektive) {
+							perspektiveList.getSelectionModel().select(perspektiveList.getItems().indexOf(set));
+						}
 
-				} else if (templateBox.getValue() != null) {
-					perspektiveList.getSelectionModel().clearSelection();
-					eigenschaftList.getSelectionModel().clearSelection();
-					notiz.setText(templateBox.getValue().getNotiz());
-					frage.setText(templateBox.getValue().getFrage());
-					List<Perspektive> templatePerspektive = templateBox.getValue().getPerspektiven();
-					List<Eigenschaft> templateEigenschaft = templateBox.getValue().getEigenschaften();
-					for (Perspektive set : templatePerspektive) {
-						perspektiveList.getSelectionModel().select(perspektiveList.getItems().indexOf(set));
+						for (Eigenschaft set : templateEigenschaft) {
+							eigenschaftList.getSelectionModel().select(eigenschaftList.getItems().indexOf(set));
+						}
 					}
 
-					for (Eigenschaft set : templateEigenschaft) {
-						eigenschaftList.getSelectionModel().select(eigenschaftList.getItems().indexOf(set));
-					}
 				}
-
 			}
 
 		});
