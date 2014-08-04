@@ -152,6 +152,7 @@ public class BewertungAnzeigenController extends BaseController {
 	private double[] avValueBereich;
 
 	private int itemCount;
+	private int bereichCount;
 	private int wertungCount = 0;
 	private int constColumns;
 	private int actualColumn;
@@ -372,6 +373,28 @@ public class BewertungAnzeigenController extends BaseController {
 		avValueBereich = CalculationHelper.getAvValueforBereiche(bewertungOl, bereiche);
 
 		allEvaluationHelper = setOutliers(EvaluationHelper.createEvaluationHelperList(bewertungOl, fragebogen.getFrageFragebogen()));
+
+		for (EvaluationHelper eh : allEvaluationHelper) {
+			double[] ret = new double[bereiche.size()];
+			for (Bereich b : bereiche) {
+				double tmp = 0;
+				int c = 0;
+				for (Item i : eh.getItems()) {
+					if (i.getBereich().equals(b)) {
+						if (eh.getItemWertung().get(eh.getItems().indexOf(i)) != null && !eh.getItemWertung().get(eh.getItems().indexOf(i)).isEmpty())
+							tmp += Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(i)));
+						c++;
+
+					}
+
+				}
+				tmp /= c;
+				ret[bereiche.indexOf(b)] = tmp;
+			}
+			eh.setAvValueBereich(ret);
+			eh.setBereiche(bereiche);
+
+		}
 
 		tableViewAll.getColumns().add(createHead(true));
 		tableViewLeast.getColumns().add(createHead(false));
@@ -918,20 +941,24 @@ public class BewertungAnzeigenController extends BaseController {
 				itemAverageCol.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
 
 					public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-						;
-						int i = 0;
-						float ret = 0;
-						for (Item item : p.getValue().getItems()) {
-							if (item.getBereich().equals(bereiche.get(itemAverageCol.getParentColumn().getColumns().indexOf(itemAverageCol)))) {
-								ret += Float.parseFloat(p.getValue().getItemWertung().get(p.getValue().getItems().indexOf(item)));
-								i++;
-							}
+						double ret = 0;
+						/*
+						 * ; int i = 0; float ret = 0; for (Item item : p.getValue().getItems()) { if
+						 * (item.getBereich().equals(bereiche.get(itemAverageCol.getParentColumn().getColumns().indexOf(itemAverageCol)))) {
+						 * System.out.println(p.getValue().getItemWertung().get(p.getValue().getItems().indexOf(item))); ret +=
+						 * Float.parseFloat(p.getValue().getItemWertung().get(p.getValue().getItems().indexOf(item))); i++; }
+						 * 
+						 * } if (i > 0) {
+						 * 
+						 * ret /= i; } System.out.println("break");
+						 */
 
+						if (bereichCount == p.getValue().getBereiche().size()) {
+							bereichCount = 0;
 						}
-						if (i > 0) {
 
-							ret /= i;
-						}
+						ret = p.getValue().getAvValueBereich()[bereichCount++];
+						System.out.println(bereiche.get(itemAverageCol.getParentColumn().getColumns().indexOf(itemAverageCol)).getName());
 						return new ReadOnlyObjectWrapper<String>(String.valueOf(doubleFormat.format(ret)));
 
 					}

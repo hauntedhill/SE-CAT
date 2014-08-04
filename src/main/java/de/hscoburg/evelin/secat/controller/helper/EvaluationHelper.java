@@ -22,6 +22,25 @@ public class EvaluationHelper {
 	private ArrayList<Item> items;
 	private ArrayList<String> itemWertung;
 	private ArrayList<String> frageWertung;
+	private double[] avValueBereich;
+
+	public double[] getAvValueBereich() {
+		return avValueBereich;
+	}
+
+	public void setAvValueBereich(double[] avValueBereich) {
+		this.avValueBereich = avValueBereich;
+	}
+
+	public ArrayList<Bereich> getBereiche() {
+		return bereiche;
+	}
+
+	public void setBereiche(ArrayList<Bereich> bereiche) {
+		this.bereiche = bereiche;
+	}
+
+	private ArrayList<Bereich> bereiche;
 	private String welle;
 	private String rawId;
 	private String source;
@@ -34,6 +53,24 @@ public class EvaluationHelper {
 		this.frageWertung = new ArrayList<String>();
 		this.setOutlier(false);
 
+	}
+
+	public float getAverageOfBereich(Bereich b) {
+
+		float ret = 0;
+		int i = 0;
+		for (Item item : items) {
+			if (item.getBereich().equals(b)) {
+
+				ret += Float.parseFloat(itemWertung.get(items.indexOf(item)));
+				i++;
+			}
+			if (i > 0) {
+				ret /= i;
+			}
+		}
+
+		return ret;
 	}
 
 	public void addItem(Item i) {
