@@ -365,6 +365,33 @@
 </TitledPane>
 <TabPane maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE" GridPane.columnIndex="3" GridPane.rowIndex="1">
 <tabs>
+<Tab text="%scene.chart.evaluationcomparision.criterion">
+<content>
+<GridPane fx:id="evaluationComparePaneBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+<columnConstraints>
+<ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
+<ColumnConstraints hgrow="SOMETIMES" maxWidth="1200.0" minWidth="10.0" />
+</columnConstraints>
+<rowConstraints>
+<RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+<RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+</rowConstraints>
+</GridPane>
+</content>
+</Tab><Tab text="%scene.chart.evaluationcomparision.subcriterion">
+<content>
+<GridPane fx:id="evaluationComparePaneKiviat" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
+<columnConstraints>
+<ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
+<ColumnConstraints hgrow="SOMETIMES" maxWidth="1200.0" minWidth="10.0" prefWidth="519.0" />
+</columnConstraints>
+<rowConstraints>
+<RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
+<RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+</rowConstraints>
+</GridPane>
+</content>
+</Tab>
                                           <Tab text="%scene.chart.evaluationcomparision.items">
                                              <content>
                                                 <GridPane fx:id="evaluationComparePaneItems" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
@@ -393,33 +420,6 @@
                                                 </GridPane>
                                              </content>
                                           </Tab>
-<Tab text="%scene.chart.evaluationcomparision.criterion">
-<content>
-<GridPane fx:id="evaluationComparePaneBar" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-<columnConstraints>
-<ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
-<ColumnConstraints hgrow="SOMETIMES" maxWidth="1200.0" minWidth="10.0" />
-</columnConstraints>
-<rowConstraints>
-<RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-<RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-</rowConstraints>
-</GridPane>
-</content>
-</Tab><Tab text="%scene.chart.evaluationcomparision.subcriterion">
-<content>
-<GridPane fx:id="evaluationComparePaneKiviat" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
-<columnConstraints>
-<ColumnConstraints hgrow="SOMETIMES" maxWidth="15.0" minWidth="15.0" prefWidth="15.0" />
-<ColumnConstraints hgrow="SOMETIMES" maxWidth="1200.0" minWidth="10.0" prefWidth="519.0" />
-</columnConstraints>
-<rowConstraints>
-<RowConstraints maxHeight="15.0" minHeight="15.0" prefHeight="15.0" vgrow="SOMETIMES" />
-<RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-</rowConstraints>
-</GridPane>
-</content>
-</Tab>
 </tabs>
 </TabPane>
 </children>

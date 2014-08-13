@@ -502,15 +502,14 @@ public class BewertungAnzeigenController extends BaseController {
 					ObservableList<EvaluationHelper> ehToCompare = EvaluationHelper.createEvaluationHelperList(fragebogenToCompare.getBewertungen(),
 							fragebogen.getFrageFragebogen());
 
-					ArrayList<Fragebogen> fbPerspektiven = new ArrayList();
-					fbPerspektiven.add(fragebogen);
-					fbPerspektiven.addAll(evaluationTable.getSelectionModel().getSelectedItems());
+					ArrayList<Fragebogen> fbToCompare = new ArrayList();
+					fbToCompare.add(fragebogen);
+					fbToCompare.addAll(evaluationTable.getSelectionModel().getSelectedItems());
 
 					ArrayList<Bereich> bereicheToCompare = EvaluationHelper.getBereicheFromEvaluationHelper(fragebogenToCompare.getBewertungen());
 					double[] avToCompare = CalculationHelper.getAvValueforBereiche(fragebogenToCompare.getBewertungen(), bereicheToCompare);
 
-					DefaultCategoryDataset dataset = DatasetCreationHelper.createDatasetForCriterionEvaluationCompareBarChart(bereiche, avValueBereich,
-							fragebogen, bereicheToCompare, avToCompare, fragebogenToCompare.getName());
+					DefaultCategoryDataset dataset = DatasetCreationHelper.createDatasetForCriterionEvaluationCompareBarChart(fbToCompare);
 
 					JFreeChart barchart = ChartCreationHelper.createBarChart(dataset, fragebogen.getName(), fragebogenToCompare.getName(), fragebogen);
 
@@ -518,25 +517,22 @@ public class BewertungAnzeigenController extends BaseController {
 					evaluationCompareBarSwingNode.setContent(new ChartPanel(barchart));
 					evaluationComparePaneBar.add(evaluationCompareBarSwingNode, 1, 1);
 
-					JFreeChart kiviatchart = ChartCreationHelper.createKiviatChart(
-							DatasetCreationHelper.createAverageRadarDatasetForBereich(
-									DatasetCreationHelper.getAverageDataSetForBereichCompare(ehToCompare, bereicheToCompare, avToCompare,
-											fragebogenToCompare.getName(), fragebogen, bereiche, avValueBereich), bereiche, avValueBereich),
-							fragebogenToCompare);
+					JFreeChart kiviatchart = ChartCreationHelper.createKiviatChart(DatasetCreationHelper.createAverageRadarDatasetForBereich(
+							DatasetCreationHelper.getAverageDataSetForBereichCompare(fbToCompare), bereiche, avValueBereich), fragebogenToCompare);
 
 					SwingNode evaluationCompareKiviatSwingNode = new SwingNode();
 					evaluationCompareKiviatSwingNode.setContent(new ChartPanel(kiviatchart));
 					evaluationComparePaneKiviat.add(evaluationCompareKiviatSwingNode, 1, 1);
 
 					JFreeChart multiperspektiveChart = ChartCreationHelper.createKiviatChartLinesOnly(
-							DatasetCreationHelper.createDatasetForMultiperspektive(fbPerspektiven), fragebogen);
+							DatasetCreationHelper.createDatasetForMultiperspektive(fbToCompare), fragebogen);
 
 					SwingNode evaluationCompareMultiperspektiveSwingNode = new SwingNode();
 					evaluationCompareMultiperspektiveSwingNode.setContent(new ChartPanel(multiperspektiveChart));
 					evaluationComparePaneMultiperspektive.add(evaluationCompareMultiperspektiveSwingNode, 1, 1);
 
 					JFreeChart itemCompareChart = ChartCreationHelper.createKiviatChart(
-							DatasetCreationHelper.createDatasetForEvaluationItemCompare(fbPerspektiven), fragebogen);
+							DatasetCreationHelper.createDatasetForEvaluationItemCompare(fbToCompare), fragebogen);
 
 					SwingNode evaluationCompareItemsSwingNode = new SwingNode();
 					evaluationCompareItemsSwingNode.setContent(new ChartPanel(itemCompareChart));

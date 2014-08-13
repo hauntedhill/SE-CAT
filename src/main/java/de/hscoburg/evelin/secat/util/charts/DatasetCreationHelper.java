@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import de.hscoburg.evelin.secat.controller.BewertungAnzeigenController;
 import de.hscoburg.evelin.secat.controller.helper.EvaluationHelper;
 import de.hscoburg.evelin.secat.dao.entity.Bereich;
+import de.hscoburg.evelin.secat.dao.entity.Bewertung;
 import de.hscoburg.evelin.secat.dao.entity.Fragebogen;
 import de.hscoburg.evelin.secat.dao.entity.Handlungsfeld;
 import de.hscoburg.evelin.secat.dao.entity.Item;
@@ -201,20 +202,37 @@ public class DatasetCreationHelper {
 
 	}
 
-	static public DefaultCategoryDataset getAverageDataSetForBereichCompare(ObservableList<EvaluationHelper> ehToCompare, ArrayList<Bereich> bereicheToCompare,
-			double[] avValueToCompare, String fragebogenNameToCompare, Fragebogen fragebogen, ArrayList<Bereich> bereiche, double[] avValueBereich) {
+	static public DefaultCategoryDataset getAverageDataSetForBereichCompare(List<Fragebogen> fragebogenList) {
 		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+		double ret = 0;
+		ArrayList<Bereich> bereiche = EvaluationHelper.getBereicheFromEvaluationHelper(fragebogenList.get(0).getBewertungen());
 
-		for (int i = 0; i < bereiche.size(); i++) {
-			defaultcategorydataset.addValue(avValueBereich[i], fragebogen.getName(),
-					bereiche.get(i).getName() + " Values: " + doubleFormat.format(avValueBereich[i]) + ", " + doubleFormat.format(avValueToCompare[i]));
+		for (Fragebogen f : fragebogenList) {
 
-			defaultcategorydataset
-					.addValue(
-							avValueToCompare[i],
-							fragebogenNameToCompare,
-							bereicheToCompare.get(i).getName() + " Values: " + doubleFormat.format(avValueBereich[i]) + ", "
-									+ doubleFormat.format(avValueToCompare[i]));
+			double[] values = new double[bereiche.size()];
+			int valCount = 0;
+			for (Bereich bereich : bereiche) {
+				valCount = 0;
+				for (Bewertung bewertung : f.getBewertungen()) {
+					if (bewertung.getItem() != null) {
+						if (bereich.equals(bewertung.getItem().getBereich())) {
+							if (!bewertung.getWert().isEmpty())
+								values[bereiche.indexOf(bereich)] += Double.parseDouble(bewertung.getWert());
+							valCount++;
+						}
+					}
+				}
+				if (valCount != 0) {
+					values[bereiche.indexOf(bereich)] /= valCount;
+				} else {
+					values[bereiche.indexOf(bereich)] = 0;
+				}
+			}
+
+			for (Bereich bereich : bereiche) {
+				defaultcategorydataset.addValue(values[bereiche.indexOf(bereich)], f.getPerspektive().getName(), bereich.getName());
+
+			}
 		}
 
 		return defaultcategorydataset;
@@ -273,25 +291,62 @@ public class DatasetCreationHelper {
 
 	}
 
-	static public DefaultCategoryDataset createDatasetForCriterionEvaluationCompareBarChart(ArrayList<Bereich> bereiche, double[] avValueBereich,
-			Fragebogen fragebogen, ArrayList<Bereich> bereicheToCompare, double[] avValuesToCompare, String name) {
+	static public DefaultCategoryDataset createDatasetForCriterionEvaluationCompareBarChart(List<Fragebogen> fragebogenList) {
+
 		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
-		double[] values = CalculationHelper.getAverageDataForCriterion(avValueBereich, bereiche);
-		ArrayList<Handlungsfeld> hfList = new ArrayList<Handlungsfeld>();
-		for (Bereich bereich : bereiche) {
-			if (hfList.isEmpty() || !hfList.contains(bereich.getHandlungsfeld())) {
-				hfList.add(bereich.getHandlungsfeld());
-				defaultcategorydataset.addValue(values[bereiche.indexOf(bereich)], fragebogen.getName(), bereich.getHandlungsfeld().getName());
+
+		ArrayList<Bereich> bereiche = EvaluationHelper.getBereicheFromEvaluationHelper(fragebogenList.get(0).getBewertungen());
+
+		for (Fragebogen f : fragebogenList) {
+
+			double[] values = new double[bereiche.size()];
+			int valCount = 0;
+			for (Bereich bereich : bereiche) {
+				valCount = 0;
+				for (Bewertung bewertung : f.getBewertungen()) {
+					if (bewertung.getItem() != null) {
+						if (bereich.equals(bewertung.getItem().getBereich())) {
+							if (!bewertung.getWert().isEmpty())
+								values[bereiche.indexOf(bereich)] += Double.parseDouble(bewertung.getWert());
+							valCount++;
+						}
+					}
+				}
+				if (valCount != 0) {
+					values[bereiche.indexOf(bereich)] /= valCount;
+				} else {
+					values[bereiche.indexOf(bereich)] = 0;
+				}
+			}
+			ArrayList<Handlungsfeld> hfList = new ArrayList<Handlungsfeld>();
+
+			for (Bereich bereich : bereiche) {
+				if (!hfList.contains(bereich.getHandlungsfeld())) {
+					hfList.add(bereich.getHandlungsfeld());
+				}
+
+			}
+
+			for (Handlungsfeld hf : hfList) {
+				double ret = 0;
+				int i = 0;
+				for (Bereich bereich : bereiche) {
+					if (bereich.getHandlungsfeld().equals(hf)) {
+						ret += values[bereiche.indexOf(bereich)];
+						i++;
+					}
+
+				}
+				if (i > 0) {
+					ret /= i;
+				} else {
+					ret = 0;
+				}
+				defaultcategorydataset.addValue(ret, f.getPerspektive().getName(), hf.getName());
+
 			}
 		}
 
-		ArrayList<Handlungsfeld> hfListToCompare = new ArrayList<Handlungsfeld>();
-		for (Bereich bereich : bereicheToCompare) {
-			if (hfListToCompare.isEmpty() || !hfListToCompare.contains(bereich.getHandlungsfeld())) {
-				hfListToCompare.add(bereich.getHandlungsfeld());
-				defaultcategorydataset.addValue(values[bereicheToCompare.indexOf(bereich)], name, bereich.getHandlungsfeld().getName());
-			}
-		}
 		return defaultcategorydataset;
 	}
 
