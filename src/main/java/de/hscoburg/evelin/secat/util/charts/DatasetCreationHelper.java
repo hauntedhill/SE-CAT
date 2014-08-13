@@ -53,6 +53,79 @@ public class DatasetCreationHelper {
 
 	}
 
+	static public DefaultCategoryDataset createDatasetForMultiperspektive(List<Fragebogen> fragebogenList) {
+
+		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+		ArrayList<Bereich> bereiche = EvaluationHelper.getBereicheFromEvaluationHelper(fragebogenList.get(0).getBewertungen());
+
+		for (Fragebogen f : fragebogenList) {
+			ObservableList<EvaluationHelper> ehList = EvaluationHelper.createEvaluationHelperList(f.getBewertungen(), null);
+			for (EvaluationHelper eh : ehList) {
+				double avValue[] = new double[bereiche.size()];
+				int valCount = 0;
+				for (Bereich bereich : bereiche) {
+					valCount = 0;
+					for (Item item : eh.getItems()) {
+
+						if (bereich.equals(item.getBereich())) {
+							if (!eh.getItemWertung().get(valCount).isEmpty()) {
+								avValue[bereiche.indexOf(bereich)] += Double.parseDouble(eh.getItemWertung().get(valCount));
+							}
+							valCount++;
+						}
+
+					}
+					if (valCount != 0) {
+						avValue[bereiche.indexOf(bereich)] /= valCount;
+					} else {
+
+						avValue[bereiche.indexOf(bereich)] = 0;
+					}
+				}
+				for (int j = 0; j < avValue.length; j++) {
+					defaultcategorydataset.addValue(avValue[j], f.getPerspektive().getName() + " : " + eh.getRawId(), bereiche.get(j).getName());
+
+				}
+
+			}
+
+		}
+
+		return defaultcategorydataset;
+
+	}
+
+	static public DefaultCategoryDataset createDatasetForEvaluationItemCompare(List<Fragebogen> fragebogenList) {
+		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
+		ObservableList<EvaluationHelper> ehListinit = EvaluationHelper.createEvaluationHelperList(fragebogenList.get(0).getBewertungen(), null);
+		List<Item> items = ehListinit.get(0).getItems();
+
+		for (Fragebogen f : fragebogenList) {
+			ObservableList<EvaluationHelper> ehList = EvaluationHelper.createEvaluationHelperList(f.getBewertungen(), null);
+
+			for (Item item : items) {
+				double ret = 0;
+				int i = 0;
+				if (ehList.get(0).getItems().contains(item)) {
+					for (EvaluationHelper eh : ehList) {
+
+						ret += Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item)));
+
+						i++;
+					}
+				}
+				if (i > 0) {
+					ret /= i;
+				}
+
+				defaultcategorydataset.addValue(ret, f.getPerspektive().getName(), item.getName());
+			}
+		}
+
+		return defaultcategorydataset;
+
+	}
+
 	static public DefaultCategoryDataset createDatasetForStudentRadarChart(ObservableList<EvaluationHelper> allEvaluationHelper) {
 
 		DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
@@ -221,30 +294,5 @@ public class DatasetCreationHelper {
 		}
 		return defaultcategorydataset;
 	}
-	/*
-	 * static public JFreeChart createStudentItemDatasetForKiviat(EvaluationHelper eh, Fragebogen fragebogen, List<EvaluationHelper>
-	 * allEvaluationHelper) {
-	 * 
-	 * DefaultCategoryDataset defaultcategorydataset = new DefaultCategoryDataset();
-	 * 
-	 * int z = 0; int anzItems = allEvaluationHelper.get(0).getItems().size(); int iBewertung = 0; double[] werte = new double[anzItems];
-	 * 
-	 * for (EvaluationHelper evalHelper : allEvaluationHelper) { int iWerte = 0; for (Item item : evalHelper.getItems()) { if (item != null)
-	 * { werte[iWerte] += ((Double.parseDouble(evalHelper.getItemWertung().get(iWerte++)))); } } z = 0; for (int j = 0; j < anzItems; j++)
-	 * defaultcategorydataset.addValue((werte[j] / allEvaluationHelper.size()),
-	 * SeCatResourceBundle.getInstance().getString("scene.chart.all.averagevalues"), z++ + ": " +
-	 * allEvaluationHelper.get(0).getItems().get(j).getName()); }
-	 * 
-	 * z = 0; for (Item item : eh.getItems()) { if (item != null) {
-	 * 
-	 * defaultcategorydataset.addValue((Double.parseDouble(eh.getItemWertung().get(iBewertung++))), eh.getRawId(), z++ + ": " +
-	 * item.getName()); }
-	 * 
-	 * }
-	 * 
-	 * return ChartCreationHelper.createKiviatChart(defaultcategorydataset, fragebogen);
-	 * 
-	 * }
-	 */
 
 }

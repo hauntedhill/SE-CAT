@@ -43,6 +43,21 @@ public class ChartCreationHelper {
 		return jfreechart;
 	}
 
+	static public JFreeChart createKiviatChartLinesOnly(DefaultCategoryDataset defaultcategorydataset, Fragebogen fragebogen) {
+
+		RadarChart rc = new RadarChart(defaultcategorydataset, fragebogen.getSkala().getSchritte());
+		SpiderWebPlot spiderwebplot = rc.getPlot();
+		spiderwebplot.setMaxValue(fragebogen.getSkala().getSchritte());
+		spiderwebplot.setWebFilled(false);
+
+		JFreeChart jfreechart = new JFreeChart(fragebogen.getName(), TextTitle.DEFAULT_FONT, spiderwebplot, false);
+		LegendTitle legendtitle = new LegendTitle(spiderwebplot);
+		legendtitle.setPosition(RectangleEdge.BOTTOM);
+		jfreechart.addSubtitle(legendtitle);
+
+		return jfreechart;
+	}
+
 	static public JFreeChart createBarChart(DefaultCategoryDataset defaultcategorydataset, String name, String titel, Fragebogen fragebogen) {
 		JFreeChart chart = ChartFactory.createBarChart(name, titel, "", defaultcategorydataset, PlotOrientation.VERTICAL, true, true, false);
 

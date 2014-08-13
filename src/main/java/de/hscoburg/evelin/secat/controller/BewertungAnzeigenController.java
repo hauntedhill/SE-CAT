@@ -105,7 +105,11 @@ public class BewertungAnzeigenController extends BaseController {
 	@FXML
 	GridPane evaluationComparePaneBar;
 	@FXML
+	GridPane evaluationComparePaneItems;
+	@FXML
 	GridPane evaluationComparePaneKiviat;
+	@FXML
+	GridPane evaluationComparePaneMultiperspektive;
 	@FXML
 	TableView<EvaluationHelper> tableViewAll;
 	@FXML
@@ -446,7 +450,7 @@ public class BewertungAnzeigenController extends BaseController {
 			public void updateUI() {
 				ObservableList<Item> items = itemTable.getSelectionModel().getSelectedItems();
 				XYSeriesCollection data_series = new XYSeriesCollection();
-				XYSeries xy_data = new XYSeries("leer");
+				XYSeries xy_data = new XYSeries(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.itemcomparison"));
 
 				if (items.size() > 1) {
 					xy_data.setDescription(items.get(0).getName() + " / " + items.get(1).getName());
@@ -497,6 +501,11 @@ public class BewertungAnzeigenController extends BaseController {
 					Fragebogen fragebogenToCompare = evaluationTable.getSelectionModel().getSelectedItem();
 					ObservableList<EvaluationHelper> ehToCompare = EvaluationHelper.createEvaluationHelperList(fragebogenToCompare.getBewertungen(),
 							fragebogen.getFrageFragebogen());
+
+					ArrayList<Fragebogen> fbPerspektiven = new ArrayList();
+					fbPerspektiven.add(fragebogen);
+					fbPerspektiven.addAll(evaluationTable.getSelectionModel().getSelectedItems());
+
 					ArrayList<Bereich> bereicheToCompare = EvaluationHelper.getBereicheFromEvaluationHelper(fragebogenToCompare.getBewertungen());
 					double[] avToCompare = CalculationHelper.getAvValueforBereiche(fragebogenToCompare.getBewertungen(), bereicheToCompare);
 
@@ -518,6 +527,21 @@ public class BewertungAnzeigenController extends BaseController {
 					SwingNode evaluationCompareKiviatSwingNode = new SwingNode();
 					evaluationCompareKiviatSwingNode.setContent(new ChartPanel(kiviatchart));
 					evaluationComparePaneKiviat.add(evaluationCompareKiviatSwingNode, 1, 1);
+
+					JFreeChart multiperspektiveChart = ChartCreationHelper.createKiviatChartLinesOnly(
+							DatasetCreationHelper.createDatasetForMultiperspektive(fbPerspektiven), fragebogen);
+
+					SwingNode evaluationCompareMultiperspektiveSwingNode = new SwingNode();
+					evaluationCompareMultiperspektiveSwingNode.setContent(new ChartPanel(multiperspektiveChart));
+					evaluationComparePaneMultiperspektive.add(evaluationCompareMultiperspektiveSwingNode, 1, 1);
+
+					JFreeChart itemCompareChart = ChartCreationHelper.createKiviatChart(
+							DatasetCreationHelper.createDatasetForEvaluationItemCompare(fbPerspektiven), fragebogen);
+
+					SwingNode evaluationCompareItemsSwingNode = new SwingNode();
+					evaluationCompareItemsSwingNode.setContent(new ChartPanel(itemCompareChart));
+					evaluationComparePaneItems.add(evaluationCompareItemsSwingNode, 1, 1);
+
 				}
 			}
 
@@ -552,13 +576,13 @@ public class BewertungAnzeigenController extends BaseController {
 		criterionincreaseSwingNode.setContent(new ChartPanel(ChartCreationHelper.createBarChart(DatasetCreationHelper.getDatasetForCriterionBarChart(
 				avValueBereich, bereiche), fragebogen.getName(), SeCatResourceBundle.getInstance().getString("scene.chart.criterionincrease"), fragebogen)));
 		criterionincreasePaneBarchart.add(criterionincreaseSwingNode, 1, 1);
+
 		SwingNode studentincreaseSwingNodeKiviat = new SwingNode();
 		studentincreaseSwingNodeKiviat.setContent(new ChartPanel(ChartCreationHelper.createKiviatChart(
 				DatasetCreationHelper.createDatasetForStudentRadarChart(allEvaluationHelper), fragebogen)));
 		studentincreasePaneKiviat.add(studentincreaseSwingNodeKiviat, 1, 1);
 
 		SwingNode chartSwingNode = new SwingNode();
-
 		chartSwingNode.setContent(new ChartPanel(ChartCreationHelper.createKiviatChart(
 				DatasetCreationHelper.createAverageRadarDatasetForBereich(null, bereiche, avValueBereich), fragebogen)));
 		subcriterionincreasePaneKiviat.add(chartSwingNode, 1, 1);
@@ -878,13 +902,6 @@ public class BewertungAnzeigenController extends BaseController {
 			col.setMaxWidth(Double.MAX_VALUE);
 			String name = bereich.getName();
 
-			// Text t = new Text(name);
-			// t.setTextAlignment(TextAlignment.CENTER);
-
-			// if (bereich.getName().length() > 15) {
-			// t.setWrappingWidth(200);
-			// }
-
 			col.setText(name);
 			makeHeaderWrappable(col);
 
@@ -894,14 +911,10 @@ public class BewertungAnzeigenController extends BaseController {
 				for (Item item : fragebogen.getItems()) {
 					if (item.getBereich().equals(bereich)) {
 						TableColumn itemCol = new TableColumn();
-						// Text itemName = new Text(item.getFrage());
-						// itemName.setWrappingWidth(125);
-						// itemCol.setGraphic(itemName);
 
 						itemCol.setText(item.getName());
 						itemCol.setMinWidth(225);
 						makeHeaderWrappable(itemCol);
-						// itemCol.setMaxWidth(125);
 						col.getColumns().add(itemCol);
 
 						((TableColumn<EvaluationHelper, String>) col.getColumns().get(count))
@@ -942,16 +955,6 @@ public class BewertungAnzeigenController extends BaseController {
 
 					public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
 						double ret = 0;
-						/*
-						 * ; int i = 0; float ret = 0; for (Item item : p.getValue().getItems()) { if
-						 * (item.getBereich().equals(bereiche.get(itemAverageCol.getParentColumn().getColumns().indexOf(itemAverageCol)))) {
-						 * System.out.println(p.getValue().getItemWertung().get(p.getValue().getItems().indexOf(item))); ret +=
-						 * Float.parseFloat(p.getValue().getItemWertung().get(p.getValue().getItems().indexOf(item))); i++; }
-						 * 
-						 * } if (i > 0) {
-						 * 
-						 * ret /= i; } System.out.println("break");
-						 */
 
 						if (bereichCount == p.getValue().getBereiche().size()) {
 							bereichCount = 0;
