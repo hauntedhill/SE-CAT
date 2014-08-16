@@ -345,7 +345,7 @@ public class TreeTableController extends BaseController {
 	 */
 	public TreeItem<TreeItemWrapper> getSelectedTreeItem() {
 
-		return treeTable.getSelectionModel().getModelItem(treeTable.getSelectionModel().getSelectedIndex());
+		return treeTable.getSelectionModel().getSelectedItem();
 	}
 
 	/**
@@ -457,7 +457,7 @@ public class TreeTableController extends BaseController {
 	}
 
 	/**
-	 * Methode gibts ausgewähöte TreeItems der Treetableview zurück
+	 * Methode gibts ausgewählte TreeItems der Treetableview zurück
 	 * 
 	 * @return {@link ObservableList} mit {@link TreeItem}s
 	 */
@@ -489,7 +489,7 @@ public class TreeTableController extends BaseController {
 	}
 
 	/**
-	 * Methode setzt den SelectionMode der Treetableview
+	 * Methode aktualisiert das Handlungsfeldund Bereich
 	 * 
 	 * @param hf
 	 *            {@link int} Index der Handlungsfeld
