@@ -215,6 +215,7 @@ public class AddItemController extends BaseController {
 							editItem.setEigenschaften(eigenschaftList.getSelectionModel().getSelectedItems());
 						}
 						handlungsfeldModel.mergeItem(editItem);
+						editMode = false;
 
 					}
 				} catch (IllegalArgumentException iae) {
