@@ -904,7 +904,7 @@ public class BewertungAnzeigenController extends BaseController {
 			if (all == true) {
 				int count = 0;
 
-				for (Item item : fragebogen.getItems()) {
+				for (Item item : bewertungController.getSelectedFragebogen().getItems()) {
 					if (item.getBereich().equals(bereich)) {
 						TableColumn itemCol = new TableColumn();
 
@@ -936,7 +936,7 @@ public class BewertungAnzeigenController extends BaseController {
 					}
 				}
 			} else {
-				final TableColumn itemAverageCol = new TableColumn();
+				TableColumn itemAverageCol = new TableColumn();
 				// Text itemAvText = new Text(SeCatResourceBundle.getInstance().getString("scene.evaluation.lable.average"));
 				// itemAvText.setWrappingWidth(125);
 				// itemAverageCol.setGraphic(itemAvText);
@@ -951,14 +951,14 @@ public class BewertungAnzeigenController extends BaseController {
 
 					public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
 						double ret = 0;
-
-						if (bereichCount == p.getValue().getBereiche().size()) {
+						
+						if ( bereichCount == p.getValue().getBereiche().size()) {
 							bereichCount = 0;
 						}
 
 						ret = p.getValue().getAvValueBereich()[bereichCount++];
 						return new ReadOnlyObjectWrapper<String>(String.valueOf(doubleFormat.format(ret)));
-
+						
 					}
 				});
 

@@ -109,10 +109,18 @@ public class DatasetCreationHelper {
 				int i = 0;
 				if (ehList.get(0).getItems().contains(item)) {
 					for (EvaluationHelper eh : ehList) {
+					    
+					    String s = eh.getItemWertung().get(eh.getItems().indexOf(item));
+					    if(s.isEmpty()){
+					        ret += 0;
+					    }
+					    else{
+					        ret += Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item)));   
+					        i++;
+					    }
+						
 
-						ret += Double.parseDouble(eh.getItemWertung().get(eh.getItems().indexOf(item)));
-
-						i++;
+						
 					}
 				}
 				if (i > 0) {

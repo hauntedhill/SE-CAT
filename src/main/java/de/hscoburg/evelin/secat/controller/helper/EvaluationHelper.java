@@ -33,7 +33,7 @@ public class EvaluationHelper {
 	}
 
 	public ArrayList<Bereich> getBereiche() {
-		return bereiche;
+	    return bereiche;
 	}
 
 	public void setBereiche(ArrayList<Bereich> bereiche) {
@@ -158,12 +158,16 @@ public class EvaluationHelper {
 				if (!erste.contains(bewertung.getZeilenid())) {
 					erste.add(bewertung.getZeilenid());
 					EvaluationHelper eh = new EvaluationHelper();
+					
 					if (bewertung.getAusreiser() != null && bewertung.getAusreiser() == true) {
 						eh.setOutlier(true);
 					}
 					if (bewertung.getAusreiser() != null && bewertung.getAusreiser() == false) {
 						eh.setOutlier(false);
 					}
+			
+					eh.setBereiche( getBereicheFromEvaluationHelper(bewertungen) );
+					eh.avValueBereich = new double[eh.getBereiche().size()];
 					eh.setWelle(bewertung.getWelle());
 					eh.setRawId(bewertung.getZeilenid());
 					eh.setSource(bewertung.getQuelle());
@@ -177,8 +181,39 @@ public class EvaluationHelper {
 								eh.addItemWertung(b.getWert());
 								eh.addItem(b.getItem());
 							}
-
+	
+							
 						}
+					for(Bereich bereich:eh.getBereiche()){
+					    double value = 0;
+					    int valcount = 0;
+		                   for (Bewertung be : temp) {
+		                       
+		                        if (be.getZeilenid().equals(eh.getRawId())) {
+		                            if (be.getItem() != null) {
+		                                if(be.getItem().getBereich().equals( bereich ) && !be.getWert().isEmpty()){
+		                                    value += Double.parseDouble( be.getWert());
+		                                    valcount += 1;
+		                                    
+		                                }
+		                                
+		                            }
+
+	
+		                            }
+		    
+		                            
+		                        }
+					    
+		                   if(valcount != 0){
+		                   eh.avValueBereich[eh.getBereiche().indexOf( bereich )] = (value / valcount);
+		                   }
+		                   else{
+		                       eh.avValueBereich[eh.getBereiche().indexOf( bereich )] = 0;
+		                   }
+					}
+						
+						
 
 					}
 
@@ -235,6 +270,7 @@ public class EvaluationHelper {
 					bereiche.add(bewertung.getItem().getBereich());
 			}
 		}
+
 		return bereiche;
 
 	}
