@@ -160,6 +160,7 @@ public class BewertungAnzeigenController extends BaseController {
 	private int wertungCount = 0;
 	private int constColumns;
 	private int actualColumn;
+	private EvaluationHelper lastOutlier;
 
 	private DecimalFormat doubleFormat = new DecimalFormat("#0.00");
 
@@ -247,6 +248,9 @@ public class BewertungAnzeigenController extends BaseController {
 						} else {
 							eh = tableViewQuestions.getSelectionModel().getSelectedItem();
 						}
+						if(eh == null){
+						    eh = lastOutlier;
+						}
 						ArrayList<Bewertung> bewertungen = new ArrayList<Bewertung>();
 						for (Bewertung b : fragebogen.getBewertungen()) {
 
@@ -256,15 +260,14 @@ public class BewertungAnzeigenController extends BaseController {
 							}
 
 						}
+						lastOutlier = eh;
 						bewertungModel.setOutlier(bewertungen);
 					}
 
 					@Override
 					public void updateUI() {
-						System.out.println(tableViewAll.isFocused());
-						// tableViewAll.getSelectionModel().getSelectedItem().setOutlier(true);
-						// tableViewAll.getItems().clear();
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
+			            allEvaluationHelper = setOutliers(EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen()));
 						tableViewAll.setItems(allEvaluationHelper);
 						tableViewLeast.setItems(allEvaluationHelper);
 						tableViewItems.setItems(allEvaluationHelper);
@@ -288,6 +291,9 @@ public class BewertungAnzeigenController extends BaseController {
 						} else {
 							eh = tableViewQuestions.getSelectionModel().getSelectedItem();
 						}
+	                      if(eh == null){
+	                            eh = lastOutlier;
+	                        }
 						ArrayList<Bewertung> bewertungen = new ArrayList<Bewertung>();
 						for (Bewertung b : fragebogen.getBewertungen()) {
 
@@ -297,14 +303,14 @@ public class BewertungAnzeigenController extends BaseController {
 							}
 
 						}
+						lastOutlier = eh;
 						bewertungModel.removeOutlier(bewertungen);
 					}
 
 					@Override
 					public void updateUI() {
-						// tableViewAll.getSelectionModel().getSelectedItem().setOutlier(true);
-						// tableViewAll.getItems().clear();
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
+					    allEvaluationHelper = setOutliers(EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen()));
 						tableViewAll.setItems(allEvaluationHelper);
 						tableViewLeast.setItems(allEvaluationHelper);
 						tableViewItems.setItems(allEvaluationHelper);
@@ -328,6 +334,9 @@ public class BewertungAnzeigenController extends BaseController {
 						} else {
 							eh = tableViewQuestions.getSelectionModel().getSelectedItem();
 						}
+	                      if(eh == null){
+	                            eh = lastOutlier;
+	                        }
 						ArrayList<Bewertung> bewertungen = new ArrayList<Bewertung>();
 						for (Bewertung b : fragebogen.getBewertungen()) {
 
@@ -338,12 +347,14 @@ public class BewertungAnzeigenController extends BaseController {
 
 						}
 						bewertungModel.setOutlierAutomatic(bewertungen);
+						lastOutlier = eh;
 					}
 
 					@Override
 					public void updateUI() {
 
 						allEvaluationHelper = EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen());
+					    allEvaluationHelper = setOutliers(EvaluationHelper.createEvaluationHelperList(fragebogen.getBewertungen(), fragebogen.getFrageFragebogen()));
 						tableViewAll.setItems(allEvaluationHelper);
 						tableViewLeast.setItems(allEvaluationHelper);
 						tableViewItems.setItems(allEvaluationHelper);
@@ -798,19 +809,12 @@ public class BewertungAnzeigenController extends BaseController {
 
 			}
 		});
-		col3.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, String>, ObservableValue<String>>() {
-
-			public ObservableValue<String> call(CellDataFeatures<EvaluationHelper, String> p) {
-
-				return new ReadOnlyObjectWrapper<String>(p.getValue().getZeit());
-
-			}
-		});
 
 		col4.setCellValueFactory(new Callback<CellDataFeatures<EvaluationHelper, Node>, ObservableValue<Node>>() {
 
 			public ObservableValue<Node> call(CellDataFeatures<EvaluationHelper, Node> p) {
 				if (p.getValue().isOutlier()) {
+
 					return new ReadOnlyObjectWrapper<Node>(new ImageView(new Image("/image/icons/flag.png", 16, 16, true, true)));
 				} else {
 					return new ReadOnlyObjectWrapper<Node>(null);
