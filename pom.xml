@@ -5,7 +5,7 @@
 	<groupId>de.hscoburg.evelin</groupId>
 	<artifactId>secat</artifactId>
 	<packaging>jar</packaging>
-	<version>${cmdVersion}</version>
+	<version>22</version>
 	<name>SE-Cat</name>
 	<url>http://maven.apache.org</url>
 

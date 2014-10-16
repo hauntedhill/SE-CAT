@@ -206,6 +206,7 @@ public class BewertungModel {
 		for (Bewertung bewertung : bewertungen) {
 			bewertung.setAusreiser(true);
 			bewertungDAO.merge(bewertung);
+			
 
 		}
 	}
